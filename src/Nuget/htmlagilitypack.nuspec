@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+		<id>HtmlAgilityPack</id>
+		<version>1.4.9.4</version>
+		<authors>Simon Mourrier, Jeff Klawiter, Stephan Grell</authors>
+		<summary>This is an agile HTML parser that builds a read/write DOM and supports plain XPATH or XSLT (you actually don't HAVE to understand XPATH nor XSLT to use it, don't worry...). It is a .NET code library that allows you to parse "out of the web" HTML files. The parser is very tolerant with "real world" malformed HTML. The object model is very similar to what proposes System.Xml, but for HTML documents (or streams). </summary>
+		<description>This is an agile HTML parser that builds a read/write DOM and supports plain XPATH or XSLT (you actually don't HAVE to understand XPATH nor XSLT to use it, don't worry...). It is a .NET code library that allows you to parse "out of the web" HTML files. The parser is very tolerant with "real world" malformed HTML. The object model is very similar to what proposes System.Xml, but for HTML documents (or streams). </description>
+		<language>en-US</language>
+		<iconUrl>http://blog.j-maxx.net/HAPIcon.png</iconUrl>
+		<licenseUrl>http://htmlagilitypack.codeplex.com/license</licenseUrl>
+		<projectUrl>http://htmlagilitypack.codeplex.com/</projectUrl>
+		<tags>HTML parse crawler spider linq</tags>
+	</metadata>
+</package>
+

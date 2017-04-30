@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{193BB801-054F-4729-9D5D-FCE1E32594BF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HtmlAgilityPack</RootNamespace>
+    <AssemblyName>HtmlAgilityPack</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Metro\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT, METRO</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Metro\Debug\HtmlAgilityPack.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Metro\Release\</OutputPath>
+    <DefineConstants>TRACE;METRO</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Metro\Release\HtmlAgilityPack.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>HtmlAgilityPack.Metro.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\HAPLight\HtmlDocumentLoadCompleted.cs">
+      <Link>HtmlDocumentLoadCompleted.cs</Link>
+    </Compile>
+    <Compile Include="..\HAPLight\Trace.Silverlight.cs">
+      <Link>Trace.Silverlight.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\crc32.cs">
+      <Link>crc32.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\EncodingFoundException.cs">
+      <Link>EncodingFoundException.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlAttribute.cs">
+      <Link>HtmlAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlAttributeCollection.cs">
+      <Link>HtmlAttributeCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlCommentNode.cs">
+      <Link>HtmlCommentNode.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlDocument.cs">
+      <Link>HtmlDocument.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlElementFlag.cs">
+      <Link>HtmlElementFlag.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlEntity.cs">
+      <Link>HtmlEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlNameTable.cs">
+      <Link>HtmlNameTable.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlNode.cs">
+      <Link>HtmlNode.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlNodeCollection.cs">
+      <Link>HtmlNodeCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlNodeType.cs">
+      <Link>HtmlNodeType.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlParseError.cs">
+      <Link>HtmlParseError.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlParseErrorCode.cs">
+      <Link>HtmlParseErrorCode.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlTextNode.cs">
+      <Link>HtmlTextNode.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlWebException.cs">
+      <Link>HtmlWebException.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\NameValuePair.cs">
+      <Link>NameValuePair.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\NameValuePairList.cs">
+      <Link>NameValuePairList.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\Properties\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\Trace.cs">
+      <Link>Trace.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\Utilities.cs">
+      <Link>Utilities.cs</Link>
+    </Compile>
+    <Compile Include="HtmlWeb.cs" />
+    <Compile Include="InvalidProgramException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="HtmlAgilityPack.Metro.pfx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>del /f /q $(SolutionDir)..\Nuget\lib\NetCore45\*
+copy "$(TargetDir)Html*.*" $(SolutionDir)..\Nuget\lib\NetCore45\</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

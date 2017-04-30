@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HAPLight", "..\HAPLight\HAPLight.csproj", "{5C9BCD7F-531E-4353-B430-C00381B55D29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HAPLight.5.0", "..\HAPLight\HAPLight.5.0.csproj", "{583C56E1-C46A-43AD-BB37-DE2209432126}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C9BCD7F-531E-4353-B430-C00381B55D29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C9BCD7F-531E-4353-B430-C00381B55D29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C9BCD7F-531E-4353-B430-C00381B55D29}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5C9BCD7F-531E-4353-B430-C00381B55D29}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5C9BCD7F-531E-4353-B430-C00381B55D29}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5C9BCD7F-531E-4353-B430-C00381B55D29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C9BCD7F-531E-4353-B430-C00381B55D29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C9BCD7F-531E-4353-B430-C00381B55D29}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{5C9BCD7F-531E-4353-B430-C00381B55D29}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{5C9BCD7F-531E-4353-B430-C00381B55D29}.Release|x86.ActiveCfg = Release|Any CPU
+		{583C56E1-C46A-43AD-BB37-DE2209432126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{583C56E1-C46A-43AD-BB37-DE2209432126}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{583C56E1-C46A-43AD-BB37-DE2209432126}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{583C56E1-C46A-43AD-BB37-DE2209432126}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{583C56E1-C46A-43AD-BB37-DE2209432126}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{583C56E1-C46A-43AD-BB37-DE2209432126}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{583C56E1-C46A-43AD-BB37-DE2209432126}.Release|Any CPU.Build.0 = Release|Any CPU
+		{583C56E1-C46A-43AD-BB37-DE2209432126}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{583C56E1-C46A-43AD-BB37-DE2209432126}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{583C56E1-C46A-43AD-BB37-DE2209432126}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

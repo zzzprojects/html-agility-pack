@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{56BB5DD2-1BA9-42E0-A449-8FB84DA95C6E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>HtmlAgilityPack</RootNamespace>
+    <AssemblyName>HtmlAgilityPack</AssemblyName>
+    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;METRO</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <DefineConstants>METRO</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\HtmlAgilityPack.Metro\HtmlWeb.cs">
+      <Link>HtmlWeb.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\crc32.cs">
+      <Link>crc32.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\EncodingFoundException.cs">
+      <Link>EncodingFoundException.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlAttribute.cs">
+      <Link>HtmlAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlAttributeCollection.cs">
+      <Link>HtmlAttributeCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlCommentNode.cs">
+      <Link>HtmlCommentNode.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlDocument.cs">
+      <Link>HtmlDocument.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlElementFlag.cs">
+      <Link>HtmlElementFlag.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlEntity.cs">
+      <Link>HtmlEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlNameTable.cs">
+      <Link>HtmlNameTable.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlNode.cs">
+      <Link>HtmlNode.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlNodeCollection.cs">
+      <Link>HtmlNodeCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlNodeType.cs">
+      <Link>HtmlNodeType.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlParseError.cs">
+      <Link>HtmlParseError.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlParseErrorCode.cs">
+      <Link>HtmlParseErrorCode.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlTextNode.cs">
+      <Link>HtmlTextNode.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlWebException.cs">
+      <Link>HtmlWebException.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\NameValuePair.cs">
+      <Link>NameValuePair.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\NameValuePairList.cs">
+      <Link>NameValuePairList.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\Trace.cs">
+      <Link>Trace.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\Trace.FullFramework.cs">
+      <Link>Trace.FullFramework.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\Utilities.cs">
+      <Link>Utilities.cs</Link>
+    </Compile>
+    <Compile Include="InvalidProgramException.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>del /f /q "$(SolutionDir)..\Nuget\lib\portable-net45+netcore45+wp8+MonoAndroid+MonoTouch\*"
+copy "$(TargetDir)Html*.*" "$(SolutionDir)..\Nuget\lib\portable-net45+netcore45+wp8+MonoAndroid+MonoTouch\"
+del /f /q "$(SolutionDir)..\Nuget\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid+MonoTouch\*"
+copy "$(TargetDir)Html*.*" "$(SolutionDir)..\Nuget\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid+MonoTouch\"</PostBuildEvent>
+  </PropertyGroup>
+</Project>

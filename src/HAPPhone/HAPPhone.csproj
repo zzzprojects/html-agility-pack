@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3DA565DD-55B2-422B-B2AB-64E35F926E93}</ProjectGuid>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HtmlAgilityPack</RootNamespace>
+    <AssemblyName>HtmlAgilityPack</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <TargetFrameworkProfile>WindowsPhone</TargetFrameworkProfile>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>Bin\Debug\HtmlAgilityPack.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>Bin\Release\HtmlAgilityPack.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\HAPLight\HtmlDocumentLoadCompleted.cs">
+      <Link>HtmlDocumentLoadCompleted.cs</Link>
+    </Compile>
+    <Compile Include="..\HAPLight\HtmlWeb.cs">
+      <Link>HtmlWeb.cs</Link>
+    </Compile>
+    <Compile Include="..\HAPLight\SilverlightExtensions.cs">
+      <Link>SilverlightExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\HAPLight\Trace.Silverlight.cs">
+      <Link>Trace.Silverlight.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\crc32.cs">
+      <Link>crc32.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\EncodingFoundException.cs">
+      <Link>EncodingFoundException.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlAttribute.cs">
+      <Link>HtmlAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlAttributeCollection.cs">
+      <Link>HtmlAttributeCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlCommentNode.cs">
+      <Link>HtmlCommentNode.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlDocument.cs">
+      <Link>HtmlDocument.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlElementFlag.cs">
+      <Link>HtmlElementFlag.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlEntity.cs">
+      <Link>HtmlEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlNameTable.cs">
+      <Link>HtmlNameTable.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlNode.cs">
+      <Link>HtmlNode.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlNodeCollection.cs">
+      <Link>HtmlNodeCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlNodeType.cs">
+      <Link>HtmlNodeType.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlParseError.cs">
+      <Link>HtmlParseError.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlParseErrorCode.cs">
+      <Link>HtmlParseErrorCode.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlTextNode.cs">
+      <Link>HtmlTextNode.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlWebException.cs">
+      <Link>HtmlWebException.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\IOLibrary.cs">
+      <Link>IOLibrary.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\MixedCodeDocument.cs">
+      <Link>MixedCodeDocument.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\MixedCodeDocumentCodeFragment.cs">
+      <Link>MixedCodeDocumentCodeFragment.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\MixedCodeDocumentFragment.cs">
+      <Link>MixedCodeDocumentFragment.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\MixedCodeDocumentFragmentList.cs">
+      <Link>MixedCodeDocumentFragmentList.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\MixedCodeDocumentFragmentType.cs">
+      <Link>MixedCodeDocumentFragmentType.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\MixedCodeDocumentTextFragment.cs">
+      <Link>MixedCodeDocumentTextFragment.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\NameValuePair.cs">
+      <Link>NameValuePair.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\NameValuePairList.cs">
+      <Link>NameValuePairList.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\Properties\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\Trace.cs">
+      <Link>Trace.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\Utilities.cs">
+      <Link>Utilities.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions />
+  <PropertyGroup>
+    <PostBuildEvent>del /f /q "$(SolutionDir)..\Nuget\lib\sl3-wp\*"
+copy "$(TargetDir)Html*.*" "$(SolutionDir)..\Nuget\lib\sl3-wp\"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
