@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{AFD07A75-912E-4F74-BE5B-E6F21EE93B03}"
 EndProject
@@ -18,8 +18,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HAPExplorer", "..\HAPExplorer\HAPExplorer.csproj", "{F18CBB28-42E9-4373-8CDF-0B050E1181DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlAgilityPack.Tests", "..\HtmlAgilityPack.Tests\HtmlAgilityPack.Tests.csproj", "{AD049DC9-C2CA-4D87-AAD4-875C004C0EC5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Z.Lab", "Z.Lab\Z.Lab.csproj", "{D91FE27B-ECB6-4EB8-BE3B-E1657C48F498}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -101,18 +99,6 @@ Global
 		{AD049DC9-C2CA-4D87-AAD4-875C004C0EC5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{AD049DC9-C2CA-4D87-AAD4-875C004C0EC5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{AD049DC9-C2CA-4D87-AAD4-875C004C0EC5}.Release|x86.ActiveCfg = Release|Any CPU
-		{D91FE27B-ECB6-4EB8-BE3B-E1657C48F498}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D91FE27B-ECB6-4EB8-BE3B-E1657C48F498}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D91FE27B-ECB6-4EB8-BE3B-E1657C48F498}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{D91FE27B-ECB6-4EB8-BE3B-E1657C48F498}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{D91FE27B-ECB6-4EB8-BE3B-E1657C48F498}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D91FE27B-ECB6-4EB8-BE3B-E1657C48F498}.Debug|x86.Build.0 = Debug|Any CPU
-		{D91FE27B-ECB6-4EB8-BE3B-E1657C48F498}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D91FE27B-ECB6-4EB8-BE3B-E1657C48F498}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D91FE27B-ECB6-4EB8-BE3B-E1657C48F498}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{D91FE27B-ECB6-4EB8-BE3B-E1657C48F498}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{D91FE27B-ECB6-4EB8-BE3B-E1657C48F498}.Release|x86.ActiveCfg = Release|Any CPU
-		{D91FE27B-ECB6-4EB8-BE3B-E1657C48F498}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
