@@ -1,0 +1,11 @@
+[Bb]in/
+[Oo]bj/
+[Pp]ackages/
+Z.Expressions.Eval.NET40/
+Z.Lab/
+*.suo
+*.user
+*.userprefs
+_ReSharper.*
+*.ReSharper.user
+*.resharper.user 
