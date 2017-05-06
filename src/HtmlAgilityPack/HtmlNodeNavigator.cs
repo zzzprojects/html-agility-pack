@@ -129,6 +129,7 @@ namespace HtmlAgilityPack
             Reset();
         }
 
+#if !NETSTANDARD
         /// <summary>
         /// Initializes a new instance of the HtmlNavigator and loads an HTML document from a file.
         /// </summary>
@@ -185,10 +186,10 @@ namespace HtmlAgilityPack
             _doc.Load(path, encoding, detectEncodingFromByteOrderMarks, buffersize);
             Reset();
         }
+#endif
+#endregion
 
-        #endregion
-
-        #region Properties
+#region Properties
 
         /// <summary>
         /// Gets the base URI for the current node.
@@ -414,9 +415,9 @@ namespace HtmlAgilityPack
             }
         }
 
-        #endregion
+#endregion
 
-        #region Public Methods
+#region Public Methods
 
         /// <summary>
         /// Creates a new HtmlNavigator positioned at the same node as this HtmlNavigator.
@@ -709,9 +710,9 @@ namespace HtmlAgilityPack
             InternalTrace(null);
         }
 
-        #endregion
+#endregion
 
-        #region Internal Methods
+#region Internal Methods
 
         [Conditional("TRACE")]
         internal void InternalTrace(object traceValue)
@@ -720,8 +721,13 @@ namespace HtmlAgilityPack
             {
                 return;
             }
+
+#if !NETSTANDARD
             StackFrame sf = new StackFrame(1);
             string name = sf.GetMethod().Name;
+#else
+            string name = "";
+#endif
             string nodename = _currentnode == null ? "(null)" : _currentnode.Name;
             string nodevalue;
             if (_currentnode == null)
@@ -753,9 +759,9 @@ namespace HtmlAgilityPack
             HtmlAgilityPack.Trace.WriteLine(string.Format("oid={0},n={1},a={2},v={3},{4}", GetHashCode(), nodename, _attindex, nodevalue, traceValue), "N!" + name);
         }
 
-        #endregion
+#endregion
 
-        #region Private Methods
+#region Private Methods
 
         private void Reset()
         {
@@ -764,6 +770,6 @@ namespace HtmlAgilityPack
             _attindex = -1;
         }
 
-        #endregion
+#endregion
     }
 }

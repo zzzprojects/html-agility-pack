@@ -152,10 +152,10 @@ namespace HtmlAgilityPack
 		public HtmlDocument()
 		{
 			_documentnode = CreateNode(HtmlNodeType.Document, 0);
-#if SILVERLIGHT || METRO
-            OptionDefaultStreamEncoding =Encoding.UTF8;
+#if SILVERLIGHT || METRO || NETSTANDARD
+            OptionDefaultStreamEncoding = Encoding.UTF8;
 #else
-			OptionDefaultStreamEncoding = Encoding.Default;
+            OptionDefaultStreamEncoding = Encoding.Default;
 #endif
 
 		}
@@ -1686,7 +1686,7 @@ namespace HtmlAgilityPack
 
 					if (_streamencoding != null)
 					{
-#if SILVERLIGHT || PocketPC || METRO
+#if SILVERLIGHT || PocketPC || METRO || NETSTANDARD
 						if (_declaredencoding.WebName != _streamencoding.WebName)
 #else
 						if (_declaredencoding != null)

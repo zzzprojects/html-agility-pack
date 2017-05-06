@@ -1,4 +1,6 @@
 // HtmlAgilityPack V1.0 - Simon Mourier <simon underscore mourier at hotmail dot com>
+
+#if !NETSTANDARD
 using System;
 using System.Diagnostics;
 
@@ -6,7 +8,7 @@ namespace HtmlAgilityPack
 {
     internal class HtmlConsoleListener : TraceListener
     {
-        #region Public Methods
+#region Public Methods
 
         public override void Write(string Message)
         {
@@ -28,6 +30,7 @@ namespace HtmlAgilityPack
             Write(Message + "\n", Category);
         }
 
-        #endregion
+#endregion
     }
 }
+#endif

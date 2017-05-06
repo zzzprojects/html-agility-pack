@@ -6,13 +6,13 @@ namespace HtmlAgilityPack
     /// </summary>
     public class MixedCodeDocumentCodeFragment : MixedCodeDocumentFragment
     {
-        #region Fields
+#region Fields
 
         private string _code;
 
-        #endregion
+#endregion
 
-        #region Constructors
+#region Constructors
 
         internal MixedCodeDocumentCodeFragment(MixedCodeDocument doc)
             :
@@ -20,9 +20,9 @@ namespace HtmlAgilityPack
         {
         }
 
-        #endregion
+#endregion
 
-        #region Properties
+#region Properties
 
         /// <summary>
         /// Gets the fragment code text.
@@ -46,6 +46,6 @@ namespace HtmlAgilityPack
             set { _code = value; }
         }
 
-        #endregion
+#endregion
     }
 }

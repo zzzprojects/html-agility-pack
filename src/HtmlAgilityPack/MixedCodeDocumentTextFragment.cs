@@ -6,7 +6,7 @@ namespace HtmlAgilityPack
     /// </summary>
     public class MixedCodeDocumentTextFragment : MixedCodeDocumentFragment
     {
-        #region Constructors
+#region Constructors
 
         internal MixedCodeDocumentTextFragment(MixedCodeDocument doc)
             :
@@ -14,9 +14,9 @@ namespace HtmlAgilityPack
         {
         }
 
-        #endregion
+#endregion
 
-        #region Properties
+#region Properties
 
         /// <summary>
         /// Gets the fragment text.
@@ -27,6 +27,6 @@ namespace HtmlAgilityPack
             set { FragmentText = value; }
         }
 
-        #endregion
+#endregion
     }
 }

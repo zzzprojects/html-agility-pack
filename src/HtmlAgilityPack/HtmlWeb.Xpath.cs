@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !NETSTANDARD
+using System;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
@@ -119,3 +120,4 @@ namespace HtmlAgilityPack
 
     }
 }
+#endif

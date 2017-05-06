@@ -1,6 +1,8 @@
 // HtmlAgilityPack V1.0 - Simon Mourier <simon underscore mourier at hotmail dot com>
 using System;
 
+#if !NETSTANDARD1_3
+
 namespace HtmlAgilityPack
 {
     internal class HtmlCmdLine
@@ -140,3 +142,4 @@ namespace HtmlAgilityPack
         #endregion
     }
 }
+#endif

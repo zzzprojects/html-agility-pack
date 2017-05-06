@@ -6,7 +6,7 @@ namespace HtmlAgilityPack
     /// </summary>
     public abstract class MixedCodeDocumentFragment
     {
-        #region Fields
+#region Fields
 
         internal MixedCodeDocument Doc;
         private string _fragmentText;
@@ -16,9 +16,9 @@ namespace HtmlAgilityPack
         internal int _lineposition;
         internal MixedCodeDocumentFragmentType _type;
 
-        #endregion
+#endregion
 
-        #region Constructors
+#region Constructors
 
         internal MixedCodeDocumentFragment(MixedCodeDocument doc, MixedCodeDocumentFragmentType type)
         {
@@ -37,9 +37,9 @@ namespace HtmlAgilityPack
             Doc._fragments.Append(this);
         }
 
-        #endregion
+#endregion
 
-        #region Properties
+#region Properties
 
         /// <summary>
         /// Gets the fragement text.
@@ -90,6 +90,6 @@ namespace HtmlAgilityPack
             get { return Index; }
         }
 
-        #endregion
+#endregion
     }
 }
