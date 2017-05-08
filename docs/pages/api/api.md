@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Dapper - API
+title: HAP - API
 permalink: api
 ---
 
