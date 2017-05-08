@@ -239,16 +239,18 @@ header {
 								<div class="example-box">
 								<div class="example-box-header"><span class="heading">C# HTML Parser Examples</span></div>
 <pre>
-<span class="code-green">// Easy to use</span>
-context.BulkSaveChanges();
+<span class="code-green">// From File</span>
+var htmlDoc = new HtmlDocument();
+html.Load(filePath);
 
-<span class="code-green">// Easy to customize</span>
-context.BulkSaveChanges(bulk => bulk.BatchSize = 100);
+<span class="code-green">// From String</span>
+var htmlDoc = new HtmlDocument();
+htmlDoc.LoadHtml(html);
 
-<span class="code-green">// Perform Bulk Operations</span>
-context.BulkDelete(customers);
-context.BulkInsert(customers);
-context.BulkUpdate(customers);</pre>
+<span class="code-green">// From Web</span>
+string url = "http://html-agility-pack.net/";
+HtmlWeb web = new HtmlWeb();
+HtmlDocument document = web.Load("url");</pre>
 								</div>
 							</div>
 						</div>
@@ -490,16 +492,18 @@ header .arrow-rtl img {
 						<div class="example-box">
 							<div class="example-box-header"><span class="language">C#</span><span class="heading">HTML Parser Examples</span></div>
 <pre>
-<span class="code-green">// Easy to use</span>
-context.BulkSaveChanges();
+<span class="code-green">// From File</span>
+var htmlDoc = new HtmlDocument();
+html.Load(filePath);
 
-<span class="code-green">// Easy to customize</span>
-context.BulkSaveChanges(bulk => bulk.BatchSize = 100);
+<span class="code-green">// From String</span>
+var htmlDoc = new HtmlDocument();
+htmlDoc.LoadHtml(html);
 
-<span class="code-green">// Customize Primary Key</span>
-context.BulkMerge(customers, operation => {
-   operation.ColumnPrimaryKeyExpression = 
-		customer => customer.Code;</pre>
+<span class="code-green">// From Web</span>
+string url = "http://html-agility-pack.net/";
+HtmlWeb web = new HtmlWeb();
+HtmlDocument document = web.Load("url");</pre>
 					
 						</div>
 					</div>
