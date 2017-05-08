@@ -27,9 +27,9 @@ src="//pagead2.googlesyndication.com/pagead/show_ads.js">
 			<h2 class="display-4">API</h2>
 			<p class="lead">Application Program Interface</p>
 			<hr class="my-4">
-			<p>Start learning the common API of Dapper, and everything around it.</p>
+			<p>Start learning the common API of HAP, and everything around it.</p>
 			<p class="lead">
-				<a class="btn btn-primary btn-lg" href="dapper" role="button">Learn more</a>
+				<a class="btn btn-primary btn-lg" href="api" role="button">Learn more</a>
 			</p>
 		</div>
 	</div>
