@@ -46,7 +46,7 @@ header {
 	padding-bottom: 30px;
 }
 </style>
-
+   <body>
 	<header>
 	
 		<!-- navbar !-->
@@ -842,4 +842,5 @@ jQuery(window).scroll(function(){
     setScrolled();
 });
 </script>
+</body>
 </html>
