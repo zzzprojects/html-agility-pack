@@ -1,10 +1,12 @@
 ---
 layout: default
-title: Dapper - FAQ
+title: FAQ
 permalink: faq
 ---
 
 {% include template-h1.html %}
+
+_Soon availaible_
 
 <ul>
 {% for num in (0..site.data.pages.size) %}	

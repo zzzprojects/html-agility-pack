@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Dapper - API
-permalink: api
+title: Elements
+permalink: elements
 ---
 
 {% include template-h1.html %}

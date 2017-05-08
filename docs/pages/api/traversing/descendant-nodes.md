@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Dapper - API
-permalink: api
+title: DescendantNodes
+permalink: descendant-nodes
 ---
 
 {% include template-h1.html %}

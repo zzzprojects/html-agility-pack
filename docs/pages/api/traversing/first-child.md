@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Dapper - API
-permalink: api
+title: First Child
+permalink: first-child
 ---
 
 {% include template-h1.html %}

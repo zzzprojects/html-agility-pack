@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Dapper - API
-permalink: api
+title: Ancestors
+permalink: ancestors
 ---
 
 {% include template-h1.html %}
