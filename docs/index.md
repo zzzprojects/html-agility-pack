@@ -10,9 +10,9 @@ layout: post
 		<meta name="msvalidate.01" content="89359D9C492A475C0061398008D105FB" />
 		
 		<!-- seo !-->
-		<meta name="description" content="Extend and Overcome Entity Framework Limitations with Must-Have Features">
-		<meta name="keywords" content="BulkSaveChanges, BulkInsert, BulkUpdate, BulkDelete, BulkMerge, Query Cache, Query Filter, Query Future, Query IncludeFilter, Audit">
-		<title>EF Must-Have Features | Bulk Operations | Batch Delete | Batch Update | Query Cache | Query Filter | Query Future | Query Include | Audit</title>
+		<meta name="description" content="Html Agility Pack | HAP">
+		<meta name="keywords" content="">
+		<title>Html Agility Pack | HAP</title>
 		
 		<!-- icon/css !-->
 		<link rel="icon" type="image/png" href="images/logo.png">
