@@ -260,7 +260,7 @@ HtmlDocument document = web.Load("url");</pre>
 							<!-- example 2 !-->
 							<div class="col-lg-3 push-lg-9">
 								<div class="example-header">USE <br class="hidden-md-down" />SELECTORS, <br class="hidden-md-down" />TRAVERSORS, <br class="hidden-md-down" />MANIPULATORS, <br class="hidden-md-down" />& MORE</div>
-								<div class="arrow-rtl hidden-md-down"><img src="images/arrow-1.png" width="100px;" /></div>
+								<div class="arrow-rtl hidden-md-down"><img src="images/arrow-1-inverse.png" width="100px;" /></div>
 							</div>
 							<div class="col-lg-9 pull-lg-3">
 								<div class="example-box">
@@ -347,11 +347,9 @@ header .arrow-ltr {
 	text-align: right;
 }
 header .arrow-ltr img {
-	image-orientation: 180deg; 
 	width: 60px;
 }
 header .arrow-rtl img {
-	image-orientation: 180deg flip; 
 	width: 60px;
 }
 .hero-examples .row {
