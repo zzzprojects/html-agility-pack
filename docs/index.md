@@ -77,9 +77,9 @@ header {
 						<li class="nav-item">
 							<a class="nav-link" href="https://github.com/zzzprojects/html-agility-pack">GitHub</a>
 						</li>
-						<li class="nav-item">
+						<!--<li class="nav-item">
 							<a class="nav-link" href="mailto:info@zzzprojects.com">Contact</a>
-						</li>
+						</li>!-->
 						<li class="nav-item nav-item-download">
 							<a class="btn btn-danger btn-lg btn-download2" href="https://www.nuget.org/packages/HtmlAgilityPack/" target="_blank" role="button" onclick="ga('send', 'event', { eventAction: 'download'});"><i class="fa fa-cloud-download"></i>&nbsp;DOWNLOAD v1.4.9</a>
 						</li>
