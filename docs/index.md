@@ -549,7 +549,7 @@ var nodes = htmlDoc.DocumentNode.Descendants("input")
 				</div>
 
 				<!-- splitter !-->
-				<div class="text-center featue-arrow"><img src="images/arrow-pointing.png" class="img-inverse" /></div>
+				<div class="text-center featue-arrow"><img src="images/arrow-pointing-inverse.png" /></div>
 
 
 				<!-- feature 3 !-->
