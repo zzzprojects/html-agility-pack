@@ -702,10 +702,11 @@ image-orientation: flip;
 						</ul>
 					</div>
 					<div class="col-lg-3">
-						<h3>Bulk Operations</h3>
+						<h3>Performance</h3>
 						<ul>
 							<li><a href="http://bulk-operations.net/" target="_blank">Bulk Operations</a></li>
 							<li><a href="http://dapper-plus.net/" target="_blank">Dapper Plus</a></li>
+							<li><a href="http://dapper-tutorial.net/" target="_blank">Dapper Tutorial</a></li>
 						</ul>
 					</div>
 					<div class="col-lg-3">
