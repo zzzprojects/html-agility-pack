@@ -480,9 +480,9 @@ header .arrow-rtl img {
 						<h3>HTML<span class="text-red"> Parser</span></h3>
 						<p>Load and parse HTML</p>
 						<ul>
-							<li><a href="#">From File</a></li>
-							<li><a href="#">From String</a></li>
-							<li><a href="#">From Web</a></li>				
+							<li><a href="http://html-agility-pack.net/parser">From File</a></li>
+							<li><a href="http://html-agility-pack.net/parser">From String</a></li>
+							<li><a href="http://html-agility-pack.net/parser">From Web</a></li>				
 						</ul>
 						
 						<div><a href="parser" type="button" class="btn btn-primary">Html Parser Tutorials</a></div>
@@ -518,10 +518,10 @@ HtmlDocument document = web.Load("url");</pre>
 						<h3 style="padding-left: 10px;">HTML<span class="text-red"> Selectors</span></h3>
 						<p>Select HtmlNode, Element, and Attributes:</p>
 						<ul>
-							<li><a href="#">XPATH</a></li>
-							<li><a href="#">CSS <i>Coming Soon</i></a></li>		
-							<li><a href="#">XDocument</a></li>
-							<li><a href="#">LINQ</a></li>							
+							<li><a href="http://html-agility-pack.net/selectors">XPATH</a></li>
+							<li><a href="http://html-agility-pack.net/selectors">CSS <i>Coming Soon</i></a></li>		
+							<li><a href="http://html-agility-pack.net/selectors">XDocument</a></li>
+							<li><a href="http://html-agility-pack.net/selectors">LINQ</a></li>							
 						</ul>
 						
 						<div><a href="selectors"  type="button" class="btn btn-primary">HTML Selectors Tutorials</a></div>
@@ -559,10 +559,10 @@ var nodes = htmlDoc.DocumentNode.Descendants("input")
 						<h3>HTML<span class="text-red"> Manipulation</span></h3>
 						<p>Manipulate HtmlNode, Element, and Attributes:</p>
 						<ul>
-							<li><a href="#">AppendChild</a></li>
-							<li><a href="#">CreateNode</a></li>
-							<li><a href="#">InsertAfert</a></li>				
-							<li><a href="#">PreprendChild</a></li>
+							<li><a href="http://html-agility-pack.net/manipulation">AppendChild</a></li>
+							<li><a href="http://html-agility-pack.net/manipulation">CreateNode</a></li>
+							<li><a href="http://html-agility-pack.net/manipulation">InsertAfert</a></li>				
+							<li><a href="http://html-agility-pack.net/manipulation">PreprendChild</a></li>
 						</ul>
 						
 						<div><a href="manipulation" type="button" class="btn btn-primary">HTML Manipulation Tutorials</a></div>
@@ -595,9 +595,9 @@ var innerText = htmlDoc.DocumentNode.InnerText;</pre>
 						<h3>HTML<span class="text-red"> Traversing</span></h3>
 						<p>Traverse HtmlNode, Element, and Attributes:</p>
 						<ul>
-							<li><a href="#">ChildNodes</a></li>
-							<li><a href="#">Descendants()</a></li>
-							<li><a href="#">Elements()</a></li>
+							<li><a href="http://html-agility-pack.net/traversing">ChildNodes</a></li>
+							<li><a href="http://html-agility-pack.net/traversing">Descendants()</a></li>
+							<li><a href="http://html-agility-pack.net/traversing">Elements()</a></li>
 						</ul>		
 
 						<div><a href="traversing" type="button" class="btn btn-primary">HTML Traversing Tutorials</a></div>			
