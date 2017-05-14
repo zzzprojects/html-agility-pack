@@ -1,3 +1,6 @@
+# What's Html Agility Pack (HAP)?
+This is an agile HTML parser that builds a read/write DOM and supports plain XPATH or XSLT (you actually don't HAVE to understand XPATH nor XSLT to use it, don't worry...). It is a .NET code library that allows you to parse "out of the web" HTML files. The parser is very tolerant with "real world" malformed HTML. The object model is very similar to what proposes System.Xml, but for HTML documents (or streams).
+
 ## Stack Overflow Support
 Have a question? Ask questions and find answers from over 2500 questions.
 
@@ -20,14 +23,10 @@ If you have question or issue not caused by a new release, please use [Stack Ove
 
 We plan to start to provide support starting on 2017-07-01
 
-
 ## Roadmap
 
 1. Support .NET Standard (_In Progress_)
-2. Add Website (_In Progress_)
-3. Add Website Documentation
-4. Clean Code && Comment
-5. Support CSS Selector
-
-## What's Html Agility Pack (HAP)?
-This is an agile HTML parser that builds a read/write DOM and supports plain XPATH or XSLT (you actually don't HAVE to understand XPATH nor XSLT to use it, don't worry...). It is a .NET code library that allows you to parse "out of the web" HTML files. The parser is very tolerant with "real world" malformed HTML. The object model is very similar to what proposes System.Xml, but for HTML documents (or streams).
+2. Add Website (Completed)
+3. Add Website Documentation (_In Progress_)
+4. Support CSS Selector
+5. Clean Code && Comment
