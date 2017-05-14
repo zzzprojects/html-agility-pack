@@ -38,9 +38,11 @@ layout: post
 
 <style>
 header {
-	background: #333; /* For browsers that do not support gradients */
+	background: #333;
+	background: -webkit-radial-gradient(circle, #333, #222, #111);
+	background: -o-radial-gradient(circle, #333, #222, #111);
 	background: -moz-radial-gradient(circle, #333, #222, #111);
-	background: radial-gradient(circle, #333, #222, #111); /* Standard syntax */
+	background: radial-gradient(circle, #333, #222, #111);
 	color: #fff;
 	min-height: 800px;
 	padding-bottom: 30px;
@@ -725,15 +727,17 @@ image-orientation: flip;
 		</div>
 		
 		<footer>
-			<div class="container text-center-md-down">
+			<div class="container">
 				<div class="row">
-					<div class="col-lg-6">
-						Copyright &copy; <a href="http://www.zzzprojects.com/" target="_blank" class="text-bold">ZZZ Projects Inc.</a> 2014 - 2017
+					<div class="col-lg-6 text-center text-lg-left">
+						Copyright &copy; <a href="http://www.zzzprojects.com/" class="text-bold">ZZZ Projects Inc.</a> 2014 - 2017
 						<div class="hidden-lg-up"></div>
 						All rights reserved
 					</div>
-					<hr class="hidden-lg-up">
-					<div class="col-lg-6 text-right-lg-up social">
+					
+					<hr class="col-lg-6 hidden-lg-up">
+					
+					<div class="col-lg-6 text-lg-right text-center social">
 						<a href="https://www.facebook.com/zzzprojects" target="_blank"><i class="fa fa-facebook"></i></a>
 						<a href="https://twitter.com/zzzprojects" target="_blank"><i class="fa fa-twitter"></i></a>
 						<a href="https://plus.google.com/+Zzzprojects_NetSQL" target="_blank"><i class="fa fa-google-plus"></i></a>
@@ -742,6 +746,7 @@ image-orientation: flip;
 				</div>
 			</div>
 		</footer>
+
 		
 <style>
 #product {
