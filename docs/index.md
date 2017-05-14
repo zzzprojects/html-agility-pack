@@ -434,7 +434,7 @@ header .arrow-rtl img {
 							<a href="https://github.com/zzzprojects/html-agility-pack/issues"><i class="fa fa-users fa-5x"></i></a>
 							<div class="card-block">
 								<p class="card-text">Found a bug? Have suggestion? Report it and get support from our professional team.</p>
-								<a href="https://github.com/zzzprojects/html-agility-pack/issues">Issue</a>
+								<a href="https://github.com/zzzprojects/html-agility-pack/issues">Issues</a>
 							</div>
 						</div>
 						
