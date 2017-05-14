@@ -16,9 +16,6 @@ Found a bug? Have suggestion? Report it and get support from our professional te
 
 [Issues](https://github.com/zzzprojects/html-agility-pack/issues)
 
-## Support
-If you have question or issue not caused by a new release, please use [Stack Overflow] (http://stackoverflow.com/questions/tagged/html-agility-pack)
-
 **ZZZ Projects** is the new home of Html Agility Pack since 2017-05-01. We do not plan to provide support by mail or on GitHub until the online documentation is completed.
 
 We plan to start to provide support starting on 2017-07-01
