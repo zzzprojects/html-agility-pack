@@ -210,7 +210,7 @@ header {
 							</h1>
 							
 							<!-- download !-->
-							<div><a type="button" class="btn btn-danger btn-hero-download">NuGet Download</a></div>
+							<div><a type="button" class="btn btn-danger btn-hero-download" href="https://www.nuget.org/packages/HtmlAgilityPack/" target="_blank">NuGet Download</a></div>
 							<div class="download-count-text">Download Count:</div>
 							<div class="download-count">
 								<span>3</span>
