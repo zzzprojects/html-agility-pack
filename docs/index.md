@@ -712,8 +712,8 @@ image-orientation: flip;
 					<div class="col-lg-3">
 						<h3>Expression Evaluator</h3>
 						<ul>
-							<li><a href="http://eval-sql.net/" target="_blank">Eval SQL.NET</a></li>
-							<li><a href="http://eval-expression.net/" target="_blank">Eval Expression.NET</a></li>
+							<li><a href="http://eval-expression.net/" target="_blank">C# Eval Function()</a></li>
+							<li><a href="http://eval-sql.net/" target="_blank">SQL Eval Function()</a></li>
 						</ul>
 					</div>
 					<div class="col-lg-3">
