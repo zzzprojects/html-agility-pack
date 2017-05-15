@@ -8,11 +8,25 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.5</TargetFramework>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>HtmlAgilityPack.snk</AssemblyOriginatorKeyFile>
+    <AssemblyName>HtmlAgilityPack</AssemblyName>
+    <Version>1.5.0</Version>
+    <Copyright>Copyright © ZZZ Projects Inc. 2014 - 2017</Copyright>
+    <Company>ZZZ Projects Inc.</Company>
+    <Product>Html Agility Pack</Product>
+    <Description />
+    <PostBuildEvent>del /f /q $(SolutionDir)..\Nuget\lib\NetStandard1_6\*
+copy "$(TargetDir)Html*.*" $(SolutionDir)..\Nuget\lib\NetStandard1_6\*</PostBuildEvent>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD1_6</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE;RELEASE;NETSTANDARD;NETSTANDARD1_6</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

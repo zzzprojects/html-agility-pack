@@ -16,8 +16,9 @@ namespace HtmlAgilityPack.Tests
 		[OneTimeSetUp]
 		public void Setup()
 		{
-			_contentDirectory = Path.Combine(Directory.GetCurrentDirectory(), @"..\HtmlAgilityPack.Tests\files\");
-		}
+            //_contentDirectory = Path.Combine(Environment.CurrentDirectory, @"..\HtmlAgilityPack.Tests\files\");
+		    _contentDirectory = Path.Combine(@"C:\Users\Jonathan\Desktop\Z\zzzproject\HtmlAgilityPack\HtmlAgilityPack.Tests\bin\Debug\files\");
+        }
 
 		private HtmlDocument GetMshomeDocument()
 		{
