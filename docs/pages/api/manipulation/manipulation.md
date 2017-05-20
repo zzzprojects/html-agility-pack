@@ -12,18 +12,18 @@ Traversing allow you to traverse through HTML node.
 
 | Name | Description |
 | :--- | :---------- |
-| InnerHtml | Gets or Sets the HTML between the start and end tags of the object. |
-| InnerText | Gets or Sets the text between the start and end tags of the object. | 
-| OuterHtml | Gets or Sets the object and its content in HTML. |
-| ParentNode | Gets the parent of this node (for nodes that can have parents). |
+| [InnerHtml](inner-html) | Gets or Sets the HTML between the start and end tags of the object. |
+| [InnerText](inner-text) | Gets the text between the start and end tags of the object. | 
+| [OuterHtml](outer-html) | Gets the object and its content in HTML. |
+| [ParentNode](parent-node) | Gets the parent of this node (for nodes that can have parents). |
 
 
 ## Methods
 
 | Name | Description |
 | :--- | :---------- |
-| AppendChild() | Adds the specified node to the end of the list of children of this node. |
-| AppendChildren() | Adds the specified node to the end of the list of children of this node. |
+| [AppendChild()](append-child) | Adds the specified node to the end of the list of children of this node. |
+| [AppendChildren()](append-children) | Adds the specified node to the end of the list of children of this node. |
 | Clone() | Creates a duplicate of the node |
 | CloneNode(Boolean) | Creates a duplicate of the node. |
 | CloneNode(String) | Creates a duplicate of the node and changes its name at the same time. |
@@ -38,8 +38,6 @@ Traversing allow you to traverse through HTML node.
 | Remove | Removes node from parent collection |
 | RemoveAll | Removes all the children and/or attributes of the current node. |
 | RemoveAllChildren | Removes all the children of the current node. |
-| RemoveChild(HtmlNode) | Removes the specified child node. |
-| RemoveChild(HtmlNode, Boolean) | Removes the specified child node. |
+| [RemoveChild(HtmlNode)](remove-child) | Removes the specified child node. |
+| [RemoveChild(HtmlNode, Boolean)](remove-child#removechildhtmlnode-oldchild-bool-keepgrandchildren) | Removes the specified child node. |
 | ReplaceChild() | Replaces the child node oldChild with newChild node. |
-| RemoveChild(HtmlNode, Boolean) | Removes the specified child node.  |
-| RemoveChild(HtmlNode, Boolean) | Removes the specified child node.  |
