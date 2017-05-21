@@ -13,8 +13,14 @@ namespace HtmlAgilityPack
 	/// </summary>
 	public partial class HtmlDocument
 	{
+        #region Manager
+
+	    public static bool DisableBehavaiorTagP;
+
+        #endregion
+
         #region Fields
-        
+
         /// <summary>
         /// Defines the max level we would go deep into the html document
         /// </summary>

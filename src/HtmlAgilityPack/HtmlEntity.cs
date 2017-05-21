@@ -771,7 +771,9 @@ namespace HtmlAgilityPack
                 if ((code > 127) ||
                     (entitizeQuotAmpAndLtGt && ((code == 34) || (code == 38) || (code == 60) || (code == 62))))
                 {
-                    string entity = _entityName[code] as string;
+                    string entity;
+                    EntityName.TryGetValue(code, out entity);
+
                     if ((entity == null) || (!useNames))
                     {
                         sb.Append("&#" + code + ";");

@@ -115,7 +115,11 @@ namespace HtmlAgilityPack
 			// <p>bla<p>bla will be transformed into <p>bla<p>bla and not <p>bla></p><p>bla</p> or <p>bla<p>bla</p></p>
 			//<br> see above
 			ElementsFlags.Add("br", HtmlElementFlag.Empty | HtmlElementFlag.Closed);
-			ElementsFlags.Add("p", HtmlElementFlag.Empty | HtmlElementFlag.Closed);
+
+		    if (!HtmlDocument.DisableBehavaiorTagP)
+		    {
+		        ElementsFlags.Add("p", HtmlElementFlag.Empty | HtmlElementFlag.Closed);
+            }
 		}
 
 		/// <summary>

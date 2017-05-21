@@ -7,13 +7,13 @@ namespace HtmlAgilityPack
 {
     internal class HtmlCmdLine
     {
-#region Static Members
+        #region Static Members
 
         internal static bool Help;
 
-#endregion
+        #endregion
 
-#region Constructors
+        #region Constructors
 
         static HtmlCmdLine()
         {
@@ -21,9 +21,9 @@ namespace HtmlAgilityPack
             ParseArgs();
         }
 
-#endregion
+        #endregion
 
-#region Internal Methods
+        #region Internal Methods
 
         internal static string GetOption(string name, string def)
         {
@@ -77,9 +77,9 @@ namespace HtmlAgilityPack
             return p;
         }
 
-#endregion
+        #endregion
 
-#region Private Methods
+        #region Private Methods
 
         private static void GetBoolArg(string Arg, string Name, ref bool ArgValue)
         {
