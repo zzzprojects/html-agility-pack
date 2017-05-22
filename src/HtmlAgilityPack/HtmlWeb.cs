@@ -1521,6 +1521,7 @@ namespace HtmlAgilityPack
             _responseUri = resp.ResponseUri;
 
             bool html = IsHtmlContent(resp.ContentType);
+            bool isUnknown = string.IsNullOrEmpty(resp.ContentType);
 
             Encoding respenc = !string.IsNullOrEmpty(resp.ContentEncoding)
                 ? Encoding.GetEncoding(resp.ContentEncoding)
@@ -1574,6 +1575,26 @@ namespace HtmlAgilityPack
                         else
                         {
                             doc.Load(s, respenc);
+                        }
+                    }
+
+                    if (doc != null && isUnknown)
+                    {
+                        try
+                        {
+                            if (respenc == null)
+                            {
+                                doc.Load(s, true);
+                            }
+                            else
+                            {
+                                doc.Load(s, respenc);
+                            }
+                        }
+                        catch
+                        {
+                            // That’s fine, the content type was unknown so probably not HTML
+                            // Perhaps trying to figure if the content contains some HTML before would be a better idea.
                         }
                     }
                 }
