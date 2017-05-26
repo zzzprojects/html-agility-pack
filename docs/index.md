@@ -503,7 +503,7 @@ htmlDoc.LoadHtml(html);
 <span class="code-green">// From Web</span>
 string url = "http://html-agility-pack.net/";
 HtmlWeb web = new HtmlWeb();
-HtmlDocument document = web.Load("url");</pre>
+HtmlDocument document = web.Load(url);</pre>
 					
 						</div>
 					</div>
