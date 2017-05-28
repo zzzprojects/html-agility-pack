@@ -6,9 +6,9 @@ permalink: remove-child
 
 {% include template-h1.html %}
 
-## RemoveChild(HtmlNode oldChild) 
+## public HtmlNode RemoveChild(HtmlNode oldChild) 
 
-Removes the specified child node.
+Removes the specified child node. RemoveChild method is a member of **HtmlAgilityPack.HtmlNode**
 
 ### Parameters:
 
@@ -20,7 +20,7 @@ The node removed.
 
 ### Examples
 
-The following example remove the first child Node.
+The following example remove the child Node h1.
 
 {% highlight csharp %}
 
@@ -28,20 +28,19 @@ var htmlDoc = new HtmlDocument();
 
 htmlDoc.LoadHtml(html);
 
-var htmlNodes = htmlDoc.DocumentNode.SelectNodes("//body");
+var htmlBody = htmlDoc.DocumentNode.SelectSingleNode("//body");
 
-foreach (var node in htmlNodes)
-{
-    HtmlNodeCollection childNodes = node.ChildNodes;
+HtmlNode node = htmlBody.ChildNodes[1];
 
-    node.RemoveChild(childNodes[0]);
-}
+htmlBody.RemoveChild(node);
 
 {% endhighlight %}
 
-## RemoveChild(HtmlNode oldChild, bool keepGrandChildren) 
+Click [here](https://dotnetfiddle.net/TSNTHW) to run this example.
 
-Removes the specified child node.
+## public HtmlNode RemoveChild(HtmlNode oldChild, bool keepGrandChildren) 
+
+Removes the specified child node. RemoveChild method is a member of **HtmlAgilityPack.HtmlNode**
 
 ### Parameters:
 
@@ -55,7 +54,7 @@ The node removed.
 
 ### Examples
 
-The following example remove the first child Node and also its grandchildren nodes.
+The following example remove the child node but will keep grand child node.
 
 {% highlight csharp %}
 
@@ -63,13 +62,12 @@ var htmlDoc = new HtmlDocument();
 
 htmlDoc.LoadHtml(html);
 
-var htmlNodes = htmlDoc.DocumentNode.SelectNodes("//body");
+var htmlBody = htmlDoc.DocumentNode.SelectSingleNode("//body");
 
-foreach (var node in htmlNodes)
-{
-    HtmlNodeCollection childNodes = node.ChildNodes;
+HtmlNode node = htmlBody.ChildNodes[1];
 
-    node.RemoveChild(childNodes[0], false);
-}
+htmlBody.RemoveChild(node, true);
 
 {% endhighlight %}
+
+Click [here](https://dotnetfiddle.net/bSWNON) to run this example.

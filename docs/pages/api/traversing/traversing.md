@@ -12,18 +12,18 @@ Traversing allow you to traverse through HTML node.
 
 | Name | Description |
 | :--- | :---------- |
-| ChildNodes | Gets all the children of the node. |
-| FirstChild | Gets the first child of the node. | 
-| LastChild | Gets the last child of the node. |
-| ParentNode | Gets the parent of this node (for nodes that can have parents). |
+| [ChildNodes](child-nodes) | Gets all the children of the node. |
+| [FirstChild](first-child) | Gets the first child of the node. | 
+| [LastChild](last-child) | Gets the last child of the node. |
+| [ParentNode](parent-node) | Gets the parent of this node (for nodes that can have parents). |
 
 
 ## Methods
 
 | Name | Description |
 | :--- | :---------- |
-| Ancestors() | Gets all the children of the node. |
-| Ancestors(String) | Gets the parent of this node (for nodes that can have parents). |
+| [Ancestors()](ancestors) | Gets all the ancestor of the node.  |
+| [Ancestors(String)](ancestors#public-ienumerable--htmlnode--ancestorsstring-name) | Gets ancestors with matching name. |
 | AncestorsAndSelf() | Returns a collection of all ancestor nodes of this element. |
 | AncestorsAndSelf(String) | Gets all anscestor nodes and the current node |
 | DescendantNodes | Gets all Descendant nodes for this node and each of child nodes |

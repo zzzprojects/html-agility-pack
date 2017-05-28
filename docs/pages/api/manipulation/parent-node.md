@@ -6,7 +6,7 @@ permalink: parent-node
 
 {% include template-h1.html %}
 
-## public HtmlAgilityPack.HtmlNode ParentNode { get; }
+## public HtmlNode ParentNode { get; }
 
 Gets the parent of this node (for nodes that can have parents). ParentNode is a member of **HtmlAgilityPack.HtmlNode**
 
@@ -19,9 +19,9 @@ htmlDoc.LoadHtml(html);
 
 var node = htmlDoc.DocumentNode.SelectSingleNode("//body/h1");
 
-HtmlNode pareNode = node.ParentNode;
+HtmlNode parentNode = node.ParentNode;
 
-Console.WriteLine(pareNode.Name);
+Console.WriteLine(parentNode.Name);
 
 {% endhighlight %}
 
