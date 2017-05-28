@@ -136,9 +136,9 @@ header .overflow-y {
 			<div class="col-lg-7">
 				<div style="background-color: gold; padding: 5px; text-align: center; font-size: 20px; padding-top: 20px;">Website & Tutorials under construction</div>
 				<br />
-
+{% if page.path != "index.md" %}
 				<div><a href="http://entityframework-extensions.net/?z=htmlagilitypack&y=top"><img src="https://zzzprojects.github.io/images/logo/entityframework-extensions-pub.jpg" style="border: 1px solid #000" /></a></div>
-				
+{% endif %}				
 				<br />
 				<article>
 	{% for num in (0..site.data.pages.size) %}
