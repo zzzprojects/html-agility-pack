@@ -215,13 +215,13 @@ header {
 							<div class="download-count">
 								<span>3</span>
 								&nbsp;,&nbsp;
-								<span>0</span>
+								<span>9</span>
 								<span>7</span>
-								<span>6</span>
+								<span>9</span>
 								&nbsp;,&nbsp;
-								<span>3</span>
-								<span>6</span>
-								<span>3</span>
+								<span>9</span>
+								<span>0</span>
+								<span>9</span>
 							</div>
 						</div>
 						
