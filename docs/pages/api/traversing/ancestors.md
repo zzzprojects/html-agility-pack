@@ -8,7 +8,7 @@ permalink: ancestors
 
 ## public IEnumerable < HtmlNode > Ancestors()
 
-Gets all the ancestor of the node. Ancestors method is a member of **HtmlAgilityPack.HtmlNode**
+Gets all the ancestors of the node. Ancestors method is a member of **HtmlAgilityPack.HtmlNode**
 
 ### Returns:
 

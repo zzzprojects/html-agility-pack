@@ -16,13 +16,15 @@ The following example loads Html from file.
 
 {% highlight csharp %}
 
-var html = @"C:\html\test.html";
+var path = @"test.html";
+		
+var doc = new HtmlDocument();
+doc.Load(path);
 
-var htmlDoc = new HtmlDocument();
-htmlDoc.Load(html);
+var node = doc.DocumentNode.SelectSingleNode("//body");
 
-var node = htmlDoc.DocumentNode.SelectSingleNode("//body");
-
-Console.WriteLine("Node Name: " + node.Name + "\n" + node.OuterHtml);	
+Console.WriteLine(node.OuterHtml);	
 
 {% endhighlight %}
+
+Click [here](https://dotnetfiddle.net/EsvZyg) to run this example.
