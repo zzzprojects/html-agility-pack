@@ -206,6 +206,7 @@ namespace HtmlAgilityPack
             HtmlAttribute att = new HtmlAttribute(_ownerdocument);
             att.Name = Name;
             att.Value = Value;
+            att.QuoteType = QuoteType;
             return att;
         }
 

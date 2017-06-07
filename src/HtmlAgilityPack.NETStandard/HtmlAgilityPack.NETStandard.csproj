@@ -22,7 +22,7 @@ copy "$(TargetDir)Html*.*" $(SolutionDir)..\Nuget\lib\NetStandard1_6\*</PostBuil
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD1_6</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD1_6;</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -35,5 +35,7 @@ copy "$(TargetDir)Html*.*" $(SolutionDir)..\Nuget\lib\NetStandard1_6\*</PostBuil
     <PackageReference Include="System.Xml.XPath" Version="4.3.0" />
     <PackageReference Include="System.Xml.XPath.XmlDocument" Version="4.3.0" />
   </ItemGroup>
+
+  <Import Project="..\HtmlAgilityPack.Shared\HtmlAgilityPack.Shared.projitems" Label="Shared" />
 
 </Project>

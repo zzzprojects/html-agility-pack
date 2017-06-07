@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="SharedProjectFile_SccProperties">
+    <SharedProjectFile_ProjectGuid>{766aa8be-d147-4e89-a3de-51c383456f20}</SharedProjectFile_ProjectGuid>
+    <SharedProjectFile_SccProjectName>SAK</SharedProjectFile_SccProjectName>
+    <SharedProjectFile_SccAuxPath>SAK</SharedProjectFile_SccAuxPath>
+    <SharedProjectFile_SccLocalPath>SAK</SharedProjectFile_SccLocalPath>
+    <SharedProjectFile_SccProvider>SAK</SharedProjectFile_SccProvider>
+  </PropertyGroup>
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>f1d90ca4-d7c4-43ea-852f-fb4ab5f3a600</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>HtmlAgilityPack.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)crc32.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EncodingFoundException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlAttributeCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlCmdLine.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlCommentNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlConsoleListener.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlDocument.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlDocument.PathMethods.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlDocument.Xpath.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlElementFlag.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlNameTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlNode.Xpath.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlNodeCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlNodeNavigator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlNodeType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlParseError.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlParseErrorCode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlTextNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlWeb.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlWeb.Xpath.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlWebException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IOLibrary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MixedCodeDocument.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MixedCodeDocumentCodeFragment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MixedCodeDocumentFragment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MixedCodeDocumentFragmentList.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MixedCodeDocumentFragmentType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MixedCodeDocumentTextFragment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NameValuePairList.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Trace.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Trace.FullFramework.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities.cs" />
+  </ItemGroup>
+</Project>

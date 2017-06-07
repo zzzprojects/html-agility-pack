@@ -204,5 +204,48 @@ namespace HtmlAgilityPack.Tests
 			Assert.AreSame(newNode.PreviousSibling, toReplacePrevSibling);
 			Assert.AreSame(toReplaceNextSibling, toReplace.NextSibling);
 		}
-	}
+
+	    [Test]
+	    public void TestCopyFromNode()
+	    {
+	        var html = @"<div attr='test'></div>";
+
+	        var htmlDoc = new HtmlDocument();
+	        htmlDoc.LoadHtml(html);
+
+	        var divNode = htmlDoc.DocumentNode.SelectSingleNode("//div");
+
+	        var newNode = HtmlAgilityPack.HtmlNode.CreateNode("<body></body>");
+	        newNode.CopyFrom(divNode);
+
+	        var attribute1 = divNode.Attributes[0];
+
+	        var attribute2 = newNode.Attributes[0];
+
+	        Assert.AreEqual(divNode.Attributes.Count, newNode.Attributes.Count);
+	        Assert.AreEqual(attribute1.Value, attribute2.Value);
+	        Assert.AreEqual(attribute1.QuoteType, attribute2.QuoteType);
+	    }
+
+	    [Test]
+	    public void TestCloneNode()
+	    {
+	        var html = @"<div attr='test'></div>";
+
+	        var htmlDoc = new HtmlDocument();
+	        htmlDoc.LoadHtml(html);
+
+	        var divNode = htmlDoc.DocumentNode.SelectSingleNode("//div");
+
+	        var newNode = divNode.Clone();
+
+	        var attribute1 = divNode.Attributes[0];
+
+	        var attribute2 = newNode.Attributes[0];
+
+	        Assert.AreEqual(divNode.Attributes.Count, newNode.Attributes.Count);
+	        Assert.AreEqual(attribute1.Value, attribute2.Value);
+	        Assert.AreEqual(attribute1.QuoteType, attribute2.QuoteType);
+	    }
+    }
 }

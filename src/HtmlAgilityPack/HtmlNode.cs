@@ -895,7 +895,8 @@ namespace HtmlAgilityPack
 			{
 				foreach (HtmlAttribute att in node.Attributes)
 				{
-					SetAttributeValue(att.Name, att.Value);
+                    HtmlAttribute newatt = att.Clone();
+                    Attributes.Append(newatt);
 				}
 			}
 

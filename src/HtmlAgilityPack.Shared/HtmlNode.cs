@@ -895,11 +895,12 @@ namespace HtmlAgilityPack
 			{
 				foreach (HtmlAttribute att in node.Attributes)
 				{
-					SetAttributeValue(att.Name, att.Value);
+                    HtmlAttribute newatt = att.Clone();
+                    Attributes.Append(newatt);
 				}
 			}
 
-			if (!deep)
+			if (deep)
 			{
 				RemoveAllChildren();
 				if (node.HasChildNodes)
@@ -948,11 +949,21 @@ namespace HtmlAgilityPack
 			return DescendantsAndSelf();
 		}
 
-		/// <summary>
-		/// Gets all Descendant nodes in enumerated list
-		/// </summary>
-		/// <returns></returns>
-		public IEnumerable<HtmlNode> Descendants(int level=0)
+	    /// <summary>
+	    /// Gets all Descendant nodes in enumerated list
+	    /// </summary>
+	    /// <returns></returns>
+        public IEnumerable<HtmlNode> Descendants()
+	    {
+            // DO NOT REMOVE, the empty method is required for Fizzler third party library
+	        return Descendants(0);
+	    }
+
+        /// <summary>
+        /// Gets all Descendant nodes in enumerated list
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<HtmlNode> Descendants(int level)
         {
             if (level > HtmlDocument.MaxDepthLevel)
             {
