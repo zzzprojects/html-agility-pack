@@ -247,5 +247,80 @@ namespace HtmlAgilityPack.Tests
 	        Assert.AreEqual(attribute1.Value, attribute2.Value);
 	        Assert.AreEqual(attribute1.QuoteType, attribute2.QuoteType);
 	    }
+
+	    [Test]
+        public void TestEmptyTag()
+	    {
+	        var html = "<img src=\"x\"/onerror=\"alert('onerror1')\"><img/src=\"x\"/onerror=\"alert('onerror2')\">";
+	        var doc = new HtmlAgilityPack.HtmlDocument();
+	        doc.LoadHtml(html);
+
+            Assert.AreEqual(@"<img src=""x"" onerror=""alert('onerror1')""><img src=""x"" onerror=""alert('onerror2')"">", doc.DocumentNode.OuterHtml);
+        }
+		
+		[Test]
+        public void TestAddClass()
+        {
+            var html = @"<h1>This is new heading</h1>";
+
+            string output = "<h1 class=\"input\">This is new heading</h1>";
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(html);
+
+            var h1Node = htmlDoc.DocumentNode.SelectSingleNode("//h1");
+
+            h1Node.AddClass("input");
+
+            Assert.AreEqual(h1Node.OuterHtml, output);
+        }
+
+        [Test]
+        public void TestRemoveClass()
+        {
+            var output = @"<h1>This is new heading</h1>";
+
+            string html = "<h1 class=\"input\">This is new heading</h1>";
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(html);
+
+            var h1Node = htmlDoc.DocumentNode.SelectSingleNode("//h1");
+
+            h1Node.RemoveClass("input");
+
+            Assert.AreEqual(h1Node.OuterHtml, output);
+        }
+
+        [Test]
+
+        public void TestReplaceClass()
+        {
+            var output = "<h1 class=\"important\">This is new heading</h1>";
+
+            string html = "<h1 class=\"input\">This is new heading</h1>";
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(html);
+
+            var h1Node = htmlDoc.DocumentNode.SelectSingleNode("//h1");
+
+            h1Node.ReplaceClass("important", "input");
+
+            Assert.AreEqual(h1Node.OuterHtml, output);
+        }
+
+        [Test]
+
+        public void TestDetectEncoding()
+        {
+            string html = Path.Combine(_contentDirectory, "test.html");
+
+            var htmlDoc = new HtmlDocument();
+
+            var encoding = htmlDoc.DetectEncoding(html);
+
+            Assert.AreEqual(System.Text.Encoding.UTF8, encoding);
+        }
     }
 }

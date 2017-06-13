@@ -340,8 +340,7 @@ namespace HtmlAgilityPack
         /// </summary>
         public void Remove()
         {
-            foreach (HtmlAttribute item in items)
-                item.Remove();
+            items.Clear();
         }
 
         #endregion

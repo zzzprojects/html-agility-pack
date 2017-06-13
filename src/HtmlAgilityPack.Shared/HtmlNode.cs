@@ -1,5 +1,6 @@
 // HtmlAgilityPack V1.0 - Simon Mourier <simon underscore mourier at hotmail dot com>
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -1887,6 +1888,113 @@ namespace HtmlAgilityPack
 			return Name + "[" + i + "]";
 		}
 
-		#endregion
-	}
+        #endregion
+
+        #region Class Helper
+        /*
+	    /// <summary>
+	    /// Adds one or more classes to this node.
+	    /// </summary>
+	    /// <param name="name">The node list to add. May not be null.</param>
+	    public void AddClass(string name)
+	    {
+	        var classAttributes = Attributes.AttributesWithName("class");
+
+	        if (!IsEmpty(classAttributes))
+	        {
+	            foreach (HtmlAttribute att in classAttributes)
+	            {
+	                SetAttributeValue(att.Name, att.Value + " " + name);
+	            }
+	        }
+	        else
+	        {
+	            HtmlAttribute attribute = _ownerdocument.CreateAttribute("class", name);
+	            Attributes.Append(attribute);
+	        }
+	    }
+
+	    /// <summary>
+	    /// Removes the specified class from the node.
+	    /// </summary>
+	    /// <param name="name">The class being removed. May not be <c>null</c>.</param>
+	    public void RemoveClass(string name)
+	    {
+	        var classAttributes = Attributes.AttributesWithName("class");
+	        if (IsEmpty(classAttributes))
+	        {
+	            throw new ArgumentNullException("class");
+	        }
+
+	        else
+	        {
+	            foreach (var att in classAttributes)
+	            {
+	                if (att.Value.Equals(name))
+	                {
+	                    Attributes.Remove(att);
+	                }
+	                else if (att.Value.Contains(name))
+	                {
+	                    string[] classNames = att.Value.Split(' ');
+
+	                    string newClassNames = "";
+
+	                    foreach (string item in classNames)
+	                    {
+	                        if (!item.Equals(name))
+	                            newClassNames += item + " ";
+	                    }
+
+	                    newClassNames = newClassNames.Trim();
+	                    SetAttributeValue(att.Name, newClassNames);
+	                }
+	                if (string.IsNullOrEmpty(att.Value))
+	                {
+	                    Attributes.Remove(att);
+	                }
+	            }
+	        }
+	    }
+
+	    /// <summary>
+	    /// Replaces the class name oldClass with newClass name.
+	    /// </summary>
+	    /// <param name="newClass">The new class name.</param>
+	    /// <param name="oldClass">The class being replaced.</param>
+	    public void ReplaceClass(string newClass, string oldClass)
+	    {
+	        if (string.IsNullOrEmpty(newClass))
+	        {
+	            RemoveClass(oldClass);
+	        }
+
+	        if (string.IsNullOrEmpty(oldClass))
+	        {
+	            AddClass(newClass);
+	        }
+
+	        var classAttributes = Attributes.AttributesWithName("class");
+            
+	        if (IsEmpty(classAttributes))
+	        {
+	            throw new ArgumentNullException("class");
+	        }
+
+	        foreach (var att in classAttributes)
+	        {
+	            string newClassNames = att.Value.Replace(oldClass, newClass);
+	            SetAttributeValue(att.Name, newClassNames);
+	        }
+	    }
+
+	    private bool IsEmpty(IEnumerable en)
+	    {
+         
+	        foreach (var c in en) { return false; }
+	        return true;
+	    }
+        */
+        #endregion
+    }
 }
