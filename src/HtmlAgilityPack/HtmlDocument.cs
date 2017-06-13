@@ -1280,7 +1280,18 @@ namespace HtmlAgilityPack
 							PushNodeStart(HtmlNodeType.Text, _index);
 							continue;
 						}
-						_state = ParseState.BetweenAttributes;
+
+                        // we may end up in this state if attributes are incorrectly seperated
+                        // by a /-character. If so, start parsing attribute-name immediately.
+                        if (!IsWhiteSpace(_c))
+                        {
+                            PushAttributeNameStart(_index - 1);
+                            _state = ParseState.AttributeName;
+                        }
+                        else
+                        {
+                            _state = ParseState.BetweenAttributes;
+                        }
 						break;
 
 					case ParseState.AttributeName:
