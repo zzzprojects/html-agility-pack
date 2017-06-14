@@ -257,7 +257,7 @@ namespace HtmlAgilityPack.Tests
 
             Assert.AreEqual(@"<img src=""x"" onerror=""alert('onerror1')""><img src=""x"" onerror=""alert('onerror2')"">", doc.DocumentNode.OuterHtml);
         }
-		
+		/*
 		[Test]
         public void TestAddClass()
         {
@@ -309,7 +309,7 @@ namespace HtmlAgilityPack.Tests
 
             Assert.AreEqual(h1Node.OuterHtml, output);
         }
-
+        */
         [Test]
 
         public void TestDetectEncoding()
@@ -321,6 +321,25 @@ namespace HtmlAgilityPack.Tests
             var encoding = htmlDoc.DetectEncoding(html);
 
             Assert.AreEqual(System.Text.Encoding.UTF8, encoding);
+        }
+
+	    [Test]
+        public void TestLoadWithCache()
+	    {
+	        var dir = _contentDirectory + "cache";
+	        Directory.CreateDirectory(dir);
+
+            var web = new HtmlAgilityPack.HtmlWeb()
+	        {
+	            CachePath = dir,
+	            UsingCache = true
+	        };
+
+	        var url = "https://github.com/zzzprojects/html-agility-pack";
+	        var docCache = web.Load(url);
+
+            var docLoad = new HtmlAgilityPack.HtmlWeb().Load(url);
+	        Console.WriteLine(docLoad.DocumentNode.OuterHtml, docCache.DocumentNode.OuterHtml);
         }
     }
 }

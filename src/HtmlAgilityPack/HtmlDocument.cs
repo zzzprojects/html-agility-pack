@@ -78,6 +78,7 @@ namespace HtmlAgilityPack
         /// Defines the default stream encoding to use. Default is System.Text.Encoding.Default.
         /// </summary>
         public Encoding OptionDefaultStreamEncoding;
+
         /// <summary>
         /// Defines if source text must be extracted while parsing errors.
         /// If the document has a lot of errors, or cascading errors, parsing performance can be dramatically affected if set to true.
@@ -169,6 +170,7 @@ namespace HtmlAgilityPack
         #endregion
 
         #region Properties
+
         /// <summary>
         /// Defines the max level we would go deep into the html document. If this depth level is exceeded, and exception is
         /// thrown.
@@ -184,7 +186,7 @@ namespace HtmlAgilityPack
         /// </summary>
         public int CheckSum
         {
-            get { return _crc32 == null ? 0 : (int)_crc32.CheckSum; }
+            get { return _crc32 == null ? 0 : (int) _crc32.CheckSum; }
         }
 
         /// <summary>
@@ -273,7 +275,7 @@ namespace HtmlAgilityPack
                 else
                 {
                     nameisok = false;
-                    byte[] bytes = Encoding.UTF8.GetBytes(new char[] { name[i] });
+                    byte[] bytes = Encoding.UTF8.GetBytes(new char[] {name[i]});
                     for (int j = 0; j < bytes.Length; j++)
                     {
                         xmlname += bytes[j].ToString("x2");
@@ -356,7 +358,7 @@ namespace HtmlAgilityPack
         /// <returns>The new HTML comment node.</returns>
         public HtmlCommentNode CreateComment()
         {
-            return (HtmlCommentNode)CreateNode(HtmlNodeType.Comment);
+            return (HtmlCommentNode) CreateNode(HtmlNodeType.Comment);
         }
 
         /// <summary>
@@ -397,7 +399,7 @@ namespace HtmlAgilityPack
         /// <returns>The new HTML text node.</returns>
         public HtmlTextNode CreateTextNode()
         {
-            return (HtmlTextNode)CreateNode(HtmlNodeType.Text);
+            return (HtmlTextNode) CreateNode(HtmlNodeType.Text);
         }
 
         /// <summary>
@@ -465,13 +467,12 @@ namespace HtmlAgilityPack
             StreamReader sr = reader as StreamReader;
             if (sr != null)
             {
-                _streamencoding = sr.CurrentEncoding;
                 Text = sr.ReadToEnd();
+                _streamencoding = sr.CurrentEncoding;
+                return _streamencoding;
             }
-            else
-            {
-                _streamencoding = null;
-            }
+
+            _streamencoding = null;
             _declaredencoding = null;
 
             Text = reader.ReadToEnd();
@@ -718,7 +719,7 @@ namespace HtmlAgilityPack
         /// <param name="writer">The StreamWriter to which you want to save.</param>
         public void Save(StreamWriter writer)
         {
-            Save((TextWriter)writer);
+            Save((TextWriter) writer);
         }
 
         /// <summary>
@@ -885,7 +886,7 @@ namespace HtmlAgilityPack
                         // this is a hack: add it as a text node
                         HtmlNode closenode = CreateNode(HtmlNodeType.Text, _currentnode._outerstartindex);
                         closenode._outerlength = _currentnode._outerlength;
-                        ((HtmlTextNode)closenode).Text = ((HtmlTextNode)closenode).Text.ToLower();
+                        ((HtmlTextNode) closenode).Text = ((HtmlTextNode) closenode).Text.ToLower();
                         if (_lastparentnode != null)
                         {
                             _lastparentnode.AppendChild(closenode);
@@ -1037,14 +1038,14 @@ namespace HtmlAgilityPack
             switch (name)
             {
                 case "li":
-                    return new string[] { "ul" };
+                    return new string[] {"ul"};
 
                 case "tr":
-                    return new string[] { "table" };
+                    return new string[] {"table"};
 
                 case "th":
                 case "td":
-                    return new string[] { "tr", "table" };
+                    return new string[] {"tr", "table"};
 
                 default:
                     return null;

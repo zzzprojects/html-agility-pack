@@ -84,6 +84,7 @@ namespace HtmlAgilityPack
         private int _streamBufferSize = 1024;
         private bool _useCookies;
         private bool _usingCache;
+        private bool _usingCacheAndLoad;
         private string _userAgent = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:x.x.x) Gecko/20041107 Firefox/x.x";
 
         /// <summary>
@@ -1184,6 +1185,11 @@ namespace HtmlAgilityPack
         /// <returns>A new HTML document.</returns>
         public HtmlDocument Load(string url, string method)
         {
+            if (UsingCache)
+            {
+                _usingCacheAndLoad = true;
+            }
+
             Uri uri = new Uri(url);
             HtmlDocument doc;
 #if !NETSTANDARD
@@ -1237,6 +1243,11 @@ namespace HtmlAgilityPack
         /// <returns>A new HTML document.</returns>
         public HtmlDocument Load(string url, string method, WebProxy proxy, NetworkCredential credentials)
         {
+            if (UsingCache)
+            {
+                _usingCacheAndLoad = true;
+            }
+
             Uri uri = new Uri(url);
             HtmlDocument doc;
             if ((uri.Scheme == Uri.UriSchemeHttps) ||
@@ -1277,6 +1288,11 @@ namespace HtmlAgilityPack
 /// <returns>A new HTML document.</returns>
 	    public HtmlDocument Load(string url, string method, IWebProxy proxy, ICredentials credentials)
 	    {
+            if (UsingCache)
+            {
+                _usingCacheAndLoad = true;
+            }
+
 	        Uri uri = new Uri(url);
 	        HtmlDocument doc;
 #if !NETSTANDARD
@@ -1568,6 +1584,11 @@ namespace HtmlAgilityPack
                         // copy and touch the file
                         IOLibrary.CopyAlways(cachePath, path);
                         File.SetLastWriteTime(path, File.GetLastWriteTime(cachePath));
+                    }
+
+                    if (_usingCacheAndLoad)
+                    {
+                        doc.Load(cachePath);
                     }
                 }
                 else
