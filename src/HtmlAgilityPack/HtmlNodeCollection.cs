@@ -246,6 +246,8 @@ namespace HtmlAgilityPack
             oldnode._prevnode = null;
             oldnode._nextnode = null;
             oldnode._parentnode = null;
+
+            _parentnode.SetChanged();
         }
 
         #endregion

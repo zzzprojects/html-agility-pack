@@ -146,8 +146,11 @@ namespace HtmlAgilityPack
 
         internal static readonly string HtmlExceptionRefNotChild = "Reference node must be a child of this node";
 
-        internal static readonly string HtmlExceptionUseIdAttributeFalse =
-            "You need to set UseIdAttribute property to true to enable this feature";
+        internal static readonly string HtmlExceptionUseIdAttributeFalse = "You need to set UseIdAttribute property to true to enable this feature";
+
+        internal static readonly string HtmlExceptionClassDoesNotExist = "Class name doesn't exist";
+
+        internal static readonly string HtmlExceptionClassExists = "Class name already exists";
 
         #endregion
 
@@ -1287,8 +1290,10 @@ namespace HtmlAgilityPack
                         // by a /-character. If so, start parsing attribute-name immediately.
                         if (!IsWhiteSpace(_c))
                         {
-                            PushAttributeNameStart(_index - 1);
-                            _state = ParseState.AttributeName;
+                            // Just do nothing and push to next one!
+                            DecrementPosition();
+                            _state = ParseState.BetweenAttributes;
+                            continue;
                         }
                         else
                         {

@@ -249,7 +249,7 @@ namespace HtmlAgilityPack.Tests
 	    }
 
 	    [Test]
-        public void TestEmptyTag()
+        public void TestEmptyTag_Single()
 	    {
 	        var html = "<img src=\"x\"/onerror=\"alert('onerror1')\"><img/src=\"x\"/onerror=\"alert('onerror2')\">";
 	        var doc = new HtmlAgilityPack.HtmlDocument();
@@ -257,59 +257,77 @@ namespace HtmlAgilityPack.Tests
 
             Assert.AreEqual(@"<img src=""x"" onerror=""alert('onerror1')""><img src=""x"" onerror=""alert('onerror2')"">", doc.DocumentNode.OuterHtml);
         }
-		/*
-		[Test]
-        public void TestAddClass()
-        {
-            var html = @"<h1>This is new heading</h1>";
 
-            string output = "<h1 class=\"input\">This is new heading</h1>";
+	    [Test]
+        public void TestEmptyTag_Many()
+	    {
+	        {
+	            var html = "<img src=\"x\"//onerror=\"alert('onerror1')\"><img//src=\"x\"//onerror=\"alert('onerror2')\">";
+	            var doc = new HtmlAgilityPack.HtmlDocument();
+	            doc.LoadHtml(html);
 
-            var htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(html);
+	            Assert.AreEqual(@"<img src=""x"" onerror=""alert('onerror1')""><img src=""x"" onerror=""alert('onerror2')"">", doc.DocumentNode.OuterHtml);
+            }
 
-            var h1Node = htmlDoc.DocumentNode.SelectSingleNode("//h1");
+	        {
+	            var html = "<img src=\"x\"//////onerror=\"alert('onerror1')\"><img//////////////src=\"x\"////////////////onerror=\"alert('onerror2')\">";
+	            var doc = new HtmlAgilityPack.HtmlDocument();
+	            doc.LoadHtml(html);
 
-            h1Node.AddClass("input");
+	            Assert.AreEqual(@"<img src=""x"" onerror=""alert('onerror1')""><img src=""x"" onerror=""alert('onerror2')"">", doc.DocumentNode.OuterHtml);
+            }
+	    }
+	    [Test]
+	    public void TestAddClass()
+	    {
+	        var html = @"<h1>This is new heading</h1>";
 
-            Assert.AreEqual(h1Node.OuterHtml, output);
-        }
+	        string output = "<h1 class=\"input\">This is new heading</h1>";
 
-        [Test]
-        public void TestRemoveClass()
-        {
-            var output = @"<h1>This is new heading</h1>";
+	        var htmlDoc = new HtmlDocument();
+	        htmlDoc.LoadHtml(html);
 
-            string html = "<h1 class=\"input\">This is new heading</h1>";
+	        var h1Node = htmlDoc.DocumentNode.SelectSingleNode("//h1");
 
-            var htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(html);
+	        h1Node.AddClass("input");
 
-            var h1Node = htmlDoc.DocumentNode.SelectSingleNode("//h1");
+	        Assert.AreEqual(h1Node.OuterHtml, output);
+	    }
 
-            h1Node.RemoveClass("input");
+	    [Test]
+	    public void TestRemoveClass()
+	    {
+	        var output = @"<h1>This is new heading</h1>";
 
-            Assert.AreEqual(h1Node.OuterHtml, output);
-        }
+	        string html = "<h1 class=\"input\">This is new heading</h1>";
 
-        [Test]
+	        var htmlDoc = new HtmlDocument();
+	        htmlDoc.LoadHtml(html);
 
-        public void TestReplaceClass()
-        {
-            var output = "<h1 class=\"important\">This is new heading</h1>";
+	        var h1Node = htmlDoc.DocumentNode.SelectSingleNode("//h1");
 
-            string html = "<h1 class=\"input\">This is new heading</h1>";
+	        h1Node.RemoveClass("input");
 
-            var htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(html);
+	        Assert.AreEqual(h1Node.OuterHtml, output);
+	    }
 
-            var h1Node = htmlDoc.DocumentNode.SelectSingleNode("//h1");
+	    [Test]
+	    public void TestReplaceClass()
+	    {
+	        var output = "<h1 class=\"important\">This is new heading</h1>";
 
-            h1Node.ReplaceClass("important", "input");
+	        string html = "<h1 class=\"input\">This is new heading</h1>";
 
-            Assert.AreEqual(h1Node.OuterHtml, output);
-        }
-        */
+	        var htmlDoc = new HtmlDocument();
+	        htmlDoc.LoadHtml(html);
+
+	        var h1Node = htmlDoc.DocumentNode.SelectSingleNode("//h1");
+
+	        h1Node.ReplaceClass("important", "input");
+
+	        Assert.AreEqual(h1Node.OuterHtml, output);
+	    }
+
         [Test]
 
         public void TestDetectEncoding()
@@ -335,11 +353,27 @@ namespace HtmlAgilityPack.Tests
 	            UsingCache = true
 	        };
 
-	        var url = "https://github.com/zzzprojects/html-agility-pack";
+	        var url = "http://html-agility-pack.net/";
 	        var docCache = web.Load(url);
 
             var docLoad = new HtmlAgilityPack.HtmlWeb().Load(url);
-	        Console.WriteLine(docLoad.DocumentNode.OuterHtml, docCache.DocumentNode.OuterHtml);
+	        Assert.AreEqual(docLoad.DocumentNode.OuterHtml, docCache.DocumentNode.OuterHtml);
+        }
+
+        [Test]
+        public void OuterHtmlHasBeenCalled_RemoveCalled_SubsequentOuterHtmlCallsAreBroken()
+        {
+            var doc = new HtmlDocument();
+            doc.LoadHtml("<html><head></head><body><div>SOme text here</div><div>some bolded<b>text</b></div></body></html>");
+            var resultList = doc.DocumentNode.SelectNodes("//div");
+            Assert.AreEqual(2, resultList.Count);
+            resultList.First().Remove();
+            Assert.AreEqual("<html><head></head><body><div>some bolded<b>text</b></div></body></html>", doc.DocumentNode.OuterHtml);
+            var resultList2 = doc.DocumentNode.SelectNodes("//div");
+            Assert.AreEqual(1, resultList2.Count);
+            resultList2.First().Remove();
+            // <div>some bolded<b>text</b></div> should have been removed
+            Assert.AreEqual("<html><head></head><body></body></html>", doc.DocumentNode.OuterHtml);
         }
     }
 }

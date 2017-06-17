@@ -1261,9 +1261,11 @@ namespace HtmlAgilityPack
 		/// </summary>
 		public void Remove()
 		{
-			if (ParentNode != null)
-				ParentNode.ChildNodes.Remove(this);
-		}
+		    if (ParentNode != null)
+		    {
+                ParentNode.ChildNodes.Remove(this);
+            }
+        }
 
 		/// <summary>
 		/// Removes all the children and/or attributes of the current node.
@@ -1891,12 +1893,22 @@ namespace HtmlAgilityPack
         #endregion
 
         #region Class Helper
-        /*
+
 	    /// <summary>
 	    /// Adds one or more classes to this node.
 	    /// </summary>
 	    /// <param name="name">The node list to add. May not be null.</param>
 	    public void AddClass(string name)
+	    {
+	        AddClass(name, false);
+	    }
+
+	    /// <summary>
+	    /// Adds one or more classes to this node.
+	    /// </summary>
+	    /// <param name="name">The node list to add. May not be null.</param>
+	    /// <param name="throwError">true to throw Error if class name exists, false otherwise.</param>
+	    public void AddClass(string name, bool throwError)
 	    {
 	        var classAttributes = Attributes.AttributesWithName("class");
 
@@ -1904,7 +1916,17 @@ namespace HtmlAgilityPack
 	        {
 	            foreach (HtmlAttribute att in classAttributes)
 	            {
-	                SetAttributeValue(att.Name, att.Value + " " + name);
+	                if (att.Value.Equals(name) || att.Value.Contains(name))
+	                {
+	                    if (throwError)
+	                    {
+	                        throw new Exception(HtmlDocument.HtmlExceptionClassExists);
+	                    }
+	                }
+	                else
+	                {
+	                    SetAttributeValue(att.Name, att.Value + " " + name);
+	                }
 	            }
 	        }
 	        else
@@ -1915,15 +1937,51 @@ namespace HtmlAgilityPack
 	    }
 
 	    /// <summary>
+	    /// Removes the class attribute from the node.
+	    /// </summary>
+	    public void RemoveClass()
+	    {
+	        RemoveClass(false);
+	    }
+
+	    /// <summary>
+	    /// Removes the class attribute from the node.
+	    /// </summary>
+	    /// <param name="throwError">true to throw Error if class name doesn't exist, false otherwise.</param>
+	    public void RemoveClass(bool throwError)
+	    {
+	        var classAttributes = Attributes.AttributesWithName("class");
+	        if (IsEmpty(classAttributes) && throwError)
+	        {
+	            throw new Exception(HtmlDocument.HtmlExceptionClassDoesNotExist);
+	        }
+
+	        foreach (var att in classAttributes)
+	        {
+	            Attributes.Remove(att);
+	        }
+	    }
+
+	    /// <summary>
 	    /// Removes the specified class from the node.
 	    /// </summary>
 	    /// <param name="name">The class being removed. May not be <c>null</c>.</param>
 	    public void RemoveClass(string name)
 	    {
+	        RemoveClass(name, false);
+	    }
+
+	    /// <summary>
+	    /// Removes the specified class from the node.
+	    /// </summary>
+	    /// <param name="name">The class being removed. May not be <c>null</c>.</param>
+	    /// <param name="throwError">true to throw Error if class name doesn't exist, false otherwise.</param>
+	    public void RemoveClass(string name, bool throwError)
+	    {
 	        var classAttributes = Attributes.AttributesWithName("class");
-	        if (IsEmpty(classAttributes))
+	        if (IsEmpty(classAttributes) && throwError)
 	        {
-	            throw new ArgumentNullException("class");
+	            throw new Exception(HtmlDocument.HtmlExceptionClassDoesNotExist);
 	        }
 
 	        else
@@ -1949,6 +2007,13 @@ namespace HtmlAgilityPack
 	                    newClassNames = newClassNames.Trim();
 	                    SetAttributeValue(att.Name, newClassNames);
 	                }
+	                else
+	                {
+	                    if (throwError)
+	                    {
+	                        throw new Exception(HtmlDocument.HtmlExceptionClassDoesNotExist);
+	                    }
+	                }
 	                if (string.IsNullOrEmpty(att.Value))
 	                {
 	                    Attributes.Remove(att);
@@ -1964,6 +2029,17 @@ namespace HtmlAgilityPack
 	    /// <param name="oldClass">The class being replaced.</param>
 	    public void ReplaceClass(string newClass, string oldClass)
 	    {
+	        ReplaceClass(newClass, oldClass, false);
+	    }
+
+	    /// <summary>
+	    /// Replaces the class name oldClass with newClass name.
+	    /// </summary>
+	    /// <param name="newClass">The new class name.</param>
+	    /// <param name="oldClass">The class being replaced.</param>
+	    /// <param name="throwError">true to throw Error if class name doesn't exist, false otherwise.</param>
+	    public void ReplaceClass(string newClass, string oldClass, bool throwError)
+	    {
 	        if (string.IsNullOrEmpty(newClass))
 	        {
 	            RemoveClass(oldClass);
@@ -1975,10 +2051,10 @@ namespace HtmlAgilityPack
 	        }
 
 	        var classAttributes = Attributes.AttributesWithName("class");
-            
+
 	        if (IsEmpty(classAttributes))
 	        {
-	            throw new ArgumentNullException("class");
+	            throw new Exception(HtmlDocument.HtmlExceptionClassDoesNotExist);
 	        }
 
 	        foreach (var att in classAttributes)
@@ -1988,13 +2064,13 @@ namespace HtmlAgilityPack
 	        }
 	    }
 
-	    private bool IsEmpty(IEnumerable en)
+        private bool IsEmpty(IEnumerable en)
 	    {
          
 	        foreach (var c in en) { return false; }
 	        return true;
 	    }
-        */
+
         #endregion
     }
 }
