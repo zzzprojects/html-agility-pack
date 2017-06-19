@@ -8,11 +8,11 @@ permalink: removeall-attribute
 
 ## public void RemoveAll()
 
-Remove all attributes in the list. RemoveAll method is a member of **HtmlAgilityPack.HtmlAttributeCollection**
+Removes all attributes in the list. RemoveAll method is a member of **HtmlAgilityPack.HtmlAttributeCollection**
 
 ### Example
 
-The following example all attributes in the list.
+The following example removes all attributes in the list.
 
 {% highlight csharp %}
 

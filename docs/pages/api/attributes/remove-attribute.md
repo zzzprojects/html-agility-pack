@@ -6,6 +6,27 @@ permalink: remove-attribute
 
 {% include template-h1.html %}
 
+## public void Remove()
+
+Removes all attributes from the collection. Remove method is a member of **HtmlAgilityPack.HtmlAttributeCollection**
+
+### Example
+
+The following example removes all attributes from the collection.
+
+{% highlight csharp %}
+
+var htmlDoc = new HtmlDocument();
+htmlDoc.LoadHtml(html);
+
+var h1Node = htmlDoc.DocumentNode.SelectSingleNode("//h1");
+		
+h1Node.Attributes.Remove();
+
+{% endhighlight %}
+
+Click [here](https://dotnetfiddle.net/otZ2Et) to run this example.
+
 ## public void Remove(string name)
 
 Removes an attribute from the list, using its name. If there are more than one attributes with this name, they will all be removed. Remove method is a member of **HtmlAgilityPack.HtmlAttributeCollection**
