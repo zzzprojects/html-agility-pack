@@ -250,7 +250,7 @@ var doc = new HtmlDocument();
 doc.LoadHtml(html);
 
 <span class="code-green">// From Web</span>
-string url = "http://html-agility-pack.net/";
+var url = "http://html-agility-pack.net/";
 var web = new HtmlWeb();
 var doc = web.Load(url);</pre>
 								</div>
@@ -269,7 +269,7 @@ var doc = web.Load(url);</pre>
 								<div class="example-box-header"><span class="heading">C# HTML Selectors Examples</span></div>
 <pre>
 <span class="code-green">// With XPath</span>	
-string name = doc.DocumentNode
+var name = doc.DocumentNode
 	.SelectNodes("//td/input")
 	.First()
 	.Attributes["value"].Value;
@@ -501,7 +501,7 @@ var doc = new HtmlDocument();
 doc.LoadHtml(html);
 
 <span class="code-green">// From Web</span>
-string url = "http://html-agility-pack.net/";
+var url = "http://html-agility-pack.net/";
 var web = new HtmlWeb();
 var doc = web.Load(url);</pre>
 					
@@ -532,7 +532,7 @@ var doc = web.Load(url);</pre>
 							<div class="example-box-header"><span class="language">C#</span><span class="heading">HTML Selectors Examples</span></div>
 <pre>
 <span class="code-green">// With XPath</span>	
-string name = doc.DocumentNode
+var name = doc.DocumentNode
 	.SelectNodes("//td/input")
 	.First()
 	.Attributes["value"].Value;
