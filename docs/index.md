@@ -611,7 +611,7 @@ var doc = new HtmlDocument();
 htmlDoc.LoadHtml(html);
 
 <span class="code-green">// Descendants</span>	
-doc.DocumentNode.Descendants("input")
+var nodes = doc.DocumentNode.Descendants("input")
 </pre>
 					
 						</div>
