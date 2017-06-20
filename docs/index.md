@@ -269,7 +269,7 @@ var doc = web.Load(url);</pre>
 								<div class="example-box-header"><span class="heading">C# HTML Selectors Examples</span></div>
 <pre>
 <span class="code-green">// With XPath</span>	
-var name = doc.DocumentNode
+var value = doc.DocumentNode
 	.SelectNodes("//td/input")
 	.First()
 	.Attributes["value"].Value;
@@ -532,7 +532,7 @@ var doc = web.Load(url);</pre>
 							<div class="example-box-header"><span class="language">C#</span><span class="heading">HTML Selectors Examples</span></div>
 <pre>
 <span class="code-green">// With XPath</span>	
-var name = doc.DocumentNode
+var value = doc.DocumentNode
 	.SelectNodes("//td/input")
 	.First()
 	.Attributes["value"].Value;
@@ -611,7 +611,7 @@ var doc = new HtmlDocument();
 htmlDoc.LoadHtml(html);
 
 <span class="code-green">// Descendants</span>	
-var nodes = doc.DocumentNode.Descendants("input")
+var nodes = doc.DocumentNode.Descendants("input");
 </pre>
 					
 						</div>
