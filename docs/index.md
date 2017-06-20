@@ -242,17 +242,17 @@ header {
 								<div class="example-box-header"><span class="heading">C# HTML Parser Examples</span></div>
 <pre>
 <span class="code-green">// From File</span>
-var htmlDoc = new HtmlDocument();
-html.Load(filePath);
+var doc = new HtmlDocument();
+doc.Load(filePath);
 
 <span class="code-green">// From String</span>
-var htmlDoc = new HtmlDocument();
-htmlDoc.LoadHtml(html);
+var doc = new HtmlDocument();
+doc.LoadHtml(html);
 
 <span class="code-green">// From Web</span>
 string url = "http://html-agility-pack.net/";
-HtmlWeb web = new HtmlWeb();
-HtmlDocument document = web.Load(url);</pre>
+var web = new HtmlWeb();
+var doc = web.Load(url);</pre>
 								</div>
 							</div>
 						</div>
@@ -269,13 +269,13 @@ HtmlDocument document = web.Load(url);</pre>
 								<div class="example-box-header"><span class="heading">C# HTML Selectors Examples</span></div>
 <pre>
 <span class="code-green">// With XPath</span>	
-string name = htmlDoc.DocumentNode
+string name = doc.DocumentNode
 	.SelectNodes("//td/input")
 	.First()
 	.Attributes["value"].Value;
 	
 <span class="code-green">// With LINQ</span>	
-var nodes = htmlDoc.DocumentNode.Descendants("input")
+var nodes = doc.DocumentNode.Descendants("input")
 	.Select(y => y.Descendants()
 	.Where(x => x.Attributes["class"].Value == "box"))
 	.ToList();</pre>
@@ -493,17 +493,17 @@ header .arrow-rtl img {
 							<div class="example-box-header"><span class="language">C#</span><span class="heading">HTML Parser Examples</span></div>
 <pre>
 <span class="code-green">// From File</span>
-var htmlDoc = new HtmlDocument();
-html.Load(filePath);
+var doc = new HtmlDocument();
+doc.Load(filePath);
 
 <span class="code-green">// From String</span>
-var htmlDoc = new HtmlDocument();
-htmlDoc.LoadHtml(html);
+var doc = new HtmlDocument();
+doc.LoadHtml(html);
 
 <span class="code-green">// From Web</span>
 string url = "http://html-agility-pack.net/";
-HtmlWeb web = new HtmlWeb();
-HtmlDocument document = web.Load(url);</pre>
+var web = new HtmlWeb();
+var doc = web.Load(url);</pre>
 					
 						</div>
 					</div>
@@ -532,13 +532,13 @@ HtmlDocument document = web.Load(url);</pre>
 							<div class="example-box-header"><span class="language">C#</span><span class="heading">HTML Selectors Examples</span></div>
 <pre>
 <span class="code-green">// With XPath</span>	
-string name = htmlDoc.DocumentNode
+string name = doc.DocumentNode
 	.SelectNodes("//td/input")
 	.First()
 	.Attributes["value"].Value;
 	
 <span class="code-green">// With LINQ</span>	
-var nodes = htmlDoc.DocumentNode.Descendants("input")
+var nodes = doc.DocumentNode.Descendants("input")
 	.Select(y => y.Descendants()
 	.Where(x => x.Attributes["class"].Value == "box"))
 	.ToList();</pre>
@@ -572,14 +572,14 @@ var nodes = htmlDoc.DocumentNode.Descendants("input")
 						<div class="example-box">
 							<div class="example-box-header"><span class="language">C#</span><span class="heading">HTML Manipulation Examples</span></div>
 <pre>
-var htmlDoc = new HtmlDocument();
-htmlDoc.LoadHtml(html);
+var doc = new HtmlDocument();
+doc.LoadHtml(html);
 
 <span class="code-green">// InnerHtml</span>	
-var innerHtml = htmlDoc.DocumentNode.InnerHtml;
+var innerHtml = doc.DocumentNode.InnerHtml;
 
 <span class="code-green">// InnerText</span>	
-var innerText = htmlDoc.DocumentNode.InnerText;</pre>
+var innerText = doc.DocumentNode.InnerText;</pre>
 					
 						</div>
 					</div>					
@@ -607,11 +607,11 @@ var innerText = htmlDoc.DocumentNode.InnerText;</pre>
 						<div class="example-box">
 							<div class="example-box-header"><span class="language">C#</span><span class="heading">HTML Traversing Examples</span></div>
 <pre>
-var htmlDoc = new HtmlDocument();
+var doc = new HtmlDocument();
 htmlDoc.LoadHtml(html);
 
 <span class="code-green">// Descendants</span>	
-htmlDoc.DocumentNode.Descendants("input")
+doc.DocumentNode.Descendants("input")
 </pre>
 					
 						</div>
