@@ -11,7 +11,7 @@
     <TargetFramework>netstandard1.3</TargetFramework>
     <PostBuildEvent>del /f /q C:\Users\Jonathan\Desktop\Z\zzzproject\HtmlAgilityPack\Solutions\..\Nuget\lib\NetStandard1_3\*
 copy "Html*.*" C:\Users\Jonathan\Desktop\Z\zzzproject\HtmlAgilityPack\Solutions\..\Nuget\lib\NetStandard1_3\*</PostBuildEvent>
-    <PackageId>HtmlAgilityPack</PackageId>
+    <AssemblyName>HtmlAgilityPack</AssemblyName>
     <Version>1.5.0</Version>
     <Authors>ZZZ Projects Inc.</Authors>
     <Company>ZZZ Projects Inc.</Company>
