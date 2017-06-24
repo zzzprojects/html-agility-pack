@@ -40,7 +40,7 @@ namespace HtmlAgilityPack
 				HtmlNodeNavigator n = (HtmlNodeNavigator)it.Current;
 				list.Add(n.CurrentNode);
 			}
-			if (list.Count == 0)
+			if (list.Count == 0 && !OwnerDocument.OptionEmptyCollection)
 			{
 				return null;
 			}

@@ -72,6 +72,11 @@ namespace HtmlAgilityPack
         /// </summary>
         public bool OptionComputeChecksum;
 
+        /// <summary>
+		/// Defines if SelectNodes method will return null or empty collection when no node matched the XPath expression.
+        /// Setting this to true will return empty collection and false will return null. Default is false.
+		/// </summary>
+		public bool OptionEmptyCollection = false;
 
 
         /// <summary>

@@ -2052,15 +2052,22 @@ namespace HtmlAgilityPack
 
 	        var classAttributes = Attributes.AttributesWithName("class");
 
-	        if (IsEmpty(classAttributes))
+	        if (IsEmpty(classAttributes) && throwError)
 	        {
 	            throw new Exception(HtmlDocument.HtmlExceptionClassDoesNotExist);
 	        }
 
 	        foreach (var att in classAttributes)
 	        {
-	            string newClassNames = att.Value.Replace(oldClass, newClass);
-	            SetAttributeValue(att.Name, newClassNames);
+                if (att.Value.Equals(oldClass) || att.Value.Contains(oldClass))
+                {
+                    string newClassNames = att.Value.Replace(oldClass, newClass);
+                    SetAttributeValue(att.Name, newClassNames);
+                }
+                else if (throwError)
+                {
+                    throw new Exception(HtmlDocument.HtmlExceptionClassDoesNotExist);
+                }
 	        }
 	    }
 

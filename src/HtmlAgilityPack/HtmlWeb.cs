@@ -20,11 +20,11 @@ using System.Net.Http;
 using System.Threading.Tasks;
 #endif
 
-#if FX45
-//using System.Diagnostics;
-//using System.Windows.Forms;
-//using System.Threading;
-//using System.Threading.Tasks;
+#if FX40 || FX45
+using System.Diagnostics;
+using System.Windows.Forms;
+using System.Threading;
+using System.Threading.Tasks;
 #endif
 
 #endregion
@@ -2057,131 +2057,110 @@ namespace HtmlAgilityPack
 
         #region Browser
 
-#if FX45
-        //private int _browserTimeout = 30000;
-        //private int _browserDelay = 100;
+#if FX40 || FX45
 
-        ///// <summary>Gets or sets the web browser timeout.</summary>
-        ///// 
-        //public int BrowserTimeout
-        //{
-        //    get { return _browserTimeout; }
-        //    set { _browserTimeout = value; }
-        //}
+        internal class WebBrowserDisposable : WebBrowser, IDisposable
+        {
+            internal void Dispose(bool disposing)
+            {
+                base.Dispose(disposing);
+            }
 
-        ///// <summary>Gets or sets the web browser delay.</summary>
-        //public int BrowserDelay
-        //{
-        //    get { return _browserDelay; }
-        //    set { _browserDelay = value; }
-        //}
-        ///// <summary>Loads the HTML from browser.</summary>
-        ///// <exception cref="Exception">Thrown when an exception error condition occurs.</exception>
-        ///// <param name="url">The requested URL, such as "http://www.zzzprojects.com/".</param>
-        ///// <param name="isBrowserScriptCompleted">(Optional) Check if all script is completed. By example, some script could all content dynamically after the document is completed.</param>
-        ///// <returns>A new HTML document.</returns>
-        //public HtmlDocument LoadFromBrowser(string url, Func<WebBrowser, bool> isBrowserScriptCompleted = null)
-        //{
-        //    Uri uri = new Uri(url);
-        //    HtmlDocument doc = new HtmlDocument();
+            void IDisposable.Dispose()
+            {
+                base.Dispose(true);
+            }
+        }
 
-        //    using (WebBrowser webBrowser = new WebBrowser { ScriptErrorsSuppressed = true })
-        //    {
-        //        webBrowser.Navigate(uri);
+        private TimeSpan _browserTimeout = TimeSpan.FromSeconds(30);
+        private TimeSpan _browserDelay = TimeSpan.FromMilliseconds(100);
 
-        //        Stopwatch clock = new Stopwatch();
-        //        clock.Start();
+        /// <summary>Gets or sets the web browser timeout.</summary>
+        /// 
+        public TimeSpan BrowserTimeout
+        {
+            get { return _browserTimeout; }
+            set { _browserTimeout = value; }
+        }
 
-        //        // WAIT until the document is completed
-        //        while (webBrowser.ReadyState != WebBrowserReadyState.Complete || webBrowser.IsBusy)
-        //        {
-        //            var state = webBrowser.ReadyState;
-        //            // ENSURE we didn't reach the timeout
-        //            if (BrowserTimeout != 0 && clock.ElapsedMilliseconds > BrowserTimeout)
-        //            {
-        //                throw new Exception("WebBrowser Execution Timeout Expired. The timeout period elapsed prior to completion of the operation. To avoid this error, increase the WebBrowserTimeout value or set it to 0 (unlimited).");
-        //            }
+        /// <summary>Gets or sets the web browser delay.</summary>
+        public TimeSpan BrowserDelay
+        {
+            get { return _browserDelay; }
+            set { _browserDelay = value; }
+        }
 
-        //            var x1 = TestWait().Result;
-        //        }
+        /// <summary>Loads HTML using a WebBrowser and Application.DoEvents.</summary>
+        /// <exception cref="Exception">Thrown when an exception error condition occurs.</exception>
+        /// <param name="url">The requested URL, such as "http://html-agility-pack.net/".</param>
+        /// <param name="isBrowserScriptCompleted">(Optional) Check if the browser script has all been run and completed.</param>
+        /// <returns>A new HTML document.</returns>
+        public HtmlDocument LoadFromBrowser(string url, Func<string, bool> isBrowserScriptCompleted = null)
+        {
+            return LoadFromBrowser(url, browser =>
+            {
+                if (isBrowserScriptCompleted != null)
+                {
+                    return isBrowserScriptCompleted(browser.Document.GetElementsByTagName("HTML")[0].OuterHtml);
+                }
+                return true;
+            });
+        }
 
-        //        if (isBrowserScriptCompleted != null)
-        //        {
-        //            // LOOP until the user say script are completed
-        //            while (!isBrowserScriptCompleted(webBrowser))
-        //            {
-        //                // ENSURE we didn't reach the timeout
-        //                if (BrowserTimeout != 0 && clock.ElapsedMilliseconds > BrowserTimeout)
-        //                {
-        //                    throw new Exception("WebBrowser Execution Timeout Expired. The timeout period elapsed prior to completion of the operation. To avoid this error, increase the WebBrowserTimeout value or set it to 0 (unlimited).");
-        //                }
+        /// <summary>Loads HTML using a WebBrowser and Application.DoEvents.</summary>
+        /// <exception cref="Exception">Thrown when an exception error condition occurs.</exception>
+        /// <param name="url">The requested URL, such as "http://html-agility-pack.net/".</param>
+        /// <param name="isBrowserScriptCompleted">(Optional) Check if the browser script has all been run and completed.</param>
+        /// <returns>A new HTML document.</returns>
+        public HtmlDocument LoadFromBrowser(string url, Func<WebBrowser, bool> isBrowserScriptCompleted = null)
+        {
+            Uri uri = new Uri(url);
+            HtmlDocument doc = new HtmlDocument();
+            string timeoutError = "WebBrowser Execution Timeout Expired. The timeout period elapsed prior to completion of the operation. To avoid this error, increase the WebBrowserTimeout value or set it to 0 (unlimited).";
 
-        //                var x1 = TestWait().Result;
-        //            }
-        //        }
+            using (WebBrowserDisposable webBrowser = new WebBrowserDisposable { AllowWebBrowserDrop = true, ScriptErrorsSuppressed = true })
+            {
+                webBrowser.Navigate(uri);
 
-        //        var outerHtml = webBrowser.Document.GetElementsByTagName("HTML")[0].OuterHtml;
+                Stopwatch clock = new Stopwatch();
+                clock.Start();
 
-        //        doc.LoadHtml(outerHtml);
+                // WAIT until the document is completed
+                while (webBrowser.ReadyState != WebBrowserReadyState.Complete || webBrowser.IsBusy)
+                {
+                    // ENSURE we didn't reach the timeout
+                    if (BrowserTimeout.Milliseconds != 0 && clock.ElapsedMilliseconds > BrowserTimeout.Milliseconds)
+                    {
+                        throw new Exception(timeoutError);
+                    }
 
-        //        return doc;
-        //    }
-        //    //return LoadFromBrowser2(url, isBrowserScriptCompleted).Result;
-        //}
+                    Application.DoEvents();
+                    Thread.Sleep(_browserDelay);
+                }
 
-        //internal async Task<int> TestWait()
-        //{
-        //    await Task.Delay(_browserDelay).ConfigureAwait(false);
-        //    return 1;
-        //}
+                if (isBrowserScriptCompleted != null)
+                {
+                    // LOOP until the user say script are completed
+                    while (!isBrowserScriptCompleted(webBrowser))
+                    {
+                        // ENSURE we didn't reach the timeout
+                        if (BrowserTimeout.Milliseconds != 0 && clock.ElapsedMilliseconds > BrowserTimeout.Milliseconds)
+                        {
+                            throw new Exception(timeoutError);
+                        }
 
-        //internal async Task<HtmlDocument> LoadFromBrowser2(string url, Func<WebBrowser, bool> isBrowserScriptCompleted = null)
-        //{
-        //    Uri uri = new Uri(url);
-        //    HtmlDocument doc = new HtmlDocument();
+                        Application.DoEvents();
+                        Thread.Sleep(_browserDelay);
+                    }
+                }
 
-        //    using (WebBrowser webBrowser = new WebBrowser { ScriptErrorsSuppressed = true })
-        //    {
-        //        webBrowser.Navigate(uri);
+                var documentText = webBrowser.Document.GetElementsByTagName("HTML")[0].OuterHtml;
 
-        //        Stopwatch clock = new Stopwatch();
-        //        clock.Start();
+                doc.LoadHtml(documentText);
+            }
 
-        //        // WAIT until the document is completed
-        //        while (webBrowser.ReadyState != WebBrowserReadyState.Complete || webBrowser.IsBusy)
-        //        {
-        //            var state = webBrowser.ReadyState;
-        //            // ENSURE we didn't reach the timeout
-        //            if (BrowserTimeout != 0 && clock.ElapsedMilliseconds > BrowserTimeout)
-        //            {
-        //                throw new Exception("WebBrowser Execution Timeout Expired. The timeout period elapsed prior to completion of the operation. To avoid this error, increase the WebBrowserTimeout value or set it to 0 (unlimited).");
-        //            }
-        //            Application.DoEvents();
-        //            await Task.Delay(_browserDelay).ConfigureAwait(false);
-        //        }
-
-        //        if (isBrowserScriptCompleted != null)
-        //        {
-        //            // LOOP until the user say script are completed
-        //            while (!isBrowserScriptCompleted(webBrowser))
-        //            {
-        //                // ENSURE we didn't reach the timeout
-        //                if (BrowserTimeout != 0 && clock.ElapsedMilliseconds > BrowserTimeout)
-        //                {
-        //                    throw new Exception("WebBrowser Execution Timeout Expired. The timeout period elapsed prior to completion of the operation. To avoid this error, increase the WebBrowserTimeout value or set it to 0 (unlimited).");
-        //                }
-
-        //                await Task.Delay(_browserDelay).ConfigureAwait(false);
-        //            }
-        //        }
-
-        //        var outerHtml = webBrowser.Document.GetElementsByTagName("HTML")[0].OuterHtml;
-
-        //        doc.LoadHtml(outerHtml);
-
-        //        return doc;
-        //    }
-        //}
+            return doc;
+        }
 #endif
         #endregion
     }

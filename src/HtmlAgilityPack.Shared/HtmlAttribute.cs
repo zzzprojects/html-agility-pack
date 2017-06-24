@@ -138,13 +138,15 @@ namespace HtmlAgilityPack
             {
                 if (_value == null)
                 {
-                    _value = _ownerdocument.Text.Substring(_valuestartindex, _valuelength);
+                    _value = HtmlEntity.DeEntitize(_ownerdocument.Text.Substring(_valuestartindex, _valuelength));
                 }
+
                 return _value;
             }
             set
             {
-                _value = value;
+                _value = HtmlEntity.DeEntitize(value);
+
                 if (_ownernode != null)
                 {
                     _ownernode.SetChanged();

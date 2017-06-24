@@ -375,5 +375,93 @@ namespace HtmlAgilityPack.Tests
             // <div>some bolded<b>text</b></div> should have been removed
             Assert.AreEqual("<html><head></head><body></body></html>", doc.DocumentNode.OuterHtml);
         }
+        [Test]
+        public void TestAttributeValue()
+        {
+            var html =
+            "<!DOCTYPE html><html><body data-foo=&quot;Hello&quot;><p>This is <u>underlined</u> paragraph</p></body></html>";
+
+            string output = "\"Hello\"";
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(html);
+
+            var body = htmlDoc.DocumentNode.SelectSingleNode("//body");
+
+            var val = body.Attributes["data-foo"].Value;
+
+            Assert.AreEqual(output, val);
+        }
+
+	    [Test]
+	    public void TestAttributeValue2()
+	    {
+	        var html =
+	            "<!DOCTYPE html><html><body data-foo=&quot;\"Hello\"&quot;><p>This is <u>underlined</u> paragraph</p></body></html>";
+
+	        string output = "\"\"Hello\"\"";
+
+	        var htmlDoc = new HtmlDocument();
+	        htmlDoc.LoadHtml(html);
+
+	        var body = htmlDoc.DocumentNode.SelectSingleNode("//body");
+
+	        var val = body.Attributes["data-foo"].Value;
+
+	        Assert.AreEqual(output, val);
+	    }
+
+	    [Test]
+	    public void TestAttributeValue3()
+	    {
+	        var doc = new HtmlDocument();
+	        var a = doc.CreateAttribute("href", "\"bad_href\"");
+	        Assert.AreEqual("href", a.Name);
+	        Assert.AreEqual("\"bad_href\"", a.Value);
+	    }
+
+	    [Test]
+	    public void TestAttributeValue4()
+	    {
+	        var html ="<!DOCTYPE html><html><body data-foo='\"Hello\"'><p>This is <u>underlined</u> paragraph</p></body></html>";
+
+	        string output = "\"Hello\"";
+
+	        var htmlDoc = new HtmlDocument();
+	        htmlDoc.LoadHtml(html);
+
+	        var body = htmlDoc.DocumentNode.SelectSingleNode("//body");
+
+	        var val = body.Attributes["data-foo"].Value;
+
+	        Assert.AreEqual(output, val);
+	    }
+
+[Test]
+
+        public void TestSingleNodesEmptyCollection()
+        {
+            var html =
+        @"<!DOCTYPE html>
+<html>
+<body>
+	<h1>This is <b>bold</b> heading</h1>
+	<p>This is <u>underlined</u> paragraph</p>
+	<h2>This is <i>italic</i> heading</h2>
+	<h2>This is new heading</h2>
+</body>
+</html> ";
+
+            var output = 0;
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(html);
+
+            htmlDoc.OptionEmptyCollection = true;
+
+            var divNodes = htmlDoc.DocumentNode.SelectNodes("//div");
+
+            Assert.AreEqual(output, divNodes.Count);
+        }
     }
 }
