@@ -376,7 +376,7 @@ header .arrow-rtl img {
 		<section id="testimonials">
 			<div class="container">
 				<h2 class="section-header"><i class="fa fa-heart text-red" aria-hidden="true"></i>&nbsp;By Millions!</h2>
-				<h3>Discover why thousands of developers around the word use Html Agility Pack</h3>
+				<h3>Discover why thousands of developers around the world use Html Agility Pack</h3>
 
 				<div class="row">
 					<div class="col-md-6">
