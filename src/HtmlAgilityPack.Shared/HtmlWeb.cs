@@ -21,10 +21,12 @@ using System.Threading.Tasks;
 #endif
 
 #if FX40 || FX45
+using System.Collections;
 using System.Diagnostics;
-using System.Windows.Forms;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Reflection;
 #endif
 
 #endregion
@@ -2059,19 +2061,6 @@ namespace HtmlAgilityPack
 
 #if FX40 || FX45
 
-        internal class WebBrowserDisposable : WebBrowser, IDisposable
-        {
-            internal void Dispose(bool disposing)
-            {
-                base.Dispose(disposing);
-            }
-
-            void IDisposable.Dispose()
-            {
-                base.Dispose(true);
-            }
-        }
-
         private TimeSpan _browserTimeout = TimeSpan.FromSeconds(30);
         private TimeSpan _browserDelay = TimeSpan.FromMilliseconds(100);
 
@@ -2093,6 +2082,31 @@ namespace HtmlAgilityPack
         /// <summary>Loads HTML using a WebBrowser and Application.DoEvents.</summary>
         /// <exception cref="Exception">Thrown when an exception error condition occurs.</exception>
         /// <param name="url">The requested URL, such as "http://html-agility-pack.net/".</param>
+        /// <returns>A new HTML document.</returns>
+        public HtmlDocument LoadFromBrowser(string url)
+        {
+            return LoadFromBrowser(url, (object browser) => true);
+        }
+        internal string WebBrowserOuterHtml(object webBrowser)
+        {
+            var documentProperty = webBrowser.GetType().GetProperty("Document");
+            var document = documentProperty.GetValue(webBrowser, null);
+
+            var getElementsByTagNameMethod = document.GetType().GetMethod("GetElementsByTagName", new Type[] { typeof(string) });
+            var getElementsByTagName = getElementsByTagNameMethod.Invoke(document, new[] { "HTML" });
+
+            var indexerProperty = getElementsByTagName.GetType().GetProperty("Item", new Type[] { typeof(int) });
+            var firstElement = indexerProperty.GetValue(getElementsByTagName, new object[] { 0 });
+
+            var outerHtmlProperty = firstElement.GetType().GetProperty("OuterHtml");
+            var outerHtml = outerHtmlProperty.GetValue(firstElement, null);
+
+            return (string)outerHtml;
+        }
+
+        /// <summary>Loads HTML using a WebBrowser and Application.DoEvents.</summary>
+        /// <exception cref="Exception">Thrown when an exception error condition occurs.</exception>
+        /// <param name="url">The requested URL, such as "http://html-agility-pack.net/".</param>
         /// <param name="isBrowserScriptCompleted">(Optional) Check if the browser script has all been run and completed.</param>
         /// <returns>A new HTML document.</returns>
         public HtmlDocument LoadFromBrowser(string url, Func<string, bool> isBrowserScriptCompleted = null)
@@ -2101,7 +2115,7 @@ namespace HtmlAgilityPack
             {
                 if (isBrowserScriptCompleted != null)
                 {
-                    return isBrowserScriptCompleted(browser.Document.GetElementsByTagName("HTML")[0].OuterHtml);
+                    return isBrowserScriptCompleted(WebBrowserOuterHtml(browser));
                 }
                 return true;
             });
@@ -2112,29 +2126,48 @@ namespace HtmlAgilityPack
         /// <param name="url">The requested URL, such as "http://html-agility-pack.net/".</param>
         /// <param name="isBrowserScriptCompleted">(Optional) Check if the browser script has all been run and completed.</param>
         /// <returns>A new HTML document.</returns>
-        public HtmlDocument LoadFromBrowser(string url, Func<WebBrowser, bool> isBrowserScriptCompleted = null)
+        public HtmlDocument LoadFromBrowser(string url, Func<object, bool> isBrowserScriptCompleted = null)
         {
+            var system_windows_forms = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.GetName().Name == "System.Windows.Forms");
+
+            if (system_windows_forms == null)
+            {
+                throw new Exception("Oops! No reference to System.Windows.Forms have been found. Make sure your project has a reference to this assembly to use LoadFromBrowser method.");
+            }
+
+            var webBrowserType = system_windows_forms.GetType("System.Windows.Forms.WebBrowser");
+            var webBrowserConstructor = webBrowserType.GetConstructor(new Type[0]);
+            var application = system_windows_forms.GetType("System.Windows.Forms.Application");
+            var doEventsMethod = application.GetMethod("DoEvents");
+
             Uri uri = new Uri(url);
             HtmlDocument doc = new HtmlDocument();
             string timeoutError = "WebBrowser Execution Timeout Expired. The timeout period elapsed prior to completion of the operation. To avoid this error, increase the WebBrowserTimeout value or set it to 0 (unlimited).";
 
-            using (WebBrowserDisposable webBrowser = new WebBrowserDisposable { AllowWebBrowserDrop = true, ScriptErrorsSuppressed = true })
+            using (var webBrowser = (IDisposable)webBrowserConstructor.Invoke(new object[0]))
             {
-                webBrowser.Navigate(uri);
+                var scripErrorSuppressedProperty = webBrowserType.GetProperty("ScriptErrorsSuppressed");
+                scripErrorSuppressedProperty.SetValue(webBrowser, true, null);
+
+                var navigateMethod = webBrowserType.GetMethod("Navigate", new Type[] {typeof(Uri)});
+                navigateMethod.Invoke(webBrowser, new object[] {uri});
+
+                var readyStateProperty = webBrowserType.GetProperty("ReadyState");
+                var isBusyProperty = webBrowserType.GetProperty("IsBusy");
 
                 Stopwatch clock = new Stopwatch();
                 clock.Start();
 
                 // WAIT until the document is completed
-                while (webBrowser.ReadyState != WebBrowserReadyState.Complete || webBrowser.IsBusy)
+                while ((int)readyStateProperty.GetValue(webBrowser, null) != 4 || (bool)isBusyProperty.GetValue(webBrowser, null))
                 {
                     // ENSURE we didn't reach the timeout
-                    if (BrowserTimeout.Milliseconds != 0 && clock.ElapsedMilliseconds > BrowserTimeout.Milliseconds)
+                    if (BrowserTimeout.TotalMilliseconds != 0 && clock.ElapsedMilliseconds > BrowserTimeout.TotalMilliseconds)
                     {
                         throw new Exception(timeoutError);
                     }
 
-                    Application.DoEvents();
+                    doEventsMethod.Invoke(null, new object[0]);
                     Thread.Sleep(_browserDelay);
                 }
 
@@ -2144,17 +2177,18 @@ namespace HtmlAgilityPack
                     while (!isBrowserScriptCompleted(webBrowser))
                     {
                         // ENSURE we didn't reach the timeout
-                        if (BrowserTimeout.Milliseconds != 0 && clock.ElapsedMilliseconds > BrowserTimeout.Milliseconds)
+                        if (BrowserTimeout.TotalMilliseconds != 0 && clock.ElapsedMilliseconds > BrowserTimeout.TotalMilliseconds)
                         {
+                            var documentTextError = WebBrowserOuterHtml(webBrowser);
                             throw new Exception(timeoutError);
                         }
 
-                        Application.DoEvents();
+                        doEventsMethod.Invoke(null, new object[0]);
                         Thread.Sleep(_browserDelay);
                     }
                 }
 
-                var documentText = webBrowser.Document.GetElementsByTagName("HTML")[0].OuterHtml;
+                var documentText = WebBrowserOuterHtml(webBrowser);
 
                 doc.LoadHtml(documentText);
             }

@@ -145,7 +145,7 @@ namespace HtmlAgilityPack
             }
             set
             {
-                _value = HtmlEntity.DeEntitize(value);
+                _value = value;
 
                 if (_ownernode != null)
                 {
