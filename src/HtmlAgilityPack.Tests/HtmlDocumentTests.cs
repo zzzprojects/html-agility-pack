@@ -463,5 +463,23 @@ namespace HtmlAgilityPack.Tests
 
             Assert.AreEqual(output, divNodes.Count);
         }
+
+        [Test]
+        public void TestCreateNode()
+        {
+            string output = "<p>text</p>";
+            HtmlNode node1 = HtmlNode.CreateNode(@"
+            <p>text</p>
+            ");
+
+            HtmlNode node2 = HtmlNode.CreateNode(@"
+                         
+            <p>text</p>            
+
+            ");
+
+            Assert.AreEqual(output, node1.OuterHtml);
+            Assert.AreEqual(output, node2.OuterHtml);
+        }
     }
 }
