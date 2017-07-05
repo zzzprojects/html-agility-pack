@@ -463,7 +463,6 @@ namespace HtmlAgilityPack.Tests
 
             Assert.AreEqual(output, divNodes.Count);
         }
-
         [Test]
         public void TestCreateNode()
         {
@@ -478,8 +477,23 @@ namespace HtmlAgilityPack.Tests
 
             ");
 
+            HtmlNode node3 = HtmlNode.CreateNode(@"   <p>text</p>   ");
+
             Assert.AreEqual(output, node1.OuterHtml);
             Assert.AreEqual(output, node2.OuterHtml);
+            Assert.AreEqual(output, node3.OuterHtml);
+
+            try
+            {
+                HtmlNode node4 = HtmlNode.CreateNode("<p>a<p/><p>b</p>");
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual("Multiple node elments can't be created.", e.Message);
+            }
+
+            HtmlNode node5 = HtmlNode.CreateNode(@"/r/n");
+            Assert.AreEqual("/r/n", node5.OuterHtml);
         }
     }
 }

@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace HtmlAgilityPack.Tests
 {
 	[TestFixture]
-	public class HtmlNode
+	public class HtmlNode2
 	{
 		[Test(Description="Attributes should maintain their original character casing if OptionOutputOriginalCase is true")]
 		public void EnsureAttributeOriginalCaseIsPreserved()

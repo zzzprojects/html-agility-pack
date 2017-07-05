@@ -569,7 +569,6 @@ namespace HtmlAgilityPack
 			// REVIEW: this is *not* optimum...
 			HtmlDocument doc = new HtmlDocument();
 			doc.LoadHtml(html);
-
             if(!doc.DocumentNode.IsSingleElementNode())
             {
                 throw new Exception("Multiple node elments can't be created.");
