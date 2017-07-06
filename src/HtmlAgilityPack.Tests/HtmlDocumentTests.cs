@@ -376,7 +376,7 @@ namespace HtmlAgilityPack.Tests
             Assert.AreEqual("<html><head></head><body></body></html>", doc.DocumentNode.OuterHtml);
         }
         [Test]
-        public void TestAttributeValue()
+        public void TestAttributeDeEntitizeValue()
         {
             var html =
             "<!DOCTYPE html><html><body data-foo=&quot;Hello&quot;><p>This is <u>underlined</u> paragraph</p></body></html>";
@@ -388,13 +388,13 @@ namespace HtmlAgilityPack.Tests
 
             var body = htmlDoc.DocumentNode.SelectSingleNode("//body");
 
-            var val = body.Attributes["data-foo"].Value;
+            var val = body.Attributes["data-foo"].DeEntitizeValue;
 
             Assert.AreEqual(output, val);
         }
 
 	    [Test]
-	    public void TestAttributeValue2()
+	    public void TestAttributeDeEntitizeValue2()
 	    {
 	        var html =
 	            "<!DOCTYPE html><html><body data-foo=&quot;\"Hello\"&quot;><p>This is <u>underlined</u> paragraph</p></body></html>";
@@ -406,26 +406,43 @@ namespace HtmlAgilityPack.Tests
 
 	        var body = htmlDoc.DocumentNode.SelectSingleNode("//body");
 
-	        var val = body.Attributes["data-foo"].Value;
+	        var val = body.Attributes["data-foo"].DeEntitizeValue;
 
 	        Assert.AreEqual(output, val);
 	    }
 
 	    [Test]
-	    public void TestAttributeValue3()
+	    public void TestAttributeDeEntitizeValue3()
 	    {
 	        var doc = new HtmlDocument();
 	        var a = doc.CreateAttribute("href", "\"bad_href\"");
 	        Assert.AreEqual("href", a.Name);
-	        Assert.AreEqual("\"bad_href\"", a.Value);
+	        Assert.AreEqual("\"bad_href\"", a.DeEntitizeValue);
 	    }
 
 	    [Test]
-	    public void TestAttributeValue4()
+	    public void TestAttributeDeEntitizeValue4()
 	    {
 	        var html ="<!DOCTYPE html><html><body data-foo='\"Hello\"'><p>This is <u>underlined</u> paragraph</p></body></html>";
 
 	        string output = "\"Hello\"";
+
+	        var htmlDoc = new HtmlDocument();
+	        htmlDoc.LoadHtml(html);
+
+	        var body = htmlDoc.DocumentNode.SelectSingleNode("//body");
+
+	        var val = body.Attributes["data-foo"].DeEntitizeValue;
+
+	        Assert.AreEqual(output, val);
+	    }
+
+        [Test]
+        public void TestAttributeValue()
+        {
+            var html = @"<!DOCTYPE html><html><body data-foo='http://example.com/path?productId=9788762505032&amp;title=something'><p>This is <u>underlined</u> paragraph</p></body></html>";
+
+            string output = "http://example.com/path?productId=9788762505032&amp;title=something";
 
 	        var htmlDoc = new HtmlDocument();
 	        htmlDoc.LoadHtml(html);
