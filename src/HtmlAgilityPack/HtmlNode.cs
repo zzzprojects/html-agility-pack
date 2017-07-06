@@ -1917,7 +1917,7 @@ namespace HtmlAgilityPack
                 element = element.NextSibling;
             }
 
-            return count == 1 ? true : false;
+            return count <= 1 ? true : false;
         }
         #endregion
 
