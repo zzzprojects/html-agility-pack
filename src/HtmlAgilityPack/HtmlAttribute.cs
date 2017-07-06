@@ -138,7 +138,7 @@ namespace HtmlAgilityPack
             {
                 if (_value == null)
                 {
-                    _value = HtmlEntity.DeEntitize(_ownerdocument.Text.Substring(_valuestartindex, _valuelength));
+                    _value = _ownerdocument.Text.Substring(_valuestartindex, _valuelength);
                 }
 
                 return _value;
@@ -151,6 +151,17 @@ namespace HtmlAgilityPack
                 {
                     _ownernode.SetChanged();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets the DeEntitized value of the attribute.
+        /// </summary>
+        public string DeEntitizeValue
+        {
+            get
+            {
+                return HtmlEntity.DeEntitize(Value);
             }
         }
 
