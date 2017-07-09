@@ -18,6 +18,7 @@ using Microsoft.Win32;
 #if NET45 || NETSTANDARD
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Threading;
 #endif
 
 #if FX40 || FX45
@@ -1948,81 +1949,177 @@ namespace HtmlAgilityPack
 	        return await LoadFromWebAsync(new Uri(url), null, null);
 	    }
 
-	    /// <summary>
-	    /// Begins the process of downloading an internet resource
-	    /// </summary>
-	    /// <param name="url">Url to the html document</param>
-	    /// <param name="encoding">The encoding to use while downloading the document</param>
-	    public async Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding)
+        /// <summary>
+        /// Begins the process of downloading an internet resource
+        /// </summary>
+        /// <param name="url">Url to the html document</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        public async Task<HtmlDocument> LoadFromWebAsync(string url, CancellationToken cancellationToken)
+        {
+            return await LoadFromWebAsync(new Uri(url), null, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Begins the process of downloading an internet resource
+        /// </summary>
+        /// <param name="url">Url to the html document</param>
+        /// <param name="encoding">The encoding to use while downloading the document</param>
+        public async Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding)
 	    {
-	        return await LoadFromWebAsync(new Uri(url), encoding, null);
+	        return await LoadFromWebAsync(new Uri(url), encoding, null, CancellationToken.None);
 	    }
 
-	    /// <summary>
-	    /// Begins the process of downloading an internet resource
-	    /// </summary>
-	    /// <param name="url">Url to the html document</param>
-	    /// <param name="encoding">The encoding to use while downloading the document</param>
-	    /// <param name="userName">Username to use for credentials in the web request</param>
-	    /// <param name="password">Password to use for credentials in the web request</param>
-	    public async Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding, string userName, string password)
+        /// <summary>
+        /// Begins the process of downloading an internet resource
+        /// </summary>
+        /// <param name="url">Url to the html document</param>
+        /// <param name="encoding">The encoding to use while downloading the document</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        public async Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding, CancellationToken cancellationToken)
+        {
+            return await LoadFromWebAsync(new Uri(url), encoding, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Begins the process of downloading an internet resource
+        /// </summary>
+        /// <param name="url">Url to the html document</param>
+        /// <param name="encoding">The encoding to use while downloading the document</param>
+        /// <param name="userName">Username to use for credentials in the web request</param>
+        /// <param name="password">Password to use for credentials in the web request</param>
+        public async Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding, string userName, string password)
 	    {
-	        return await LoadFromWebAsync(new Uri(url), encoding, new NetworkCredential(userName, password));
+	        return await LoadFromWebAsync(new Uri(url), encoding, new NetworkCredential(userName, password), CancellationToken.None);
 	    }
 
-	    /// <summary>
-	    /// Begins the process of downloading an internet resource
-	    /// </summary>
-	    /// <param name="url">Url to the html document</param>
-	    /// <param name="encoding">The encoding to use while downloading the document</param>
-	    /// <param name="userName">Username to use for credentials in the web request</param>
-	    /// <param name="password">Password to use for credentials in the web request</param>
-	    /// <param name="domain">Domain to use for credentials in the web request</param>
-	    public async Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding, string userName, string password, string domain)
+        /// <summary>
+        /// Begins the process of downloading an internet resource
+        /// </summary>
+        /// <param name="url">Url to the html document</param>
+        /// <param name="encoding">The encoding to use while downloading the document</param>
+        /// <param name="userName">Username to use for credentials in the web request</param>
+        /// <param name="password">Password to use for credentials in the web request</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        public async Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding, string userName, string password, CancellationToken cancellationToken)
+        {
+            return await LoadFromWebAsync(new Uri(url), encoding, new NetworkCredential(userName, password), cancellationToken);
+        }
+
+        /// <summary>
+        /// Begins the process of downloading an internet resource
+        /// </summary>
+        /// <param name="url">Url to the html document</param>
+        /// <param name="encoding">The encoding to use while downloading the document</param>
+        /// <param name="userName">Username to use for credentials in the web request</param>
+        /// <param name="password">Password to use for credentials in the web request</param>
+        /// <param name="domain">Domain to use for credentials in the web request</param>
+        public async Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding, string userName, string password, string domain)
 	    {
-	        return await LoadFromWebAsync(new Uri(url), encoding, new NetworkCredential(userName, password, domain));
+	        return await LoadFromWebAsync(new Uri(url), encoding, new NetworkCredential(userName, password, domain), CancellationToken.None);
 	    }
 
-	    /// <summary>
-	    /// Begins the process of downloading an internet resource
-	    /// </summary>
-	    /// <param name="url">Url to the html document</param>
-	    /// <param name="userName">Username to use for credentials in the web request</param>
-	    /// <param name="password">Password to use for credentials in the web request</param>
-	    /// <param name="domain">Domain to use for credentials in the web request</param>
-	    public async Task<HtmlDocument> LoadFromWebAsync(string url, string userName, string password, string domain)
+        /// <summary>
+        /// Begins the process of downloading an internet resource
+        /// </summary>
+        /// <param name="url">Url to the html document</param>
+        /// <param name="encoding">The encoding to use while downloading the document</param>
+        /// <param name="userName">Username to use for credentials in the web request</param>
+        /// <param name="password">Password to use for credentials in the web request</param>
+        /// <param name="domain">Domain to use for credentials in the web request</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        public async Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding, string userName, string password, string domain, CancellationToken cancellationToken)
+        {
+            return await LoadFromWebAsync(new Uri(url), encoding, new NetworkCredential(userName, password, domain), cancellationToken);
+        }
+
+        /// <summary>
+        /// Begins the process of downloading an internet resource
+        /// </summary>
+        /// <param name="url">Url to the html document</param>
+        /// <param name="userName">Username to use for credentials in the web request</param>
+        /// <param name="password">Password to use for credentials in the web request</param>
+        /// <param name="domain">Domain to use for credentials in the web request</param>
+        public async Task<HtmlDocument> LoadFromWebAsync(string url, string userName, string password, string domain)
 	    {
-	        return await LoadFromWebAsync(new Uri(url), null, new NetworkCredential(userName, password, domain));
+	        return await LoadFromWebAsync(new Uri(url), null, new NetworkCredential(userName, password, domain), CancellationToken.None);
 	    }
 
-	    /// <summary>
-	    /// Begins the process of downloading an internet resource
-	    /// </summary>
-	    /// <param name="url">Url to the html document</param>
-	    /// <param name="userName">Username to use for credentials in the web request</param>
-	    /// <param name="password">Password to use for credentials in the web request</param>
-	    public async Task<HtmlDocument> LoadFromWebAsync(string url, string userName, string password)
+        /// <summary>
+        /// Begins the process of downloading an internet resource
+        /// </summary>
+        /// <param name="url">Url to the html document</param>
+        /// <param name="userName">Username to use for credentials in the web request</param>
+        /// <param name="password">Password to use for credentials in the web request</param>
+        /// <param name="domain">Domain to use for credentials in the web request</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        public async Task<HtmlDocument> LoadFromWebAsync(string url, string userName, string password, string domain, CancellationToken cancellationToken)
+        {
+            return await LoadFromWebAsync(new Uri(url), null, new NetworkCredential(userName, password, domain), cancellationToken);
+        }
+
+        /// <summary>
+        /// Begins the process of downloading an internet resource
+        /// </summary>
+        /// <param name="url">Url to the html document</param>
+        /// <param name="userName">Username to use for credentials in the web request</param>
+        /// <param name="password">Password to use for credentials in the web request</param>
+        public async Task<HtmlDocument> LoadFromWebAsync(string url, string userName, string password)
 	    {
-	        return await LoadFromWebAsync(new Uri(url), null, new NetworkCredential(userName, password));
+	        return await LoadFromWebAsync(new Uri(url), null, new NetworkCredential(userName, password), CancellationToken.None);
 	    }
 
-	    /// <summary>
-	    /// Begins the process of downloading an internet resource
-	    /// </summary>
-	    /// <param name="url">Url to the html document</param>
-	    /// <param name="credentials">The credentials to use for authenticating the web request</param>
-	    public async Task<HtmlDocument> LoadFromWebAsync(string url, NetworkCredential credentials)
+        /// <summary>
+        /// Begins the process of downloading an internet resource
+        /// </summary>
+        /// <param name="url">Url to the html document</param>
+        /// <param name="userName">Username to use for credentials in the web request</param>
+        /// <param name="password">Password to use for credentials in the web request</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        public async Task<HtmlDocument> LoadFromWebAsync(string url, string userName, string password, CancellationToken cancellationToken)
+        {
+            return await LoadFromWebAsync(new Uri(url), null, new NetworkCredential(userName, password), cancellationToken);
+        }
+
+        /// <summary>
+        /// Begins the process of downloading an internet resource
+        /// </summary>
+        /// <param name="url">Url to the html document</param>
+        /// <param name="credentials">The credentials to use for authenticating the web request</param>
+        public async Task<HtmlDocument> LoadFromWebAsync(string url, NetworkCredential credentials)
 	    {
-	        return await LoadFromWebAsync(new Uri(url), null, credentials);
+	        return await LoadFromWebAsync(new Uri(url), null, credentials, CancellationToken.None);
 	    }
 
-	    /// <summary>
-	    /// Begins the process of downloading an internet resource
-	    /// </summary>
-	    /// <param name="uri">Url to the html document</param>
-	    /// <param name="encoding">The encoding to use while downloading the document</param>
-	    /// <param name="credentials">The credentials to use for authenticating the web request</param>
-	    public async Task<HtmlDocument> LoadFromWebAsync(Uri uri, Encoding encoding, NetworkCredential credentials)
+        /// <summary>
+        /// Begins the process of downloading an internet resource
+        /// </summary>
+        /// <param name="url">Url to the html document</param>
+        /// <param name="credentials">The credentials to use for authenticating the web request</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        public async Task<HtmlDocument> LoadFromWebAsync(string url, NetworkCredential credentials, CancellationToken cancellationToken)
+        {
+            return await LoadFromWebAsync(new Uri(url), null, credentials, cancellationToken);
+        }
+
+        /// <summary>
+        /// Begins the process of downloading an internet resource
+        /// </summary>
+        /// <param name="uri">Url to the html document</param>
+        /// <param name="encoding">The encoding to use while downloading the document</param>
+        /// <param name="credentials">The credentials to use for authenticating the web request</param>
+        public async Task<HtmlDocument> LoadFromWebAsync(Uri uri, Encoding encoding, NetworkCredential credentials)
+        {
+            return await LoadFromWebAsync(uri, encoding, credentials, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Begins the process of downloading an internet resource
+        /// </summary>
+        /// <param name="uri">Url to the html document</param>
+        /// <param name="encoding">The encoding to use while downloading the document</param>
+        /// <param name="credentials">The credentials to use for authenticating the web request</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        public async Task<HtmlDocument> LoadFromWebAsync(Uri uri, Encoding encoding, NetworkCredential credentials, CancellationToken cancellationToken)
 	    {
 	        var clientHandler = new HttpClientHandler();
 	        if (credentials == null)
@@ -2032,7 +2129,7 @@ namespace HtmlAgilityPack
 
 	        var client = new HttpClient(clientHandler);
 
-	        var e = await client.GetAsync(uri);
+	        var e = await client.GetAsync(uri, cancellationToken);
 	        if (e.StatusCode == HttpStatusCode.OK)
 	        {
 	            var html = string.Empty;
