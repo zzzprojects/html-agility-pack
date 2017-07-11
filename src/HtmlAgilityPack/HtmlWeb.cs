@@ -1789,6 +1789,11 @@ namespace HtmlAgilityPack
 	                        IOLibrary.CopyAlways(cachePath, path);
 	                        File.SetLastWriteTime(path, File.GetLastWriteTime(cachePath));
 	                    }
+
+                        if (_usingCacheAndLoad)
+                        {
+                            doc.Load(cachePath);
+                        }
 	                }
 	                else
 	                {
