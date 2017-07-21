@@ -512,5 +512,15 @@ namespace HtmlAgilityPack.Tests
             HtmlNode node5 = HtmlNode.CreateNode(@"/r/n");
             Assert.AreEqual("/r/n", node5.OuterHtml);
         }
+
+        [Test]
+        public void TestLoadWithUri()
+        {
+            string adress = "http://www.filmweb.pl/film/Piraci+z+Karaib%C3%B3w%3A+Zemsta+Salazara-2017-606542";
+            Uri uri = new Uri(adress, true);
+            var web = new HtmlWeb();
+            HtmlAgilityPack.HtmlDocument document = web.Load(uri);
+            Assert.AreNotEqual(document.DocumentNode.OuterHtml, string.Empty);
+        }
     }
 }
