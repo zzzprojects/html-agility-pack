@@ -1046,7 +1046,7 @@ namespace HtmlAgilityPack
             switch (name)
             {
                 case "li":
-                    return new string[] {"ul"};
+                    return new string[] {"ul", "ol"};
 
                 case "tr":
                     return new string[] {"table"};

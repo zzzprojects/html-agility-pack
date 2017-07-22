@@ -512,6 +512,18 @@ namespace HtmlAgilityPack.Tests
             HtmlNode node5 = HtmlNode.CreateNode(@"/r/n");
             Assert.AreEqual("/r/n", node5.OuterHtml);
         }
+    
+    	 [Test]
+	    public void TestParseListInList()
+	    {
+	        var html = "<ol><li><ol><li>x</li></ol></li></ol>";
+
+	        var doc = new HtmlDocument();
+	        doc.OptionFixNestedTags = true;
+	        doc.Load(new StringReader(html));
+
+	        Assert.AreEqual(html, doc.DocumentNode.OuterHtml);
+	    }
 
         [Test]
         public void TestLoadWithUri()
@@ -523,4 +535,5 @@ namespace HtmlAgilityPack.Tests
             Assert.AreNotEqual(document.DocumentNode.OuterHtml, string.Empty);
         }
     }
+	}
 }
