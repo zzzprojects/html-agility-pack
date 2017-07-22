@@ -1149,6 +1149,16 @@ namespace HtmlAgilityPack
             return Load(url, "GET");
         }
 
+        /// <summary>
+        /// Gets an HTML document from an Internet resource.
+        /// </summary>
+        /// <param name="uri">The requested Uri, such as new Uri("http://Myserver/Mypath/Myfile.asp").</param>
+        /// <returns>A new HTML document.</returns>
+        public HtmlDocument Load(Uri uri)
+        {
+            return Load(uri, "GET");
+        }
+
 #if !NETSTANDARD
         /// <summary>
         /// Gets an HTML document from an Internet resource.
@@ -1177,6 +1187,37 @@ namespace HtmlAgilityPack
             }
 
             return Load(url, "GET", myProxy, myCreds);
+        }
+#endif
+
+#if !NETSTANDARD
+        /// <summary>
+        /// Gets an HTML document from an Internet resource.
+        /// </summary>
+        /// <param name="uri">The requested Uri, such as new Uri("http://Myserver/Mypath/Myfile.asp").</param>
+        /// <param name="proxyHost">Host to use for Proxy</param>
+        /// <param name="proxyPort">Port the Proxy is on</param>
+        /// <param name="userId">User Id for Authentication</param>
+        /// <param name="password">Password for Authentication</param>
+        /// <returns>A new HTML document.</returns>
+        public HtmlDocument Load(Uri uri, string proxyHost, int proxyPort, string userId, string password)
+        {
+            //Create my proxy
+            WebProxy myProxy = new WebProxy(proxyHost, proxyPort);
+            myProxy.BypassProxyOnLocal = true;
+
+            //Create my credentials
+            NetworkCredential myCreds = null;
+            if ((userId != null) && (password != null))
+            {
+                myCreds = new NetworkCredential(userId, password);
+                CredentialCache credCache = new CredentialCache();
+                //Add the creds
+                credCache.Add(myProxy.Address, "Basic", myCreds);
+                credCache.Add(myProxy.Address, "Digest", myCreds);
+            }
+
+            return Load(uri, "GET", myProxy, myCreds);
         }
 #endif
 
@@ -1222,6 +1263,59 @@ namespace HtmlAgilityPack
                         doc.Load(url, OverrideEncoding);
                     else
                         doc.DetectEncodingAndLoad(url, _autoDetectEncoding);
+                }
+                else
+                {
+                    throw new HtmlWebException("Unsupported uri scheme: '" + uri.Scheme + "'.");
+                }
+            }
+            if (PreHandleDocument != null)
+            {
+                PreHandleDocument(doc);
+            }
+            return doc;
+        }
+        /// <summary>
+        /// Loads an HTML document from an Internet resource.
+        /// </summary>
+        /// <param name="uri">The requested URL, such as new Uri("http://Myserver/Mypath/Myfile.asp").</param>
+        /// <param name="method">The HTTP method used to open the connection, such as GET, POST, PUT, or PROPFIND.</param>
+        /// <returns>A new HTML document.</returns>
+        public HtmlDocument Load(Uri uri, string method)
+        {
+            if (UsingCache)
+            {
+                _usingCacheAndLoad = true;
+            }
+
+            HtmlDocument doc;
+#if !NETSTANDARD
+            if ((uri.Scheme == Uri.UriSchemeHttps) ||
+                (uri.Scheme == Uri.UriSchemeHttp))
+#else
+// TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
+		    if ((uri.Scheme == "https") ||
+		        (uri.Scheme == "http"))
+#endif
+            {
+                doc = LoadUrl(uri, method, null, null);
+            }
+            else
+            {
+#if !NETSTANDARD
+                if (uri.Scheme == Uri.UriSchemeFile)
+#else
+// TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
+                if (uri.Scheme == "file")
+#endif
+                {
+                    doc = new HtmlDocument();
+                    doc.OptionAutoCloseOnEnd = false;
+                    doc.OptionAutoCloseOnEnd = true;
+                    if (OverrideEncoding != null)
+                        doc.Load(uri.OriginalString, OverrideEncoding);
+                    else
+                        doc.DetectEncodingAndLoad(uri.OriginalString, _autoDetectEncoding);
                 }
                 else
                 {
@@ -1280,6 +1374,49 @@ namespace HtmlAgilityPack
         }
 #endif
 
+#if !NETSTANDARD
+        /// <summary>
+        /// Loads an HTML document from an Internet resource.
+        /// </summary>
+        /// <param name="uri">The requested Uri, such as new Uri("http://Myserver/Mypath/Myfile.asp").</param>
+        /// <param name="method">The HTTP method used to open the connection, such as GET, POST, PUT, or PROPFIND.</param>
+        /// <param name="proxy">Proxy to use with this request</param>
+        /// <param name="credentials">Credentials to use when authenticating</param>
+        /// <returns>A new HTML document.</returns>
+        public HtmlDocument Load(Uri uri, string method, WebProxy proxy, NetworkCredential credentials)
+        {
+            if (UsingCache)
+            {
+                _usingCacheAndLoad = true;
+            }
+
+            HtmlDocument doc;
+            if ((uri.Scheme == Uri.UriSchemeHttps) ||
+                (uri.Scheme == Uri.UriSchemeHttp))
+            {
+                doc = LoadUrl(uri, method, proxy, credentials);
+            }
+            else
+            {
+                if (uri.Scheme == Uri.UriSchemeFile)
+                {
+                    doc = new HtmlDocument();
+                    doc.OptionAutoCloseOnEnd = false;
+                    doc.OptionAutoCloseOnEnd = true;
+                    doc.DetectEncodingAndLoad(uri.OriginalString, _autoDetectEncoding);
+                }
+                else
+                {
+                    throw new HtmlWebException("Unsupported uri scheme: '" + uri.Scheme + "'.");
+                }
+            }
+            if (PreHandleDocument != null)
+            {
+                PreHandleDocument(doc);
+            }
+            return doc;
+        }
+#endif
 #if NET45 || NETSTANDARD
 /// <summary>
 /// Loads an HTML document from an Internet resource.
@@ -1334,6 +1471,58 @@ namespace HtmlAgilityPack
 	    }
 #endif
 
+#if NET45 || NETSTANDARD
+/// <summary>
+/// Loads an HTML document from an Internet resource.
+/// </summary>
+/// <param name="uri">The requested Uri, such as new Uri("http://Myserver/Mypath/Myfile.asp").</param>
+/// <param name="method">The HTTP method used to open the connection, such as GET, POST, PUT, or PROPFIND.</param>
+/// <param name="proxy">Proxy to use with this request</param>
+/// <param name="credentials">Credentials to use when authenticating</param>
+/// <returns>A new HTML document.</returns>
+	    public HtmlDocument Load(Uri uri, string method, IWebProxy proxy, ICredentials credentials)
+	    {
+            if (UsingCache)
+            {
+                _usingCacheAndLoad = true;
+            }
+
+	        HtmlDocument doc;
+#if !NETSTANDARD
+            if (uri.Scheme == Uri.UriSchemeFile)
+#else
+	        // TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
+            if (uri.Scheme == "file")
+#endif
+	        {
+	            doc = LoadUrl(uri, method, proxy, credentials);
+	        }
+	        else
+	        {
+#if !NETSTANDARD
+                if (uri.Scheme == Uri.UriSchemeFile)
+#else
+	            // TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
+                if (uri.Scheme == "file")
+#endif
+	            {
+	                doc = new HtmlDocument();
+	                doc.OptionAutoCloseOnEnd = false;
+	                doc.OptionAutoCloseOnEnd = true;
+	                doc.DetectEncodingAndLoad(url, _autoDetectEncoding);
+	            }
+	            else
+	            {
+	                throw new HtmlWebException("Unsupported uri scheme: '" + uri.Scheme + "'.");
+	            }
+	        }
+	        if (PreHandleDocument != null)
+	        {
+	            PreHandleDocument(doc);
+	        }
+	        return doc;
+	    }
+#endif
 #if !NETSTANDARD
         /// <summary>
         /// Loads an HTML document from an Internet resource and saves it to the specified XmlTextWriter.
