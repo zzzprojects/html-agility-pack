@@ -8,6 +8,8 @@ permalink: tutorials
 
 <div id="banner-leaderboard"><a href='http://entityframework-extensions.net/?z=hap&y=leaderboard'><img src='{{ site.github.url }}/images/banners/entityframework-extensions-728x90.jpg'></a></div>
 
+<br /><br />
+
 <div class="row">
 	<div class="col-md-6 col-lg-4">
 		<div class="jumbotron">
