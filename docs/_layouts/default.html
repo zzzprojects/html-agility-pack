@@ -262,16 +262,16 @@ function setBanner() {
 	var random = Math.floor((Math.random() * 100) + 1);
 	
 	if(leaderboard.length == 1 && halfpage.length == 1) {
-		var banner1 = "<a href='http://entityframework-extensions.net/?z=hap&y=[banner-name]'><img src='{{ site.github.url }}/banners/entityframework-extensions-[banner-size].jpg'></a>";
+		var banner1 = "<a href='http://entityframework-extensions.net/?z=hap&y=[banner-name]'><img src='{{ site.github.url }}/images/banners/entityframework-extensions-[banner-size].jpg'></a>";
 		var banner2 = "";
 		if(random % 3 == 0){
-			banner2 = "<a href='http://eval-expression.net/?z=hap&y=[banner-name]'><img src='{{ site.github.url }}/banners/csharp-eval-[banner-size].jpg'></a>";
+			banner2 = "<a href='http://eval-expression.net/?z=hap&y=[banner-name]'><img src='{{ site.github.url }}/images/banners/csharp-eval-[banner-size].jpg'></a>";
 		}
 		else if (random % 3 == 1) {
-			banner2 = "<a href='http://dapper-plus.net/?z=hap&y=[banner-name]'><img src='{{ site.github.url }}/banners/dapper-plus-[banner-size].jpg'></a>";
+			banner2 = "<a href='http://dapper-plus.net/?z=hap&y=[banner-name]'><img src='{{ site.github.url }}/images/banners/dapper-plus-[banner-size].jpg'></a>";
 		}
 		else {
-			banner2 = "<a href='http://eval-sql.net/?z=hap&y=[banner-name]'><img src='{{ site.github.url }}/banners/sql-eval-[banner-size].jpg'></a>";
+			banner2 = "<a href='http://eval-sql.net/?z=hap&y=[banner-name]'><img src='{{ site.github.url }}/images/banners/sql-eval-[banner-size].jpg'></a>";
 		}
 			
 		if(random <= 50) {
