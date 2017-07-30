@@ -6,20 +6,9 @@ permalink: tutorials
 
 <h1 class="text-center" style="margin-bottom: 60px; font-size: 60px">Html Agility Pack Tutorials & Examples</h1>
 
-<div>
-<div style="margin: auto; width: 728px; margin-bottom: 60px;">
-<script type="text/javascript">
-    google_ad_client = "ca-pub-7869211898023730";
-    google_ad_slot = "1439249006";
-    google_ad_width = 728;
-    google_ad_height = 90;
-</script>
-<!-- leaderboard -->
-<script type="text/javascript"
-src="//pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-</div>
-</div>
+<div id="banner-leaderboard"><a href='http://entityframework-extensions.net/?z=hap&y=leaderboard'><img src='{{ site.github.url }}/images/banners/entityframework-extensions-728x90.jpg'></a></div>
+
+<br /><br />
 
 <div class="row">
 	<div class="col-md-6 col-lg-4">

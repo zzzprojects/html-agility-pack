@@ -1229,51 +1229,9 @@ namespace HtmlAgilityPack
         /// <returns>A new HTML document.</returns>
         public HtmlDocument Load(string url, string method)
         {
-            if (UsingCache)
-            {
-                _usingCacheAndLoad = true;
-            }
-
             Uri uri = new Uri(url);
-            HtmlDocument doc;
-#if !NETSTANDARD
-            if ((uri.Scheme == Uri.UriSchemeHttps) ||
-                (uri.Scheme == Uri.UriSchemeHttp))
-#else
-// TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
-		    if ((uri.Scheme == "https") ||
-		        (uri.Scheme == "http"))
-#endif
-            {
-                doc = LoadUrl(uri, method, null, null);
-            }
-            else
-            {
-#if !NETSTANDARD
-                if (uri.Scheme == Uri.UriSchemeFile)
-#else
-// TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
-                if (uri.Scheme == "file")
-#endif
-                {
-                    doc = new HtmlDocument();
-                    doc.OptionAutoCloseOnEnd = false;
-                    doc.OptionAutoCloseOnEnd = true;
-                    if (OverrideEncoding != null)
-                        doc.Load(url, OverrideEncoding);
-                    else
-                        doc.DetectEncodingAndLoad(url, _autoDetectEncoding);
-                }
-                else
-                {
-                    throw new HtmlWebException("Unsupported uri scheme: '" + uri.Scheme + "'.");
-                }
-            }
-            if (PreHandleDocument != null)
-            {
-                PreHandleDocument(doc);
-            }
-            return doc;
+
+            return Load(uri, method);
         }
         /// <summary>
         /// Loads an HTML document from an Internet resource.
@@ -1340,37 +1298,9 @@ namespace HtmlAgilityPack
         /// <returns>A new HTML document.</returns>
         public HtmlDocument Load(string url, string method, WebProxy proxy, NetworkCredential credentials)
         {
-            if (UsingCache)
-            {
-                _usingCacheAndLoad = true;
-            }
-
             Uri uri = new Uri(url);
-            HtmlDocument doc;
-            if ((uri.Scheme == Uri.UriSchemeHttps) ||
-                (uri.Scheme == Uri.UriSchemeHttp))
-            {
-                doc = LoadUrl(uri, method, proxy, credentials);
-            }
-            else
-            {
-                if (uri.Scheme == Uri.UriSchemeFile)
-                {
-                    doc = new HtmlDocument();
-                    doc.OptionAutoCloseOnEnd = false;
-                    doc.OptionAutoCloseOnEnd = true;
-                    doc.DetectEncodingAndLoad(url, _autoDetectEncoding);
-                }
-                else
-                {
-                    throw new HtmlWebException("Unsupported uri scheme: '" + uri.Scheme + "'.");
-                }
-            }
-            if (PreHandleDocument != null)
-            {
-                PreHandleDocument(doc);
-            }
-            return doc;
+
+            return Load(uri, method, proxy, credentials);
         }
 #endif
 
@@ -1428,46 +1358,8 @@ namespace HtmlAgilityPack
 /// <returns>A new HTML document.</returns>
 	    public HtmlDocument Load(string url, string method, IWebProxy proxy, ICredentials credentials)
 	    {
-            if (UsingCache)
-            {
-                _usingCacheAndLoad = true;
-            }
-
-	        Uri uri = new Uri(url);
-	        HtmlDocument doc;
-#if !NETSTANDARD
-            if (uri.Scheme == Uri.UriSchemeFile)
-#else
-	        // TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
-            if (uri.Scheme == "file")
-#endif
-	        {
-	            doc = LoadUrl(uri, method, proxy, credentials);
-	        }
-	        else
-	        {
-#if !NETSTANDARD
-                if (uri.Scheme == Uri.UriSchemeFile)
-#else
-	            // TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
-                if (uri.Scheme == "file")
-#endif
-	            {
-	                doc = new HtmlDocument();
-	                doc.OptionAutoCloseOnEnd = false;
-	                doc.OptionAutoCloseOnEnd = true;
-	                doc.DetectEncodingAndLoad(url, _autoDetectEncoding);
-	            }
-	            else
-	            {
-	                throw new HtmlWebException("Unsupported uri scheme: '" + uri.Scheme + "'.");
-	            }
-	        }
-	        if (PreHandleDocument != null)
-	        {
-	            PreHandleDocument(doc);
-	        }
-	        return doc;
+            Uri uri = new Uri(url);
+            return Load(uri, method, proxy, credentials);
 	    }
 #endif
 
@@ -1509,7 +1401,7 @@ namespace HtmlAgilityPack
 	                doc = new HtmlDocument();
 	                doc.OptionAutoCloseOnEnd = false;
 	                doc.OptionAutoCloseOnEnd = true;
-	                doc.DetectEncodingAndLoad(url, _autoDetectEncoding);
+	                doc.DetectEncodingAndLoad(uri.OriginalString, _autoDetectEncoding);
 	            }
 	            else
 	            {
