@@ -17,6 +17,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)crc32.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)InternalCrc32.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EncodingFoundException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HtmlAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HtmlAttributeCollection.cs" />
