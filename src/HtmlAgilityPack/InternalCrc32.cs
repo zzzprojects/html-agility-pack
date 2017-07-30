@@ -4,8 +4,7 @@ namespace HtmlAgilityPack
     /// <summary>
     /// A utility class to compute CRC32.
     /// </summary>
-    [System.Obsolete("This type should not be used; it is intended for internal use in HTML Agility Pack.")]
-    public class Crc32
+    internal sealed class InternalCrc32
     {
         #region Fields
 
