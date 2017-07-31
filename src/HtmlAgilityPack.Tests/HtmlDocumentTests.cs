@@ -537,5 +537,26 @@ namespace HtmlAgilityPack.Tests
             HtmlAgilityPack.HtmlDocument document = web.Load(uri);
             Assert.AreNotEqual(document.DocumentNode.OuterHtml, string.Empty);
         }
+
+        [Test]
+        public void TestFormTag()
+        {
+            var html = @"<form></form>";
+            var document = new HtmlDocument();
+            document.LoadHtml(html);
+            var result = document.DocumentNode.Descendants().Select(dn => new { dn.NodeType, dn.Name, dn.OuterHtml }).ToArray();
+            Assert.AreEqual(document.DocumentNode.OuterHtml, html);
+            Assert.AreEqual(result.Count(), 1);
+        }
+        [Test]
+        public void TestOptionTag()
+        {
+            var html = "<select><option>Select a cell</option><option>C1</option><option value='\"c2\"'></select>";
+
+            string output = "<select><option>Select a cell</option><option>C1</option><option value='\"c2\"'></option></select>";
+            var document = new HtmlDocument();
+            document.LoadHtml(html);
+            Assert.AreEqual(document.DocumentNode.OuterHtml, output);
+        }
     }
 }

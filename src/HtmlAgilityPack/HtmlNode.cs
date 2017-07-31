@@ -106,10 +106,10 @@ namespace HtmlAgilityPack
 			ElementsFlags.Add("input", HtmlElementFlag.Empty);
 			ElementsFlags.Add("basefont", HtmlElementFlag.Empty);
 
-			ElementsFlags.Add("form", HtmlElementFlag.CanOverlap | HtmlElementFlag.Empty);
+			ElementsFlags.Add("form",  HtmlElementFlag.CanOverlap);
 
 			// they sometimes contain, and sometimes they don 't...
-			ElementsFlags.Add("option", HtmlElementFlag.Empty);
+			//ElementsFlags.Add("option", HtmlElementFlag.Empty);
 
 			// tag whose closing tag is equivalent to open tag:
 			// <p>bla</p>bla will be transformed into <p>bla</p>bla
