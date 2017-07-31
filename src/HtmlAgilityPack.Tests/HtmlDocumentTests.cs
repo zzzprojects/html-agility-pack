@@ -548,5 +548,15 @@ namespace HtmlAgilityPack.Tests
             Assert.AreEqual(document.DocumentNode.OuterHtml, html);
             Assert.AreEqual(result.Count(), 1);
         }
+        [Test]
+        public void TestOptionTag()
+        {
+            var html = "<select><option>Select a cell</option><option>C1</option><option value='\"c2\"'></select>";
+
+            string output = "<select><option>Select a cell</option><option>C1</option><option value='\"c2\"'></option></select>";
+            var document = new HtmlDocument();
+            document.LoadHtml(html);
+            Assert.AreEqual(document.DocumentNode.OuterHtml, output);
+        }
     }
 }

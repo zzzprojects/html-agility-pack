@@ -1055,6 +1055,8 @@ namespace HtmlAgilityPack
                 case "td":
                     return new string[] {"tr", "table"};
 
+                case "option":
+                    return new string[] { "select", "optgroup", "datalist" };
                 default:
                     return null;
             }
