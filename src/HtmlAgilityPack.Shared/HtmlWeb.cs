@@ -42,16 +42,16 @@ namespace HtmlAgilityPack
         #region Delegates
 
 #if !NETSTANDARD
-        /// <summary>
-        /// Represents the method that will handle the PostResponse event.
-        /// </summary>
+/// <summary>
+/// Represents the method that will handle the PostResponse event.
+/// </summary>
         public delegate void PostResponseHandler(HttpWebRequest request, HttpWebResponse response);
 #endif
 
 #if NET45 || NETSTANDARD
-/// <summary>
-/// Represents the method that will handle the PostResponse event.
-/// </summary>
+        /// <summary>
+        /// Represents the method that will handle the PostResponse event.
+        /// </summary>
         public delegate void PostResponseHandler(HttpRequestMessage request, HttpResponseMessage response);
 #endif
         /// <summary>
@@ -60,16 +60,16 @@ namespace HtmlAgilityPack
         public delegate void PreHandleDocumentHandler(HtmlDocument document);
 
 #if !NETSTANDARD
-        /// <summary>
-        /// Represents the method that will handle the PreRequest event.
-        /// </summary>
+/// <summary>
+/// Represents the method that will handle the PreRequest event.
+/// </summary>
         public delegate bool PreRequestHandler(HttpWebRequest request);
 #endif
 #if NET45 || NETSTANDARD
-/// <summary>
-/// Represents the method that will handle the PostResponse event.
-/// </summary>
-	    public delegate bool PreRequestHandler(HttpClientHandler handler, HttpRequestMessage request);
+        /// <summary>
+        /// Represents the method that will handle the PostResponse event.
+        /// </summary>
+        public delegate bool PreRequestHandler(HttpClientHandler handler, HttpRequestMessage request);
 #endif
 
         #endregion
@@ -901,12 +901,12 @@ namespace HtmlAgilityPack
 
         #region Public Methods
 #if !NETSTANDARD
-        /// <summary>
-        /// Gets the MIME content type for a given path extension.
-        /// </summary>
-        /// <param name="extension">The input path extension.</param>
-        /// <param name="def">The default content type to return if any error occurs.</param>
-        /// <returns>The path extension's MIME content type.</returns>
+/// <summary>
+/// Gets the MIME content type for a given path extension.
+/// </summary>
+/// <param name="extension">The input path extension.</param>
+/// <param name="def">The default content type to return if any error occurs.</param>
+/// <returns>The path extension's MIME content type.</returns>
         public static string GetContentTypeForExtension(string extension, string def)
         {
             var helper = new PermissionHelper();
@@ -1006,19 +1006,6 @@ namespace HtmlAgilityPack
         }
 
 #if !NETSTANDARD
-        /// <summary>
-        /// Gets an HTML document from an Internet resource and saves it to the specified file. - Proxy aware
-        /// </summary>
-        /// <param name="url">The requested URL, such as "http://Myserver/Mypath/Myfile.asp".</param>
-        /// <param name="path">The location of the file where you want to save the document.</param>
-        /// <param name="proxy"></param>
-        /// <param name="credentials"></param>
-        public void Get(string url, string path, WebProxy proxy, NetworkCredential credentials)
-        {
-            Get(url, path, proxy, credentials, "GET");
-        }
-#endif
-#if NET45 || NETSTANDARD
 /// <summary>
 /// Gets an HTML document from an Internet resource and saves it to the specified file. - Proxy aware
 /// </summary>
@@ -1026,10 +1013,23 @@ namespace HtmlAgilityPack
 /// <param name="path">The location of the file where you want to save the document.</param>
 /// <param name="proxy"></param>
 /// <param name="credentials"></param>
-	    public void Get(string url, string path, IWebProxy proxy, ICredentials credentials)
-	    {
-	        Get(url, path, proxy, credentials, "GET");
-	    }
+        public void Get(string url, string path, WebProxy proxy, NetworkCredential credentials)
+        {
+            Get(url, path, proxy, credentials, "GET");
+        }
+#endif
+#if NET45 || NETSTANDARD
+        /// <summary>
+        /// Gets an HTML document from an Internet resource and saves it to the specified file. - Proxy aware
+        /// </summary>
+        /// <param name="url">The requested URL, such as "http://Myserver/Mypath/Myfile.asp".</param>
+        /// <param name="path">The location of the file where you want to save the document.</param>
+        /// <param name="proxy"></param>
+        /// <param name="credentials"></param>
+        public void Get(string url, string path, IWebProxy proxy, ICredentials credentials)
+        {
+            Get(url, path, proxy, credentials, "GET");
+        }
 #endif
 
         /// <summary>
@@ -1045,9 +1045,9 @@ namespace HtmlAgilityPack
             if ((uri.Scheme == Uri.UriSchemeHttps) ||
                 (uri.Scheme == Uri.UriSchemeHttp))
 #else
-// TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
+            // TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
             if ((uri.Scheme == "https") ||
-		        (uri.Scheme == "http"))
+                (uri.Scheme == "http"))
 #endif
             {
                 Get(uri, method, path, null, null, null);
@@ -1059,14 +1059,14 @@ namespace HtmlAgilityPack
         }
 
 #if !NETSTANDARD
-        /// <summary>
-        /// Gets an HTML document from an Internet resource and saves it to the specified file.  Understands Proxies
-        /// </summary>
-        /// <param name="url">The requested URL, such as "http://Myserver/Mypath/Myfile.asp".</param>
-        /// <param name="path">The location of the file where you want to save the document.</param>
-        /// <param name="credentials"></param>
-        /// <param name="method">The HTTP method used to open the connection, such as GET, POST, PUT, or PROPFIND.</param>
-        /// <param name="proxy"></param>
+/// <summary>
+/// Gets an HTML document from an Internet resource and saves it to the specified file.  Understands Proxies
+/// </summary>
+/// <param name="url">The requested URL, such as "http://Myserver/Mypath/Myfile.asp".</param>
+/// <param name="path">The location of the file where you want to save the document.</param>
+/// <param name="credentials"></param>
+/// <param name="method">The HTTP method used to open the connection, such as GET, POST, PUT, or PROPFIND.</param>
+/// <param name="proxy"></param>
         public void Get(string url, string path, WebProxy proxy, NetworkCredential credentials, string method)
         {
             Uri uri = new Uri(url);
@@ -1083,33 +1083,33 @@ namespace HtmlAgilityPack
 #endif
 
 #if NET45 || NETSTANDARD
-/// <summary>
-/// Gets an HTML document from an Internet resource and saves it to the specified file.  Understands Proxies
-/// </summary>
-/// <param name="url">The requested URL, such as "http://Myserver/Mypath/Myfile.asp".</param>
-/// <param name="path">The location of the file where you want to save the document.</param>
-/// <param name="credentials"></param>
-/// <param name="method">The HTTP method used to open the connection, such as GET, POST, PUT, or PROPFIND.</param>
-/// <param name="proxy"></param>
-	    public void Get(string url, string path, IWebProxy proxy, ICredentials credentials, string method)
-	    {
-	        Uri uri = new Uri(url);
+        /// <summary>
+        /// Gets an HTML document from an Internet resource and saves it to the specified file.  Understands Proxies
+        /// </summary>
+        /// <param name="url">The requested URL, such as "http://Myserver/Mypath/Myfile.asp".</param>
+        /// <param name="path">The location of the file where you want to save the document.</param>
+        /// <param name="credentials"></param>
+        /// <param name="method">The HTTP method used to open the connection, such as GET, POST, PUT, or PROPFIND.</param>
+        /// <param name="proxy"></param>
+        public void Get(string url, string path, IWebProxy proxy, ICredentials credentials, string method)
+        {
+            Uri uri = new Uri(url);
 #if !NETSTANDARD
             if ((uri.Scheme == Uri.UriSchemeHttps) ||
                 (uri.Scheme == Uri.UriSchemeHttp))
 #else
-	        // TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
+            // TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
             if ((uri.Scheme == "https") ||
-	            (uri.Scheme == "http"))
+                (uri.Scheme == "http"))
 #endif
-	        {
-	            Get(uri, method, path, null, proxy, credentials);
-	        }
-	        else
-	        {
-	            throw new HtmlWebException("Unsupported uri scheme: '" + uri.Scheme + "'.");
-	        }
-	    }
+            {
+                Get(uri, method, path, null, proxy, credentials);
+            }
+            else
+            {
+                throw new HtmlWebException("Unsupported uri scheme: '" + uri.Scheme + "'.");
+            }
+        }
 #endif
 
         /// <summary>
@@ -1160,15 +1160,15 @@ namespace HtmlAgilityPack
         }
 
 #if !NETSTANDARD
-        /// <summary>
-        /// Gets an HTML document from an Internet resource.
-        /// </summary>
-        /// <param name="url">The requested URL, such as "http://Myserver/Mypath/Myfile.asp".</param>
-        /// <param name="proxyHost">Host to use for Proxy</param>
-        /// <param name="proxyPort">Port the Proxy is on</param>
-        /// <param name="userId">User Id for Authentication</param>
-        /// <param name="password">Password for Authentication</param>
-        /// <returns>A new HTML document.</returns>
+/// <summary>
+/// Gets an HTML document from an Internet resource.
+/// </summary>
+/// <param name="url">The requested URL, such as "http://Myserver/Mypath/Myfile.asp".</param>
+/// <param name="proxyHost">Host to use for Proxy</param>
+/// <param name="proxyPort">Port the Proxy is on</param>
+/// <param name="userId">User Id for Authentication</param>
+/// <param name="password">Password for Authentication</param>
+/// <returns>A new HTML document.</returns>
         public HtmlDocument Load(string url, string proxyHost, int proxyPort, string userId, string password)
         {
             //Create my proxy
@@ -1191,15 +1191,15 @@ namespace HtmlAgilityPack
 #endif
 
 #if !NETSTANDARD
-        /// <summary>
-        /// Gets an HTML document from an Internet resource.
-        /// </summary>
-        /// <param name="uri">The requested Uri, such as new Uri("http://Myserver/Mypath/Myfile.asp").</param>
-        /// <param name="proxyHost">Host to use for Proxy</param>
-        /// <param name="proxyPort">Port the Proxy is on</param>
-        /// <param name="userId">User Id for Authentication</param>
-        /// <param name="password">Password for Authentication</param>
-        /// <returns>A new HTML document.</returns>
+/// <summary>
+/// Gets an HTML document from an Internet resource.
+/// </summary>
+/// <param name="uri">The requested Uri, such as new Uri("http://Myserver/Mypath/Myfile.asp").</param>
+/// <param name="proxyHost">Host to use for Proxy</param>
+/// <param name="proxyPort">Port the Proxy is on</param>
+/// <param name="userId">User Id for Authentication</param>
+/// <param name="password">Password for Authentication</param>
+/// <returns>A new HTML document.</returns>
         public HtmlDocument Load(Uri uri, string proxyHost, int proxyPort, string userId, string password)
         {
             //Create my proxy
@@ -1251,9 +1251,9 @@ namespace HtmlAgilityPack
             if ((uri.Scheme == Uri.UriSchemeHttps) ||
                 (uri.Scheme == Uri.UriSchemeHttp))
 #else
-// TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
-		    if ((uri.Scheme == "https") ||
-		        (uri.Scheme == "http"))
+            // TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
+            if ((uri.Scheme == "https") ||
+                (uri.Scheme == "http"))
 #endif
             {
                 doc = LoadUrl(uri, method, null, null);
@@ -1263,7 +1263,7 @@ namespace HtmlAgilityPack
 #if !NETSTANDARD
                 if (uri.Scheme == Uri.UriSchemeFile)
 #else
-// TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
+                // TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
                 if (uri.Scheme == "file")
 #endif
                 {
@@ -1288,14 +1288,14 @@ namespace HtmlAgilityPack
         }
 
 #if !NETSTANDARD
-        /// <summary>
-        /// Loads an HTML document from an Internet resource.
-        /// </summary>
-        /// <param name="url">The requested URL, such as "http://Myserver/Mypath/Myfile.asp".</param>
-        /// <param name="method">The HTTP method used to open the connection, such as GET, POST, PUT, or PROPFIND.</param>
-        /// <param name="proxy">Proxy to use with this request</param>
-        /// <param name="credentials">Credentials to use when authenticating</param>
-        /// <returns>A new HTML document.</returns>
+/// <summary>
+/// Loads an HTML document from an Internet resource.
+/// </summary>
+/// <param name="url">The requested URL, such as "http://Myserver/Mypath/Myfile.asp".</param>
+/// <param name="method">The HTTP method used to open the connection, such as GET, POST, PUT, or PROPFIND.</param>
+/// <param name="proxy">Proxy to use with this request</param>
+/// <param name="credentials">Credentials to use when authenticating</param>
+/// <returns>A new HTML document.</returns>
         public HtmlDocument Load(string url, string method, WebProxy proxy, NetworkCredential credentials)
         {
             Uri uri = new Uri(url);
@@ -1305,14 +1305,14 @@ namespace HtmlAgilityPack
 #endif
 
 #if !NETSTANDARD
-        /// <summary>
-        /// Loads an HTML document from an Internet resource.
-        /// </summary>
-        /// <param name="uri">The requested Uri, such as new Uri("http://Myserver/Mypath/Myfile.asp").</param>
-        /// <param name="method">The HTTP method used to open the connection, such as GET, POST, PUT, or PROPFIND.</param>
-        /// <param name="proxy">Proxy to use with this request</param>
-        /// <param name="credentials">Credentials to use when authenticating</param>
-        /// <returns>A new HTML document.</returns>
+/// <summary>
+/// Loads an HTML document from an Internet resource.
+/// </summary>
+/// <param name="uri">The requested Uri, such as new Uri("http://Myserver/Mypath/Myfile.asp").</param>
+/// <param name="method">The HTTP method used to open the connection, such as GET, POST, PUT, or PROPFIND.</param>
+/// <param name="proxy">Proxy to use with this request</param>
+/// <param name="credentials">Credentials to use when authenticating</param>
+/// <returns>A new HTML document.</returns>
         public HtmlDocument Load(Uri uri, string method, WebProxy proxy, NetworkCredential credentials)
         {
             if (UsingCache)
@@ -1348,79 +1348,79 @@ namespace HtmlAgilityPack
         }
 #endif
 #if NET45 || NETSTANDARD
-/// <summary>
-/// Loads an HTML document from an Internet resource.
-/// </summary>
-/// <param name="url">The requested URL, such as "http://Myserver/Mypath/Myfile.asp".</param>
-/// <param name="method">The HTTP method used to open the connection, such as GET, POST, PUT, or PROPFIND.</param>
-/// <param name="proxy">Proxy to use with this request</param>
-/// <param name="credentials">Credentials to use when authenticating</param>
-/// <returns>A new HTML document.</returns>
-	    public HtmlDocument Load(string url, string method, IWebProxy proxy, ICredentials credentials)
-	    {
+        /// <summary>
+        /// Loads an HTML document from an Internet resource.
+        /// </summary>
+        /// <param name="url">The requested URL, such as "http://Myserver/Mypath/Myfile.asp".</param>
+        /// <param name="method">The HTTP method used to open the connection, such as GET, POST, PUT, or PROPFIND.</param>
+        /// <param name="proxy">Proxy to use with this request</param>
+        /// <param name="credentials">Credentials to use when authenticating</param>
+        /// <returns>A new HTML document.</returns>
+        public HtmlDocument Load(string url, string method, IWebProxy proxy, ICredentials credentials)
+        {
             Uri uri = new Uri(url);
             return Load(uri, method, proxy, credentials);
-	    }
+        }
 #endif
 
 #if NET45 || NETSTANDARD
-/// <summary>
-/// Loads an HTML document from an Internet resource.
-/// </summary>
-/// <param name="uri">The requested Uri, such as new Uri("http://Myserver/Mypath/Myfile.asp").</param>
-/// <param name="method">The HTTP method used to open the connection, such as GET, POST, PUT, or PROPFIND.</param>
-/// <param name="proxy">Proxy to use with this request</param>
-/// <param name="credentials">Credentials to use when authenticating</param>
-/// <returns>A new HTML document.</returns>
-	    public HtmlDocument Load(Uri uri, string method, IWebProxy proxy, ICredentials credentials)
-	    {
+        /// <summary>
+        /// Loads an HTML document from an Internet resource.
+        /// </summary>
+        /// <param name="uri">The requested Uri, such as new Uri("http://Myserver/Mypath/Myfile.asp").</param>
+        /// <param name="method">The HTTP method used to open the connection, such as GET, POST, PUT, or PROPFIND.</param>
+        /// <param name="proxy">Proxy to use with this request</param>
+        /// <param name="credentials">Credentials to use when authenticating</param>
+        /// <returns>A new HTML document.</returns>
+        public HtmlDocument Load(Uri uri, string method, IWebProxy proxy, ICredentials credentials)
+        {
             if (UsingCache)
             {
                 _usingCacheAndLoad = true;
             }
 
-	        HtmlDocument doc;
+            HtmlDocument doc;
 #if !NETSTANDARD
             if (uri.Scheme == Uri.UriSchemeFile)
 #else
-	        // TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
+            // TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
             if (uri.Scheme == "file")
 #endif
-	        {
-	            doc = LoadUrl(uri, method, proxy, credentials);
-	        }
-	        else
-	        {
+            {
+                doc = LoadUrl(uri, method, proxy, credentials);
+            }
+            else
+            {
 #if !NETSTANDARD
                 if (uri.Scheme == Uri.UriSchemeFile)
 #else
-	            // TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
+                // TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
                 if (uri.Scheme == "file")
 #endif
-	            {
-	                doc = new HtmlDocument();
-	                doc.OptionAutoCloseOnEnd = false;
-	                doc.OptionAutoCloseOnEnd = true;
-	                doc.DetectEncodingAndLoad(uri.OriginalString, _autoDetectEncoding);
-	            }
-	            else
-	            {
-	                throw new HtmlWebException("Unsupported uri scheme: '" + uri.Scheme + "'.");
-	            }
-	        }
-	        if (PreHandleDocument != null)
-	        {
-	            PreHandleDocument(doc);
-	        }
-	        return doc;
-	    }
+                {
+                    doc = new HtmlDocument();
+                    doc.OptionAutoCloseOnEnd = false;
+                    doc.OptionAutoCloseOnEnd = true;
+                    doc.DetectEncodingAndLoad(uri.OriginalString, _autoDetectEncoding);
+                }
+                else
+                {
+                    throw new HtmlWebException("Unsupported uri scheme: '" + uri.Scheme + "'.");
+                }
+            }
+            if (PreHandleDocument != null)
+            {
+                PreHandleDocument(doc);
+            }
+            return doc;
+        }
 #endif
 #if !NETSTANDARD
-        /// <summary>
-        /// Loads an HTML document from an Internet resource and saves it to the specified XmlTextWriter.
-        /// </summary>
-        /// <param name="htmlUrl">The requested URL, such as "http://Myserver/Mypath/Myfile.asp".</param>
-        /// <param name="writer">The XmlTextWriter to which you want to save to.</param>
+/// <summary>
+/// Loads an HTML document from an Internet resource and saves it to the specified XmlTextWriter.
+/// </summary>
+/// <param name="htmlUrl">The requested URL, such as "http://Myserver/Mypath/Myfile.asp".</param>
+/// <param name="writer">The XmlTextWriter to which you want to save to.</param>
         public void LoadHtmlAsXml(string htmlUrl, XmlTextWriter writer)
         {
             HtmlDocument doc = Load(htmlUrl);
@@ -1428,16 +1428,16 @@ namespace HtmlAgilityPack
         }
 #endif
 #if NET45 || NETSTANDARD
-/// <summary>
-/// Loads an HTML document from an Internet resource and saves it to the specified XmlTextWriter.
-/// </summary>
-/// <param name="htmlUrl">The requested URL, such as "http://Myserver/Mypath/Myfile.asp".</param>
-/// <param name="writer">The XmlTextWriter to which you want to save to.</param>
-	    public void LoadHtmlAsXml(string htmlUrl, XmlWriter writer)
-	    {
-	        HtmlDocument doc = Load(htmlUrl);
-	        doc.Save(writer);
-	    }
+        /// <summary>
+        /// Loads an HTML document from an Internet resource and saves it to the specified XmlTextWriter.
+        /// </summary>
+        /// <param name="htmlUrl">The requested URL, such as "http://Myserver/Mypath/Myfile.asp".</param>
+        /// <param name="writer">The XmlTextWriter to which you want to save to.</param>
+        public void LoadHtmlAsXml(string htmlUrl, XmlWriter writer)
+        {
+            HtmlDocument doc = Load(htmlUrl);
+            doc.Save(writer);
+        }
 #endif
 
 
@@ -1715,188 +1715,210 @@ namespace HtmlAgilityPack
             return resp.StatusCode;
         }
 #else
-	    private HttpStatusCode Get(Uri uri, string method, string path, HtmlDocument doc, IWebProxy proxy,
-	        ICredentials creds)
-	    {
-	        string cachePath = null;
-	        bool oldFile = false;
-	        HttpStatusCode status;
-	        using (var request = new HttpRequestMessage(new HttpMethod(method), uri))
-	        using (var handler = new HttpClientHandler())
-	        using (var client = new HttpClient(handler))
-	        {
-	            client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
+        private HttpStatusCode Get(Uri uri, string method, string path, HtmlDocument doc, IWebProxy proxy,
+            ICredentials creds)
+        {
+            string cachePath = null;
+            bool oldFile = false;
+            HttpStatusCode status;
+            using (var request = new HttpRequestMessage(new HttpMethod(method), uri))
+            using (var handler = new HttpClientHandler())
+            using (var client = new HttpClient(handler))
+            {
+                client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
 
-	            if (proxy != null)
-	            {
-	                if (creds != null)
-	                {
-	                    proxy.Credentials = creds;
-	                    handler.Credentials = creds;
-	                }
-	                else
-	                {
-	                    proxy.Credentials = CredentialCache.DefaultCredentials;
-	                    handler.Credentials = CredentialCache.DefaultCredentials;
-	                }
-	                handler.Proxy = proxy;
-	                handler.UseProxy = true;
-	            }
+                if (proxy != null)
+                {
+                    if (creds != null)
+                    {
+                        proxy.Credentials = creds;
+                        handler.Credentials = creds;
+                    }
+                    else
+                    {
+                        proxy.Credentials = CredentialCache.DefaultCredentials;
+                        handler.Credentials = CredentialCache.DefaultCredentials;
+                    }
+                    handler.Proxy = proxy;
+                    handler.UseProxy = true;
+                }
 
-	            _fromCache = false;
-	            _requestDuration = 0;
-	            int tc = Environment.TickCount;
-	            if (UsingCache)
-	            {
-	                cachePath = GetCachePath(request.RequestUri);
-	                if (File.Exists(cachePath))
-	                {
-	                    client.DefaultRequestHeaders.IfModifiedSince = File.GetLastAccessTime(cachePath);
-	                    oldFile = true;
-	                }
-	            }
+                _fromCache = false;
+                _requestDuration = 0;
+                int tc = Environment.TickCount;
+                if (UsingCache)
+                {
+                    cachePath = GetCachePath(request.RequestUri);
+                    if (File.Exists(cachePath))
+                    {
+                        client.DefaultRequestHeaders.IfModifiedSince = File.GetLastAccessTime(cachePath);
+                        oldFile = true;
+                    }
+                }
 
-	            if (_cacheOnly)
-	            {
-	                if (!File.Exists(cachePath))
-	                {
-	                    throw new HtmlWebException("File was not found at cache path: '" + cachePath + "'");
-	                }
+                if (_cacheOnly)
+                {
+                    if (!File.Exists(cachePath))
+                    {
+                        throw new HtmlWebException("File was not found at cache path: '" + cachePath + "'");
+                    }
 
-	                if (path != null)
-	                {
-	                    IOLibrary.CopyAlways(cachePath, path);
-	                    // touch the file
-	                    if (cachePath != null) File.SetLastWriteTime(path, File.GetLastWriteTime(cachePath));
-	                }
-	                _fromCache = true;
-	                return HttpStatusCode.NotModified;
-	            }
+                    if (path != null)
+                    {
+                        IOLibrary.CopyAlways(cachePath, path);
+                        // touch the file
+                        if (cachePath != null) File.SetLastWriteTime(path, File.GetLastWriteTime(cachePath));
+                    }
+                    _fromCache = true;
+                    return HttpStatusCode.NotModified;
+                }
 
-	            if (_useCookies)
-	            {
-	                handler.CookieContainer = new CookieContainer();
-	            }
+                if (_useCookies)
+                {
+                    handler.CookieContainer = new CookieContainer();
+                }
 
-	            if (PreRequest != null)
-	            {
-	                // allow our user to change the request at will
-	                if (!PreRequest(handler, request))
-	                {
-	                    return HttpStatusCode.ResetContent;
-	                }
+                if (PreRequest != null)
+                {
+                    // allow our user to change the request at will
+                    if (!PreRequest(handler, request))
+                    {
+                        return HttpStatusCode.ResetContent;
+                    }
 
-	                // dump cookie
-	                //				if (_useCookies)
-	                //				{
-	                //					foreach(Cookie cookie in req.CookieContainer.GetCookies(req.RequestUri))
-	                //					{
-	                //						HtmlLibrary.Trace("Cookie " + cookie.Name + "=" + cookie.Value + " path=" + cookie.Path + " domain=" + cookie.Domain);
-	                //					}
-	                //				}
-	            }
+                    // dump cookie
+                    //				if (_useCookies)
+                    //				{
+                    //					foreach(Cookie cookie in req.CookieContainer.GetCookies(req.RequestUri))
+                    //					{
+                    //						HtmlLibrary.Trace("Cookie " + cookie.Name + "=" + cookie.Value + " path=" + cookie.Path + " domain=" + cookie.Domain);
+                    //					}
+                    //				}
+                }
 
-	            HttpResponseMessage response;
-	            try
-	            {
-	                response = client.SendAsync(request).Result;
-	            }
-	            catch (HttpRequestException)
-	            {
-	                _requestDuration = Environment.TickCount - tc;
-	                if (oldFile)
-	                {
-	                    if (path != null)
-	                    {
-	                        IOLibrary.CopyAlways(cachePath, path);
-	                        // touch the file
-	                        File.SetLastWriteTime(path, File.GetLastWriteTime(cachePath));
-	                    }
-	                    return HttpStatusCode.NotModified;
-	                }
-	                throw;
-	            }
-	            catch (Exception)
-	            {
-	                _requestDuration = Environment.TickCount - tc;
-	                throw;
-	            }
+                HttpResponseMessage response;
+                try
+                {
+                    response = client.SendAsync(request).Result;
+                }
+                catch (HttpRequestException)
+                {
+                    _requestDuration = Environment.TickCount - tc;
+                    if (oldFile)
+                    {
+                        if (path != null)
+                        {
+                            IOLibrary.CopyAlways(cachePath, path);
+                            // touch the file
+                            File.SetLastWriteTime(path, File.GetLastWriteTime(cachePath));
+                        }
+                        return HttpStatusCode.NotModified;
+                    }
+                    throw;
+                }
+                catch (Exception)
+                {
+                    _requestDuration = Environment.TickCount - tc;
+                    throw;
+                }
 
-	            // allow our user to get some info from the response
-	            if (PostResponse != null)
-	            {
-	                PostResponse(request, response);
-	            }
+                // allow our user to get some info from the response
+                if (PostResponse != null)
+                {
+                    PostResponse(request, response);
+                }
 
-	            _requestDuration = Environment.TickCount - tc;
-	            _responseUri = response.RequestMessage.RequestUri;
+                _requestDuration = Environment.TickCount - tc;
+                _responseUri = response.RequestMessage.RequestUri;
 
-	            bool html = IsHtmlContent(response.Content.Headers.ContentType.MediaType);
-	            var encoding = response.Content.Headers.ContentEncoding.FirstOrDefault();
-	            Encoding respenc = !string.IsNullOrEmpty(encoding)
-	                ? Encoding.GetEncoding(encoding)
-	                : null;
+                bool isUnknown = response.Content.Headers.ContentType == null;
+                bool html = !isUnknown && IsHtmlContent(response.Content.Headers.ContentType.MediaType);
 
-	            if (response.StatusCode == HttpStatusCode.NotModified)
-	            {
-	                if (UsingCache)
-	                {
-	                    _fromCache = true;
-	                    if (path != null)
-	                    {
-	                        IOLibrary.CopyAlways(cachePath, path);
-	                        // touch the file
-	                        File.SetLastWriteTime(path, File.GetLastWriteTime(cachePath));
-	                    }
-	                    return response.StatusCode;
-	                }
-	                // this should *never* happen...
-	                throw new HtmlWebException("Server has send a NotModifed code, without cache enabled.");
-	            }
-	            Stream s = response.Content.ReadAsStreamAsync().Result;
-	            if (s != null)
-	            {
-	                if (UsingCache)
-	                {
-	                    // NOTE: LastModified does not contain milliseconds, so we remove them to the file
-	                    SaveStream(s, cachePath, RemoveMilliseconds(response.Content.Headers.LastModified), _streamBufferSize);
+                var encoding = response.Content.Headers.ContentEncoding.FirstOrDefault();
+                Encoding respenc = !string.IsNullOrEmpty(encoding)
+                    ? Encoding.GetEncoding(encoding)
+                    : null;
 
-	                    // save headers
-	                    SaveCacheHeaders(request.RequestUri, response);
+                if (response.StatusCode == HttpStatusCode.NotModified)
+                {
+                    if (UsingCache)
+                    {
+                        _fromCache = true;
+                        if (path != null)
+                        {
+                            IOLibrary.CopyAlways(cachePath, path);
+                            // touch the file
+                            File.SetLastWriteTime(path, File.GetLastWriteTime(cachePath));
+                        }
+                        return response.StatusCode;
+                    }
+                    // this should *never* happen...
+                    throw new HtmlWebException("Server has send a NotModifed code, without cache enabled.");
+                }
+                Stream s = response.Content.ReadAsStreamAsync().Result;
+                if (s != null)
+                {
+                    if (UsingCache)
+                    {
+                        // NOTE: LastModified does not contain milliseconds, so we remove them to the file
+                        SaveStream(s, cachePath, RemoveMilliseconds(response.Content.Headers.LastModified), _streamBufferSize);
 
-	                    if (path != null)
-	                    {
-	                        // copy and touch the file
-	                        IOLibrary.CopyAlways(cachePath, path);
-	                        File.SetLastWriteTime(path, File.GetLastWriteTime(cachePath));
-	                    }
+                        // save headers
+                        SaveCacheHeaders(request.RequestUri, response);
+
+                        if (path != null)
+                        {
+                            // copy and touch the file
+                            IOLibrary.CopyAlways(cachePath, path);
+                            File.SetLastWriteTime(path, File.GetLastWriteTime(cachePath));
+                        }
 
                         if (_usingCacheAndLoad)
                         {
                             doc.Load(cachePath);
                         }
-	                }
-	                else
-	                {
-	                    // try to work in-memory
-	                    if ((doc != null) && (html))
-	                    {
-	                        if (respenc != null)
-	                        {
-	                            doc.Load(s, respenc);
-	                        }
-	                        else
-	                        {
-	                            doc.Load(s, true);
-	                        }
-	                    }
-	                }
-	            }
-	            status = response.StatusCode;
-	        }
+                    }
+                    else
+                    {
+                        // try to work in-memory
+                        if ((doc != null) && (html))
+                        {
+                            if (respenc != null)
+                            {
+                                doc.Load(s, respenc);
+                            }
+                            else
+                            {
+                                doc.Load(s, true);
+                            }
+                        }
 
-	        return status;
-	    }
+                        else if (doc != null && isUnknown)
+                        {
+                            try
+                            {
+                                if (respenc == null)
+                                {
+                                    doc.Load(s, true);
+                                }
+                                else
+                                {
+                                    doc.Load(s, respenc);
+                                }
+                            }
+                            catch
+                            {
+                                // That’s fine, the content type was unknown so probably not HTML
+                                // Perhaps trying to figure if the content contains some HTML before would be a better idea.
+                            }
+                        }
+                    }
+                }
+                status = response.StatusCode;
+            }
+
+            return status;
+        }
 #endif
 
         private string GetCacheHeader(Uri requestUri, string name, string def)
@@ -1905,7 +1927,7 @@ namespace HtmlAgilityPack
             // we don't handle that here
             XmlDocument doc = new XmlDocument();
 #if NETSTANDARD
-		    doc.Load(File.OpenRead(GetCacheHeadersPath(requestUri)));
+            doc.Load(File.OpenRead(GetCacheHeadersPath(requestUri)));
 #else
             doc.Load(GetCacheHeadersPath(requestUri));
 #endif
@@ -1961,19 +1983,19 @@ namespace HtmlAgilityPack
 #endif
 
 #if NET45 || NETSTANDARD
-	    private HtmlDocument LoadUrl(Uri uri, string method, IWebProxy proxy, ICredentials creds)
-	    {
-	        HtmlDocument doc = new HtmlDocument();
-	        doc.OptionAutoCloseOnEnd = false;
-	        doc.OptionFixNestedTags = true;
-	        _statusCode = Get(uri, method, null, doc, proxy, creds);
-	        if (_statusCode == HttpStatusCode.NotModified)
-	        {
-	            // read cached encoding
-	            doc.DetectEncodingAndLoad(GetCachePath(uri));
-	        }
-	        return doc;
-	    }
+        private HtmlDocument LoadUrl(Uri uri, string method, IWebProxy proxy, ICredentials creds)
+        {
+            HtmlDocument doc = new HtmlDocument();
+            doc.OptionAutoCloseOnEnd = false;
+            doc.OptionFixNestedTags = true;
+            _statusCode = Get(uri, method, null, doc, proxy, creds);
+            if (_statusCode == HttpStatusCode.NotModified)
+            {
+                // read cached encoding
+                doc.DetectEncodingAndLoad(GetCachePath(uri));
+            }
+            return doc;
+        }
 #endif
 #if !NETSTANDARD
         private void SaveCacheHeaders(Uri requestUri, HttpWebResponse resp)
@@ -2002,47 +2024,47 @@ namespace HtmlAgilityPack
 
 #if NET45 || NETSTANDARD
         private void SaveCacheHeaders(Uri requestUri, HttpResponseMessage resp)
-	    {
-	        // we cache the original headers aside the cached document.
-	        string file = GetCacheHeadersPath(requestUri);
-	        XmlDocument doc = new XmlDocument();
-	        doc.LoadXml("<c></c>");
-	        XmlNode cache = doc.FirstChild;
-	        foreach (var header in resp.Headers)
-	        {
-	            XmlNode entry = doc.CreateElement("h");
-	            XmlAttribute att = doc.CreateAttribute("n");
-	            att.Value = header.Key;
-	            entry.Attributes.Append(att);
+        {
+            // we cache the original headers aside the cached document.
+            string file = GetCacheHeadersPath(requestUri);
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml("<c></c>");
+            XmlNode cache = doc.FirstChild;
+            foreach (var header in resp.Headers)
+            {
+                XmlNode entry = doc.CreateElement("h");
+                XmlAttribute att = doc.CreateAttribute("n");
+                att.Value = header.Key;
+                entry.Attributes.Append(att);
 
-	            att = doc.CreateAttribute("v");
-	            att.Value = string.Join(";", header.Value);
-	            entry.Attributes.Append(att);
+                att = doc.CreateAttribute("v");
+                att.Value = string.Join(";", header.Value);
+                entry.Attributes.Append(att);
 
-	            cache.AppendChild(entry);
-	        }
-	        doc.Save(File.OpenWrite(file));
-	    }
+                cache.AppendChild(entry);
+            }
+            doc.Save(File.OpenWrite(file));
+        }
 #endif
 
 #if NET45 || NETSTANDARD
-/// <summary>
-/// Begins the process of downloading an internet resource
-/// </summary>
-/// <param name="url">Url to the html document</param>
-	    public async Task<HtmlDocument> LoadFromWebAsync(string url)
-	    {
-	        return await LoadFromWebAsync(new Uri(url), null, null);
-	    }
+        /// <summary>
+        /// Begins the process of downloading an internet resource
+        /// </summary>
+        /// <param name="url">Url to the html document</param>
+        public Task<HtmlDocument> LoadFromWebAsync(string url)
+        {
+            return LoadFromWebAsync(new Uri(url), null, null);
+        }
 
         /// <summary>
         /// Begins the process of downloading an internet resource
         /// </summary>
         /// <param name="url">Url to the html document</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        public async Task<HtmlDocument> LoadFromWebAsync(string url, CancellationToken cancellationToken)
+        public Task<HtmlDocument> LoadFromWebAsync(string url, CancellationToken cancellationToken)
         {
-            return await LoadFromWebAsync(new Uri(url), null, null, cancellationToken);
+            return LoadFromWebAsync(new Uri(url), null, null, cancellationToken);
         }
 
         /// <summary>
@@ -2050,10 +2072,10 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="url">Url to the html document</param>
         /// <param name="encoding">The encoding to use while downloading the document</param>
-        public async Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding)
-	    {
-	        return await LoadFromWebAsync(new Uri(url), encoding, null, CancellationToken.None);
-	    }
+        public Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding)
+        {
+            return LoadFromWebAsync(new Uri(url), encoding, null, CancellationToken.None);
+        }
 
         /// <summary>
         /// Begins the process of downloading an internet resource
@@ -2061,9 +2083,9 @@ namespace HtmlAgilityPack
         /// <param name="url">Url to the html document</param>
         /// <param name="encoding">The encoding to use while downloading the document</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        public async Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding, CancellationToken cancellationToken)
+        public Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding, CancellationToken cancellationToken)
         {
-            return await LoadFromWebAsync(new Uri(url), encoding, null, cancellationToken);
+            return LoadFromWebAsync(new Uri(url), encoding, null, cancellationToken);
         }
 
         /// <summary>
@@ -2073,10 +2095,10 @@ namespace HtmlAgilityPack
         /// <param name="encoding">The encoding to use while downloading the document</param>
         /// <param name="userName">Username to use for credentials in the web request</param>
         /// <param name="password">Password to use for credentials in the web request</param>
-        public async Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding, string userName, string password)
-	    {
-	        return await LoadFromWebAsync(new Uri(url), encoding, new NetworkCredential(userName, password), CancellationToken.None);
-	    }
+        public Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding, string userName, string password)
+        {
+            return LoadFromWebAsync(new Uri(url), encoding, new NetworkCredential(userName, password), CancellationToken.None);
+        }
 
         /// <summary>
         /// Begins the process of downloading an internet resource
@@ -2086,9 +2108,9 @@ namespace HtmlAgilityPack
         /// <param name="userName">Username to use for credentials in the web request</param>
         /// <param name="password">Password to use for credentials in the web request</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        public async Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding, string userName, string password, CancellationToken cancellationToken)
+        public Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding, string userName, string password, CancellationToken cancellationToken)
         {
-            return await LoadFromWebAsync(new Uri(url), encoding, new NetworkCredential(userName, password), cancellationToken);
+            return LoadFromWebAsync(new Uri(url), encoding, new NetworkCredential(userName, password), cancellationToken);
         }
 
         /// <summary>
@@ -2099,10 +2121,10 @@ namespace HtmlAgilityPack
         /// <param name="userName">Username to use for credentials in the web request</param>
         /// <param name="password">Password to use for credentials in the web request</param>
         /// <param name="domain">Domain to use for credentials in the web request</param>
-        public async Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding, string userName, string password, string domain)
-	    {
-	        return await LoadFromWebAsync(new Uri(url), encoding, new NetworkCredential(userName, password, domain), CancellationToken.None);
-	    }
+        public Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding, string userName, string password, string domain)
+        {
+            return LoadFromWebAsync(new Uri(url), encoding, new NetworkCredential(userName, password, domain), CancellationToken.None);
+        }
 
         /// <summary>
         /// Begins the process of downloading an internet resource
@@ -2113,9 +2135,9 @@ namespace HtmlAgilityPack
         /// <param name="password">Password to use for credentials in the web request</param>
         /// <param name="domain">Domain to use for credentials in the web request</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        public async Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding, string userName, string password, string domain, CancellationToken cancellationToken)
+        public Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding, string userName, string password, string domain, CancellationToken cancellationToken)
         {
-            return await LoadFromWebAsync(new Uri(url), encoding, new NetworkCredential(userName, password, domain), cancellationToken);
+            return LoadFromWebAsync(new Uri(url), encoding, new NetworkCredential(userName, password, domain), cancellationToken);
         }
 
         /// <summary>
@@ -2125,10 +2147,10 @@ namespace HtmlAgilityPack
         /// <param name="userName">Username to use for credentials in the web request</param>
         /// <param name="password">Password to use for credentials in the web request</param>
         /// <param name="domain">Domain to use for credentials in the web request</param>
-        public async Task<HtmlDocument> LoadFromWebAsync(string url, string userName, string password, string domain)
-	    {
-	        return await LoadFromWebAsync(new Uri(url), null, new NetworkCredential(userName, password, domain), CancellationToken.None);
-	    }
+        public Task<HtmlDocument> LoadFromWebAsync(string url, string userName, string password, string domain)
+        {
+            return LoadFromWebAsync(new Uri(url), null, new NetworkCredential(userName, password, domain), CancellationToken.None);
+        }
 
         /// <summary>
         /// Begins the process of downloading an internet resource
@@ -2138,9 +2160,9 @@ namespace HtmlAgilityPack
         /// <param name="password">Password to use for credentials in the web request</param>
         /// <param name="domain">Domain to use for credentials in the web request</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        public async Task<HtmlDocument> LoadFromWebAsync(string url, string userName, string password, string domain, CancellationToken cancellationToken)
+        public Task<HtmlDocument> LoadFromWebAsync(string url, string userName, string password, string domain, CancellationToken cancellationToken)
         {
-            return await LoadFromWebAsync(new Uri(url), null, new NetworkCredential(userName, password, domain), cancellationToken);
+            return LoadFromWebAsync(new Uri(url), null, new NetworkCredential(userName, password, domain), cancellationToken);
         }
 
         /// <summary>
@@ -2149,10 +2171,10 @@ namespace HtmlAgilityPack
         /// <param name="url">Url to the html document</param>
         /// <param name="userName">Username to use for credentials in the web request</param>
         /// <param name="password">Password to use for credentials in the web request</param>
-        public async Task<HtmlDocument> LoadFromWebAsync(string url, string userName, string password)
-	    {
-	        return await LoadFromWebAsync(new Uri(url), null, new NetworkCredential(userName, password), CancellationToken.None);
-	    }
+        public Task<HtmlDocument> LoadFromWebAsync(string url, string userName, string password)
+        {
+            return LoadFromWebAsync(new Uri(url), null, new NetworkCredential(userName, password), CancellationToken.None);
+        }
 
         /// <summary>
         /// Begins the process of downloading an internet resource
@@ -2161,9 +2183,9 @@ namespace HtmlAgilityPack
         /// <param name="userName">Username to use for credentials in the web request</param>
         /// <param name="password">Password to use for credentials in the web request</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        public async Task<HtmlDocument> LoadFromWebAsync(string url, string userName, string password, CancellationToken cancellationToken)
+        public Task<HtmlDocument> LoadFromWebAsync(string url, string userName, string password, CancellationToken cancellationToken)
         {
-            return await LoadFromWebAsync(new Uri(url), null, new NetworkCredential(userName, password), cancellationToken);
+            return LoadFromWebAsync(new Uri(url), null, new NetworkCredential(userName, password), cancellationToken);
         }
 
         /// <summary>
@@ -2171,10 +2193,10 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="url">Url to the html document</param>
         /// <param name="credentials">The credentials to use for authenticating the web request</param>
-        public async Task<HtmlDocument> LoadFromWebAsync(string url, NetworkCredential credentials)
-	    {
-	        return await LoadFromWebAsync(new Uri(url), null, credentials, CancellationToken.None);
-	    }
+        public Task<HtmlDocument> LoadFromWebAsync(string url, NetworkCredential credentials)
+        {
+            return LoadFromWebAsync(new Uri(url), null, credentials, CancellationToken.None);
+        }
 
         /// <summary>
         /// Begins the process of downloading an internet resource
@@ -2182,9 +2204,9 @@ namespace HtmlAgilityPack
         /// <param name="url">Url to the html document</param>
         /// <param name="credentials">The credentials to use for authenticating the web request</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        public async Task<HtmlDocument> LoadFromWebAsync(string url, NetworkCredential credentials, CancellationToken cancellationToken)
+        public Task<HtmlDocument> LoadFromWebAsync(string url, NetworkCredential credentials, CancellationToken cancellationToken)
         {
-            return await LoadFromWebAsync(new Uri(url), null, credentials, cancellationToken);
+            return LoadFromWebAsync(new Uri(url), null, credentials, cancellationToken);
         }
 
         /// <summary>
@@ -2193,9 +2215,9 @@ namespace HtmlAgilityPack
         /// <param name="uri">Url to the html document</param>
         /// <param name="encoding">The encoding to use while downloading the document</param>
         /// <param name="credentials">The credentials to use for authenticating the web request</param>
-        public async Task<HtmlDocument> LoadFromWebAsync(Uri uri, Encoding encoding, NetworkCredential credentials)
+        public Task<HtmlDocument> LoadFromWebAsync(Uri uri, Encoding encoding, NetworkCredential credentials)
         {
-            return await LoadFromWebAsync(uri, encoding, credentials, CancellationToken.None);
+            return LoadFromWebAsync(uri, encoding, credentials, CancellationToken.None);
         }
 
         /// <summary>
@@ -2206,36 +2228,36 @@ namespace HtmlAgilityPack
         /// <param name="credentials">The credentials to use for authenticating the web request</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         public async Task<HtmlDocument> LoadFromWebAsync(Uri uri, Encoding encoding, NetworkCredential credentials, CancellationToken cancellationToken)
-	    {
-	        var clientHandler = new HttpClientHandler();
-	        if (credentials == null)
-	            clientHandler.UseDefaultCredentials = true;
-	        else
-	            clientHandler.Credentials = credentials;
+        {
+            var clientHandler = new HttpClientHandler();
+            if (credentials == null)
+                clientHandler.UseDefaultCredentials = true;
+            else
+                clientHandler.Credentials = credentials;
 
-	        var client = new HttpClient(clientHandler);
+            var client = new HttpClient(clientHandler);
 
-	        var e = await client.GetAsync(uri, cancellationToken);
-	        if (e.StatusCode == HttpStatusCode.OK)
-	        {
-	            var html = string.Empty;
-	            if (encoding != null)
-	            {
-	                using (var sr = new StreamReader(await e.Content.ReadAsStreamAsync(), encoding))
-	                {
-	                    html = sr.ReadToEnd();
-	                }
-	            }
-	            else
-	                html = await e.Content.ReadAsStringAsync();
-	            var doc = new HtmlDocument();
-	            if (PreHandleDocument != null)
-	                PreHandleDocument(doc);
-	            doc.LoadHtml(html);
-	            return doc;
-	        }
-	        throw new Exception("Error downloading html");
-	    }
+            var e = await client.GetAsync(uri, cancellationToken).ConfigureAwait(false);
+            if (e.StatusCode == HttpStatusCode.OK)
+            {
+                var html = string.Empty;
+                if (encoding != null)
+                {
+                    using (var sr = new StreamReader(await e.Content.ReadAsStreamAsync().ConfigureAwait(false), encoding))
+                    {
+                        html = sr.ReadToEnd();
+                    }
+                }
+                else
+                    html = await e.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var doc = new HtmlDocument();
+                if (PreHandleDocument != null)
+                    PreHandleDocument(doc);
+                doc.LoadHtml(html);
+                return doc;
+            }
+            throw new Exception("Error downloading html");
+        }
 #endif
 
         #endregion
@@ -2383,9 +2405,9 @@ namespace HtmlAgilityPack
     }
 
 #if !NETSTANDARD
-    /// <summary>
-    /// Wraps getting AppDomain permissions
-    /// </summary>
+/// <summary>
+/// Wraps getting AppDomain permissions
+/// </summary>
     public class PermissionHelper : IPermissionHelper
     {
         /// <summary>

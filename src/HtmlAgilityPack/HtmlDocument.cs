@@ -1055,8 +1055,6 @@ namespace HtmlAgilityPack
                 case "td":
                     return new string[] {"tr", "table"};
 
-                case "option":
-                    return new string[] { "select", "optgroup", "datalist" };
                 default:
                     return null;
             }
@@ -1722,7 +1720,7 @@ namespace HtmlAgilityPack
 						if (_declaredencoding.WebName != _streamencoding.WebName)
 #else
                         if (_declaredencoding != null)
-                            if (_declaredencoding.WindowsCodePage != _streamencoding.WindowsCodePage)
+                            if (_declaredencoding.CodePage != _streamencoding.CodePage)
 #endif
                             {
                                 AddError(

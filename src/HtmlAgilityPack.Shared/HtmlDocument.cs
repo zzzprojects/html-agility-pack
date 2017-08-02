@@ -1720,7 +1720,7 @@ namespace HtmlAgilityPack
 						if (_declaredencoding.WebName != _streamencoding.WebName)
 #else
                         if (_declaredencoding != null)
-                            if (_declaredencoding.WindowsCodePage != _streamencoding.WindowsCodePage)
+                            if (_declaredencoding.CodePage != _streamencoding.CodePage)
 #endif
                             {
                                 AddError(

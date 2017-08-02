@@ -106,7 +106,7 @@ namespace HtmlAgilityPack
 			ElementsFlags.Add("input", HtmlElementFlag.Empty);
 			ElementsFlags.Add("basefont", HtmlElementFlag.Empty);
 
-			ElementsFlags.Add("form", HtmlElementFlag.CanOverlap | HtmlElementFlag.Empty);
+			ElementsFlags.Add("form",  HtmlElementFlag.CanOverlap);
 
 			// they sometimes contain, and sometimes they don 't...
 			ElementsFlags.Add("option", HtmlElementFlag.Empty);
