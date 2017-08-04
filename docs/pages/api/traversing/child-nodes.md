@@ -19,8 +19,8 @@ The following example displays all the children element of the node.
 var htmlDoc = new HtmlDocument();
 htmlDoc.LoadHtml(html);
 
-var htmlNodes = htmlDoc.DocumentNode.SelectNodes("//body");
-
+var htmlBody = htmlDoc.DocumentNode.SelectSingleNode("//body");
+		
 HtmlNodeCollection childNodes = htmlBody.ChildNodes;
 		
 foreach (var node in childNodes)
