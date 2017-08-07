@@ -40,6 +40,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)HtmlWeb.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HtmlWeb.Xpath.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HtmlWebException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)InvalidProgramException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IOLibrary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MixedCodeDocument.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MixedCodeDocumentCodeFragment.cs" />
@@ -47,6 +48,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)MixedCodeDocumentFragmentList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MixedCodeDocumentFragmentType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MixedCodeDocumentTextFragment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NameValuePair.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NameValuePairList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Trace.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Trace.FullFramework.cs" />

@@ -5,24 +5,39 @@
 // More projects: http://www.zzzprojects.com/
 // Copyright © ZZZ Projects Inc. 2014 - 2017. All rights reserved.
 
+#if METRO
 namespace HtmlAgilityPack
 {
-    internal partial class Trace
+    internal class NameValuePair
     {
-        internal static Trace _current;
-        internal static Trace Current
-    {
-        get
+#region Fields
+
+        internal readonly string Name;
+        internal string Value;
+
+#endregion
+
+#region Constructors
+
+        internal NameValuePair()
         {
-            if(_current == null)
-                _current = new Trace();
-            return _current;
         }
-    }
-        partial void WriteLineIntern(string message,string category);
-        public static void WriteLine(string message,string category)
+
+        internal NameValuePair(string name)
+            :
+            this()
         {
-            Current.WriteLineIntern(message,category);
+            Name = name;
         }
+
+        internal NameValuePair(string name, string value)
+            :
+            this(name)
+        {
+            Value = value;
+        }
+
+#endregion
     }
 }
+#endif
