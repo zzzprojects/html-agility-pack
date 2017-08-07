@@ -27,7 +27,7 @@ namespace HtmlAgilityPack
         private static int _maxDepthLevel = int.MaxValue;
 
         private int _c;
-        private Crc32 _crc32;
+        private InternalCrc32 _crc32;
         private HtmlAttribute _currentattribute;
         private HtmlNode _currentnode;
         private Encoding _declaredencoding;
@@ -1151,7 +1151,7 @@ namespace HtmlAgilityPack
             int lastquote = 0;
             if (OptionComputeChecksum)
             {
-                _crc32 = new Crc32();
+                _crc32 = new InternalCrc32();
             }
 
             Lastnodes = new Dictionary<string, HtmlNode>();

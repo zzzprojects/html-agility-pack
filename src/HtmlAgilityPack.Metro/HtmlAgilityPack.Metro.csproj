@@ -49,6 +49,9 @@
     <Compile Include="..\HtmlAgilityPack\crc32.cs">
       <Link>crc32.cs</Link>
     </Compile>
+    <Compile Include="..\HtmlAgilityPack\InternalCrc32.cs">
+      <Link>InternalCrc32.cs</Link>
+    </Compile>
     <Compile Include="..\HtmlAgilityPack\EncodingFoundException.cs">
       <Link>EncodingFoundException.cs</Link>
     </Compile>
