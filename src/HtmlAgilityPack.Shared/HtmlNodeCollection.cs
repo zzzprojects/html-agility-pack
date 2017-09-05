@@ -231,6 +231,9 @@ namespace HtmlAgilityPack
             HtmlNode prev = null;
             HtmlNode oldnode = _items[index];
 
+            // KEEP a reference since it will be set to null
+            var parentNode = _parentnode ?? oldnode._parentnode;
+
             if (index > 0)
                 prev = _items[index - 1];
 
@@ -253,7 +256,10 @@ namespace HtmlAgilityPack
             oldnode._nextnode = null;
             oldnode._parentnode = null;
 
-            _parentnode.SetChanged();
+            if (parentNode != null)
+            {
+                parentNode.SetChanged();
+            }
         }
 
         #endregion
