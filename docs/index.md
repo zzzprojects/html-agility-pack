@@ -238,7 +238,6 @@ var nodes = doc.DocumentNode.Descendants("input")
 
 			<h2>Getting Started - <span class="text-z">HTML</span> Agility Pack</h2>
 
-			<div>
 			<div class="arrow arrow-start arrow-start-1 wow fadeInDown" data-wow-delay="1s"><span>&nbsp;</span></div>
 			<div class="arrow arrow-start arrow-start-2 wow fadeInDown" data-wow-delay="1s"><span>&nbsp;</span></div>
 			<div class="arrow arrow-start arrow-start-3 wow fadeInDown" data-wow-delay="1s"><span>&nbsp;</span></div>
