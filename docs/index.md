@@ -415,7 +415,7 @@ var nodes = doc.DocumentNode.Descendants("input");
 		<center>
 			<a class="btn btn-social btn-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fhtml-agility-pack.net%2F" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i>&nbsp;Share on Facebook</a>
 			&nbsp;
-			<a class="btn btn-social btn-twitter" href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fhtml-agility-pack.net%2F&text=Check out this library: http%3A%2F%2Fhtml-agility-pack.net%2F" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i>&nbsp;Share on Twitter</a>
+			<a class="btn btn-social btn-twitter" href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fhtml-agility-pack.net%2F&text=Check out this C# library Html Agility Pack:" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i>&nbsp;Share on Twitter</a>
 		</center>
 	</footer>
 
