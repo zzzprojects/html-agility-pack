@@ -54,12 +54,12 @@ layout: post
 					<li class="nav-item">
 						<a class="nav-link" href="https://github.com/zzzprojects/html-agility-pack"><i class="fa fa-github" aria-hidden="true"></i>&nbsp;GitHub</a>
 					</li>
-					<li class="nav-item">
+					<!--<li class="nav-item">
 						<a class="nav-link" href="https://github.com/zzzprojects/html-agility-pack/issues"><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Contrib</a>
 					</li>			
 					<li class="nav-item">
 						<a class="nav-link" href="https://github.com/zzzprojects/html-agility-pack/issues"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;Contact</a>
-					</li>
+					</li>!-->
 					<li class="nav-item nav-item-download">
 						<a class="btn btn-lg btn-z" href="https://www.nuget.org/packages/HtmlAgilityPack/" role="button" onclick="ga('send', 'event', { eventAction: 'download'});"><i class="fa fa-cloud-download" aria-hidden="true"></i>&nbsp;&nbsp;Download&nbsp;<i class="fa fa-angle-right"></i></a>
 					</li>
@@ -91,7 +91,7 @@ layout: post
 					</h1>
 					
 					<!-- download !-->
-					<div><a class="btn btn-xl btn-z" href="#" target="_blank">NuGet Download&nbsp;<i class="fa fa-angle-right"></i></a></div>
+					<div><a class="btn btn-xl btn-z" href="https://www.nuget.org/packages/HtmlAgilityPack/" target="_blank">NuGet Download&nbsp;<i class="fa fa-angle-right"></i></a></div>
 					<div class="download-count-text">Download Count:</div>
 					<div class="download-count"><img src="https://zzzprojects.github.io/images/nuget/html-agility-pack-big-d.svg" /></div>
 					
@@ -413,9 +413,9 @@ var nodes = doc.DocumentNode.Descendants("input");
 	
 	<footer class="fixed-bottom">
 		<center>
-			<a class="btn btn-social btn-facebook" href="https://www.facebook.com/sharer/sharer.php?u=@(Request.Url.ToString())" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i>&nbsp;Share on Facebook</a>
+			<a class="btn btn-social btn-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fhtml-agility-pack.net%2F" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i>&nbsp;Share on Facebook</a>
 			&nbsp;
-			<a class="btn btn-social btn-twitter" href="https://twitter.com/intent/tweet?url=URL&text=Check out this page on NuGet Must-Haves: @(Request.Url.ToString())" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i>&nbsp;Share on Twitter</a>
+			<a class="btn btn-social btn-twitter" href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fhtml-agility-pack.net%2F&text=Check out this library: http%3A%2F%2Fhtml-agility-pack.net%2F" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i>&nbsp;Share on Twitter</a>
 		</center>
 	</footer>
 
