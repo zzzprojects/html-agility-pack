@@ -105,7 +105,7 @@ layout: post
 					
 						<!-- example-1-header !-->
 						<div class="col-lg-3"> 
-							<h5>LOAD &amp; <span class="hidden-md-down">PARSE HTML</h5>
+							<h5>LOAD &amp; PARSE HTML</h5>
 							<div class="hero-arrow hero-arrow-ltr"><img src="images/hero-arrow.svg"></div>
 						</div>
 						
