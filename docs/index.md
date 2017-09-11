@@ -104,7 +104,7 @@ layout: post
 					<div class="row wow slideInRight">
 					
 						<!-- example-1-header !-->
-						<div class="col-lg-3">
+						<div class="col-lg-3"> 
 							<h5>LOAD &amp; <span class="hidden-md-down">PARSE HTML</h5>
 							<div class="hero-arrow hero-arrow-ltr"><img src="images/hero-arrow.svg"></div>
 						</div>
