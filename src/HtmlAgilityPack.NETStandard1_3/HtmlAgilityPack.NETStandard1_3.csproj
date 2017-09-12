@@ -12,7 +12,7 @@
     <PostBuildEvent>del /f /q C:\Users\Jonathan\Desktop\Z\zzzproject\HtmlAgilityPack\Solutions\..\Nuget\lib\NetStandard1_3\*
 copy "Html*.*" C:\Users\Jonathan\Desktop\Z\zzzproject\HtmlAgilityPack\Solutions\..\Nuget\lib\NetStandard1_3\*</PostBuildEvent>
     <PackageId>HtmlAgilityPack</PackageId>
-    <Version>1.5.2</Version>
+    <Version>1.5.6</Version>
     <Authors>ZZZ Projects Inc.</Authors>
     <Company>ZZZ Projects Inc.</Company>
     <Product>Html Agility Pack</Product>

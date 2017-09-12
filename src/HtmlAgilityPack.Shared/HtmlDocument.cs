@@ -21,6 +21,7 @@ namespace HtmlAgilityPack
     {
         #region Manager
 
+        /// <summary>True to disable, false to enable the behavaior tag p.</summary>
         public static bool DisableBehavaiorTagP;
 
         #endregion
@@ -184,6 +185,13 @@ namespace HtmlAgilityPack
         #endregion
 
         #region Properties
+
+        /// <summary>Gets the parsed text.</summary>
+        /// <value>The parsed text.</value>
+        public string ParsedText
+        {
+            get { return Text; } 
+        }
 
         /// <summary>
         /// Defines the max level we would go deep into the html document. If this depth level is exceeded, and exception is
