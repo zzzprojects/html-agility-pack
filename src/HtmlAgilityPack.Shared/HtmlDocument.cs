@@ -1095,9 +1095,15 @@ namespace HtmlAgilityPack
             }
         }
 
+        private bool IsValidTag()
+        {
+            bool isValidTag = _c == '<' && _index < Text.Length && (Char.IsLetter(Text[_index]) || Text[_index] == '/' || Text[_index] == '!' || Text[_index] == '%');
+            return isValidTag;
+        }
+
         private bool NewCheck()
         {
-            if (_c != '<')
+            if (_c != '<' || !IsValidTag())
             {
                 return false;
             }
