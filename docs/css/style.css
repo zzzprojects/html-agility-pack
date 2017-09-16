@@ -59,6 +59,11 @@ header nav.navbar .navbar-nav .nav-item a.nav-link {
 header nav.navbar .navbar-nav .nav-item a.nav-link:hover {
 	color: rgba(0, 0, 0, 0.6);
 }
+@media (max-width: 575px) {
+	header nav.navbar .navbar-brand img {
+	    height: 40px;
+	}
+}
 @media (max-width: 991px) {
 	header nav.navbar .navbar-nav {
 		padding: 1em 0;
