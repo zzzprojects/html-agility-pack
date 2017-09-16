@@ -166,6 +166,11 @@ header nav.navbar .navbar-nav .nav-item a.nav-link:hover {
 		margin-top: 40px;
 	}
 }
+@media (max-width: 575px) {
+	#hero .hero-header .download-count img {
+		width: 350px;
+	}
+}
 
 /* keys */
 #keys {
