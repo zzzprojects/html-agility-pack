@@ -30,6 +30,11 @@ body {
     line-height: 1.75;
     padding: 0.5rem 1rem;
 }
+@media (max-width: 575px) {
+	body {
+		margin-top: 60px;
+	}
+}
 
 /* header */
 header {
