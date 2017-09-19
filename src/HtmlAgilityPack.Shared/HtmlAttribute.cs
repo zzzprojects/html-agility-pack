@@ -141,6 +141,12 @@ namespace HtmlAgilityPack
         {
             get
             {
+                // A null value has been provided, the attribute should be considered as "hidden"
+                if (_value == null && _ownerdocument.Text == null && _valuestartindex == 0 && _valuelength == 0)
+                {
+                    return null;
+                }
+
                 if (_value == null)
                 {
                     _value = _ownerdocument.Text.Substring(_valuestartindex, _valuelength);

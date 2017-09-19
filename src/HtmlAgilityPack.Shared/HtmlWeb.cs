@@ -3,7 +3,7 @@
 // Forum & Issues: https://github.com/zzzprojects/html-agility-pack
 // License: https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE
 // More projects: http://www.zzzprojects.com/
-// Copyright Â© ZZZ Projects Inc. 2014 - 2017. All rights reserved.
+// Copyright © ZZZ Projects Inc. 2014 - 2017. All rights reserved.
 
 #if !METRO
 #region
@@ -1140,7 +1140,7 @@ namespace HtmlAgilityPack
             }
             else
             {
-                cachePath = Path.Combine(_cachePath, (uri.Host + uri.AbsolutePath.TrimEnd(Path.AltDirectorySeparatorChar)).Replace('/', '\\'));
+                cachePath = Path.Combine(_cachePath, (uri.Host + uri.AbsolutePath.TrimEnd(Path.AltDirectorySeparatorChar)).Replace('/', '\\') + ".htm");
             }
             return cachePath;
         }
@@ -1711,7 +1711,7 @@ namespace HtmlAgilityPack
                         }
                         catch
                         {
-                            // ThatÂ’s fine, the content type was unknown so probably not HTML
+                            // That’s fine, the content type was unknown so probably not HTML
                             // Perhaps trying to figure if the content contains some HTML before would be a better idea.
                         }
                     }
@@ -1914,7 +1914,7 @@ namespace HtmlAgilityPack
                             }
                             catch
                             {
-                                // ThatÂ’s fine, the content type was unknown so probably not HTML
+                                // That’s fine, the content type was unknown so probably not HTML
                                 // Perhaps trying to figure if the content contains some HTML before would be a better idea.
                             }
                         }

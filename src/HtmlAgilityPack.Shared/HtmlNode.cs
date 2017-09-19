@@ -1802,6 +1802,12 @@ namespace HtmlAgilityPack
 
 		internal void WriteAttribute(TextWriter outText, HtmlAttribute att)
 		{
+		    if (att.Value == null)
+		    {   
+                // null value attribute are not written
+		        return;
+		    }
+
 			string name;
 			string quote = att.QuoteType == AttributeValueQuote.DoubleQuote ? "\"" : "'";
 			if (_ownerdocument.OptionOutputAsXml)
@@ -2023,7 +2029,12 @@ namespace HtmlAgilityPack
 	        {
 	            foreach (var att in classAttributes)
 	            {
-	                if (att.Value.Equals(name))
+	                if (att.Value == null)
+	                {
+	                    continue;
+	                }
+
+                    if (att.Value.Equals(name))
 	                {
 	                    Attributes.Remove(att);
 	                }
@@ -2094,6 +2105,11 @@ namespace HtmlAgilityPack
 
 	        foreach (var att in classAttributes)
 	        {
+	            if (att.Value == null)
+	            {
+	                continue;
+	            }
+
                 if (att.Value.Equals(oldClass) || att.Value.Contains(oldClass))
                 {
                     string newClassNames = att.Value.Replace(oldClass, newClass);

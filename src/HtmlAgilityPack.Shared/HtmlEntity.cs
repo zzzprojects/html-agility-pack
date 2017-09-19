@@ -804,6 +804,10 @@ namespace HtmlAgilityPack
         {
             foreach (HtmlAttribute at in collection)
             {
+                if (at.Value == null)
+                {
+                    continue;
+                }
                 at.Value = Entitize(at.Value);
             }
         }
