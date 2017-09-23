@@ -35,7 +35,7 @@ layout: post
 		<nav class="container navbar navbar-light navbar-expand-lg">
 
 			<!-- brand !-->
-			<a class="navbar-brand" href="http://html-agility-pack.net/">
+			<a class="navbar-brand" href="{{ site.github.url }}/">
 				<img src="http://html-agility-pack.net/images/logo256X256.png">
 				Html Agility Pack (<span class="text-z">HAP</span>)
 			</a>
@@ -49,17 +49,17 @@ layout: post
 			<div class="navbar-collapse collapse justify-content-end" id="navbar-menu">		
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<a class="nav-link" href="http://html-agility-pack.net/tutorials"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Tutorials</a>
+						<a class="nav-link" href="{{ site.github.url }}/tutorials"><i class="fa fa-book" aria-hidden="true"></i>&nbsp;Tutorials</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="https://github.com/zzzprojects/html-agility-pack"><i class="fa fa-github" aria-hidden="true"></i>&nbsp;GitHub</a>
 					</li>
 					<!--<li class="nav-item">
 						<a class="nav-link" href="https://github.com/zzzprojects/html-agility-pack/issues"><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Contrib</a>
-					</li>			
+					</li>!-->		
 					<li class="nav-item">
-						<a class="nav-link" href="https://github.com/zzzprojects/html-agility-pack/issues"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;Contact</a>
-					</li>!-->
+						<a class="nav-link" href="{{ site.github.url }}/contact-us"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;Contact</a>
+					</li>
 					<li class="nav-item nav-item-download">
 						<a class="btn btn-lg btn-z" href="https://www.nuget.org/packages/HtmlAgilityPack/" role="button" onclick="ga('send', 'event', { eventAction: 'download'});"><i class="fa fa-cloud-download" aria-hidden="true"></i>&nbsp;&nbsp;Download&nbsp;<i class="fa fa-angle-right"></i></a>
 					</li>
