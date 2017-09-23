@@ -52,15 +52,16 @@ namespace HtmlAgilityPack
 		internal HtmlNode _prevwithsamename;
 		internal bool _starttag;
 		internal int _streamposition;
+	    internal bool _isImplicitEnd;
 
-		#endregion
+        #endregion
 
-		#region Static Members
+        #region Static Members
 
-		/// <summary>
-		/// Gets the name of a comment node. It is actually defined as '#comment'.
-		/// </summary>
-		public static readonly string HtmlNodeTypeNameComment = "#comment";
+        /// <summary>
+        /// Gets the name of a comment node. It is actually defined as '#comment'.
+        /// </summary>
+        public static readonly string HtmlNodeTypeNameComment = "#comment";
 
 		/// <summary>
 		/// Gets the name of the document node. It is actually defined as '#document'.
@@ -372,12 +373,13 @@ namespace HtmlAgilityPack
 				if (_nodetype == HtmlNodeType.Text)
 					return ((HtmlTextNode)this).Text;
 
-				if (_nodetype == HtmlNodeType.Comment)
-					return ((HtmlCommentNode)this).Comment;
+                // Don't display comment or comment child nodes
+                if (_nodetype == HtmlNodeType.Comment)
+                    return "";
 
-				// note: right now, this method is *slow*, because we recompute everything.
-				// it could be optimized like innerhtml
-				if (!HasChildNodes)
+                // note: right now, this method is *slow*, because we recompute everything.
+                // it could be optimized like innerhtml
+                if (!HasChildNodes)
 					return string.Empty;
 
 				string s = null;
@@ -1597,28 +1599,37 @@ namespace HtmlAgilityPack
 						else
 							WriteContentTo(outText, level);
 
-						outText.Write("</" + name);
-						if (!_ownerdocument.OptionOutputAsXml)
-							WriteAttributes(outText, true);
+					    if (!_isImplicitEnd)
+					    {
+					        outText.Write("</" + name);
+					        if (!_ownerdocument.OptionOutputAsXml)
+					            WriteAttributes(outText, true);
 
-						outText.Write(">");
-					}
+					        outText.Write(">");
+					    }
+                    }
+
 					else
 					{
-						if (IsEmptyElement(Name))
-						{
-							if ((_ownerdocument.OptionWriteEmptyNodes) || (_ownerdocument.OptionOutputAsXml))
-								outText.Write(" />");
-							else
-							{
-								if (Name.Length > 0 && Name[0] == '?')
-									outText.Write("?");
+					    if (IsEmptyElement(Name))
+					    {
+					        if ((_ownerdocument.OptionWriteEmptyNodes) || (_ownerdocument.OptionOutputAsXml))
+					            outText.Write(" />");
+					        else
+					        {
+					            if (Name.Length > 0 && Name[0] == '?')
+					                outText.Write("?");
 
-								outText.Write(">");
-							}
-						}
-						else
-							outText.Write("></" + name + ">");
+					            outText.Write(">");
+					        }
+					    }
+					    else
+					    {
+					        if (!_isImplicitEnd)
+					        {
+					            outText.Write("></" + name + ">");
+                            }
+					    }
 					}
 					break;
 			}

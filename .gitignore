@@ -1,3 +1,7 @@
+*.pfx
+*.snk
+Z.Lab/
+
 [Bb]in/
 [Oo]bj/
 [Pp]ackages/

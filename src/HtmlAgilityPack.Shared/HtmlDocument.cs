@@ -1226,6 +1226,12 @@ namespace HtmlAgilityPack
                             continue;
                         if (IsWhiteSpace(_c))
                         {
+                            // CHECK if parent must be implicitely closed
+                            if (IsParentImplicitEnd())
+                            {
+                                CloseParentImplicitEnd();
+                            }
+
                             PushNodeNameEnd(_index - 1);
                             if (_state != ParseState.Tag)
                                 continue;
@@ -1234,6 +1240,12 @@ namespace HtmlAgilityPack
                         }
                         if (_c == '/')
                         {
+                            // CHECK if parent must be implicitely closed
+                            if (IsParentImplicitEnd())
+                            {
+                                CloseParentImplicitEnd();
+                            }
+
                             PushNodeNameEnd(_index - 1);
                             if (_state != ParseState.Tag)
                                 continue;
@@ -1242,6 +1254,12 @@ namespace HtmlAgilityPack
                         }
                         if (_c == '>')
                         {
+                            // CHECK if parent must be implicitely closed
+                            if (IsParentImplicitEnd())
+                            {
+                                CloseParentImplicitEnd();
+                            }
+
                             PushNodeNameEnd(_index - 1);
                             if (_state != ParseState.Tag)
                                 continue;
@@ -1553,6 +1571,9 @@ namespace HtmlAgilityPack
                 }
             }
 
+            // TODO: Add implicit end here?
+             
+            
             // finish the current work
             if (_currentnode._namestartindex > 0)
             {
@@ -1587,6 +1608,44 @@ namespace HtmlAgilityPack
         private void PushAttributeValueStart(int index)
         {
             PushAttributeValueStart(index, 0);
+        }
+
+        private bool IsParentImplicitEnd()
+        {
+            // MUST be a start tag
+            if (!_currentnode._starttag) return false;
+
+            bool isImplicitEnd = false;
+
+            var parent = _lastparentnode.Name;
+            var nodeName = Text.Substring(_currentnode._namestartindex, _index - _currentnode._namestartindex - 1);
+
+            switch (parent)
+            {
+                case "a":
+                    isImplicitEnd = nodeName == "a";
+                    break;
+                case "dd":
+                    isImplicitEnd = nodeName == "dt" || nodeName == "dd";
+                    break;
+                case "dt":
+                    isImplicitEnd = nodeName == "dt" || nodeName == "dd";
+                    break;
+                case "p":
+                    isImplicitEnd = nodeName == "p";
+                    break;
+            }
+
+            return isImplicitEnd;
+        }
+
+        private void CloseParentImplicitEnd()
+        {
+            HtmlNode close = new HtmlNode(_lastparentnode.NodeType, this, -1);
+            close._endnode = close;
+            close._isImplicitEnd = true;
+            _lastparentnode._isImplicitEnd = true;
+            _lastparentnode.CloseNode(close);
         }
 
         private void PushAttributeValueStart(int index, int quote)
