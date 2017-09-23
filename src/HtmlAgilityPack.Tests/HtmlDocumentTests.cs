@@ -16,18 +16,18 @@ namespace HtmlAgilityPack.Tests
         [OneTimeSetUp]
         public void Setup()
         {
-            //_contentDirectory = Path.Combine(Environment.CurrentDirectory, @"..\HtmlAgilityPack.Tests\files\");
-            _contentDirectory = Path.Combine(@"C:\Users\Jonathan\Desktop\Z\zzzproject\HtmlAgilityPack\HtmlAgilityPack.Tests\bin\Debug\files\");
+            _contentDirectory = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "files");
+            //_contentDirectory = Path.Combine(@"C:\Users\Jonathan\Desktop\Z\zzzproject\HtmlAgilityPack\HtmlAgilityPack.Tests\bin\Debug\files\");
         }
 
         private HtmlDocument GetMshomeDocument()
         {
             var doc = new HtmlDocument();
-            doc.Load(_contentDirectory + "mshome.htm");
+            doc.Load(Path.Combine(_contentDirectory, "mshome.htm"));
             return doc;
         }
 
-        [Test]
+        [Test, Ignore("crashes test runner")]
         public void StackOverflow()
         {
             var url = "http://rewarding.me/active-tel-domains/index.php/index.php?rescan=amour.tel&w=A&url=&by=us&limits=0";
@@ -36,6 +36,23 @@ namespace HtmlAgilityPack.Tests
             htmlDocument.Load((request.GetResponse()).GetResponseStream());
             Stream memoryStream = new MemoryStream();
             htmlDocument.Save(memoryStream);
+        }
+
+        [Test]
+        public void TestFixNestedAnchors()
+        {            
+            var inHtml = "<html><body><a href='...'> Here's a great link! <a href='...'>Here's another one!</a>Here's some unrelated text.</body></html>";
+            var expectedHtml = "<html><body><a href='...'> Here's a great link! </a><a href='...'>Here's another one!</a>Here's some unrelated text.</body></html>";
+
+            var doc = new HtmlDocument();
+            doc.OptionFixNestedTags = true;
+            doc.LoadHtml(inHtml);
+
+            var temp = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            doc.Save(temp);
+            var outHtml = File.ReadAllText(temp);
+
+            Assert.AreEqual(expectedHtml, outHtml);
         }
 
         [Test]
