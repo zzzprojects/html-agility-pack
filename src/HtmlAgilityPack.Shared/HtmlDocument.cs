@@ -288,6 +288,7 @@ namespace HtmlAgilityPack
                 // names are lcase
                 // note: we are very limited here, too much?
                 if (((name[i] >= 'a') && (name[i] <= 'z')) ||
+                    ((name[i] >= 'A') && (name[i] <= 'Z')) || 
                     ((name[i] >= '0') && (name[i] <= '9')) ||
                     //					(name[i]==':') || (name[i]=='_') || (name[i]=='-') || (name[i]=='.')) // these are bads in fact
                     (name[i] == '_') || (name[i] == '-') || (name[i] == '.'))
@@ -323,6 +324,7 @@ namespace HtmlAgilityPack
             {
                 throw new ArgumentNullException("html");
             }
+
             // replace & by &amp; but only once!
             Regex rx = new Regex("&(?!(amp;)|(lt;)|(gt;)|(quot;))", RegexOptions.IgnoreCase);
             return rx.Replace(html, "&amp;").Replace("<", "&lt;").Replace(">", "&gt;").Replace("\"", "&quot;");

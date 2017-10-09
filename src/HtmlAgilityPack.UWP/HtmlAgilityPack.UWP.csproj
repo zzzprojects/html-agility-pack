@@ -39,6 +39,7 @@
     <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP;NETSTANDARD;NETSTANDARD1_3</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\HtmlAgilityPack.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>

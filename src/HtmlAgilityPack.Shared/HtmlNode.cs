@@ -1730,7 +1730,8 @@ namespace HtmlAgilityPack
 		internal static string GetXmlComment(HtmlCommentNode comment)
 		{
 			string s = comment.Comment;
-			return s.Substring(4, s.Length - 7).Replace("--", " - -");
+            s = s.Substring(4, s.Length - 7).Replace("--", " - -");
+            return s;
 		}
 
 		internal static void WriteAttributes(XmlWriter writer, HtmlNode node)

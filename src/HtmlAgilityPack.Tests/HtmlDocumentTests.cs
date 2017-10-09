@@ -547,15 +547,79 @@ namespace HtmlAgilityPack.Tests
             Assert.AreEqual(html, document.DocumentNode.OuterHtml);
             Assert.AreEqual(1, result.Count());
         }
-        //[Test]
-        //public void TestOptionTag()
-        //{
-        //    var html = "<select><option>Select a cell</option><option>C1</option><option value='\"c2\"'></select>";
 
-        //    string output = "<select><option>Select a cell</option><option>C1</option><option value='\"c2\"'></option></select>";
-        //    var document = new HtmlDocument();
-        //    document.LoadHtml(html);
-        //    Assert.AreEqual(output, document.DocumentNode.OuterHtml);
-        //}
-    }
+        [Test]
+        public void TestNumericTag()
+        {
+            var html = @"<div><1</div>";
+            var document = new HtmlDocument();
+            document.LoadHtml(html);
+            var result = document.DocumentNode.Descendants().Select(dn => new { dn.NodeType, dn.Name, dn.OuterHtml }).ToArray();
+            Assert.AreEqual(html, document.DocumentNode.OuterHtml);
+        }
+
+        [Test]
+        public void ImplicitTag()
+        {
+            {
+                var html = @"<dt>a<dd>b<dd>c<dt>a<dd>b<dd>c";
+                var document = new HtmlDocument();
+                document.LoadHtml(html);
+                var result = document.DocumentNode.Descendants().Select(dn => new { dn.NodeType, dn.Name, dn.OuterHtml }).ToArray();
+
+                // TODO: Fix issue with last "dd"
+                Assert.AreEqual(html + "</dd>", document.DocumentNode.OuterHtml);
+            }
+
+
+            {
+                var html = @"<dt>a</dt><dd>b</dd><dd>c</dd><dt>a</dt><dd>b</dd><dd>c</dd>";
+                var document = new HtmlDocument();
+                document.LoadHtml(html);
+                var result = document.DocumentNode.Descendants().Select(dn => new { dn.NodeType, dn.Name, dn.OuterHtml }).ToArray();
+
+                Assert.AreEqual(html, document.DocumentNode.OuterHtml);
+            }
+        }
+
+        [Test]
+        public void DeEntitize()
+        {
+            var html = @"mouse&apos;s house";
+
+            Assert.AreEqual("mouse's house", HtmlEntity.DeEntitize("mouse&apos;s house"));
+        }
+
+        [Test]
+        public void InnerText_Comment()
+        {
+            var document = new HtmlDocument();
+            document.LoadHtml("<p><!-- comment 1 -->Expected <!-- comment 2 -->value</p>");
+
+            Assert.AreEqual("Expected value", document.DocumentNode.FirstChild.InnerText);
+        }
+
+        [Test]
+        public void TestFixNestedAnchors()
+        {
+            var inHtml = "<html><body><a href='...'> Here's a great link! <a href='...'>Here's another one!</a>Here's some unrelated text.</body></html>";
+            var expectedHtml = "<html><body><a href='...'> Here's a great link! <a href='...'>Here's another one!</a>Here's some unrelated text.</body></html>";
+
+            var doc = new HtmlDocument();
+            doc.LoadHtml(inHtml);
+
+            Assert.AreEqual(expectedHtml, doc.DocumentNode.OuterHtml);
+        }
+
+        //[Test]
+    //public void TestOptionTag()
+    //{
+    //    var html = "<select><option>Select a cell</option><option>C1</option><option value='\"c2\"'></select>";
+
+    //    string output = "<select><option>Select a cell</option><option>C1</option><option value='\"c2\"'></option></select>";
+    //    var document = new HtmlDocument();
+    //    document.LoadHtml(html);
+    //    Assert.AreEqual(output, document.DocumentNode.OuterHtml);
+    //}
+}
 }

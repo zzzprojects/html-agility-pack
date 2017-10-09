@@ -20,6 +20,8 @@ copy "Html*.*" C:\Users\Jonathan\Desktop\Z\zzzproject\HtmlAgilityPack\Solutions\
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>HtmlAgilityPack.snk</AssemblyOriginatorKeyFile>
     <AssemblyName>HtmlAgilityPack</AssemblyName>
+    <AssemblyVersion>1.6.0.0</AssemblyVersion>
+    <FileVersion>1.6.0.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -28,6 +30,7 @@ copy "Html*.*" C:\Users\Jonathan\Desktop\Z\zzzproject\HtmlAgilityPack\Solutions\
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DefineConstants>TRACE;NETSTANDARD;NETSTANDARD1_3</DefineConstants>
+    <DocumentationFile>bin\Release\netstandard1.3\HtmlAgilityPack.xml</DocumentationFile>
   </PropertyGroup>
 
   <Import Project="..\HtmlAgilityPack.Shared\HtmlAgilityPack.Shared.projitems" Label="Shared" />
