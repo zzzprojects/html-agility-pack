@@ -2350,7 +2350,28 @@ namespace HtmlAgilityPack
 
             if (system_windows_forms == null)
             {
-                throw new Exception("Oops! No reference to System.Windows.Forms have been found. Make sure your project has a reference to this assembly to use LoadFromBrowser method.");
+                // TRY to load id
+                try
+                {
+                    var system = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.GetName().Name == "System");
+
+                    if (system != null)
+                    {
+                        var path = system.CodeBase.Replace("System", "System.Windows.Forms").Replace("file:///", "");
+                        Assembly.LoadFile(path);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    // Silence catch
+                }
+
+                system_windows_forms = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.GetName().Name == "System.Windows.Forms");
+
+                if (system_windows_forms == null)
+                {
+                    throw new Exception("Oops! No reference to System.Windows.Forms have been loaded. Make sure your project load any type from this assembly to make sure the reference is added to the domain assemblies list. Example: `var webBrowserType = typeof(WebBrowser);`");
+                }
             }
 
             var webBrowserType = system_windows_forms.GetType("System.Windows.Forms.WebBrowser");

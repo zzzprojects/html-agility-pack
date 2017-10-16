@@ -56,8 +56,9 @@ namespace HtmlAgilityPack
         private Encoding _streamencoding;
         internal string Text;
 
-        // public props
 
+        /// <summary>True to stay backward compatible with previous version of HAP. This option does not guarantee 100% compatibility.</summary>
+        public bool BackwardCompatibility = true;
         /// <summary>
         /// Adds Debugging attributes to node. Default is false.
         /// </summary>
@@ -320,13 +321,21 @@ namespace HtmlAgilityPack
         /// <returns>The encoded string.</returns>
         public static string HtmlEncode(string html)
         {
+            return HtmlEncodeWithCompatibility(html, true);
+        }
+
+        internal static string HtmlEncodeWithCompatibility(string html, bool backwardCompatibility = true)
+        {
             if (html == null)
             {
                 throw new ArgumentNullException("html");
             }
 
             // replace & by &amp; but only once!
-            Regex rx = new Regex("&(?!(amp;)|(lt;)|(gt;)|(quot;))", RegexOptions.IgnoreCase);
+
+            Regex rx = backwardCompatibility ?
+                new Regex("&(?!(amp;)|(lt;)|(gt;)|(quot;))", RegexOptions.IgnoreCase) :
+                new Regex("&(?!(amp;)|(lt;)|(gt;)|(quot;)|(nbsp;)|(reg;))", RegexOptions.IgnoreCase);
             return rx.Replace(html, "&amp;").Replace("<", "&lt;").Replace(">", "&gt;").Replace("\"", "&quot;");
         }
 

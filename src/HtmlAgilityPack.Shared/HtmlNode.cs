@@ -1500,8 +1500,18 @@ namespace HtmlAgilityPack
 			{
 				case HtmlNodeType.Comment:
 					html = ((HtmlCommentNode)this).Comment;
-					if (_ownerdocument.OptionOutputAsXml)
-						outText.Write("<!--" + GetXmlComment((HtmlCommentNode)this) + " -->");
+				    if (_ownerdocument.OptionOutputAsXml)
+				    {
+                        var commentNode = (HtmlCommentNode)this;
+				        if (!_ownerdocument.BackwardCompatibility && commentNode.Comment.ToLowerInvariant().StartsWith("<!doctype"))
+				        {
+				            outText.Write(commentNode.Comment);
+                        }
+				        else
+				        {
+				            outText.Write("<!--" + GetXmlComment(commentNode) + " -->");
+                        }
+				    }
 					else
 						outText.Write(html);
 					break;
@@ -1524,20 +1534,29 @@ namespace HtmlAgilityPack
 								if (xml != null)
 									rootnodes--;
 
+				
 								if (rootnodes > 1)
 								{
-									if (_ownerdocument.OptionOutputUpperCase)
-									{
-										outText.Write("<SPAN>");
-										WriteContentTo(outText, level);
-										outText.Write("</SPAN>");
-									}
-									else
-									{
-										outText.Write("<span>");
-										WriteContentTo(outText, level);
-										outText.Write("</span>");
-									}
+								    if (!_ownerdocument.BackwardCompatibility)
+								    {
+								        WriteContentTo(outText, level);
+								    }
+								    else
+								    {
+								        if (_ownerdocument.OptionOutputUpperCase)
+								        {
+								            outText.Write("<SPAN>");
+								            WriteContentTo(outText, level);
+								            outText.Write("</SPAN>");
+								        }
+								        else
+								        {
+								            outText.Write("<span>");
+								            WriteContentTo(outText, level);
+								            outText.Write("</span>");
+								        }
+                                    }
+
 									break;
 								}
 							}
@@ -1548,7 +1567,7 @@ namespace HtmlAgilityPack
 
 				case HtmlNodeType.Text:
 					html = ((HtmlTextNode)this).Text;
-					outText.Write(_ownerdocument.OptionOutputAsXml ? HtmlDocument.HtmlEncode(html) : html);
+					outText.Write(_ownerdocument.OptionOutputAsXml ? HtmlDocument.HtmlEncodeWithCompatibility(html, _ownerdocument.BackwardCompatibility) : html);
 					break;
 
 				case HtmlNodeType.Element:
@@ -1828,7 +1847,7 @@ namespace HtmlAgilityPack
 				if (_ownerdocument.OptionOutputOriginalCase)
 					name = att.OriginalName;
 
-				outText.Write(" " + name + "=" + quote + HtmlDocument.HtmlEncode(att.XmlValue) + quote);
+				outText.Write(" " + name + "=" + quote + HtmlDocument.HtmlEncodeWithCompatibility(att.XmlValue, _ownerdocument.BackwardCompatibility) + quote);
 			}
 			else
 			{
