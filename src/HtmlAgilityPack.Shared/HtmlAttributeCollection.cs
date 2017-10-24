@@ -18,7 +18,7 @@ namespace HtmlAgilityPack
     {
         #region Fields
 
-        internal Dictionary<string, HtmlAttribute> Hashitems = new Dictionary<string, HtmlAttribute>();
+        internal Dictionary<string, HtmlAttribute> Hashitems = new Dictionary<string, HtmlAttribute>(StringComparer.OrdinalIgnoreCase);
         private HtmlNode _ownernode;
         private List<HtmlAttribute> items = new List<HtmlAttribute>();
 
@@ -47,7 +47,7 @@ namespace HtmlAgilityPack
                     throw new ArgumentNullException("name");
                 }
                 HtmlAttribute value;
-                return Hashitems.TryGetValue(name.ToLower(), out value) ? value : null;
+                return Hashitems.TryGetValue(name, out value) ? value : null;
             }
             set { Append(value); }
         }

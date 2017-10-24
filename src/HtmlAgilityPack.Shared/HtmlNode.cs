@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Xml;
 
 // ReSharper disable InconsistentNaming
@@ -89,7 +90,7 @@ namespace HtmlAgilityPack
 		static HtmlNode()
 		{
 			// tags whose content may be anything
-			ElementsFlags = new Dictionary<string, HtmlElementFlag>();
+			ElementsFlags = new Dictionary<string, HtmlElementFlag>(StringComparer.OrdinalIgnoreCase);
 			ElementsFlags.Add("script", HtmlElementFlag.CData);
 			ElementsFlags.Add("style", HtmlElementFlag.CData);
 			ElementsFlags.Add("noxhtml", HtmlElementFlag.CData);
@@ -370,6 +371,18 @@ namespace HtmlAgilityPack
 		{
 			get
 			{
+			    if (!_ownerdocument.BackwardCompatibility)
+			    {
+			        if (HasChildNodes)
+			        {
+			            StringBuilder sb = new StringBuilder();
+			            AppendInnerText(sb);
+			            return sb.ToString();
+                    }
+
+			        return GetCurrentNodeText();
+                }
+
 				if (_nodetype == HtmlNodeType.Text)
 					return ((HtmlTextNode)this).Text;
 
@@ -388,6 +401,39 @@ namespace HtmlAgilityPack
 				return s;
 			}
 		}
+
+	    internal string GetCurrentNodeText()
+	    {
+	        if (_nodetype == HtmlNodeType.Text)
+	        {
+	            string s = ((HtmlTextNode)this).Text;
+
+	            if (ParentNode.Name != "pre")
+	            {
+	                // Make some test...
+	                s = s.Replace("\n", "").Replace("\r", "").Replace("\t", "");
+                }
+
+	            return s;
+	        }
+
+	        return "";
+	    }
+
+        internal void AppendInnerText(StringBuilder sb)
+	    {
+	        if (_nodetype == HtmlNodeType.Text)
+	        {
+	            sb.Append(GetCurrentNodeText());
+	        }
+
+	        if (!HasChildNodes) return;
+
+	        foreach (HtmlNode node in ChildNodes)
+	        {
+	            node.AppendInnerText(sb);
+	        }
+        }
 
 		/// <summary>
 		/// Gets the last child of the node.
@@ -558,12 +604,12 @@ namespace HtmlAgilityPack
 				throw new ArgumentNullException("name");
 			}
 
-			if (!ElementsFlags.ContainsKey(name.ToLower()))
+			if (!ElementsFlags.ContainsKey(name))
 			{
 				return false;
 			}
 
-			HtmlElementFlag flag = ElementsFlags[name.ToLower()];
+			HtmlElementFlag flag = ElementsFlags[name];
 			return (flag & HtmlElementFlag.CanOverlap) != 0;
 		}
 
@@ -606,12 +652,12 @@ namespace HtmlAgilityPack
 				throw new ArgumentNullException("name");
 			}
 
-			if (!ElementsFlags.ContainsKey(name.ToLower()))
+			if (!ElementsFlags.ContainsKey(name))
 			{
 				return false;
 			}
 
-			HtmlElementFlag flag = ElementsFlags[name.ToLower()];
+			HtmlElementFlag flag = ElementsFlags[name];
 			return (flag & HtmlElementFlag.CData) != 0;
 		}
 
@@ -627,12 +673,12 @@ namespace HtmlAgilityPack
 				throw new ArgumentNullException("name");
 			}
 
-			if (!ElementsFlags.ContainsKey(name.ToLower()))
+			if (!ElementsFlags.ContainsKey(name))
 			{
 				return false;
 			}
 
-			HtmlElementFlag flag = ElementsFlags[name.ToLower()];
+			HtmlElementFlag flag = ElementsFlags[name];
 			return (flag & HtmlElementFlag.Closed) != 0;
 		}
 
@@ -665,12 +711,12 @@ namespace HtmlAgilityPack
 				return true;
 			}
 
-			if (!ElementsFlags.ContainsKey(name.ToLower()))
+			if (!ElementsFlags.ContainsKey(name))
 			{
 				return false;
 			}
 
-			HtmlElementFlag flag = ElementsFlags[name.ToLower()];
+			HtmlElementFlag flag = ElementsFlags[name];
 			return (flag & HtmlElementFlag.Empty) != 0;
 		}
 

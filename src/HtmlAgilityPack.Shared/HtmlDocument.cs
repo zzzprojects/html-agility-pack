@@ -490,7 +490,7 @@ namespace HtmlAgilityPack
 
             if (OptionUseIdAttribute)
             {
-                Nodesid = new Dictionary<string, HtmlNode>();
+                Nodesid = new Dictionary<string, HtmlNode>(StringComparer.OrdinalIgnoreCase);
             }
             else
             {
@@ -560,7 +560,7 @@ namespace HtmlAgilityPack
             {
                 throw new Exception(HtmlExceptionUseIdAttributeFalse);
             }
-            return Nodesid.ContainsKey(id.ToLower()) ? Nodesid[id.ToLower()] : null;
+            return Nodesid.ContainsKey(id) ? Nodesid[id] : null;
         }
 
         /// <summary>
@@ -635,7 +635,7 @@ namespace HtmlAgilityPack
 
             if (OptionUseIdAttribute)
             {
-                Nodesid = new Dictionary<string, HtmlNode>();
+                Nodesid = new Dictionary<string, HtmlNode>(StringComparer.OrdinalIgnoreCase);
             }
             else
             {
@@ -835,9 +835,9 @@ namespace HtmlAgilityPack
                 return;
 
             if (node == null)
-                Nodesid.Remove(id.ToLower());
+                Nodesid.Remove(id);
             else
-                Nodesid[id.ToLower()] = node;
+                Nodesid[id] = node;
         }
 
         internal void UpdateLastParentNode()
@@ -1243,6 +1243,12 @@ namespace HtmlAgilityPack
                                 CloseParentImplicitEnd();
                             }
 
+                            // CHECK if parent must be explicitely closed
+                            if (IsParentExplicitEnd())
+                            {
+                                CloseParentExplicitEnd();
+                            }
+
                             PushNodeNameEnd(_index - 1);
                             if (_state != ParseState.Tag)
                                 continue;
@@ -1257,6 +1263,12 @@ namespace HtmlAgilityPack
                                 CloseParentImplicitEnd();
                             }
 
+                            // CHECK if parent must be explicitely closed
+                            if (IsParentExplicitEnd())
+                            {
+                                CloseParentExplicitEnd();
+                            }
+
                             PushNodeNameEnd(_index - 1);
                             if (_state != ParseState.Tag)
                                 continue;
@@ -1269,6 +1281,12 @@ namespace HtmlAgilityPack
                             if (IsParentImplicitEnd())
                             {
                                 CloseParentImplicitEnd();
+                            }
+
+                            // CHECK if parent must be explicitely closed
+                            if (IsParentExplicitEnd())
+                            {
+                                CloseParentExplicitEnd();
                             }
 
                             PushNodeNameEnd(_index - 1);
@@ -1650,12 +1668,39 @@ namespace HtmlAgilityPack
             return isImplicitEnd;
         }
 
+        private bool IsParentExplicitEnd()
+        {
+            // MUST be a start tag
+            if (!_currentnode._starttag) return false;
+
+            bool isExplicitEnd = false;
+
+            var parent = _lastparentnode.Name;
+            var nodeName = Text.Substring(_currentnode._namestartindex, _index - _currentnode._namestartindex - 1);
+
+            switch (parent)
+            {
+                case "title":
+                    isExplicitEnd = nodeName == "title";
+                    break;
+            }
+
+            return isExplicitEnd;
+        }
+
         private void CloseParentImplicitEnd()
         {
             HtmlNode close = new HtmlNode(_lastparentnode.NodeType, this, -1);
             close._endnode = close;
             close._isImplicitEnd = true;
             _lastparentnode._isImplicitEnd = true;
+            _lastparentnode.CloseNode(close);
+        }
+
+        private void CloseParentExplicitEnd()
+        {
+            HtmlNode close = new HtmlNode(_lastparentnode.NodeType, this, -1);
+            close._endnode = close;
             _lastparentnode.CloseNode(close);
         }
 
