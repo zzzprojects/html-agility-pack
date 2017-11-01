@@ -86,6 +86,9 @@ namespace HtmlAgilityPack
 		/// </summary>
 		public bool OptionEmptyCollection = false;
 
+        /// <summary>True to disable, false to enable the server side code.</summary>
+        public bool DisableServerSideCode = false;
+
 
         /// <summary>
         /// Defines the default stream encoding to use. Default is System.Text.Encoding.Default.
@@ -282,6 +285,11 @@ namespace HtmlAgilityPack
         /// <returns>A string that is a valid XML name.</returns>
         public static string GetXmlName(string name)
         {
+            return GetXmlName(name, false);
+        }
+
+        public static string GetXmlName(string name, bool isAttribute)
+        {
             string xmlname = string.Empty;
             bool nameisok = true;
             for (int i = 0; i < name.Length; i++)
@@ -289,8 +297,9 @@ namespace HtmlAgilityPack
                 // names are lcase
                 // note: we are very limited here, too much?
                 if (((name[i] >= 'a') && (name[i] <= 'z')) ||
-                    ((name[i] >= 'A') && (name[i] <= 'Z')) || 
+                    ((name[i] >= 'A') && (name[i] <= 'Z')) ||
                     ((name[i] >= '0') && (name[i] <= '9')) ||
+                    (isAttribute && name[i] == ':') ||
                     //					(name[i]==':') || (name[i]=='_') || (name[i]=='-') || (name[i]=='.')) // these are bads in fact
                     (name[i] == '_') || (name[i] == '-') || (name[i] == '.'))
                 {
@@ -299,7 +308,7 @@ namespace HtmlAgilityPack
                 else
                 {
                     nameisok = false;
-                    byte[] bytes = Encoding.UTF8.GetBytes(new char[] {name[i]});
+                    byte[] bytes = Encoding.UTF8.GetBytes(new char[] { name[i] });
                     for (int j = 0; j < bytes.Length; j++)
                     {
                         xmlname += bytes[j].ToString("x2");
@@ -1122,6 +1131,11 @@ namespace HtmlAgilityPack
             {
                 if (Text[_index] == '%')
                 {
+                    if (DisableServerSideCode)
+                    {
+                        return false;
+                    }
+
                     switch (_state)
                     {
                         case ParseState.AttributeAfterEquals:
