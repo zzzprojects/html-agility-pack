@@ -630,9 +630,9 @@ namespace HtmlAgilityPack
                                         string e = entity.ToString();
                                         try
  										{
-											string codeStr = e.Substring(1).Trim().ToLower();
+											string codeStr = e.Substring(1).Trim();
 											int fromBase;
-											if (codeStr.StartsWith("x"))
+											if (codeStr.StartsWith("x", StringComparison.OrdinalIgnoreCase))
 											{
 												fromBase = 16;
 												codeStr = codeStr.Substring(1);

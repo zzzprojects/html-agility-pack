@@ -254,7 +254,7 @@ namespace HtmlAgilityPack
         {
             for (int i = 0; i < items.Count; i++)
             {
-                if (items[i].Name.Equals(name.ToLower()))
+                if (String.Equals(items[i].Name, name, StringComparison.OrdinalIgnoreCase))
                     return true;
             }
             return false;
@@ -300,11 +300,10 @@ namespace HtmlAgilityPack
                 throw new ArgumentNullException("name");
             }
 
-            string lname = name.ToLower();
             for (int i = 0; i < items.Count; i++)
             {
                 HtmlAttribute att = items[i];
-                if (att.Name == lname)
+                if (String.Equals(att.Name, name, StringComparison.OrdinalIgnoreCase))
                 {
                     RemoveAt(i);
                 }
@@ -333,10 +332,9 @@ namespace HtmlAgilityPack
         /// <returns></returns>
         public IEnumerable<HtmlAttribute> AttributesWithName(string attributeName)
         {
-            attributeName = attributeName.ToLower();
             for (int i = 0; i < items.Count; i++)
             {
-                if (items[i].Name.Equals(attributeName))
+                if (String.Equals(items[i].Name, attributeName, StringComparison.OrdinalIgnoreCase))
                     yield return items[i];
             }
         }
@@ -382,10 +380,10 @@ namespace HtmlAgilityPack
             {
                 throw new ArgumentNullException("name");
             }
-            string lname = name.ToLower();
+
             for (int i = 0; i < items.Count; i++)
             {
-                if ((items[i]).Name == lname)
+                if (String.Equals((items[i]).Name, name, StringComparison.OrdinalIgnoreCase))
                     return i;
             }
             return -1;

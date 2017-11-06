@@ -26,6 +26,7 @@ namespace HtmlAgilityPack
         private int _line;
         internal int _lineposition;
         internal string _name;
+        internal string _optimizedName;
         internal int _namelength;
         internal int _namestartindex;
         internal HtmlDocument _ownerdocument; // attribute can exists without a node
@@ -77,7 +78,12 @@ namespace HtmlAgilityPack
                 {
                     _name = _ownerdocument.Text.Substring(_namestartindex, _namelength);
                 }
-                return _name.ToLower();
+
+                if (_optimizedName == null)
+                {
+                    _optimizedName = OwnerDocument.OptionLowerCaseWhenParsing ? _name.ToLowerInvariant() : _name;
+                }
+                return _optimizedName;
             }
             set
             {
@@ -86,6 +92,7 @@ namespace HtmlAgilityPack
                     throw new ArgumentNullException("value");
                 }
                 _name = value;
+                _optimizedName = null;
                 if (_ownernode != null)
                 {
                     _ownernode.SetChanged();
