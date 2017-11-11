@@ -1432,7 +1432,7 @@ namespace HtmlAgilityPack
 				// reroute grand children to ourselves
 				foreach (HtmlNode grandchild in oldChild._childnodes)
 				{
-					InsertAfter(grandchild, prev);
+					prev = InsertAfter(grandchild, prev);
 				}
 			}
 			RemoveChild(oldChild);
@@ -2198,6 +2198,25 @@ namespace HtmlAgilityPack
                 }
 	        }
 	    }
+
+        /// <summary>Gets the CSS Class from the node.</summary>
+        /// <returns>
+        ///     The CSS Class from the node
+        /// </returns>
+	    public IEnumerable<string> GetClasses()
+	    {
+	        var classAttributes = Attributes.AttributesWithName("class");
+
+	        foreach (var att in classAttributes)
+	        {
+	            var classNames = att.Value.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+
+	            foreach (var className in classNames)
+	            {
+	                yield return className;
+	            }
+	        }
+        }
 
         private bool IsEmpty(IEnumerable en)
 	    {

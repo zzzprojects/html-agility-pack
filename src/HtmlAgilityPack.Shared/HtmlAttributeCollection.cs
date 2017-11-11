@@ -252,9 +252,11 @@ namespace HtmlAgilityPack
         /// <returns></returns>
         public bool Contains(string name)
         {
+            string lname = name.ToLower();
+
             for (int i = 0; i < items.Count; i++)
             {
-                if (items[i].Name.Equals(name.ToLower()))
+                if (items[i].Name.Equals(lname))
                     return true;
             }
             return false;

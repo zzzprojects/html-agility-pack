@@ -882,6 +882,10 @@ namespace HtmlAgilityPack
             set { _useCookies = value; }
         }
 
+        /// <summary>Gets or sets a value indicating whether redirect should be captured instead of the current location.</summary>
+        /// <value>True if capture redirect, false if not.</value>
+        public bool CaptureRedirect { get; set; }
+
         /// <summary>
         /// Gets or Sets the User Agent HTTP 1.1 header sent on any webrequest
         /// </summary>
@@ -1532,7 +1536,10 @@ namespace HtmlAgilityPack
             req = WebRequest.Create(uri) as HttpWebRequest;
             req.Method = method;
             req.UserAgent = UserAgent;
-            req.AllowAutoRedirect = false;
+            if (CaptureRedirect)
+            {
+                req.AllowAutoRedirect = false;
+            }
             if (proxy != null)
             {
                 if (creds != null)
@@ -1650,16 +1657,24 @@ namespace HtmlAgilityPack
             if (OverrideEncoding != null)
                 respenc = OverrideEncoding;
 
-            // Found == 302
-            if (resp.StatusCode == HttpStatusCode.Found)
+            if (CaptureRedirect)
             {
-                var location = resp.Headers["Location"];
-                Uri locationUri;
-                // Do the redirection after we've eaten all the cookies...
-                if (!Uri.TryCreate(location, UriKind.Absolute, out locationUri))
-                    locationUri = new Uri(uri, location);
-                return Get(locationUri, "GET", path, doc, proxy, creds);
+                // Found == 302
+                if (resp.StatusCode == HttpStatusCode.Found)
+                {
+                    var location = resp.Headers["Location"];
+                    Uri locationUri;
+
+                    // Do the redirection after we've eaten all the cookies...
+                    if (!Uri.TryCreate(location, UriKind.Absolute, out locationUri))
+                    {
+                        locationUri = new Uri(uri, location);
+                    }
+                    return Get(locationUri, "GET", path, doc, proxy, creds);
+                }
             }
+
+
 
             if (resp.StatusCode == HttpStatusCode.NotModified)
             {
@@ -1747,9 +1762,14 @@ namespace HtmlAgilityPack
             bool oldFile = false;
             HttpStatusCode status;
             using (var request = new HttpRequestMessage(new HttpMethod(method), uri))
-            using (var handler = new HttpClientHandler() { AllowAutoRedirect = false })
+            using (var handler = new HttpClientHandler())
             using (var client = new HttpClient(handler))
             {
+                if(CaptureRedirect)
+                {
+                    handler.AllowAutoRedirect = false;
+                }
+
                 client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
 
                 if (proxy != null)
@@ -1864,11 +1884,14 @@ namespace HtmlAgilityPack
                     ? Encoding.GetEncoding(encoding)
                     : null;
 
-                // Found == 302
-                if (response.StatusCode == HttpStatusCode.Found)
+                if(CaptureRedirect)
                 {
-                    // Do the redirection after we've eaten all the cookies...
-                    return Get(response.Headers.Location, "GET", path, doc, proxy, creds);
+                    // Found == 302
+                    if (response.StatusCode == HttpStatusCode.Found)
+                    {
+                        // Do the redirection after we've eaten all the cookies...
+                        return Get(response.Headers.Location, "GET", path, doc, proxy, creds);
+                    }
                 }
 
                 if (response.StatusCode == HttpStatusCode.NotModified)
