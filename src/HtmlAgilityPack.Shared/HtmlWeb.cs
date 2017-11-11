@@ -1532,6 +1532,7 @@ namespace HtmlAgilityPack
             req = WebRequest.Create(uri) as HttpWebRequest;
             req.Method = method;
             req.UserAgent = UserAgent;
+            req.AllowAutoRedirect = false;
             if (proxy != null)
             {
                 if (creds != null)
@@ -1649,6 +1650,17 @@ namespace HtmlAgilityPack
             if (OverrideEncoding != null)
                 respenc = OverrideEncoding;
 
+            // Found == 302
+            if (resp.StatusCode == HttpStatusCode.Found)
+            {
+                var location = resp.Headers["Location"];
+                Uri locationUri;
+                // Do the redirection after we've eaten all the cookies...
+                if (!Uri.TryCreate(location, UriKind.Absolute, out locationUri))
+                    locationUri = new Uri(uri, location);
+                return Get(locationUri, "GET", path, doc, proxy, creds);
+            }
+
             if (resp.StatusCode == HttpStatusCode.NotModified)
             {
                 if (UsingCache)
@@ -1735,7 +1747,7 @@ namespace HtmlAgilityPack
             bool oldFile = false;
             HttpStatusCode status;
             using (var request = new HttpRequestMessage(new HttpMethod(method), uri))
-            using (var handler = new HttpClientHandler())
+            using (var handler = new HttpClientHandler() { AllowAutoRedirect = false })
             using (var client = new HttpClient(handler))
             {
                 client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
@@ -1851,6 +1863,13 @@ namespace HtmlAgilityPack
                 Encoding respenc = !string.IsNullOrEmpty(encoding)
                     ? Encoding.GetEncoding(encoding)
                     : null;
+
+                // Found == 302
+                if (response.StatusCode == HttpStatusCode.Found)
+                {
+                    // Do the redirection after we've eaten all the cookies...
+                    return Get(response.Headers.Location, "GET", path, doc, proxy, creds);
+                }
 
                 if (response.StatusCode == HttpStatusCode.NotModified)
                 {
