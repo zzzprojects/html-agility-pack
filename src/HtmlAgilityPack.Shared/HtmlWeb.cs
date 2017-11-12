@@ -882,6 +882,10 @@ namespace HtmlAgilityPack
             set { _useCookies = value; }
         }
 
+        /// <summary>Gets or sets a value indicating whether redirect should be captured instead of the current location.</summary>
+        /// <value>True if capture redirect, false if not.</value>
+        public bool CaptureRedirect { get; set; }
+
         /// <summary>
         /// Gets or Sets the User Agent HTTP 1.1 header sent on any webrequest
         /// </summary>
@@ -1532,6 +1536,10 @@ namespace HtmlAgilityPack
             req = WebRequest.Create(uri) as HttpWebRequest;
             req.Method = method;
             req.UserAgent = UserAgent;
+            if (CaptureRedirect)
+            {
+                req.AllowAutoRedirect = false;
+            }
             if (proxy != null)
             {
                 if (creds != null)
@@ -1649,6 +1657,25 @@ namespace HtmlAgilityPack
             if (OverrideEncoding != null)
                 respenc = OverrideEncoding;
 
+            if (CaptureRedirect)
+            {
+                // Found == 302
+                if (resp.StatusCode == HttpStatusCode.Found)
+                {
+                    var location = resp.Headers["Location"];
+                    Uri locationUri;
+
+                    // Do the redirection after we've eaten all the cookies...
+                    if (!Uri.TryCreate(location, UriKind.Absolute, out locationUri))
+                    {
+                        locationUri = new Uri(uri, location);
+                    }
+                    return Get(locationUri, "GET", path, doc, proxy, creds);
+                }
+            }
+
+
+
             if (resp.StatusCode == HttpStatusCode.NotModified)
             {
                 if (UsingCache)
@@ -1738,6 +1765,11 @@ namespace HtmlAgilityPack
             using (var handler = new HttpClientHandler())
             using (var client = new HttpClient(handler))
             {
+                if(CaptureRedirect)
+                {
+                    handler.AllowAutoRedirect = false;
+                }
+
                 client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
 
                 if (proxy != null)
@@ -1851,6 +1883,16 @@ namespace HtmlAgilityPack
                 Encoding respenc = !string.IsNullOrEmpty(encoding)
                     ? Encoding.GetEncoding(encoding)
                     : null;
+
+                if(CaptureRedirect)
+                {
+                    // Found == 302
+                    if (response.StatusCode == HttpStatusCode.Found)
+                    {
+                        // Do the redirection after we've eaten all the cookies...
+                        return Get(response.Headers.Location, "GET", path, doc, proxy, creds);
+                    }
+                }
 
                 if (response.StatusCode == HttpStatusCode.NotModified)
                 {

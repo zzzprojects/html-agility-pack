@@ -54,9 +54,9 @@ layout: post
 					<li class="nav-item">
 						<a class="nav-link" href="https://github.com/zzzprojects/html-agility-pack"><i class="fa fa-github" aria-hidden="true"></i>&nbsp;GitHub</a>
 					</li>
-					<!--<li class="nav-item">
-						<a class="nav-link" href="https://github.com/zzzprojects/html-agility-pack/issues"><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Contrib</a>
-					</li>!-->		
+							<li class="nav-item">
+								<a class="nav-link" href="http://www.zzzprojects.com/contribute" target="_blank"><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Contribute</a>
+							</li>	
 					<li class="nav-item">
 						<a class="nav-link" href="{{ site.github.url }}/contact-us"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;Contact</a>
 					</li>
