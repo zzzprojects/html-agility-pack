@@ -2218,6 +2218,28 @@ namespace HtmlAgilityPack
 	        }
         }
 
+        /// <summary>Check if the node class has the parameter class.</summary>
+        /// <param name="class">The class.</param>
+        /// <returns>True if node class has the parameter class, false if not.</returns>
+	    public bool HasClass(string className)
+	    {
+	        var classes = GetClasses();
+
+            foreach(var @class in classes)
+            {
+                var classNames = @class.Split(' ');
+                foreach (var theClassName in classNames)
+                {
+                    if (theClassName == className)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+	    }
+
         private bool IsEmpty(IEnumerable en)
 	    {
          
