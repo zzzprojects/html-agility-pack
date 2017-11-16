@@ -56,4 +56,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Trace.FullFramework.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)HtmlNode.Encapsulator.cs" />
+  </ItemGroup>
 </Project>
