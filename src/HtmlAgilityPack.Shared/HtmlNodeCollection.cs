@@ -108,6 +108,7 @@ namespace HtmlAgilityPack
         public void Add(HtmlNode node)
         {
             _items.Add(node);
+            node.ParentNode = _parentnode;
         }
 
         /// <summary>
