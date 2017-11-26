@@ -218,7 +218,7 @@ var nodes = doc.DocumentNode.Descendants("input")
 				<!-- key-4 !-->
 				<div class="col-lg-6 wow slideInRight">	
 					<div class="media">
-						<i class="fa fa-users"></i>
+						<i class="fa fa-bug"></i>
 						<div class="media-body">
 							<h5>Issue Tracker</h5>
 							<p>Found a bug? Have suggestion? Report it and get support from our professional team.</p>
