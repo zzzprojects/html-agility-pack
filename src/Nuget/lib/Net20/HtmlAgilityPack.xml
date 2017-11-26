@@ -1371,6 +1371,14 @@
             <param name="xpath">The XPath expression. May not be null.</param>
             <returns>The first <see cref="T:HtmlAgilityPack.HtmlNode"/> that matches the XPath query or a null reference if no matching node was found.</returns>
         </member>
+        <member name="M:HtmlAgilityPack.HtmlNode.GetEncapsulatedData``1(HtmlAgilityPack.HtmlDocument)">
+            <summary>
+            Fill an object and go through it's properties and fill them too.
+            </summary>
+            <typeparam name="T">Type of object to want to fill. It should have atleast one property that defined XPath.</typeparam>
+            <param name="htmlDocument">If htmlDocument includes data , leave this parameter null. Else pass your specific htmldocument.</param>
+            <returns>Returns an object of type T including Encapsulated data.</returns>
+        </member>
         <member name="T:HtmlAgilityPack.HtmlNodeCollection">
             <summary>
             Represents a combined list and collection of HTML nodes.
@@ -2611,6 +2619,95 @@
         <member name="P:HtmlAgilityPack.MixedCodeDocumentTextFragment.Text">
             <summary>
             Gets the fragment text.
+            </summary>
+        </member>
+        <member name="T:HtmlAgilityPack.Tools">
+            <summary>
+            Includes tools that GetEncapsulatedData method uses them.
+            </summary>
+        </member>
+        <member name="M:HtmlAgilityPack.Tools.IsDefinedAttr(System.Type,System.Type)">
+            <summary>
+            Determine if a type define an attribute or not , supporting both .NetStandard and .NetFramework2.0
+            </summary>
+            <param name="type">Type you want to test it.</param>
+            <param name="attributeType">Attribute that type must have or not.</param>
+            <returns>If true , The type parameter define attributeType parameter.</returns>
+        </member>
+        <member name="M:HtmlAgilityPack.Tools.LinqWherePropertyInfoDefinedAttribute(System.Reflection.PropertyInfo[],System.Type)">
+            <summary>
+            Find property infos that defined specific attribute.
+            </summary>
+            <param name="properties">Array of property infos that should examin.</param>
+            <param name="attributeType">The type of attribute that property infos should have.</param>
+            <returns>IEnumerable of property infos that defined specific attribute.</returns>
+        </member>
+        <member name="M:HtmlAgilityPack.Tools.GetPropertiesDefinedXPath(System.Type)">
+            <summary>
+            Retrive properties of type that defined <see cref="T:HtmlAgilityPack.XPathAttribute"/>.
+            </summary>
+            <param name="type">Type that you want to find it's XPath-Defined properties.</param>
+            <returns>IEnumerable of property infos of a type , that defined specific attribute.</returns>
+        </member>
+        <member name="M:HtmlAgilityPack.Tools.IsIEnumerable(System.Reflection.PropertyInfo)">
+            <summary>
+            Determine if a <see cref="T:System.Reflection.PropertyInfo"/> has implemented <see cref="T:System.Collections.IEnumerable"/> BUT <see cref="T:System.String"/> is considered as NONE-IEnumerable !
+            </summary>
+            <param name="propertyInfo">The property info you want to test.</param>
+            <returns>True if property info is IEnumerable.</returns>
+        </member>
+        <member name="M:HtmlAgilityPack.Tools.GetGenericTypes(System.Reflection.PropertyInfo)">
+            <summary>
+            Returns T type(first generic type) of <see cref="T:System.Collections.Generic.IEnumerable`1"/> or <see cref="T:System.Collections.Generic.List`1"/>.
+            </summary>
+            <param name="propertyInfo">IEnumerable-Implemented property</param>
+            <returns>List of generic types.</returns>
+        </member>
+        <member name="M:HtmlAgilityPack.Tools.GetMethodByItsName(System.Type,System.String)">
+            <summary>
+            Find and Return a mehtod that defined in a class by it's name.
+            </summary>
+            <param name="type">Type of class include requested method.</param>
+            <param name="methodName">Name of requested method as string.</param>
+            <returns>Method info of requested method.</returns>
+        </member>
+        <member name="M:HtmlAgilityPack.Tools.CreateIListOfType(System.Type)">
+            <summary>
+            Create <see cref="T:System.Collections.IList"/> of given type.
+            </summary>
+            <param name="type">Type that you want to make a List of it.</param>
+            <returns>Returns IList of given type.</returns>
+        </member>
+        <member name="M:HtmlAgilityPack.Tools.GetNodeValueBasedOnXPathReturnType``1(HtmlAgilityPack.HtmlNode,HtmlAgilityPack.XPathAttribute)">
+            <summary>
+            Returns the part of value of <see cref="T:HtmlAgilityPack.HtmlNode"/> you want as .
+            </summary>
+            <param name="htmlNode">A htmlNode instance.</param>
+            <param name="xPathAttribute">Attribute that includes ReturnType</param>
+            <returns>String that choosen from HtmlNode as result.</returns>
+        </member>
+        <member name="M:HtmlAgilityPack.Tools.GetNodesValuesBasedOnXPathReturnType(HtmlAgilityPack.HtmlNodeCollection,HtmlAgilityPack.XPathAttribute,System.Type)">
+            <summary>
+            Returns parts of values of <see cref="T:HtmlAgilityPack.HtmlNode"/> you want as <see cref="T:System.Collections.Generic.IList`1"/>.
+            </summary>
+            <param name="htmlNodeCollection"><see cref="T:HtmlAgilityPack.HtmlNodeCollection"/> that you want to retrive each <see cref="T:HtmlAgilityPack.HtmlNode"/> value.</param>
+            <param name="xPathAttribute">A <see cref="T:HtmlAgilityPack.XPathAttribute"/> instnce incules <see cref="T:HtmlAgilityPack.ReturnType"/>.</param>
+            <param name="listGenericType">Type of IList generic you want.</param>
+            <returns></returns>
+        </member>
+        <member name="T:HtmlAgilityPack.ReturnType">
+            <summary>
+            Specify which part of <see cref="T:HtmlAgilityPack.HtmlNode"/> is requested.
+            </summary>
+        </member>
+        <member name="T:HtmlAgilityPack.HasXPathAttribute">
+            <summary>
+            Just mark and flag classes to show they have properties that defined <see cref="T:HtmlAgilityPack.XPathAttribute"/>.
+            </summary>
+        </member>
+        <member name="T:HtmlAgilityPack.XPathAttribute">
+            <summary>
+            Includes XPath and <see cref="P:HtmlAgilityPack.XPathAttribute.NodeReturnType"/>. XPath for finding html tags and <see cref="P:HtmlAgilityPack.XPathAttribute.NodeReturnType"/> for specify which part of <see cref="T:HtmlAgilityPack.HtmlNode"/> you want to return.
             </summary>
         </member>
     </members>
