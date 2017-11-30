@@ -1303,6 +1303,14 @@ namespace HtmlAgilityPack
                                 CloseParentExplicitEnd();
                             }
 
+                            //// CHECK if parent is compatible with end tag
+                            //if (IsParentIncompatibleEndTag())
+                            //{
+                            //    _state = ParseState.Text;
+                            //    PushNodeStart(HtmlNodeType.Text, _index);
+                            //    break;
+                            //}
+
                             PushNodeNameEnd(_index - 1);
                             if (_state != ParseState.Tag)
                                 continue;
@@ -1677,6 +1685,9 @@ namespace HtmlAgilityPack
                 case "p":
                     isImplicitEnd = nodeName == "p";
                     break;
+                case "option":
+                    isImplicitEnd = nodeName == "option";
+                    break;
             }
 
             return isImplicitEnd;
@@ -1697,10 +1708,57 @@ namespace HtmlAgilityPack
                 case "title":
                     isExplicitEnd = nodeName == "title";
                     break;
+                case "h1":
+                    isExplicitEnd = nodeName == "h2" || nodeName == "h3" || nodeName == "h4" || nodeName == "h5";
+                    break;
+                case "h2":
+                    isExplicitEnd = nodeName == "h1" || nodeName == "h3" || nodeName == "h4" || nodeName == "h5";
+                    break;
+                case "h3":
+                    isExplicitEnd = nodeName == "h1" || nodeName == "h2" || nodeName == "h4" || nodeName == "h5";
+                    break;
+                case "h4":
+                    isExplicitEnd = nodeName == "h1" || nodeName == "h2" || nodeName == "h3" || nodeName == "h5";
+                    break;
+                case "h5":
+                    isExplicitEnd = nodeName == "h1" || nodeName == "h2" || nodeName == "h3" || nodeName == "h4";
+                    break;
             }
 
             return isExplicitEnd;
         }
+
+        //private bool IsParentIncompatibleEndTag()
+        //{
+        //    // MUST be a end tag
+        //    if (_currentnode._starttag) return false;
+
+        //    bool isIncompatible = false;
+
+        //    var parent = _lastparentnode.Name;
+        //    var nodeName = Text.Substring(_currentnode._namestartindex, _index - _currentnode._namestartindex - 1);
+
+        //    switch (parent)
+        //    {
+        //        case "h1":
+        //            isIncompatible = nodeName == "h2" || nodeName == "h3" || nodeName == "h4" || nodeName == "h5";
+        //            break;
+        //        case "h2":
+        //            isIncompatible = nodeName == "h1" || nodeName == "h3" || nodeName == "h4" || nodeName == "h5";
+        //            break;
+        //        case "h3":
+        //            isIncompatible = nodeName == "h1" || nodeName == "h2" || nodeName == "h4" || nodeName == "h5";
+        //            break;
+        //        case "h4":
+        //            isIncompatible = nodeName == "h1" || nodeName == "h2" || nodeName == "h3" || nodeName == "h5";
+        //            break;
+        //        case "h5":
+        //            isIncompatible = nodeName == "h1" || nodeName == "h2" || nodeName == "h3" || nodeName == "h4";
+        //            break;
+        //    }
+
+        //    return isIncompatible;
+        //}
 
         private void CloseParentImplicitEnd()
         {
