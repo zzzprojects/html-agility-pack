@@ -612,14 +612,52 @@ namespace HtmlAgilityPack.Tests
         }
 
         //[Test]
-    //public void TestOptionTag()
-    //{
-    //    var html = "<select><option>Select a cell</option><option>C1</option><option value='\"c2\"'></select>";
+        //public void TestOptionTag()
+        //{
+        //    var html = "<select><option>Select a cell</option><option>C1</option><option value='\"c2\"'></select>";
 
-    //    string output = "<select><option>Select a cell</option><option>C1</option><option value='\"c2\"'></option></select>";
-    //    var document = new HtmlDocument();
-    //    document.LoadHtml(html);
-    //    Assert.AreEqual(output, document.DocumentNode.OuterHtml);
-    //}
-}
+        //    string output = "<select><option>Select a cell</option><option>C1</option><option value='\"c2\"'></option></select>";
+        //    var document = new HtmlDocument();
+        //    document.LoadHtml(html);
+        //    Assert.AreEqual(output, document.DocumentNode.OuterHtml);
+        //}
+
+
+        [Test]
+        public void VerifyChildDivParent()
+        {
+            var doc = new HtmlDocument();
+            doc.LoadHtml("<html><body></body></html>");
+
+            var div = HtmlNode.CreateNode("<div class='1'/>");
+            var div2 = HtmlNode.CreateNode("<div class='2'/>");
+
+            doc.DocumentNode.ChildNodes.Add(div);
+            div.ChildNodes.Add(div2);
+
+            Assert.AreEqual(div.Name, div2.ParentNode.Name);
+
+        }
+
+
+        [Test]
+        public void ChildIsRemovedFromParent()
+        {
+            var doc = new HtmlDocument();
+            doc.LoadHtml("<html><body></body></html>");
+
+            var div = HtmlNode.CreateNode("<div class='1'/>");
+            var div2 = HtmlNode.CreateNode("<div class='2'/>");
+
+            div.ChildNodes.Add(div2);
+            doc.DocumentNode.ChildNodes.Add(div);
+
+
+            div.FirstChild.Remove();
+
+            Assert.AreEqual(0, div.ChildNodes.Count);
+
+        }
+
+    }
 }
