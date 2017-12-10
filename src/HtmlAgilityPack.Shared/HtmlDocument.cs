@@ -1589,6 +1589,12 @@ namespace HtmlAgilityPack
                                 }
                             }
                         }
+                        else if (_oldstate == ParseState.QuotedAttributeValue
+                                 && _c == lastquote)
+                        {
+                            _state = _oldstate;
+                            DecrementPosition();
+                        }
                         break;
 
                     case ParseState.PcData:

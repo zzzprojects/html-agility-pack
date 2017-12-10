@@ -107,8 +107,22 @@ namespace HtmlAgilityPack
         /// <param name="node"></param>
         public void Add(HtmlNode node)
         {
+            Add(node, true);
+        }
+
+        /// <summary>
+        /// Add node to the collection
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="setParent"></param>
+        public void Add(HtmlNode node, bool setParent)
+        {
             _items.Add(node);
-            node.ParentNode = _parentnode;
+
+            if (setParent)
+            {
+                node.ParentNode = _parentnode;
+            }
         }
 
         /// <summary>
