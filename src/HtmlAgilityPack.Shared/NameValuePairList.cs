@@ -50,7 +50,7 @@ namespace HtmlAgilityPack
         {
             if (name == null)
                 return _allPairs;
-            return _pairsWithName.ContainsKey(name) ? _pairsWithName[name] : new List<KeyValuePair<string,string>>();
+            return Utilities.GetDictionaryValueOrDefault(_pairsWithName, name, new List<KeyValuePair<string,string>>());
         }
 
         internal string GetNameValuePairValue(string name)
@@ -91,13 +91,11 @@ namespace HtmlAgilityPack
 
                 // index by name
                 List<KeyValuePair<string, string>> al;
-                if (!_pairsWithName.ContainsKey(nvp.Key))
+                if (!_pairsWithName.TryGetValue(nvp.Key, out al))
                 {
                     al = new List<KeyValuePair<string, string>>();
-                    _pairsWithName[nvp.Key] = al;
+                    _pairsWithName.Add(nvp.Key, al);
                 }
-                else
-                    al = _pairsWithName[nvp.Key];
 
                 al.Add(nvp);
             }

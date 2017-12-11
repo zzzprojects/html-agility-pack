@@ -156,6 +156,11 @@ namespace HtmlAgilityPack
         /// </summary>
         public bool OptionWriteEmptyNodes;
 
+        /// <summary>
+        /// Defines if node and attribute names should be converted to lowercase.
+        /// </summary>
+        public bool OptionLowerCaseWhenParsing = true;
+
         #endregion
 
         #region Static Members
@@ -167,6 +172,13 @@ namespace HtmlAgilityPack
         internal static readonly string HtmlExceptionClassDoesNotExist = "Class name doesn't exist";
 
         internal static readonly string HtmlExceptionClassExists = "Class name already exists";
+
+        internal static readonly KeyValuePair<string, string[]>[] HtmlResetters = {
+            new KeyValuePair<string, string[]>("li", new[] {"ul", "ol"}),
+            new KeyValuePair<string, string[]>("tr", new[] {"table"}),
+            new KeyValuePair<string, string[]>("th", new[] {"tr", "table"}),
+            new KeyValuePair<string, string[]>("td", new[] {"tr", "table"}),
+        };
 
         #endregion
 
@@ -569,7 +581,8 @@ namespace HtmlAgilityPack
             {
                 throw new Exception(HtmlExceptionUseIdAttributeFalse);
             }
-            return Nodesid.ContainsKey(id) ? Nodesid[id] : null;
+
+            return Utilities.GetDictionaryValueOrDefault(Nodesid, id);
         }
 
         /// <summary>
@@ -879,7 +892,7 @@ namespace HtmlAgilityPack
                 return;
 
             bool error = false;
-            HtmlNode prev = Utilities.GetDictionaryValueOrNull(Lastnodes, _currentnode.Name);
+            HtmlNode prev = Utilities.GetDictionaryValueOrDefault(Lastnodes, _currentnode.Name);
 
             // find last node of this kind
             if (prev == null)
@@ -928,7 +941,9 @@ namespace HtmlAgilityPack
                         // this is a hack: add it as a text node
                         HtmlNode closenode = CreateNode(HtmlNodeType.Text, _currentnode._outerstartindex);
                         closenode._outerlength = _currentnode._outerlength;
-                        ((HtmlTextNode) closenode).Text = ((HtmlTextNode) closenode).Text.ToLower();
+                        if (closenode.OwnerDocument.OptionLowerCaseWhenParsing) {
+                            ((HtmlTextNode) closenode).Text = ((HtmlTextNode) closenode).Text.ToLowerInvariant();
+                        }
                         if (_lastparentnode != null)
                         {
                             _lastparentnode.AppendChild(closenode);
@@ -1016,7 +1031,7 @@ namespace HtmlAgilityPack
 
         private HtmlNode FindResetterNode(HtmlNode node, string name)
         {
-            HtmlNode resetter = Utilities.GetDictionaryValueOrNull(Lastnodes, name);
+            HtmlNode resetter = Utilities.GetDictionaryValueOrDefault(Lastnodes, name);
             if (resetter == null)
                 return null;
 
@@ -1049,7 +1064,7 @@ namespace HtmlAgilityPack
             if (resetters == null)
                 return;
 
-            HtmlNode prev = Utilities.GetDictionaryValueOrNull(Lastnodes, _currentnode.Name);
+            HtmlNode prev = Utilities.GetDictionaryValueOrDefault(Lastnodes, _currentnode.Name);
             // if we find a previous unclosed same name node, without a resetter node between, we must close it
             if (prev == null || (Lastnodes[name].Closed)) return;
             // try to find a resetter node, if found, we do nothing
@@ -1077,21 +1092,14 @@ namespace HtmlAgilityPack
 
         private string[] GetResetters(string name)
         {
-            switch (name)
+            for (int i = 0; i < HtmlResetters.Length; i++) 
             {
-                case "li":
-                    return new string[] {"ul", "ol"};
-
-                case "tr":
-                    return new string[] {"table"};
-
-                case "th":
-                case "td":
-                    return new string[] {"tr", "table"};
-
-                default:
-                    return null;
+                KeyValuePair<string, string[]> resetter = HtmlResetters[i];
+                if (resetter.Key == name)
+                    return resetter.Value;
             }
+
+                    return null;
         }
 
         private void IncrementPosition()
@@ -1675,21 +1683,21 @@ namespace HtmlAgilityPack
             bool isImplicitEnd = false;
 
             var parent = _lastparentnode.Name;
-            var nodeName = Text.Substring(_currentnode._namestartindex, _index - _currentnode._namestartindex - 1);
+            int nodeNameLength = _index - _currentnode._namestartindex - 1;
 
             switch (parent)
             {
                 case "a":
-                    isImplicitEnd = nodeName == "a";
+                    isImplicitEnd = Utilities.StringSubstringEquals(Text, "a", _currentnode._namestartindex, nodeNameLength, StringComparison.Ordinal);
                     break;
                 case "dd":
-                    isImplicitEnd = nodeName == "dt" || nodeName == "dd";
-                    break;
                 case "dt":
-                    isImplicitEnd = nodeName == "dt" || nodeName == "dd";
+                    isImplicitEnd =
+                        Utilities.StringSubstringEquals(Text, "dt", _currentnode._namestartindex, nodeNameLength, StringComparison.Ordinal) ||
+                        Utilities.StringSubstringEquals(Text, "dd", _currentnode._namestartindex, nodeNameLength, StringComparison.Ordinal);
                     break;
                 case "p":
-                    isImplicitEnd = nodeName == "p";
+                    isImplicitEnd = Utilities.StringSubstringEquals(Text, "p", _currentnode._namestartindex, nodeNameLength, StringComparison.Ordinal);;
                     break;
                 case "option":
                     isImplicitEnd = nodeName == "option";
@@ -1707,12 +1715,12 @@ namespace HtmlAgilityPack
             bool isExplicitEnd = false;
 
             var parent = _lastparentnode.Name;
-            var nodeName = Text.Substring(_currentnode._namestartindex, _index - _currentnode._namestartindex - 1);
+            int nodeNameLength = _index - _currentnode._namestartindex - 1;
 
             switch (parent)
             {
                 case "title":
-                    isExplicitEnd = nodeName == "title";
+                    isExplicitEnd = Utilities.StringSubstringEquals(Text, "title", _currentnode._namestartindex, nodeNameLength, StringComparison.Ordinal);
                     break;
                 case "h1":
                     isExplicitEnd = nodeName == "h2" || nodeName == "h3" || nodeName == "h4" || nodeName == "h5";
@@ -1820,7 +1828,7 @@ namespace HtmlAgilityPack
                     ReadDocumentEncoding(_currentnode);
 
                     // remember last node of this kind
-                    HtmlNode prev = Utilities.GetDictionaryValueOrNull(Lastnodes, _currentnode.Name);
+                    HtmlNode prev = Utilities.GetDictionaryValueOrDefault(Lastnodes, _currentnode.Name);
 
                     _currentnode._prevwithsamename = prev;
                     Lastnodes[_currentnode.Name] = _currentnode;

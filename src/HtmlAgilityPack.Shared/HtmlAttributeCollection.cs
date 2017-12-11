@@ -3,7 +3,7 @@
 // Forum & Issues: https://github.com/zzzprojects/html-agility-pack
 // License: https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE
 // More projects: http://www.zzzprojects.com/
-// Copyright © ZZZ Projects Inc. 2014 - 2017. All rights reserved.
+// Copyright Â© ZZZ Projects Inc. 2014 - 2017. All rights reserved.
 
 using System;
 using System.Collections;
@@ -252,11 +252,9 @@ namespace HtmlAgilityPack
         /// <returns></returns>
         public bool Contains(string name)
         {
-            string lname = name.ToLower();
-
             for (int i = 0; i < items.Count; i++)
             {
-                if (items[i].Name.Equals(lname))
+                if (String.Equals(items[i].Name, name, StringComparison.OrdinalIgnoreCase))
                     return true;
             }
             return false;
@@ -302,11 +300,10 @@ namespace HtmlAgilityPack
                 throw new ArgumentNullException("name");
             }
 
-            string lname = name.ToLower();
             for (int i = 0; i < items.Count; i++)
             {
                 HtmlAttribute att = items[i];
-                if (att.Name == lname)
+                if (String.Equals(att.Name, name, StringComparison.OrdinalIgnoreCase))
                 {
                     RemoveAt(i);
                 }
@@ -335,10 +332,9 @@ namespace HtmlAgilityPack
         /// <returns></returns>
         public IEnumerable<HtmlAttribute> AttributesWithName(string attributeName)
         {
-            attributeName = attributeName.ToLower();
             for (int i = 0; i < items.Count; i++)
             {
-                if (items[i].Name.Equals(attributeName))
+                if (String.Equals(items[i].Name, attributeName, StringComparison.OrdinalIgnoreCase))
                     yield return items[i];
             }
         }
@@ -384,10 +380,10 @@ namespace HtmlAgilityPack
             {
                 throw new ArgumentNullException("name");
             }
-            string lname = name.ToLower();
+
             for (int i = 0; i < items.Count; i++)
             {
-                if ((items[i]).Name == lname)
+                if (String.Equals((items[i]).Name, name, StringComparison.OrdinalIgnoreCase))
                     return i;
             }
             return -1;
