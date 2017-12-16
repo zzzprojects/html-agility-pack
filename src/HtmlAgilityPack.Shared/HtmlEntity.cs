@@ -629,21 +629,21 @@ namespace HtmlAgilityPack
                                     {
                                         string e = entity.ToString();
                                         try
- 										{
-											string codeStr = e.Substring(1).Trim().ToLower();
-											int fromBase;
-											if (codeStr.StartsWith("x"))
-											{
-												fromBase = 16;
-												codeStr = codeStr.Substring(1);
-											}
-											else
-											{
-												fromBase = 10;
-											}
-											int code = Convert.ToInt32(codeStr, fromBase);
- 											sb.Append(Convert.ToChar(code));
- 										}
+                                        {
+                                            string codeStr = e.Substring(1).Trim();
+                                            int fromBase;
+                                            if (codeStr.StartsWith("x", StringComparison.OrdinalIgnoreCase))
+                                            {
+                                                fromBase = 16;
+                                                codeStr = codeStr.Substring(1);
+                                            }
+                                            else
+                                            {
+                                                fromBase = 10;
+                                            }
+                                            int code = Convert.ToInt32(codeStr, fromBase);
+                                            sb.Append(Convert.ToChar(code));
+                                        }
                                         catch
                                         {
                                             sb.Append("&#" + e + ";");

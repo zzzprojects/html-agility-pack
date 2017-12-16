@@ -604,12 +604,12 @@ namespace HtmlAgilityPack
 				throw new ArgumentNullException("name");
 			}
 
-			if (!ElementsFlags.ContainsKey(name))
-			{
+		    HtmlElementFlag flag;
+		    if (!ElementsFlags.TryGetValue(name, out flag))
+            {
 				return false;
 			}
 
-			HtmlElementFlag flag = ElementsFlags[name];
 			return (flag & HtmlElementFlag.CanOverlap) != 0;
 		}
 
@@ -652,12 +652,12 @@ namespace HtmlAgilityPack
 				throw new ArgumentNullException("name");
 			}
 
-			if (!ElementsFlags.ContainsKey(name))
-			{
+		    HtmlElementFlag flag;
+		    if (!ElementsFlags.TryGetValue(name, out flag))
+            {
 				return false;
 			}
 
-			HtmlElementFlag flag = ElementsFlags[name];
 			return (flag & HtmlElementFlag.CData) != 0;
 		}
 
@@ -673,12 +673,12 @@ namespace HtmlAgilityPack
 				throw new ArgumentNullException("name");
 			}
 
-			if (!ElementsFlags.ContainsKey(name))
-			{
+		    HtmlElementFlag flag;
+		    if (!ElementsFlags.TryGetValue(name, out flag))
+            {
 				return false;
 			}
 
-			HtmlElementFlag flag = ElementsFlags[name];
 			return (flag & HtmlElementFlag.Closed) != 0;
 		}
 
@@ -711,12 +711,12 @@ namespace HtmlAgilityPack
 				return true;
 			}
 
-			if (!ElementsFlags.ContainsKey(name))
-			{
+		    HtmlElementFlag flag;
+		    if (!ElementsFlags.TryGetValue(name, out flag))
+            {
 				return false;
 			}
 
-			HtmlElementFlag flag = ElementsFlags[name];
 			return (flag & HtmlElementFlag.Empty) != 0;
 		}
 
@@ -1057,10 +1057,9 @@ namespace HtmlAgilityPack
 		/// <returns></returns>
 		public IEnumerable<HtmlNode> Descendants(string name)
 		{
-			name = name.ToLowerInvariant();
 			foreach (HtmlNode node in Descendants())
-				if (node.Name.Equals(name))
-					yield return node;
+			    if (String.Equals(node.Name, name, StringComparison.OrdinalIgnoreCase))
+                    yield return node;
 		}
 
 		/// <summary>
@@ -1844,7 +1843,7 @@ namespace HtmlAgilityPack
 				if (_ownerdocument.Openednodes != null)
 					_ownerdocument.Openednodes.Remove(_outerstartindex);
 
-				HtmlNode self = Utilities.GetDictionaryValueOrNull(_ownerdocument.Lastnodes, Name);
+				HtmlNode self = Utilities.GetDictionaryValueOrDefault(_ownerdocument.Lastnodes, Name);
 				if (self == this)
 				{
 					_ownerdocument.Lastnodes.Remove(Name);
@@ -1871,11 +1870,12 @@ namespace HtmlAgilityPack
 
 		internal void SetId(string id)
 		{
-			HtmlAttribute att = Attributes["id"] ?? _ownerdocument.CreateAttribute("id");
-			att.Value = id;
-			_ownerdocument.SetIdForNode(this, att.Value);
-            SetChanged();
-		}
+		    HtmlAttribute att = Attributes["id"] ?? _ownerdocument.CreateAttribute("id");
+		    att.Value = id;
+		    _ownerdocument.SetIdForNode(this, att.Value);
+		    Attributes.Add(att);
+		    SetChanged();
+        }
 
 		internal void WriteAttribute(TextWriter outText, HtmlAttribute att)
 		{
