@@ -927,9 +927,7 @@ namespace HtmlAgilityPack
             string contentType = "";
             if (!helper.GetIsRegistryAvailable())
             {
-                if (MimeTypes.ContainsKey(extension))
-                    contentType = MimeTypes[extension];
-                else
+                if (!MimeTypes.TryGetValue(extension, out contentType))
                     contentType = def;
             }
 
@@ -1648,9 +1646,6 @@ namespace HtmlAgilityPack
             _requestDuration = Environment.TickCount - tc;
             _responseUri = resp.ResponseUri;
 
-            bool html = IsHtmlContent(resp.ContentType);
-            bool isUnknown = string.IsNullOrEmpty(resp.ContentType);
-
             Encoding respenc = !string.IsNullOrEmpty(resp.ContentEncoding)
                 ? Encoding.GetEncoding(resp.ContentEncoding)
                 : null;
@@ -1718,6 +1713,10 @@ namespace HtmlAgilityPack
                 else
                 {
                     // try to work in-memory
+
+                    bool html = IsHtmlContent(resp.ContentType);
+                    bool isUnknown = string.IsNullOrEmpty(resp.ContentType);
+
                     if (doc != null && html)
                     {
                         if (respenc == null)
@@ -1876,14 +1875,6 @@ namespace HtmlAgilityPack
                 _requestDuration = Environment.TickCount - tc;
                 _responseUri = response.RequestMessage.RequestUri;
 
-                bool isUnknown = response.Content.Headers.ContentType == null;
-                bool html = !isUnknown && IsHtmlContent(response.Content.Headers.ContentType.MediaType);
-
-                var encoding = response.Content.Headers.ContentEncoding.FirstOrDefault();
-                Encoding respenc = !string.IsNullOrEmpty(encoding)
-                    ? Encoding.GetEncoding(encoding)
-                    : null;
-
                 if(CaptureRedirect)
                 {
                     // Found == 302
@@ -1936,6 +1927,15 @@ namespace HtmlAgilityPack
                     else
                     {
                         // try to work in-memory
+
+                        bool isUnknown = response.Content.Headers.ContentType == null;
+                        bool html = !isUnknown && IsHtmlContent(response.Content.Headers.ContentType.MediaType);
+
+                        var encoding = response.Content.Headers.ContentEncoding.FirstOrDefault();
+                        Encoding respenc = !string.IsNullOrEmpty(encoding)
+                            ? Encoding.GetEncoding(encoding)
+                            : null;
+
                         if ((doc != null) && (html))
                         {
                             if (respenc != null)
@@ -2011,14 +2011,14 @@ namespace HtmlAgilityPack
         }
 #endif
 
-        private bool IsHtmlContent(string contentType)
+        private static bool IsHtmlContent(string contentType)
         {
-            return contentType.ToLower().StartsWith("text/html");
+            return contentType.StartsWith("text/html", StringComparison.OrdinalIgnoreCase);
         }
 
-        private bool IsGZipEncoding(string contentEncoding)
+        private static bool IsGZipEncoding(string contentEncoding)
         {
-            return contentEncoding.ToLower().StartsWith("gzip");
+            return contentEncoding.StartsWith("gzip", StringComparison.OrdinalIgnoreCase);
         }
 
 #if !NETSTANDARD
@@ -2062,7 +2062,7 @@ namespace HtmlAgilityPack
             XmlNode cache = doc.FirstChild;
             foreach (string header in resp.Headers)
             {
-                XmlNode entry = doc.CreateElement("h");
+                XmlElement entry = doc.CreateElement("h");
                 XmlAttribute att = doc.CreateAttribute("n");
                 att.Value = header;
                 entry.Attributes.Append(att);
@@ -2087,7 +2087,7 @@ namespace HtmlAgilityPack
             XmlNode cache = doc.FirstChild;
             foreach (var header in resp.Headers)
             {
-                XmlNode entry = doc.CreateElement("h");
+                XmlElement entry = doc.CreateElement("h");
                 XmlAttribute att = doc.CreateAttribute("n");
                 att.Value = header.Key;
                 entry.Attributes.Append(att);

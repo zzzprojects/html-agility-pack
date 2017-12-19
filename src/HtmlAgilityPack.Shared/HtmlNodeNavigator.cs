@@ -235,7 +235,7 @@ namespace HtmlAgilityPack
         {
             get
             {
-                InternalTrace(">" + (_currentnode.Attributes.Count > 0));
+                InternalTrace(">" + (_currentnode.Attributes.Count > 0).ToString());
                 return (_currentnode.Attributes.Count > 0);
             }
         }
@@ -247,7 +247,7 @@ namespace HtmlAgilityPack
         {
             get
             {
-                InternalTrace(">" + (_currentnode.ChildNodes.Count > 0));
+                InternalTrace(">" + (_currentnode.ChildNodes.Count > 0).ToString());
                 return (_currentnode.ChildNodes.Count > 0);
             }
         }
@@ -259,7 +259,7 @@ namespace HtmlAgilityPack
         {
             get
             {
-                InternalTrace(">" + !HasChildren);
+                InternalTrace(">" + (!HasChildren).ToString());
                 // REVIEW: is this ok?
                 return !HasChildren;
             }
@@ -329,31 +329,31 @@ namespace HtmlAgilityPack
                 switch (_currentnode.NodeType)
                 {
                     case HtmlNodeType.Comment:
-                        InternalTrace(">" + XPathNodeType.Comment);
+                        InternalTrace(">" + XPathNodeType.Comment.ToString());
                         return XPathNodeType.Comment;
 
                     case HtmlNodeType.Document:
-                        InternalTrace(">" + XPathNodeType.Root);
+                        InternalTrace(">" + XPathNodeType.Root.ToString());
                         return XPathNodeType.Root;
 
                     case HtmlNodeType.Text:
-                        InternalTrace(">" + XPathNodeType.Text);
+                        InternalTrace(">" + XPathNodeType.Text.ToString());
                         return XPathNodeType.Text;
 
                     case HtmlNodeType.Element:
                         {
                             if (_attindex != -1)
                             {
-                                InternalTrace(">" + XPathNodeType.Attribute);
+                                InternalTrace(">" + XPathNodeType.Attribute.ToString());
                                 return XPathNodeType.Attribute;
                             }
-                            InternalTrace(">" + XPathNodeType.Element);
+                            InternalTrace(">" + XPathNodeType.Element.ToString());
                             return XPathNodeType.Element;
                         }
 
                     default:
                         throw new NotImplementedException("Internal error: Unhandled HtmlNodeType: " +
-                                                          _currentnode.NodeType);
+                                                          _currentnode.NodeType.ToString());
                 }
             }
         }
@@ -378,7 +378,7 @@ namespace HtmlAgilityPack
         {
             get
             {
-                InternalTrace("nt=" + _currentnode.NodeType);
+                InternalTrace("nt=" + _currentnode.NodeType.ToString());
                 switch (_currentnode.NodeType)
                 {
                     case HtmlNodeType.Comment:
@@ -405,7 +405,7 @@ namespace HtmlAgilityPack
 
                     default:
                         throw new NotImplementedException("Internal error: Unhandled HtmlNodeType: " +
-                                                          _currentnode.NodeType);
+                                                          _currentnode.NodeType.ToString());
                 }
             }
         }
@@ -481,7 +481,7 @@ namespace HtmlAgilityPack
                 InternalTrace(">false");
                 return false;
             }
-            InternalTrace(">" + (nav._currentnode == _currentnode));
+            InternalTrace(">" + (nav._currentnode == _currentnode).ToString());
             return (nav._currentnode == _currentnode);
         }
 
@@ -498,9 +498,9 @@ namespace HtmlAgilityPack
                 InternalTrace(">false (nav is not an HtmlNodeNavigator)");
                 return false;
             }
-            InternalTrace("moveto oid=" + nav.GetHashCode()
+            InternalTrace("moveto oid=" + nav.GetHashCode().ToString()
                           + ", n:" + nav._currentnode.Name
-                          + ", a:" + nav._attindex);
+                          + ", a:" + nav._attindex.ToString());
 
             if (nav._doc == _doc)
             {
