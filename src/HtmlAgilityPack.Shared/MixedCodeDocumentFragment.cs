@@ -59,7 +59,7 @@ namespace HtmlAgilityPack
                 {
                     _fragmentText = Doc._text.Substring(Index, Length);
                 }
-                return FragmentText;
+                return _fragmentText;
             }
             internal set { _fragmentText = value; }
         }
