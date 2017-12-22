@@ -150,6 +150,11 @@ namespace HtmlAgilityPack
                 if (_value == null)
                 {
                     _value = _ownerdocument.Text.Substring(_valuestartindex, _valuelength);
+
+                    if (!_ownerdocument.BackwardCompatibility)
+                    {
+                        _value = HtmlEntity.DeEntitize(_value);
+                    }
                 }
 
                 return _value;

@@ -812,9 +812,21 @@ namespace HtmlAgilityPack
 
 			ChildNodes.Append(newChild);
 			_ownerdocument.SetIdForNode(newChild, newChild.GetId());
+		    SetChildNodesId(newChild);
+
             SetChanged();
 			return newChild;
 		}
+        /// <summary>Sets child nodes identifier.</summary>
+        /// <param name="chilNode">The chil node.</param>
+	    public void SetChildNodesId(HtmlNode chilNode)
+	    {
+	        foreach (HtmlNode child in chilNode.ChildNodes)
+	        {
+	            _ownerdocument.SetIdForNode(child, child.GetId());
+	            SetChildNodesId(child);
+	        }
+        }
 
 		/// <summary>
 		/// Adds the specified node to the end of the list of children of this node.
@@ -1139,7 +1151,8 @@ namespace HtmlAgilityPack
 			{
 				return def;
 			}
-			return att.Value;
+
+		    return att.Value;
 		}
 
 		/// <summary>
@@ -1243,6 +1256,7 @@ namespace HtmlAgilityPack
 			if (_childnodes != null) _childnodes.Insert(index + 1, newChild);
 
 			_ownerdocument.SetIdForNode(newChild, newChild.GetId());
+            SetChildNodesId(newChild);
             SetChanged();
 			return newChild;
 		}
@@ -1285,6 +1299,7 @@ namespace HtmlAgilityPack
 			if (_childnodes != null) _childnodes.Insert(index, newChild);
 
 			_ownerdocument.SetIdForNode(newChild, newChild.GetId());
+            SetChildNodesId(newChild);
             SetChanged();
 			return newChild;
 		}
@@ -1302,6 +1317,7 @@ namespace HtmlAgilityPack
 			}
 			ChildNodes.Prepend(newChild);
 			_ownerdocument.SetIdForNode(newChild, newChild.GetId());
+            SetChildNodesId(newChild);
             SetChanged();
 			return newChild;
 		}
@@ -1372,12 +1388,24 @@ namespace HtmlAgilityPack
 				foreach (HtmlNode node in _childnodes)
 				{
 					_ownerdocument.SetIdForNode(null, node.GetId());
+                    RemoveAllIDforNode(node);
 				}
 			}
 			_childnodes.Clear();
             SetChanged();
 		}
 
+        /// <summary>Removes all id for node described by node.</summary>
+        /// <param name="node">The node.</param>
+	    public void RemoveAllIDforNode(HtmlNode node)
+	    {
+	        foreach (HtmlNode nodeChildNode in node.ChildNodes)
+	        {
+	            _ownerdocument.SetIdForNode(null, nodeChildNode.GetId());
+	            RemoveAllIDforNode(nodeChildNode);
+
+	        }
+        }
 		/// <summary>
 		/// Removes the specified child node.
 		/// </summary>
@@ -1406,6 +1434,7 @@ namespace HtmlAgilityPack
 				_childnodes.Remove(index);
 
 			_ownerdocument.SetIdForNode(null, oldChild.GetId());
+		    RemoveAllIDforNode(oldChild);
             SetChanged();
 			return oldChild;
 		}
@@ -1472,7 +1501,11 @@ namespace HtmlAgilityPack
 			if (_childnodes != null) _childnodes.Replace(index, newChild);
 
 			_ownerdocument.SetIdForNode(null, oldChild.GetId());
-			_ownerdocument.SetIdForNode(newChild, newChild.GetId());
+		    RemoveAllIDforNode(oldChild);
+
+            _ownerdocument.SetIdForNode(newChild, newChild.GetId());
+            SetChildNodesId(newChild);
+
             SetChanged();
 			return newChild;
 		}

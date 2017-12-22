@@ -24,6 +24,9 @@ namespace HtmlAgilityPack
         /// <summary>True to disable, false to enable the behavaior tag p.</summary>
         public static bool DisableBehavaiorTagP;
 
+        /// <summary>Default builder to use in the HtmlDocument constructor</summary>
+        public static Action<HtmlDocument> DefaultBuilder { get; set; }
+
         #endregion
 
         #region Fields
@@ -185,6 +188,11 @@ namespace HtmlAgilityPack
         /// </summary>
         public HtmlDocument()
         {
+            if (DefaultBuilder != null)
+            {
+                DefaultBuilder(this);
+            }
+
             _documentnode = CreateNode(HtmlNodeType.Document, 0);
 #if SILVERLIGHT || METRO || NETSTANDARD
             OptionDefaultStreamEncoding = Encoding.UTF8;
