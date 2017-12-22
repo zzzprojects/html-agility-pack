@@ -435,7 +435,7 @@ namespace HtmlAgilityPack
                     case ParseState.Text:
                         if (_index + TokenCodeStart.Length < _text.Length)
                         {
-                            if (_text.Substring(_index - 1, TokenCodeStart.Length) == TokenCodeStart)
+                            if (string.CompareOrdinal(_text, _index - 1, TokenCodeStart, 0, TokenCodeStart.Length) == 0)
                             {
                                 _state = ParseState.Code;
                                 _currentfragment.Length = _index - 1 - _currentfragment.Index;
@@ -449,7 +449,7 @@ namespace HtmlAgilityPack
                     case ParseState.Code:
                         if (_index + TokenCodeEnd.Length < _text.Length)
                         {
-                            if (_text.Substring(_index - 1, TokenCodeEnd.Length) == TokenCodeEnd)
+                            if (string.CompareOrdinal(_text, _index - 1, TokenCodeEnd, 0, TokenCodeEnd.Length) == 0)
                             {
                                 _state = ParseState.Text;
                                 _currentfragment.Length = _index + TokenCodeEnd.Length - _currentfragment.Index;

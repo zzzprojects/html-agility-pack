@@ -646,7 +646,9 @@ namespace HtmlAgilityPack
                                         }
                                         catch
                                         {
-                                            sb.Append("&#" + e + ";");
+                                            sb.Append("&#")
+                                              .Append(e)
+                                              .Append(';');
                                         }
                                     }
                                     else
@@ -656,7 +658,9 @@ namespace HtmlAgilityPack
                                         if (!_entityValue.TryGetValue(entity.ToString(), out code))
                                         {
                                             // nope
-                                            sb.Append("&" + entity + ";");
+                                            sb.Append('&')
+                                              .Append(entity)
+                                              .Append(';');
                                         }
                                         else
                                         {
@@ -671,7 +675,8 @@ namespace HtmlAgilityPack
 
                             case '&':
                                 // new entity start without end, it was not an entity...
-                                sb.Append("&" + entity);
+                                sb.Append('&')
+                                  .Append(entity);
                                 entity.Remove(0, entity.Length);
                                 break;
 
@@ -681,7 +686,8 @@ namespace HtmlAgilityPack
                                 {
                                     // unknown stuff, just don't touch it
                                     state = ParseState.Text;
-                                    sb.Append("&" + entity);
+                                    sb.Append('&')
+                                      .Append(entity);
                                     entity.Remove(0, entity.Length);
                                 }
                                 break;
@@ -693,7 +699,8 @@ namespace HtmlAgilityPack
             // finish the work
             if (state == ParseState.EntityStart)
             {
-                sb.Append("&" + entity);
+                sb.Append('&')
+                  .Append(entity);
             }
             return sb.ToString();
         }
@@ -784,11 +791,15 @@ namespace HtmlAgilityPack
 
                     if ((entity == null) || (!useNames))
                     {
-                        sb.Append("&#" + code + ";");
+                        sb.Append("&#")
+                          .Append(code)
+                          .Append(';');
                     }
                     else
                     {
-                        sb.Append("&" + entity + ";");
+                        sb.Append('&')
+                          .Append(entity)
+                          .Append(';');
                     }
                 }
                 else

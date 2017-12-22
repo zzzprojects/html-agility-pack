@@ -261,7 +261,7 @@ namespace HtmlAgilityPack
 
                 i++;
             }
-            return "@" + Name + "[" + i + "]";
+            return "@" + Name + "[" + i.ToString() + "]";
         }
 
         #endregion

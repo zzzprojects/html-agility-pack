@@ -1604,8 +1604,9 @@ namespace HtmlAgilityPack
                         // check buffer end
                         if ((_currentnode._namelength + 3) <= (Text.Length - (_index - 1)))
                         {
-                            if (string.Compare(Text.Substring(_index - 1, _currentnode._namelength + 2),
-                                    "</" + _currentnode.Name, StringComparison.OrdinalIgnoreCase) == 0)
+                            if (Text[_index - 1] == '<' &&
+                                Text[_index] == '/' &&
+                                string.Compare(Text, _index + 1, _currentnode.Name, 0, _currentnode._namelength, StringComparison.OrdinalIgnoreCase) == 0)
                             {
                                 int c = Text[_index - 1 + 2 + _currentnode.Name.Length];
                                 if ((c == '>') || (IsWhiteSpace(c)))
@@ -1850,7 +1851,7 @@ namespace HtmlAgilityPack
             if ((close) || (!_currentnode._starttag))
             {
                 if ((OptionStopperNodeName != null) && (_remainder == null) &&
-                    (string.Compare(_currentnode.Name, OptionStopperNodeName, StringComparison.OrdinalIgnoreCase) == 0))
+                    (string.Equals(_currentnode.Name, OptionStopperNodeName, StringComparison.OrdinalIgnoreCase)))
                 {
                     _remainderOffset = index;
                     _remainder = Text.Substring(_remainderOffset);
@@ -1904,7 +1905,7 @@ namespace HtmlAgilityPack
             HtmlAttribute att = node.Attributes["http-equiv"];
             if (att == null)
                 return;
-            if (string.Compare(att.Value, "content-type", StringComparison.OrdinalIgnoreCase) != 0)
+            if (!string.Equals(att.Value, "content-type", StringComparison.OrdinalIgnoreCase))
                 return;
             HtmlAttribute content = node.Attributes["content"];
             if (content != null)

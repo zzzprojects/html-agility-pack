@@ -1548,7 +1548,7 @@ namespace HtmlAgilityPack
 				    if (_ownerdocument.OptionOutputAsXml)
 				    {
                         var commentNode = (HtmlCommentNode)this;
-				        if (!_ownerdocument.BackwardCompatibility && commentNode.Comment.ToLowerInvariant().StartsWith("<!doctype"))
+				        if (!_ownerdocument.BackwardCompatibility && commentNode.Comment.StartsWith("<!doctype", StringComparison.OrdinalIgnoreCase))
 				        {
 				            outText.Write(commentNode.Comment);
                         }
@@ -1949,7 +1949,7 @@ namespace HtmlAgilityPack
 				int i = 0;
 				foreach (HtmlNode n in ChildNodes)
 				{
-					WriteAttribute(outText, _ownerdocument.CreateAttribute("_child_" + i,
+					WriteAttribute(outText, _ownerdocument.CreateAttribute("_child_" + i.ToString(),
 																		   n.Name));
 					i++;
 				}
@@ -1990,7 +1990,7 @@ namespace HtmlAgilityPack
 
 				i++;
 			}
-			return Name + "[" + i + "]";
+			return Name + "[" + i.ToString() + "]";
 		}
 
         private bool IsSingleElementNode()
