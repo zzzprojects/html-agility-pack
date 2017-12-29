@@ -316,7 +316,7 @@ namespace HtmlAgilityPack
                     ((name[i] >= 'A') && (name[i] <= 'Z')) ||
                     ((name[i] >= '0') && (name[i] <= '9')) ||
                     (isAttribute && name[i] == ':') ||
-                    //					(name[i]==':') || (name[i]=='_') || (name[i]=='-') || (name[i]=='.')) // these are bads in fact
+                    //                    (name[i]==':') || (name[i]=='_') || (name[i]=='-') || (name[i]=='.')) // these are bads in fact
                     (name[i] == '_') || (name[i] == '-') || (name[i] == '.'))
                 {
                     xmlname += name[i];
@@ -1989,7 +1989,7 @@ namespace HtmlAgilityPack
                     if (_streamencoding != null)
                     {
 #if SILVERLIGHT || PocketPC || METRO || NETSTANDARD
-						if (_declaredencoding.WebName != _streamencoding.WebName)
+                        if (_declaredencoding.WebName != _streamencoding.WebName)
 #else
                         if (_declaredencoding != null)
                             if (_declaredencoding.CodePage != _streamencoding.CodePage)

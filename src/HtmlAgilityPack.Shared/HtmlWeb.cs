@@ -1622,13 +1622,13 @@ namespace HtmlAgilityPack
                 }
 
                 // dump cookie
-                //				if (_useCookies)
-                //				{
-                //					foreach(Cookie cookie in req.CookieContainer.GetCookies(req.RequestUri))
-                //					{
-                //						HtmlLibrary.Trace("Cookie " + cookie.Name + "=" + cookie.Value + " path=" + cookie.Path + " domain=" + cookie.Domain);
-                //					}
-                //				}
+                //                if (_useCookies)
+                //                {
+                //                    foreach(Cookie cookie in req.CookieContainer.GetCookies(req.RequestUri))
+                //                    {
+                //                        HtmlLibrary.Trace("Cookie " + cookie.Name + "=" + cookie.Value + " path=" + cookie.Path + " domain=" + cookie.Domain);
+                //                    }
+                //                }
             }
 
             HttpWebResponse resp;
@@ -1862,13 +1862,13 @@ namespace HtmlAgilityPack
                     }
 
                     // dump cookie
-                    //				if (_useCookies)
-                    //				{
-                    //					foreach(Cookie cookie in req.CookieContainer.GetCookies(req.RequestUri))
-                    //					{
-                    //						HtmlLibrary.Trace("Cookie " + cookie.Name + "=" + cookie.Value + " path=" + cookie.Path + " domain=" + cookie.Domain);
-                    //					}
-                    //				}
+                    //                if (_useCookies)
+                    //                {
+                    //                    foreach(Cookie cookie in req.CookieContainer.GetCookies(req.RequestUri))
+                    //                    {
+                    //                        HtmlLibrary.Trace("Cookie " + cookie.Name + "=" + cookie.Value + " path=" + cookie.Path + " domain=" + cookie.Domain);
+                    //                    }
+                    //                }
                 }
 
                 HttpResponseMessage response;

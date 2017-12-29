@@ -57,7 +57,7 @@ namespace HtmlAgilityPack
             _entityName.Add(34, "quot");
             _entityValue.Add("amp", 38); // ampersand, U+0026 ISOnum 
             _entityName.Add(38, "amp");
-            _entityValue.Add("apos", 39); // apostrophe-quote 	U+0027 (39)
+            _entityValue.Add("apos", 39); // apostrophe-quote     U+0027 (39)
             _entityName.Add(39, "apos");
             _entityValue.Add("lt", 60); // less-than sign, U+003C ISOnum 
             _entityName.Add(60, "lt");
@@ -766,14 +766,14 @@ namespace HtmlAgilityPack
         /// <param name="entitizeQuotAmpAndLtGt">If set to true, the [quote], [ampersand], [lower than] and [greather than] characters will be entitized.</param>
         /// <returns>The result text</returns>
         public static string Entitize(string text, bool useNames, bool entitizeQuotAmpAndLtGt)
-//		_entityValue.Add("quot", 34);	// quotation mark = APL quote, U+0022 ISOnum 
-//		_entityName.Add(34, "quot");
-//		_entityValue.Add("amp", 38);	// ampersand, U+0026 ISOnum 
-//		_entityName.Add(38, "amp");
-//		_entityValue.Add("lt", 60);	// less-than sign, U+003C ISOnum 
-//		_entityName.Add(60, "lt");
-//		_entityValue.Add("gt", 62);	// greater-than sign, U+003E ISOnum 
-//		_entityName.Add(62, "gt");
+//        _entityValue.Add("quot", 34);    // quotation mark = APL quote, U+0022 ISOnum 
+//        _entityName.Add(34, "quot");
+//        _entityValue.Add("amp", 38);    // ampersand, U+0026 ISOnum 
+//        _entityName.Add(38, "amp");
+//        _entityValue.Add("lt", 60);    // less-than sign, U+003C ISOnum 
+//        _entityName.Add(60, "lt");
+//        _entityValue.Add("gt", 62);    // greater-than sign, U+003E ISOnum 
+//        _entityName.Add(62, "gt");
         {
             if (text == null)
                 return null;

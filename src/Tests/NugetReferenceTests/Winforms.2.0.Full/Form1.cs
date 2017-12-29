@@ -8,11 +8,11 @@ using System.Windows.Forms;
 
 namespace Winforms._2._0.Full
 {
-	public partial class Form1 : Form
-	{
-		public Form1()
-		{
-			InitializeComponent();
-		}
-	}
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+    }
 }

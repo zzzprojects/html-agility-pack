@@ -30,7 +30,7 @@ namespace HtmlAgilityPack
             File.SetAttributes(path, File.GetAttributes(path) & ~FileAttributes.ReadOnly);
         }
 #else
-		internal static void MakeWritable(string path)
+        internal static void MakeWritable(string path)
         {
         }
 #endif
