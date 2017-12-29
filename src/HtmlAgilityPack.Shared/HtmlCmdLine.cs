@@ -8,7 +8,6 @@
 using System;
 
 #if !NETSTANDARD1_3 && !METRO
-
 namespace HtmlAgilityPack
 {
     internal class HtmlCmdLine
@@ -39,6 +38,7 @@ namespace HtmlAgilityPack
             {
                 GetStringArg(args[i], name, ref p);
             }
+
             return p;
         }
 
@@ -58,6 +58,7 @@ namespace HtmlAgilityPack
                     j++;
                 }
             }
+
             return p;
         }
 
@@ -69,6 +70,7 @@ namespace HtmlAgilityPack
             {
                 GetBoolArg(args[i], name, ref p);
             }
+
             return p;
         }
 
@@ -80,6 +82,7 @@ namespace HtmlAgilityPack
             {
                 GetIntArg(args[i], name, ref p);
             }
+
             return p;
         }
 

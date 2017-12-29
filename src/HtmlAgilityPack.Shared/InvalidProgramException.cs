@@ -23,7 +23,6 @@ namespace System
         /// </summary>
         public InvalidProgramException()
         {
-
         }
 
         /// <summary>
@@ -32,7 +31,6 @@ namespace System
         /// <param name="message">The error message that explains the reason for the exception. </param>
         public InvalidProgramException(string message) : base(message)
         {
-
         }
 
         /// <summary>
@@ -41,7 +39,6 @@ namespace System
         /// <param name="message">The error message that explains the reason for the exception. </param><param name="inner">The exception that is the cause of the current exception. If the <paramref name="inner"/> parameter is not a null reference (Nothing in Visual Basic), the current exception is raised in a catch block that handles the inner exception. </param>
         public InvalidProgramException(string message, Exception inner) : base(message, inner)
         {
-
         }
     }
 }

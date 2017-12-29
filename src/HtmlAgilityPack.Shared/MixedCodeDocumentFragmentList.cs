@@ -18,23 +18,23 @@ namespace HtmlAgilityPack
     /// </summary>
     public class MixedCodeDocumentFragmentList : IEnumerable
     {
-#region Fields
+        #region Fields
 
         private MixedCodeDocument _doc;
         private IList<MixedCodeDocumentFragment> _items = new List<MixedCodeDocumentFragment>();
 
-#endregion
+        #endregion
 
-#region Constructors
+        #region Constructors
 
         internal MixedCodeDocumentFragmentList(MixedCodeDocument doc)
         {
             _doc = doc;
         }
 
-#endregion
+        #endregion
 
-#region Properties
+        #region Properties
 
         ///<summary>
         /// Gets the Document
@@ -60,9 +60,9 @@ namespace HtmlAgilityPack
             get { return _items[index]; }
         }
 
-#endregion
+        #endregion
 
-#region IEnumerable Members
+        #region IEnumerable Members
 
         /// <summary>
         /// Gets an enumerator that can iterate through the fragment list.
@@ -72,9 +72,9 @@ namespace HtmlAgilityPack
             return GetEnumerator();
         }
 
-#endregion
+        #endregion
 
-#region Public Methods
+        #region Public Methods
 
         /// <summary>
         /// Appends a fragment to the list of fragments.
@@ -86,6 +86,7 @@ namespace HtmlAgilityPack
             {
                 throw new ArgumentNullException("newFragment");
             }
+
             _items.Add(newFragment);
         }
 
@@ -107,6 +108,7 @@ namespace HtmlAgilityPack
             {
                 throw new ArgumentNullException("newFragment");
             }
+
             _items.Insert(0, newFragment);
         }
 
@@ -120,11 +122,13 @@ namespace HtmlAgilityPack
             {
                 throw new ArgumentNullException("fragment");
             }
+
             int index = GetFragmentIndex(fragment);
             if (index == -1)
             {
                 throw new IndexOutOfRangeException();
             }
+
             RemoveAt(index);
         }
 
@@ -146,9 +150,9 @@ namespace HtmlAgilityPack
             _items.RemoveAt(index);
         }
 
-#endregion
+        #endregion
 
-#region Internal Methods
+        #region Internal Methods
 
         internal void Clear()
         {
@@ -161,6 +165,7 @@ namespace HtmlAgilityPack
             {
                 throw new ArgumentNullException("fragment");
             }
+
             for (int i = 0; i < _items.Count; i++)
             {
                 if ((_items[i]) == fragment)
@@ -168,26 +173,27 @@ namespace HtmlAgilityPack
                     return i;
                 }
             }
+
             return -1;
         }
 
-#endregion
+        #endregion
 
-#region Nested type: MixedCodeDocumentFragmentEnumerator
+        #region Nested type: MixedCodeDocumentFragmentEnumerator
 
         /// <summary>
         /// Represents a fragment enumerator.
         /// </summary>
         public class MixedCodeDocumentFragmentEnumerator : IEnumerator
         {
-#region Fields
+            #region Fields
 
             private int _index;
             private IList<MixedCodeDocumentFragment> _items;
 
-#endregion
+            #endregion
 
-#region Constructors
+            #region Constructors
 
             internal MixedCodeDocumentFragmentEnumerator(IList<MixedCodeDocumentFragment> items)
             {
@@ -195,9 +201,9 @@ namespace HtmlAgilityPack
                 _index = -1;
             }
 
-#endregion
+            #endregion
 
-#region Properties
+            #region Properties
 
             /// <summary>
             /// Gets the current element in the collection.
@@ -207,9 +213,9 @@ namespace HtmlAgilityPack
                 get { return (MixedCodeDocumentFragment) (_items[_index]); }
             }
 
-#endregion
+            #endregion
 
-#region IEnumerator Members
+            #region IEnumerator Members
 
             /// <summary>
             /// Gets the current element in the collection.
@@ -237,10 +243,10 @@ namespace HtmlAgilityPack
                 _index = -1;
             }
 
-#endregion
+            #endregion
         }
 
-#endregion
+        #endregion
     }
 }
 #endif

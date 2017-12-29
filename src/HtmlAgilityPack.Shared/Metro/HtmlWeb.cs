@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace HtmlAgilityPack
 {
-
     /// <summary>
     /// Used for downloading and parsing html from the internet
     /// </summary>
@@ -19,7 +18,7 @@ namespace HtmlAgilityPack
         /// </summary>
         public Action<HtmlDocument> PreHandleDocument { get; set; }
 
-#region Instance Methods
+        #region Instance Methods
 
         /// <summary>
         /// Begins the process of downloading an internet resource
@@ -124,18 +123,21 @@ namespace HtmlAgilityPack
                     {
                         html = sr.ReadToEnd();
                     }
-                } else
+                }
+                else
                     html = await e.Content.ReadAsStringAsync();
+
                 var doc = new HtmlDocument();
                 if (PreHandleDocument != null)
                     PreHandleDocument(doc);
                 doc.LoadHtml(html);
                 return doc;
             }
+
             throw new Exception("Error downloading html");
         }
 
-#endregion
+        #endregion
     }
 }
 #endif

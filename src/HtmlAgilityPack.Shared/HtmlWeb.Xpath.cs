@@ -39,7 +39,7 @@ namespace HtmlAgilityPack
         /// <param name="xmlPath">A file path where the temporary XML before transformation will be saved. Mostly used for debugging purposes.</param>
         /// <returns>An newly created instance.</returns>
         public object CreateInstance(string htmlUrl, string xsltUrl, XsltArgumentList xsltArgs, Type type,
-                                     string xmlPath)
+            string xmlPath)
         {
             StringWriter sw = new StringWriter();
             XmlTextWriter writer = new XmlTextWriter(sw);
@@ -58,6 +58,7 @@ namespace HtmlAgilityPack
                     LoadHtmlAsXml(htmlUrl, xsltUrl, xsltArgs, writer, xmlPath);
                 }
             }
+
             writer.Flush();
             StringReader sr = new StringReader(sw.ToString());
             XmlTextReader reader = new XmlTextReader(sr);
@@ -71,6 +72,7 @@ namespace HtmlAgilityPack
             {
                 throw new Exception(ex + ", --- xml:" + sw);
             }
+
             return o;
         }
 
@@ -95,7 +97,7 @@ namespace HtmlAgilityPack
         /// <param name="writer">The XmlTextWriter to which you want to save.</param>
         /// <param name="xmlPath">A file path where the temporary XML before transformation will be saved. Mostly used for debugging purposes.</param>
         public void LoadHtmlAsXml(string htmlUrl, string xsltUrl, XsltArgumentList xsltArgs, XmlTextWriter writer,
-                                  string xmlPath)
+            string xmlPath)
         {
             if (htmlUrl == null)
             {
@@ -110,6 +112,7 @@ namespace HtmlAgilityPack
                 doc.Save(w);
                 w.Close();
             }
+
             if (xsltArgs == null)
             {
                 xsltArgs = new XsltArgumentList();
@@ -124,7 +127,6 @@ namespace HtmlAgilityPack
             xslt.Load(xsltUrl);
             xslt.Transform(doc, xsltArgs, writer);
         }
-
     }
 }
 #endif
