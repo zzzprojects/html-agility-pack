@@ -12,11 +12,11 @@ using System.Windows.Shapes;
 
 namespace Silverlight._4._0
 {
-	public partial class MainPage : UserControl
-	{
-		public MainPage()
-		{
-			InitializeComponent();
-		}
-	}
+    public partial class MainPage : UserControl
+    {
+        public MainPage()
+        {
+            InitializeComponent();
+        }
+    }
 }

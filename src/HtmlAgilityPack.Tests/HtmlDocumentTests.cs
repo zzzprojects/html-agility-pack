@@ -464,10 +464,10 @@ namespace HtmlAgilityPack.Tests
                 @"<!DOCTYPE html>
 <html>
 <body>
-	<h1>This is <b>bold</b> heading</h1>
-	<p>This is <u>underlined</u> paragraph</p>
-	<h2>This is <i>italic</i> heading</h2>
-	<h2>This is new heading</h2>
+    <h1>This is <b>bold</b> heading</h1>
+    <p>This is <u>underlined</u> paragraph</p>
+    <h2>This is <i>italic</i> heading</h2>
+    <h2>This is new heading</h2>
 </body>
 </html> ";
 

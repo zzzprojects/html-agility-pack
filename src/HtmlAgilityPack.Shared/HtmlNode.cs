@@ -1617,7 +1617,7 @@ namespace HtmlAgilityPack
                     if (_ownerdocument.OptionOutputAsXml)
                     {
 #if SILVERLIGHT || PocketPC || METRO || NETSTANDARD
-						outText.Write("<?xml version=\"1.0\" encoding=\"" + _ownerdocument.GetOutEncoding().WebName + "\"?>");
+                        outText.Write("<?xml version=\"1.0\" encoding=\"" + _ownerdocument.GetOutEncoding().WebName + "\"?>");
 #else
                         outText.Write("<?xml version=\"1.0\" encoding=\"" + _ownerdocument.GetOutEncoding().BodyName + "\"?>");
 #endif
@@ -1768,8 +1768,8 @@ namespace HtmlAgilityPack
                 case HtmlNodeType.Document:
 #if SILVERLIGHT || PocketPC || METRO || NETSTANDARD
                     writer.WriteProcessingInstruction("xml",
-													  "version=\"1.0\" encoding=\"" +
-													  _ownerdocument.GetOutEncoding().WebName + "\"");
+                                                      "version=\"1.0\" encoding=\"" +
+                                                      _ownerdocument.GetOutEncoding().WebName + "\"");
 #else
                     writer.WriteProcessingInstruction("xml",
                         "version=\"1.0\" encoding=\"" +
