@@ -12,13 +12,13 @@ namespace HtmlAgilityPack
 {
     internal class HtmlCmdLine
     {
-        #region Static Members
+#region Static Members
 
         internal static bool Help;
 
-        #endregion
+#endregion
 
-        #region Constructors
+#region Constructors
 
         static HtmlCmdLine()
         {
@@ -26,9 +26,9 @@ namespace HtmlAgilityPack
             ParseArgs();
         }
 
-        #endregion
+#endregion
 
-        #region Internal Methods
+#region Internal Methods
 
         internal static string GetOption(string name, string def)
         {
@@ -86,9 +86,9 @@ namespace HtmlAgilityPack
             return p;
         }
 
-        #endregion
+#endregion
 
-        #region Private Methods
+#region Private Methods
 
         private static void GetBoolArg(string Arg, string Name, ref bool ArgValue)
         {
@@ -96,7 +96,7 @@ namespace HtmlAgilityPack
                 return;
             if (('/' != Arg[0]) && ('-' != Arg[0])) // not a param
                 return;
-            if (Arg.Substring(1, Name.Length).ToLower() == Name.ToLower())
+            if (Arg.Substring(1, Name.Length).ToLowerInvariant() == Name.ToLowerInvariant())
                 ArgValue = true;
         }
 
@@ -106,7 +106,7 @@ namespace HtmlAgilityPack
                 return;
             if (('/' != Arg[0]) && ('-' != Arg[0])) // not a param
                 return;
-            if (Arg.Substring(1, Name.Length).ToLower() == Name.ToLower())
+            if (Arg.Substring(1, Name.Length).ToLowerInvariant() == Name.ToLowerInvariant())
             {
                 try
                 {
@@ -132,7 +132,7 @@ namespace HtmlAgilityPack
                 return;
             if (('/' != Arg[0]) && ('-' != Arg[0])) // not a param
                 return;
-            if (Arg.Substring(1, Name.Length).ToLower() == Name.ToLower())
+            if (Arg.Substring(1, Name.Length).ToLowerInvariant() == Name.ToLowerInvariant())
                 ArgValue = Arg.Substring(Name.Length + 2, Arg.Length - Name.Length - 2);
         }
 
@@ -148,7 +148,7 @@ namespace HtmlAgilityPack
             }
         }
 
-        #endregion
+#endregion
     }
 }
 #endif

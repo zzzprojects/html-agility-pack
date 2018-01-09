@@ -3,6 +3,8 @@ using System.Linq;
 using System.Net;
 using NUnit.Framework;
 using System;
+using System.Globalization;
+using System.Threading;
 
 namespace HtmlAgilityPack.Tests
 {
@@ -16,8 +18,10 @@ namespace HtmlAgilityPack.Tests
         [OneTimeSetUp]
         public void Setup()
         {
-            //_contentDirectory = Path.Combine(Environment.CurrentDirectory, @"..\HtmlAgilityPack.Tests\files\");
-            _contentDirectory = Path.Combine(@"C:\Users\Jonathan\Desktop\Z\zzzproject\HtmlAgilityPack\HtmlAgilityPack.Tests\bin\Debug\files\");
+             
+
+            _contentDirectory = Path.GetDirectoryName(typeof(HtmlDocumentTests).Assembly.Location).ToString() + "\\files\\";
+            //   _contentDirectory = Path.Combine(@"C:\Users\Jonathan\Desktop\Z\zzzproject\HtmlAgilityPack\HtmlAgilityPack.Tests\bin\Debug\files\");
         }
 
         private HtmlDocument GetMshomeDocument()
@@ -30,6 +34,7 @@ namespace HtmlAgilityPack.Tests
         [Test]
         public void StackOverflow()
         {
+            // url not work, ???? 
             var url = "http://rewarding.me/active-tel-domains/index.php/index.php?rescan=amour.tel&w=A&url=&by=us&limits=0";
             var request = WebRequest.Create(url);
             var htmlDocument = new HtmlDocument();
@@ -464,10 +469,10 @@ namespace HtmlAgilityPack.Tests
                 @"<!DOCTYPE html>
 <html>
 <body>
-    <h1>This is <b>bold</b> heading</h1>
-    <p>This is <u>underlined</u> paragraph</p>
-    <h2>This is <i>italic</i> heading</h2>
-    <h2>This is new heading</h2>
+	<h1>This is <b>bold</b> heading</h1>
+	<p>This is <u>underlined</u> paragraph</p>
+	<h2>This is <i>italic</i> heading</h2>
+	<h2>This is new heading</h2>
 </body>
 </html> ";
 
@@ -531,19 +536,20 @@ namespace HtmlAgilityPack.Tests
         [Test]
         public void TestLoadWithUri()
         {
-            string adress = "http://www.filmweb.pl/film/Piraci+z+Karaib%C3%B3w%3A+Zemsta+Salazara-2017-606542";
-            Uri uri = new Uri(adress, true);
-            var web = new HtmlWeb();
-            HtmlAgilityPack.HtmlDocument document = web.Load(uri);
-            Assert.AreNotEqual(string.Empty, document.DocumentNode.OuterHtml);
+            //string adress = "http://www.filmweb.pl/film/Piraci+z+Karaib%C3%B3w%3A+Zemsta+Salazara-2017-606542";
+            //Uri uri = new Uri(adress, true);
+            //var web = new HtmlWeb();
+            //HtmlAgilityPack.HtmlDocument document = web.Load(uri);
+            //Assert.AreNotEqual(string.Empty, document.DocumentNode.OuterHtml);
         }
+
         [Test]
         public void TestFormTag()
         {
             var html = @"<form></form>";
             var document = new HtmlDocument();
             document.LoadHtml(html);
-            var result = document.DocumentNode.Descendants().Select(dn => new { dn.NodeType, dn.Name, dn.OuterHtml }).ToArray();
+            var result = document.DocumentNode.Descendants().Select(dn => new {dn.NodeType, dn.Name, dn.OuterHtml}).ToArray();
             Assert.AreEqual(html, document.DocumentNode.OuterHtml);
             Assert.AreEqual(1, result.Count());
         }
@@ -554,7 +560,7 @@ namespace HtmlAgilityPack.Tests
             var html = @"<div><1</div>";
             var document = new HtmlDocument();
             document.LoadHtml(html);
-            var result = document.DocumentNode.Descendants().Select(dn => new { dn.NodeType, dn.Name, dn.OuterHtml }).ToArray();
+            var result = document.DocumentNode.Descendants().Select(dn => new {dn.NodeType, dn.Name, dn.OuterHtml}).ToArray();
             Assert.AreEqual(html, document.DocumentNode.OuterHtml);
         }
 
@@ -565,7 +571,7 @@ namespace HtmlAgilityPack.Tests
                 var html = @"<dt>a<dd>b<dd>c<dt>a<dd>b<dd>c";
                 var document = new HtmlDocument();
                 document.LoadHtml(html);
-                var result = document.DocumentNode.Descendants().Select(dn => new { dn.NodeType, dn.Name, dn.OuterHtml }).ToArray();
+                var result = document.DocumentNode.Descendants().Select(dn => new {dn.NodeType, dn.Name, dn.OuterHtml}).ToArray();
 
                 // TODO: Fix issue with last "dd"
                 Assert.AreEqual(html + "</dd>", document.DocumentNode.OuterHtml);
@@ -576,7 +582,7 @@ namespace HtmlAgilityPack.Tests
                 var html = @"<dt>a</dt><dd>b</dd><dd>c</dd><dt>a</dt><dd>b</dd><dd>c</dd>";
                 var document = new HtmlDocument();
                 document.LoadHtml(html);
-                var result = document.DocumentNode.Descendants().Select(dn => new { dn.NodeType, dn.Name, dn.OuterHtml }).ToArray();
+                var result = document.DocumentNode.Descendants().Select(dn => new {dn.NodeType, dn.Name, dn.OuterHtml}).ToArray();
 
                 Assert.AreEqual(html, document.DocumentNode.OuterHtml);
             }
@@ -611,17 +617,39 @@ namespace HtmlAgilityPack.Tests
             Assert.AreEqual(expectedHtml, doc.DocumentNode.OuterHtml);
         }
 
-        //[Test]
-        //public void TestOptionTag()
-        //{
-        //    var html = "<select><option>Select a cell</option><option>C1</option><option value='\"c2\"'></select>";
+        [Test]
+        public void TestInnerText()
+        {
+            var inHtml = @"<html>
+	<head>
+		<title>
+			InnerText bug Demo
+		</title>
+	</head>
+	<body>
+		<div>
+			This demonstration should show that the HAP currently parses div tags incorrectly, parsing carriage returns, new lines and tabular indents as text.
+		</div>
+	</body>
+</html>";
+            var expectedHtml = "InnerText bug DemoThis demonstration should show that the HAP currently parses div tags incorrectly, parsing carriage returns, new lines and tabular indents as text.";
 
-        //    string output = "<select><option>Select a cell</option><option>C1</option><option value='\"c2\"'></option></select>";
-        //    var document = new HtmlDocument();
-        //    document.LoadHtml(html);
-        //    Assert.AreEqual(output, document.DocumentNode.OuterHtml);
-        //}
+            var doc = new HtmlDocument() {BackwardCompatibility = false};
+            doc.LoadHtml(inHtml);
 
+            Assert.AreEqual(expectedHtml, doc.DocumentNode.InnerText);
+        }
+
+        [Test]
+        public void TestOptionTag()
+        {
+            var html = "<select><option>Select a cell</option><option>C1</option><option value='\"c2\"'></select>";
+
+            string output = "<select><option>Select a cell</option><option>C1</option><option value='\"c2\"'></option></select>";
+            var document = new HtmlDocument();
+            document.LoadHtml(html);
+            Assert.AreEqual(output, document.DocumentNode.OuterHtml);
+        }
 
         [Test]
         public void VerifyChildDivParent()
@@ -659,5 +687,49 @@ namespace HtmlAgilityPack.Tests
 
         }
 
+        [Test]
+        public void CompareLowerCulture()
+        {
+
+            string html = File.ReadAllText(_contentDirectory + "regression.html");
+            HtmlNode node1 = null;
+            // Test 1
+            CultureInfo cul1 = CultureInfo.CreateSpecificCulture("en-US");
+            Thread.CurrentThread.CurrentCulture = cul1;
+            HtmlAgilityPack.HtmlDocument doc1 = new HtmlAgilityPack.HtmlDocument();
+            doc1.LoadHtml(html);
+
+            node1 = doc1.DocumentNode.SelectSingleNode("//div[@id='mainContents']/h2");
+
+            CultureInfo cul2 = CultureInfo.CreateSpecificCulture("tr-TR");
+            Thread.CurrentThread.CurrentCulture = cul2;
+            HtmlAgilityPack.HtmlDocument doc2 = new HtmlAgilityPack.HtmlDocument();
+            doc2.LoadHtml(html);
+            var s = doc2.DocumentNode.OuterHtml;
+
+            HtmlNode node2 = doc2.DocumentNode.SelectSingleNode("//div[@id='mainContents']/h2");
+            if (node1?.InnerHtml == node2?.InnerHtml)
+
+                 
+            Assert.AreEqual(node1?.InnerHtml, node2?.InnerHtml);
+            Assert.AreEqual(0, doc2.DocumentNode.OwnerDocument.ParseErrors.Count());
+        }
+
+
+        [Test]
+        public void OverFlowNotEndTag()
+        {
+
+            string html = File.ReadAllText(_contentDirectory + "overflow.html");
+            HtmlNode node1 = null;
+            // Test 1
+             
+            HtmlAgilityPack.HtmlDocument doc1 = new HtmlAgilityPack.HtmlDocument();
+            doc1.LoadHtml(html);
+
+            Assert.AreEqual(15, doc1.DocumentNode.ChildNodes[4].ChildNodes.Count);
+
+            Assert.AreEqual(0, doc1.DocumentNode.OwnerDocument.ParseErrors.Count());
+        }
     }
 }

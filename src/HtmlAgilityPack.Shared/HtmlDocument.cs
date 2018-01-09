@@ -960,7 +960,7 @@ namespace HtmlAgilityPack
                         // this is a hack: add it as a text node
                         HtmlNode closenode = CreateNode(HtmlNodeType.Text, _currentnode._outerstartindex);
                         closenode._outerlength = _currentnode._outerlength;
-                        ((HtmlTextNode) closenode).Text = ((HtmlTextNode) closenode).Text.ToLower();
+                        ((HtmlTextNode) closenode).Text = ((HtmlTextNode) closenode).Text.ToLowerInvariant();
                         if (_lastparentnode != null)
                         {
                             _lastparentnode.AppendChild(closenode);
@@ -1281,17 +1281,7 @@ namespace HtmlAgilityPack
                             continue;
                         if (IsWhiteSpace(_c))
                         {
-                            // CHECK if parent must be implicitely closed
-                            if (IsParentImplicitEnd())
-                            {
-                                CloseParentImplicitEnd();
-                            }
-
-                            // CHECK if parent must be explicitely closed
-                            if (IsParentExplicitEnd())
-                            {
-                                CloseParentExplicitEnd();
-                            }
+                            CloseParentImplicitExplicitNode();
 
                             PushNodeNameEnd(_index - 1);
                             if (_state != ParseState.Tag)
@@ -1302,17 +1292,7 @@ namespace HtmlAgilityPack
 
                         if (_c == '/')
                         {
-                            // CHECK if parent must be implicitely closed
-                            if (IsParentImplicitEnd())
-                            {
-                                CloseParentImplicitEnd();
-                            }
-
-                            // CHECK if parent must be explicitely closed
-                            if (IsParentExplicitEnd())
-                            {
-                                CloseParentExplicitEnd();
-                            }
+                            CloseParentImplicitExplicitNode();
 
                             PushNodeNameEnd(_index - 1);
                             if (_state != ParseState.Tag)
@@ -1323,17 +1303,7 @@ namespace HtmlAgilityPack
 
                         if (_c == '>')
                         {
-                            // CHECK if parent must be implicitely closed
-                            if (IsParentImplicitEnd())
-                            {
-                                CloseParentImplicitEnd();
-                            }
-
-                            // CHECK if parent must be explicitely closed
-                            if (IsParentExplicitEnd())
-                            {
-                                CloseParentExplicitEnd();
-                            }
+                            CloseParentImplicitExplicitNode();
 
                             //// CHECK if parent is compatible with end tag
                             //if (IsParentIncompatibleEndTag())
@@ -1722,6 +1692,29 @@ namespace HtmlAgilityPack
             PushAttributeValueStart(index, 0);
         }
 
+        private void CloseParentImplicitExplicitNode()
+        {
+            bool hasNodeToClose = true;
+
+            while(hasNodeToClose)
+            {
+                hasNodeToClose = false;
+
+                // CHECK if parent must be implicitely closed
+                if (IsParentImplicitEnd())
+                {
+                    CloseParentImplicitEnd();
+                    hasNodeToClose = true;
+                }
+
+                // CHECK if parent must be explicitely closed
+                if (IsParentExplicitEnd())
+                {
+                    CloseParentExplicitEnd();
+                    hasNodeToClose = true;
+                }
+            }           
+        }
         private bool IsParentImplicitEnd()
         {
             // MUST be a start tag
@@ -1769,6 +1762,15 @@ namespace HtmlAgilityPack
                 case "title":
                     isExplicitEnd = nodeName == "title";
                     break;
+                case "table":
+                    isExplicitEnd = nodeName == "table";
+                    break;
+                case "tr":
+                    isExplicitEnd = nodeName == "tr";
+                    break;
+                case "td":
+                    isExplicitEnd = nodeName == "td" || nodeName == "tr";
+                    break; 
                 case "h1":
                     isExplicitEnd = nodeName == "h2" || nodeName == "h3" || nodeName == "h4" || nodeName == "h5";
                     break;

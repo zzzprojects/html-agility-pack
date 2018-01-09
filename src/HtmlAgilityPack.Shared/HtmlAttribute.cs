@@ -79,7 +79,7 @@ namespace HtmlAgilityPack
                     _name = _ownerdocument.Text.Substring(_namestartindex, _namelength);
                 }
 
-                return _name.ToLower();
+                return _name.ToLowerInvariant();
             }
             set
             {

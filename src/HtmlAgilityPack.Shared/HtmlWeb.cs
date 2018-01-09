@@ -2018,7 +2018,7 @@ namespace HtmlAgilityPack
 #endif
             XmlNode node =
                 doc.SelectSingleNode("//h[translate(@n, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')='" +
-                                     name.ToUpper() + "']");
+                                     name.ToUpperInvariant() + "']");
             if (node == null)
             {
                 return def;
@@ -2044,12 +2044,12 @@ namespace HtmlAgilityPack
 
         private bool IsHtmlContent(string contentType)
         {
-            return contentType.ToLower().StartsWith("text/html");
+            return contentType.ToLowerInvariant().StartsWith("text/html");
         }
 
         private bool IsGZipEncoding(string contentEncoding)
         {
-            return contentEncoding.ToLower().StartsWith("gzip");
+            return contentEncoding.ToLowerInvariant().StartsWith("gzip");
         }
 
 #if !NETSTANDARD

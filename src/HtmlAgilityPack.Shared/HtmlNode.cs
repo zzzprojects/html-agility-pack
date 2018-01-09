@@ -476,7 +476,7 @@ namespace HtmlAgilityPack
                     if (_name == null)
                         _optimizedName = string.Empty;
                     else
-                        _optimizedName = _name.ToLower();
+                        _optimizedName = _name.ToLowerInvariant();
                 }
 
                 return _optimizedName;
@@ -1669,7 +1669,7 @@ namespace HtmlAgilityPack
                     break;
 
                 case HtmlNodeType.Element:
-                    string name = _ownerdocument.OptionOutputUpperCase ? Name.ToUpper() : Name;
+                    string name = _ownerdocument.OptionOutputUpperCase ? Name.ToUpperInvariant() : Name;
 
                     if (_ownerdocument.OptionOutputOriginalCase)
                         name = OriginalName;
@@ -1792,7 +1792,7 @@ namespace HtmlAgilityPack
                     break;
 
                 case HtmlNodeType.Element:
-                    string name = _ownerdocument.OptionOutputUpperCase ? Name.ToUpper() : Name;
+                    string name = _ownerdocument.OptionOutputUpperCase ? Name.ToUpperInvariant() : Name;
 
                     if (_ownerdocument.OptionOutputOriginalCase)
                         name = OriginalName;
@@ -1946,7 +1946,7 @@ namespace HtmlAgilityPack
             string quote = att.QuoteType == AttributeValueQuote.DoubleQuote ? "\"" : "'";
             if (_ownerdocument.OptionOutputAsXml)
             {
-                name = _ownerdocument.OptionOutputUpperCase ? att.XmlName.ToUpper() : att.XmlName;
+                name = _ownerdocument.OptionOutputUpperCase ? att.XmlName.ToUpperInvariant(): att.XmlName;
                 if (_ownerdocument.OptionOutputOriginalCase)
                     name = att.OriginalName;
 
@@ -1954,7 +1954,7 @@ namespace HtmlAgilityPack
             }
             else
             {
-                name = _ownerdocument.OptionOutputUpperCase ? att.Name.ToUpper() : att.Name;
+                name = _ownerdocument.OptionOutputUpperCase ? att.Name.ToUpperInvariant() : att.Name;
                 if (_ownerdocument.OptionOutputOriginalCase)
                     name = att.OriginalName;
                 if (att.Name.Length >= 4)
