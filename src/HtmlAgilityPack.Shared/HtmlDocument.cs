@@ -1696,7 +1696,7 @@ namespace HtmlAgilityPack
         {
             bool hasNodeToClose = true;
 
-            while(hasNodeToClose)
+            while(hasNodeToClose && !_lastparentnode.Closed)
             {
                 hasNodeToClose = false;
 
@@ -1769,8 +1769,11 @@ namespace HtmlAgilityPack
                     isExplicitEnd = nodeName == "tr";
                     break;
                 case "td":
-                    isExplicitEnd = nodeName == "td" || nodeName == "tr";
-                    break; 
+                    isExplicitEnd = nodeName == "td" || nodeName == "th" || nodeName == "tr";
+                    break;
+                case "th":
+                    isExplicitEnd = nodeName == "td" || nodeName == "th" || nodeName == "tr";
+                    break;
                 case "h1":
                     isExplicitEnd = nodeName == "h2" || nodeName == "h3" || nodeName == "h4" || nodeName == "h5";
                     break;
