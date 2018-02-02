@@ -11,6 +11,7 @@ using System;
 using System.Diagnostics;
 
 #endregion
+
 // ReSharper disable InconsistentNaming
 
 namespace HtmlAgilityPack
@@ -77,7 +78,8 @@ namespace HtmlAgilityPack
                 {
                     _name = _ownerdocument.Text.Substring(_namestartindex, _namelength);
                 }
-                return _name.ToLower();
+
+                return _name.ToLowerInvariant();
             }
             set
             {
@@ -85,6 +87,7 @@ namespace HtmlAgilityPack
                 {
                     throw new ArgumentNullException("value");
                 }
+
                 _name = value;
                 if (_ownernode != null)
                 {
@@ -150,6 +153,11 @@ namespace HtmlAgilityPack
                 if (_value == null)
                 {
                     _value = _ownerdocument.Text.Substring(_valuestartindex, _valuelength);
+
+                    if (!_ownerdocument.BackwardCompatibility)
+                    {
+                        _value = HtmlEntity.DeEntitize(_value);
+                    }
                 }
 
                 return _value;
@@ -170,10 +178,7 @@ namespace HtmlAgilityPack
         /// </summary>
         public string DeEntitizeValue
         {
-            get
-            {
-                return HtmlEntity.DeEntitize(Value);
-            }
+            get { return HtmlEntity.DeEntitize(Value); }
         }
 
         internal string XmlName
@@ -214,6 +219,7 @@ namespace HtmlAgilityPack
             {
                 throw new ArgumentException("obj");
             }
+
             return Name.CompareTo(att.Name);
         }
 
@@ -261,6 +267,7 @@ namespace HtmlAgilityPack
 
                 i++;
             }
+
             return "@" + Name + "[" + i + "]";
         }
 
@@ -276,6 +283,7 @@ namespace HtmlAgilityPack
         /// A single quote mark '
         /// </summary>
         SingleQuote,
+
         /// <summary>
         /// A double quote mark "
         /// </summary>

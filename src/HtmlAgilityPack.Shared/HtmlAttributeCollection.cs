@@ -33,26 +33,6 @@ namespace HtmlAgilityPack
 
         #endregion
 
-        #region Properties
-
-        /// <summary>
-        /// Gets a given attribute from the list using its name.
-        /// </summary>
-        public HtmlAttribute this[string name]
-        {
-            get
-            {
-                if (name == null)
-                {
-                    throw new ArgumentNullException("name");
-                }
-                HtmlAttribute value;
-                return Hashitems.TryGetValue(name, out value) ? value : null;
-            }
-            set { Append(value); }
-        }
-
-        #endregion
 
         #region IList<HtmlAttribute> Members
 
@@ -78,8 +58,52 @@ namespace HtmlAgilityPack
         public HtmlAttribute this[int index]
         {
             get { return items[index]; }
-            set { items[index] = value; }
+            set
+            {
+                var oldValue = items[index];
+               
+                items[index] = value;
+
+                if (oldValue.Name != value.Name)
+                {
+                    Hashitems.Remove(oldValue.Name);
+                }
+                Hashitems[value.Name] = value;
+
+                value._ownernode = _ownernode;
+                _ownernode.SetChanged();
+            }
         }
+
+
+        /// <summary>
+        /// Gets a given attribute from the list using its name.
+        /// </summary>
+        public HtmlAttribute this[string name]
+        {
+            get
+            {
+                if (name == null)
+                {
+                    throw new ArgumentNullException("name");
+                }
+
+                HtmlAttribute value;
+                return Hashitems.TryGetValue(name, out value) ? value : null;
+            }
+            set
+            {
+                HtmlAttribute currentValue;
+
+                if (!Hashitems.TryGetValue(name, out currentValue))
+                {
+                    Append(value);
+                }
+
+                this[items.IndexOf(currentValue)] = value;
+            }
+        }
+
 
         /// <summary>
         /// Adds supplied item to collection
@@ -252,13 +276,12 @@ namespace HtmlAgilityPack
         /// <returns></returns>
         public bool Contains(string name)
         {
-            string lname = name.ToLower();
-
             for (int i = 0; i < items.Count; i++)
             {
-                if (items[i].Name.Equals(lname))
+                if (String.Equals(items[i].Name, name, StringComparison.OrdinalIgnoreCase))
                     return true;
             }
+
             return false;
         }
 
@@ -283,11 +306,13 @@ namespace HtmlAgilityPack
             {
                 throw new ArgumentNullException("attribute");
             }
+
             int index = GetAttributeIndex(attribute);
             if (index == -1)
             {
                 throw new IndexOutOfRangeException();
             }
+
             RemoveAt(index);
         }
 
@@ -302,11 +327,10 @@ namespace HtmlAgilityPack
                 throw new ArgumentNullException("name");
             }
 
-            string lname = name.ToLower();
             for (int i = 0; i < items.Count; i++)
             {
                 HtmlAttribute att = items[i];
-                if (att.Name == lname)
+                if (String.Equals(att.Name, name, StringComparison.OrdinalIgnoreCase))
                 {
                     RemoveAt(i);
                 }
@@ -335,10 +359,9 @@ namespace HtmlAgilityPack
         /// <returns></returns>
         public IEnumerable<HtmlAttribute> AttributesWithName(string attributeName)
         {
-            attributeName = attributeName.ToLower();
             for (int i = 0; i < items.Count; i++)
             {
-                if (items[i].Name.Equals(attributeName))
+                if (String.Equals(items[i].Name, attributeName, StringComparison.OrdinalIgnoreCase))
                     yield return items[i];
             }
         }
@@ -370,11 +393,13 @@ namespace HtmlAgilityPack
             {
                 throw new ArgumentNullException("attribute");
             }
+
             for (int i = 0; i < items.Count; i++)
             {
                 if ((items[i]) == attribute)
                     return i;
             }
+
             return -1;
         }
 
@@ -384,12 +409,13 @@ namespace HtmlAgilityPack
             {
                 throw new ArgumentNullException("name");
             }
-            string lname = name.ToLower();
+
             for (int i = 0; i < items.Count; i++)
             {
-                if ((items[i]).Name == lname)
+                if (String.Equals((items[i]).Name, name, StringComparison.OrdinalIgnoreCase))
                     return i;
             }
+
             return -1;
         }
 

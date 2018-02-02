@@ -35,6 +35,7 @@ namespace HtmlAgilityPack
             {
                 throw new ArgumentNullException("path");
             }
+
             Encoding enc;
             if (detectEncoding)
             {
@@ -54,6 +55,7 @@ namespace HtmlAgilityPack
                 Load(path, enc);
             }
         }
+
         /// <summary>
         /// Detects the encoding of an HTML file.
         /// </summary>
@@ -89,7 +91,7 @@ namespace HtmlAgilityPack
 #if NETSTANDARD
             using (StreamReader sr = new StreamReader(File.OpenRead(path), OptionDefaultStreamEncoding))
 #else
-            using(StreamReader sr = new StreamReader(path, OptionDefaultStreamEncoding))
+            using (StreamReader sr = new StreamReader(path, OptionDefaultStreamEncoding))
 #endif
             {
                 Load(sr);
@@ -109,11 +111,11 @@ namespace HtmlAgilityPack
 #if NETSTANDARD
             using (StreamReader sr = new StreamReader(File.OpenRead(path), detectEncodingFromByteOrderMarks))
 #else
-           using(StreamReader sr = new StreamReader(path, detectEncodingFromByteOrderMarks))
+            using (StreamReader sr = new StreamReader(path, detectEncodingFromByteOrderMarks))
 #endif
             {
-               Load(sr);
-           }
+                Load(sr);
+            }
         }
 
         /// <summary>
@@ -132,7 +134,7 @@ namespace HtmlAgilityPack
 #if NETSTANDARD
             using (StreamReader sr = new StreamReader(File.OpenRead(path), encoding))
 #else
-            using(StreamReader sr = new StreamReader(path, encoding))
+            using (StreamReader sr = new StreamReader(path, encoding))
 #endif
             {
                 Load(sr);
@@ -156,11 +158,11 @@ namespace HtmlAgilityPack
 #if NETSTANDARD
             using (StreamReader sr = new StreamReader(File.OpenRead(path), encoding, detectEncodingFromByteOrderMarks))
 #else
-           using(StreamReader sr = new StreamReader(path, encoding, detectEncodingFromByteOrderMarks))
+            using (StreamReader sr = new StreamReader(path, encoding, detectEncodingFromByteOrderMarks))
 #endif
             {
-               Load(sr);
-           }
+                Load(sr);
+            }
         }
 
         /// <summary>
@@ -182,12 +184,13 @@ namespace HtmlAgilityPack
             using (StreamReader sr = new StreamReader(File.OpenRead(path), encoding, detectEncodingFromByteOrderMarks, buffersize))
 
 #else
-           using(StreamReader sr = new StreamReader(path, encoding, detectEncodingFromByteOrderMarks, buffersize))
+            using (StreamReader sr = new StreamReader(path, encoding, detectEncodingFromByteOrderMarks, buffersize))
 #endif
             {
-               Load(sr);
-           }
+                Load(sr);
+            }
         }
+
         /// <summary>
         /// Saves the mixed document to the specified file.
         /// </summary>
@@ -197,7 +200,7 @@ namespace HtmlAgilityPack
 #if NETSTANDARD
             using (StreamWriter sw = new StreamWriter(File.OpenWrite(filename), GetOutEncoding()))
 #else
-            using(StreamWriter sw = new StreamWriter(filename, false, GetOutEncoding()))
+            using (StreamWriter sw = new StreamWriter(filename, false, GetOutEncoding()))
 #endif
             {
                 Save(sw);
@@ -215,6 +218,7 @@ namespace HtmlAgilityPack
             {
                 throw new ArgumentNullException("filename");
             }
+
             if (encoding == null)
             {
                 throw new ArgumentNullException("encoding");
@@ -228,7 +232,6 @@ namespace HtmlAgilityPack
                 Save(sw);
             }
         }
-
     }
 }
 #endif

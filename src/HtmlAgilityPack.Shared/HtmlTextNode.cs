@@ -22,7 +22,7 @@ namespace HtmlAgilityPack
 
         internal HtmlTextNode(HtmlDocument ownerdocument, int index)
             :
-                base(HtmlNodeType.Text, ownerdocument, index)
+            base(HtmlNodeType.Text, ownerdocument, index)
         {
         }
 
@@ -50,6 +50,7 @@ namespace HtmlAgilityPack
                 {
                     return base.OuterHtml;
                 }
+
                 return _text;
             }
         }
@@ -65,6 +66,7 @@ namespace HtmlAgilityPack
                 {
                     return base.OuterHtml;
                 }
+
                 return _text;
             }
             set { _text = value; }

@@ -16,7 +16,7 @@ namespace HtmlAgilityPack
 
         internal readonly string Text;
         private List<KeyValuePair<string, string>> _allPairs;
-        private Dictionary<string,List<KeyValuePair<string,string>>> _pairsWithName;
+        private Dictionary<string, List<KeyValuePair<string, string>>> _pairsWithName;
 
         #endregion
 
@@ -46,23 +46,23 @@ namespace HtmlAgilityPack
             return l.GetNameValuePairValue(name);
         }
 
-        internal List<KeyValuePair<string,string>> GetNameValuePairs(string name)
+        internal List<KeyValuePair<string, string>> GetNameValuePairs(string name)
         {
             if (name == null)
                 return _allPairs;
-            return _pairsWithName.ContainsKey(name) ? _pairsWithName[name] : new List<KeyValuePair<string,string>>();
+            return _pairsWithName.ContainsKey(name) ? _pairsWithName[name] : new List<KeyValuePair<string, string>>();
         }
 
         internal string GetNameValuePairValue(string name)
         {
             if (name == null)
                 throw new ArgumentNullException();
-            List<KeyValuePair<string,string>> al = GetNameValuePairs(name);
-            if (al.Count==0)
+            List<KeyValuePair<string, string>> al = GetNameValuePairs(name);
+            if (al.Count == 0)
                 return string.Empty;
 
             // return first item
-             return al[0].Value.Trim();
+            return al[0].Value.Trim();
         }
 
         #endregion
@@ -82,22 +82,20 @@ namespace HtmlAgilityPack
                 if (pv.Length == 0)
                     continue;
                 string[] onep = pv.Split(new[] {'='}, 2);
-                if (onep.Length==0)
+                if (onep.Length == 0)
                     continue;
-                KeyValuePair<string, string> nvp = new KeyValuePair<string, string>(onep[0].Trim().ToLower(),
-                                                                                    onep.Length < 2 ? "" : onep[1]);
+                KeyValuePair<string, string> nvp = new KeyValuePair<string, string>(onep[0].Trim().ToLowerInvariant(),
+                    onep.Length < 2 ? "" : onep[1]);
 
                 _allPairs.Add(nvp);
 
                 // index by name
                 List<KeyValuePair<string, string>> al;
-                if (!_pairsWithName.ContainsKey(nvp.Key))
+                if (!_pairsWithName.TryGetValue(nvp.Key, out al))
                 {
                     al = new List<KeyValuePair<string, string>>();
-                    _pairsWithName[nvp.Key] = al;
+                    _pairsWithName.Add(nvp.Key, al);
                 }
-                else
-                    al = _pairsWithName[nvp.Key];
 
                 al.Add(nvp);
             }

@@ -13,7 +13,7 @@ namespace HtmlAgilityPack
 {
     internal class HtmlConsoleListener : TraceListener
     {
-#region Public Methods
+        #region Public Methods
 
         public override void Write(string Message)
         {
@@ -35,7 +35,7 @@ namespace HtmlAgilityPack
             Write(Message + "\n", Category);
         }
 
-#endregion
+        #endregion
     }
 }
 #endif

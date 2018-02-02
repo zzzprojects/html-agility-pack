@@ -10,14 +10,14 @@ namespace HtmlAgilityPack
 {
     internal class NameValuePair
     {
-#region Fields
+        #region Fields
 
         internal readonly string Name;
         internal string Value;
 
-#endregion
+        #endregion
 
-#region Constructors
+        #region Constructors
 
         internal NameValuePair()
         {
@@ -37,7 +37,7 @@ namespace HtmlAgilityPack
             Value = value;
         }
 
-#endregion
+        #endregion
     }
 }
 #endif

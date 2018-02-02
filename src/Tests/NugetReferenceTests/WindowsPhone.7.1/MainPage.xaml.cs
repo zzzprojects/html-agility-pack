@@ -13,12 +13,12 @@ using Microsoft.Phone.Controls;
 
 namespace WindowsPhone._7._1
 {
-	public partial class MainPage : PhoneApplicationPage
-	{
-		// Constructor
-		public MainPage()
-		{
-			InitializeComponent();
-		}
-	}
+    public partial class MainPage : PhoneApplicationPage
+    {
+        // Constructor
+        public MainPage()
+        {
+            InitializeComponent();
+        }
+    }
 }

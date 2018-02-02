@@ -5,15 +5,19 @@
 // More projects: http://www.zzzprojects.com/
 // Copyright © ZZZ Projects Inc. 2014 - 2017. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 
 namespace HtmlAgilityPack
 {
     internal static class Utilities
     {
-        public static TValue GetDictionaryValueOrNull<TKey,TValue>(Dictionary<TKey,TValue> dict, TKey key) where TKey: class
+        public static TValue GetDictionaryValueOrDefault<TKey, TValue>(Dictionary<TKey, TValue> dict, TKey key, TValue defaultValue = default(TValue)) where TKey : class
         {
-            return dict.ContainsKey(key) ? dict[key] : default(TValue);
+            TValue value;
+            if (!dict.TryGetValue(key, out value))
+                return defaultValue;
+            return value;
         }
     }
 }

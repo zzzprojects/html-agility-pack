@@ -22,7 +22,7 @@ namespace HtmlAgilityPack
 
         internal HtmlCommentNode(HtmlDocument ownerdocument, int index)
             :
-                base(HtmlNodeType.Comment, ownerdocument, index)
+            base(HtmlNodeType.Comment, ownerdocument, index)
         {
         }
 
@@ -41,6 +41,7 @@ namespace HtmlAgilityPack
                 {
                     return base.InnerHtml;
                 }
+
                 return _comment;
             }
             set { _comment = value; }
@@ -57,6 +58,7 @@ namespace HtmlAgilityPack
                 {
                     return base.InnerHtml;
                 }
+
                 return _comment;
             }
             set { _comment = value; }
@@ -73,6 +75,7 @@ namespace HtmlAgilityPack
                 {
                     return base.OuterHtml;
                 }
+
                 return "<!--" + _comment + "-->";
             }
         }

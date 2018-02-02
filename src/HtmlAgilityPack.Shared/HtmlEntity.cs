@@ -23,7 +23,7 @@ namespace HtmlAgilityPack
         #region Static Members
 
         private static readonly int _maxEntitySize;
-        private static Dictionary<int,string> _entityName;
+        private static Dictionary<int, string> _entityName;
         private static Dictionary<string, int> _entityValue;
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace HtmlAgilityPack
             _entityName.Add(34, "quot");
             _entityValue.Add("amp", 38); // ampersand, U+0026 ISOnum 
             _entityName.Add(38, "amp");
-            _entityValue.Add("apos", 39); // apostrophe-quote 	U+0027 (39)
+            _entityValue.Add("apos", 39); // apostrophe-quote     U+0027 (39)
             _entityName.Add(39, "apos");
             _entityValue.Add("lt", 60); // less-than sign, U+003C ISOnum 
             _entityName.Add(60, "lt");
@@ -86,7 +86,7 @@ namespace HtmlAgilityPack
             _entityValue.Add("ordf", 170); // feminine ordinal indicator, U+00AA ISOnum 
             _entityName.Add(170, "ordf");
             _entityValue.Add("laquo", 171);
-                // left-pointing double angle quotation mark = left pointing guillemet, U+00AB ISOnum 
+            // left-pointing double angle quotation mark = left pointing guillemet, U+00AB ISOnum 
             _entityName.Add(171, "laquo");
             _entityValue.Add("not", 172); // not sign, U+00AC ISOnum 
             _entityName.Add(172, "not");
@@ -119,7 +119,7 @@ namespace HtmlAgilityPack
             _entityValue.Add("ordm", 186); // masculine ordinal indicator, U+00BA ISOnum 
             _entityName.Add(186, "ordm");
             _entityValue.Add("raquo", 187);
-                // right-pointing double angle quotation mark = right pointing guillemet, U+00BB ISOnum 
+            // right-pointing double angle quotation mark = right pointing guillemet, U+00BB ISOnum 
             _entityName.Add(187, "raquo");
             _entityValue.Add("frac14", 188); // vulgar fraction one quarter = fraction one quarter, U+00BC ISOnum 
             _entityName.Add(188, "frac14");
@@ -130,7 +130,7 @@ namespace HtmlAgilityPack
             _entityValue.Add("iquest", 191); // inverted question mark = turned question mark, U+00BF ISOnum 
             _entityName.Add(191, "iquest");
             _entityValue.Add("Agrave", 192);
-                // latin capital letter A with grave = latin capital letter A grave, U+00C0 ISOlat1 
+            // latin capital letter A with grave = latin capital letter A grave, U+00C0 ISOlat1 
             _entityName.Add(192, "Agrave");
             _entityValue.Add("Aacute", 193); // latin capital letter A with acute, U+00C1 ISOlat1 
             _entityName.Add(193, "Aacute");
@@ -141,7 +141,7 @@ namespace HtmlAgilityPack
             _entityValue.Add("Auml", 196); // latin capital letter A with diaeresis, U+00C4 ISOlat1 
             _entityName.Add(196, "Auml");
             _entityValue.Add("Aring", 197);
-                // latin capital letter A with ring above = latin capital letter A ring, U+00C5 ISOlat1 
+            // latin capital letter A with ring above = latin capital letter A ring, U+00C5 ISOlat1 
             _entityName.Add(197, "Aring");
             _entityValue.Add("AElig", 198); // latin capital letter AE = latin capital ligature AE, U+00C6 ISOlat1 
             _entityName.Add(198, "AElig");
@@ -180,7 +180,7 @@ namespace HtmlAgilityPack
             _entityValue.Add("times", 215); // multiplication sign, U+00D7 ISOnum 
             _entityName.Add(215, "times");
             _entityValue.Add("Oslash", 216);
-                // latin capital letter O with stroke = latin capital letter O slash, U+00D8 ISOlat1 
+            // latin capital letter O with stroke = latin capital letter O slash, U+00D8 ISOlat1 
             _entityName.Add(216, "Oslash");
             _entityValue.Add("Ugrave", 217); // latin capital letter U with grave, U+00D9 ISOlat1 
             _entityName.Add(217, "Ugrave");
@@ -197,7 +197,7 @@ namespace HtmlAgilityPack
             _entityValue.Add("szlig", 223); // latin small letter sharp s = ess-zed, U+00DF ISOlat1 
             _entityName.Add(223, "szlig");
             _entityValue.Add("agrave", 224);
-                // latin small letter a with grave = latin small letter a grave, U+00E0 ISOlat1 
+            // latin small letter a with grave = latin small letter a grave, U+00E0 ISOlat1 
             _entityName.Add(224, "agrave");
             _entityValue.Add("aacute", 225); // latin small letter a with acute, U+00E1 ISOlat1 
             _entityName.Add(225, "aacute");
@@ -208,7 +208,7 @@ namespace HtmlAgilityPack
             _entityValue.Add("auml", 228); // latin small letter a with diaeresis, U+00E4 ISOlat1 
             _entityName.Add(228, "auml");
             _entityValue.Add("aring", 229);
-                // latin small letter a with ring above = latin small letter a ring, U+00E5 ISOlat1 
+            // latin small letter a with ring above = latin small letter a ring, U+00E5 ISOlat1 
             _entityName.Add(229, "aring");
             _entityValue.Add("aelig", 230); // latin small letter ae = latin small ligature ae, U+00E6 ISOlat1 
             _entityName.Add(230, "aelig");
@@ -247,7 +247,7 @@ namespace HtmlAgilityPack
             _entityValue.Add("divide", 247); // division sign, U+00F7 ISOnum 
             _entityName.Add(247, "divide");
             _entityValue.Add("oslash", 248);
-                // latin small letter o with stroke, = latin small letter o slash, U+00F8 ISOlat1 
+            // latin small letter o with stroke, = latin small letter o slash, U+00F8 ISOlat1 
             _entityName.Add(248, "oslash");
             _entityValue.Add("ugrave", 249); // latin small letter u with grave, U+00F9 ISOlat1 
             _entityName.Add(249, "ugrave");
@@ -613,6 +613,7 @@ namespace HtmlAgilityPack
                                 sb.Append(text[i]);
                                 break;
                         }
+
                         break;
 
                     case ParseState.EntityStart:
@@ -629,21 +630,22 @@ namespace HtmlAgilityPack
                                     {
                                         string e = entity.ToString();
                                         try
- 										{
-											string codeStr = e.Substring(1).Trim().ToLower();
-											int fromBase;
-											if (codeStr.StartsWith("x"))
-											{
-												fromBase = 16;
-												codeStr = codeStr.Substring(1);
-											}
-											else
-											{
-												fromBase = 10;
-											}
-											int code = Convert.ToInt32(codeStr, fromBase);
- 											sb.Append(Convert.ToChar(code));
- 										}
+                                        {
+                                            string codeStr = e.Substring(1).Trim();
+                                            int fromBase;
+                                            if (codeStr.StartsWith("x", StringComparison.OrdinalIgnoreCase))
+                                            {
+                                                fromBase = 16;
+                                                codeStr = codeStr.Substring(1);
+                                            }
+                                            else
+                                            {
+                                                fromBase = 10;
+                                            }
+
+                                            int code = Convert.ToInt32(codeStr, fromBase);
+                                            sb.Append(Convert.ToChar(code));
+                                        }
                                         catch
                                         {
                                             sb.Append("&#" + e + ";");
@@ -664,8 +666,10 @@ namespace HtmlAgilityPack
                                             sb.Append(Convert.ToChar(code));
                                         }
                                     }
+
                                     entity.Remove(0, entity.Length);
                                 }
+
                                 state = ParseState.Text;
                                 break;
 
@@ -684,8 +688,10 @@ namespace HtmlAgilityPack
                                     sb.Append("&" + entity);
                                     entity.Remove(0, entity.Length);
                                 }
+
                                 break;
                         }
+
                         break;
                 }
             }
@@ -695,6 +701,7 @@ namespace HtmlAgilityPack
             {
                 sb.Append("&" + entity);
             }
+
             return sb.ToString();
         }
 
@@ -709,6 +716,7 @@ namespace HtmlAgilityPack
             {
                 throw new ArgumentNullException("node");
             }
+
             HtmlNode result = node.CloneNode(true);
             if (result.HasAttributes)
                 Entitize(result.Attributes);
@@ -724,6 +732,7 @@ namespace HtmlAgilityPack
                     ((HtmlTextNode) result).Text = Entitize(((HtmlTextNode) result).Text, true, true);
                 }
             }
+
             return result;
         }
 
@@ -757,14 +766,14 @@ namespace HtmlAgilityPack
         /// <param name="entitizeQuotAmpAndLtGt">If set to true, the [quote], [ampersand], [lower than] and [greather than] characters will be entitized.</param>
         /// <returns>The result text</returns>
         public static string Entitize(string text, bool useNames, bool entitizeQuotAmpAndLtGt)
-//		_entityValue.Add("quot", 34);	// quotation mark = APL quote, U+0022 ISOnum 
-//		_entityName.Add(34, "quot");
-//		_entityValue.Add("amp", 38);	// ampersand, U+0026 ISOnum 
-//		_entityName.Add(38, "amp");
-//		_entityValue.Add("lt", 60);	// less-than sign, U+003C ISOnum 
-//		_entityName.Add(60, "lt");
-//		_entityValue.Add("gt", 62);	// greater-than sign, U+003E ISOnum 
-//		_entityName.Add(62, "gt");
+//        _entityValue.Add("quot", 34);    // quotation mark = APL quote, U+0022 ISOnum 
+//        _entityName.Add(34, "quot");
+//        _entityValue.Add("amp", 38);    // ampersand, U+0026 ISOnum 
+//        _entityName.Add(38, "amp");
+//        _entityValue.Add("lt", 60);    // less-than sign, U+003C ISOnum 
+//        _entityName.Add(60, "lt");
+//        _entityValue.Add("gt", 62);    // greater-than sign, U+003E ISOnum 
+//        _entityName.Add(62, "gt");
         {
             if (text == null)
                 return null;
@@ -812,6 +821,7 @@ namespace HtmlAgilityPack
                 {
                     continue;
                 }
+
                 at.Value = Entitize(at.Value);
             }
         }

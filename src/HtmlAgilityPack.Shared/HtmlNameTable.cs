@@ -50,6 +50,7 @@ namespace HtmlAgilityPack
             {
                 return Add(array);
             }
+
             return s;
         }
 

@@ -17,7 +17,7 @@ namespace HtmlAgilityPack
     /// </summary>
     public class MixedCodeDocument
     {
-#region Fields
+        #region Fields
 
         private int _c;
         internal MixedCodeDocumentFragmentList _codefragments;
@@ -54,9 +54,9 @@ namespace HtmlAgilityPack
 
         private string TokenTextBlock = "TextBlock({0})";
 
-#endregion
+        #endregion
 
-#region Constructors
+        #region Constructors
 
         /// <summary>
         /// Creates a mixed code document instance.
@@ -68,9 +68,9 @@ namespace HtmlAgilityPack
             _fragments = new MixedCodeDocumentFragmentList(this);
         }
 
-#endregion
+        #endregion
 
-#region Properties
+        #region Properties
 
         /// <summary>
         /// Gets the code represented by the mixed code document seen as a template.
@@ -95,6 +95,7 @@ namespace HtmlAgilityPack
                             break;
                     }
                 }
+
                 return s;
             }
         }
@@ -131,9 +132,9 @@ namespace HtmlAgilityPack
             get { return _textfragments; }
         }
 
-#endregion
+        #endregion
 
-#region Public Methods
+        #region Public Methods
 
         /// <summary>
         /// Create a code fragment instances.
@@ -296,7 +297,7 @@ namespace HtmlAgilityPack
 
                 _text = reader.ReadToEnd();
             }
-                
+
             Parse();
         }
 
@@ -377,9 +378,9 @@ namespace HtmlAgilityPack
             writer.Flush();
         }
 
-#endregion
+        #endregion
 
-#region Internal Methods
+        #region Internal Methods
 
         internal MixedCodeDocumentFragment CreateFragment(MixedCodeDocumentFragmentType type)
         {
@@ -403,9 +404,9 @@ namespace HtmlAgilityPack
             return Encoding.UTF8;
         }
 
-#endregion
+        #endregion
 
-#region Private Methods
+        #region Private Methods
 
         private void IncrementPosition()
         {
@@ -444,6 +445,7 @@ namespace HtmlAgilityPack
                                 continue;
                             }
                         }
+
                         break;
 
                     case ParseState.Code:
@@ -460,6 +462,7 @@ namespace HtmlAgilityPack
                                 continue;
                             }
                         }
+
                         break;
                 }
             }
@@ -475,9 +478,9 @@ namespace HtmlAgilityPack
             _currentfragment.Length = 0;
         }
 
-#endregion
+        #endregion
 
-#region Nested type: ParseState
+        #region Nested type: ParseState
 
         private enum ParseState
         {
@@ -485,7 +488,7 @@ namespace HtmlAgilityPack
             Code
         }
 
-#endregion
+        #endregion
     }
 }
 #endif

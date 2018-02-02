@@ -30,6 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)HtmlEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HtmlNameTable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HtmlNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlNode.Encapsulator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HtmlNode.Xpath.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HtmlNodeCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HtmlNodeNavigator.cs" />
