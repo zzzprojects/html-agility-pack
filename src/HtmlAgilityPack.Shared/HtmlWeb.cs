@@ -1914,7 +1914,10 @@ namespace HtmlAgilityPack
                     ? Encoding.GetEncoding(encoding)
                     : null;
 
-                if(CaptureRedirect)
+                if (OverrideEncoding != null)
+                    respenc = OverrideEncoding;
+
+                if (CaptureRedirect)
                 {
                     // Found == 302
                     if (response.StatusCode == HttpStatusCode.Found)
