@@ -1485,7 +1485,7 @@ namespace HtmlAgilityPack
 		/// </summary>
 		/// <param name="outText">The TextWriter to which you want to save.</param>
         /// <param name="level">identifies the level we are in starting at root with 0</param>
-		public void WriteTo(TextWriter outText, int level=0)
+		public virtual void WriteTo(TextWriter outText, int level=0)
 		{
             string html;
 			switch (_nodetype)
