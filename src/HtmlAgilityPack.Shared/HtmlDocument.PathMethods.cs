@@ -68,7 +68,7 @@ namespace HtmlAgilityPack
                 throw new ArgumentNullException("path");
             }
 
-#if NETSTANDARD
+#if NETSTANDARD1_3 || NETSTANDARD1_6
             using (StreamReader sr = new StreamReader(File.OpenRead(path), OptionDefaultStreamEncoding))
 #else
             using (StreamReader sr = new StreamReader(path, OptionDefaultStreamEncoding))
@@ -88,7 +88,7 @@ namespace HtmlAgilityPack
             if (path == null)
                 throw new ArgumentNullException("path");
 
-#if NETSTANDARD
+#if NETSTANDARD1_3 || NETSTANDARD1_6
             using (StreamReader sr = new StreamReader(File.OpenRead(path), OptionDefaultStreamEncoding))
 #else
             using (StreamReader sr = new StreamReader(path, OptionDefaultStreamEncoding))
@@ -108,7 +108,7 @@ namespace HtmlAgilityPack
             if (path == null)
                 throw new ArgumentNullException("path");
 
-#if NETSTANDARD
+#if NETSTANDARD1_3 || NETSTANDARD1_6
             using (StreamReader sr = new StreamReader(File.OpenRead(path), detectEncodingFromByteOrderMarks))
 #else
             using (StreamReader sr = new StreamReader(path, detectEncodingFromByteOrderMarks))
@@ -131,7 +131,7 @@ namespace HtmlAgilityPack
             if (encoding == null)
                 throw new ArgumentNullException("encoding");
 
-#if NETSTANDARD
+#if NETSTANDARD1_3 || NETSTANDARD1_6
             using (StreamReader sr = new StreamReader(File.OpenRead(path), encoding))
 #else
             using (StreamReader sr = new StreamReader(path, encoding))
@@ -155,7 +155,7 @@ namespace HtmlAgilityPack
             if (encoding == null)
                 throw new ArgumentNullException("encoding");
 
-#if NETSTANDARD
+#if NETSTANDARD1_3 || NETSTANDARD1_6
             using (StreamReader sr = new StreamReader(File.OpenRead(path), encoding, detectEncodingFromByteOrderMarks))
 #else
             using (StreamReader sr = new StreamReader(path, encoding, detectEncodingFromByteOrderMarks))
@@ -180,7 +180,7 @@ namespace HtmlAgilityPack
             if (encoding == null)
                 throw new ArgumentNullException("encoding");
 
-#if NETSTANDARD
+#if NETSTANDARD1_3 || NETSTANDARD1_6
             using (StreamReader sr = new StreamReader(File.OpenRead(path), encoding, detectEncodingFromByteOrderMarks, buffersize))
 
 #else
@@ -197,7 +197,7 @@ namespace HtmlAgilityPack
         /// <param name="filename">The location of the file where you want to save the document.</param>
         public void Save(string filename)
         {
-#if NETSTANDARD
+#if NETSTANDARD1_3 || NETSTANDARD1_6
             using (StreamWriter sw = new StreamWriter(File.OpenWrite(filename), GetOutEncoding()))
 #else
             using (StreamWriter sw = new StreamWriter(filename, false, GetOutEncoding()))
@@ -223,7 +223,7 @@ namespace HtmlAgilityPack
             {
                 throw new ArgumentNullException("encoding");
             }
-#if NETSTANDARD
+#if NETSTANDARD1_3 || NETSTANDARD1_6
             using (StreamWriter sw = new StreamWriter(File.OpenWrite(filename), encoding))
 #else
             using (StreamWriter sw = new StreamWriter(filename, false, encoding))

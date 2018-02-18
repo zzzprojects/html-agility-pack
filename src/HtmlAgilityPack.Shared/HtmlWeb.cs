@@ -22,7 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using Microsoft.Win32;
-#if NET45 || NETSTANDARD
+#if NET45 || NETSTANDARD1_3 || NETSTANDARD1_6
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Threading;
@@ -48,14 +48,14 @@ namespace HtmlAgilityPack
     {
         #region Delegates
 
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
         /// <summary>
         /// Represents the method that will handle the PostResponse event.
         /// </summary>
         public delegate void PostResponseHandler(HttpWebRequest request, HttpWebResponse response);
 #endif
 
-#if NET45 || NETSTANDARD
+#if NET45 || NETSTANDARD1_3 || NETSTANDARD1_6
 /// <summary>
 /// Represents the method that will handle the PostResponse event.
 /// </summary>
@@ -66,13 +66,13 @@ namespace HtmlAgilityPack
         /// </summary>
         public delegate void PreHandleDocumentHandler(HtmlDocument document);
 
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
         /// <summary>
         /// Represents the method that will handle the PreRequest event.
         /// </summary>
         public delegate bool PreRequestHandler(HttpWebRequest request);
 #endif
-#if NET45 || NETSTANDARD
+#if NET45 || NETSTANDARD1_3 || NETSTANDARD1_6
 /// <summary>
 /// Represents the method that will handle the PostResponse event.
 /// </summary>
@@ -919,7 +919,7 @@ namespace HtmlAgilityPack
 
         #region Public Methods
 
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
         /// <summary>
         /// Gets the MIME content type for a given path extension.
         /// </summary>
@@ -928,13 +928,14 @@ namespace HtmlAgilityPack
         /// <returns>The path extension's MIME content type.</returns>
         public static string GetContentTypeForExtension(string extension, string def)
         {
-            var helper = new PermissionHelper();
             if (string.IsNullOrEmpty(extension))
             {
                 return def;
             }
 
             string contentType = "";
+#if !NETSTANDARD2_0
+            var helper = new PermissionHelper();
             if (!helper.GetIsRegistryAvailable())
             {
                 //if (MimeTypes.ContainsKey(extension))
@@ -945,6 +946,7 @@ namespace HtmlAgilityPack
 
             if (!helper.GetIsDnsAvailable())
             {
+
                 //do something.... not at full trust
                 try
                 {
@@ -957,7 +959,7 @@ namespace HtmlAgilityPack
                     contentType = def;
                 }
             }
-
+#endif
             return contentType;
         }
 
@@ -969,14 +971,14 @@ namespace HtmlAgilityPack
         /// <returns>The MIME content type's path extension.</returns>
         public static string GetExtensionForContentType(string contentType, string def)
         {
-            var helper = new PermissionHelper();
-
             if (string.IsNullOrEmpty(contentType))
             {
                 return def;
             }
 
             string ext = "";
+#if !NETSTANDARD2_0
+            var helper = new PermissionHelper();
             if (!helper.GetIsRegistryAvailable())
             {
                 //if (MimeTypes.ContainsValue(contentType))
@@ -990,6 +992,7 @@ namespace HtmlAgilityPack
 
             if (helper.GetIsRegistryAvailable())
             {
+
                 try
                 {
                     RegistryKey reg = Registry.ClassesRoot;
@@ -1001,6 +1004,7 @@ namespace HtmlAgilityPack
                     ext = def;
                 }
             }
+#endif
 
             return ext;
         }
@@ -1018,17 +1022,17 @@ namespace HtmlAgilityPack
 #endif
 
 
-        /// <summary>
-        /// Gets an HTML document from an Internet resource and saves it to the specified file.
-        /// </summary>
-        /// <param name="url">The requested URL, such as "http://Myserver/Mypath/Myfile.asp".</param>
-        /// <param name="path">The location of the file where you want to save the document.</param>
-        public void Get(string url, string path)
+                /// <summary>
+                /// Gets an HTML document from an Internet resource and saves it to the specified file.
+                /// </summary>
+                /// <param name="url">The requested URL, such as "http://Myserver/Mypath/Myfile.asp".</param>
+                /// <param name="path">The location of the file where you want to save the document.</param>
+                public void Get(string url, string path)
         {
             Get(url, path, "GET");
         }
 
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
         /// <summary>
         /// Gets an HTML document from an Internet resource and saves it to the specified file. - Proxy aware
         /// </summary>
@@ -1041,7 +1045,7 @@ namespace HtmlAgilityPack
             Get(url, path, proxy, credentials, "GET");
         }
 #endif
-#if NET45 || NETSTANDARD
+#if NET45 || NETSTANDARD1_3 || NETSTANDARD1_6
 /// <summary>
 /// Gets an HTML document from an Internet resource and saves it to the specified file. - Proxy aware
 /// </summary>
@@ -1064,7 +1068,7 @@ namespace HtmlAgilityPack
         public void Get(string url, string path, string method)
         {
             Uri uri = new Uri(url);
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
             if ((uri.Scheme == Uri.UriSchemeHttps) ||
                 (uri.Scheme == Uri.UriSchemeHttp))
 #else
@@ -1081,7 +1085,7 @@ namespace HtmlAgilityPack
             }
         }
 
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
         /// <summary>
         /// Gets an HTML document from an Internet resource and saves it to the specified file.  Understands Proxies
         /// </summary>
@@ -1105,7 +1109,7 @@ namespace HtmlAgilityPack
         }
 #endif
 
-#if NET45 || NETSTANDARD
+#if NET45 || NETSTANDARD1_3 || NETSTANDARD1_6
 /// <summary>
 /// Gets an HTML document from an Internet resource and saves it to the specified file.  Understands Proxies
 /// </summary>
@@ -1117,7 +1121,7 @@ namespace HtmlAgilityPack
         public void Get(string url, string path, IWebProxy proxy, ICredentials credentials, string method)
         {
             Uri uri = new Uri(url);
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
             if ((uri.Scheme == Uri.UriSchemeHttps) ||
                 (uri.Scheme == Uri.UriSchemeHttp))
 #else
@@ -1192,7 +1196,7 @@ namespace HtmlAgilityPack
             return Load(uri, "GET");
         }
 
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
         /// <summary>
         /// Gets an HTML document from an Internet resource.
         /// </summary>
@@ -1223,7 +1227,7 @@ namespace HtmlAgilityPack
         }
 #endif
 
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
         /// <summary>
         /// Gets an HTML document from an Internet resource.
         /// </summary>
@@ -1281,7 +1285,7 @@ namespace HtmlAgilityPack
             }
 
             HtmlDocument doc;
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
             if ((uri.Scheme == Uri.UriSchemeHttps) ||
                 (uri.Scheme == Uri.UriSchemeHttp))
 #else
@@ -1294,7 +1298,7 @@ namespace HtmlAgilityPack
             }
             else
             {
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
                 if (uri.Scheme == Uri.UriSchemeFile)
 #else
 // TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
@@ -1323,7 +1327,7 @@ namespace HtmlAgilityPack
             return doc;
         }
 
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
         /// <summary>
         /// Loads an HTML document from an Internet resource.
         /// </summary>
@@ -1340,7 +1344,7 @@ namespace HtmlAgilityPack
         }
 #endif
 
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
         /// <summary>
         /// Loads an HTML document from an Internet resource.
         /// </summary>
@@ -1385,7 +1389,7 @@ namespace HtmlAgilityPack
             return doc;
         }
 #endif
-#if NET45 || NETSTANDARD
+#if NET45 || NETSTANDARD1_3 || NETSTANDARD1_6
 /// <summary>
 /// Loads an HTML document from an Internet resource.
 /// </summary>
@@ -1401,15 +1405,15 @@ namespace HtmlAgilityPack
         }
 #endif
 
-#if NET45 || NETSTANDARD
-/// <summary>
-/// Loads an HTML document from an Internet resource.
-/// </summary>
-/// <param name="uri">The requested Uri, such as new Uri("http://Myserver/Mypath/Myfile.asp").</param>
-/// <param name="method">The HTTP method used to open the connection, such as GET, POST, PUT, or PROPFIND.</param>
-/// <param name="proxy">Proxy to use with this request</param>
-/// <param name="credentials">Credentials to use when authenticating</param>
-/// <returns>A new HTML document.</returns>
+#if NET45 || NETSTANDARD1_3 || NETSTANDARD1_6
+        /// <summary>
+        /// Loads an HTML document from an Internet resource.
+        /// </summary>
+        /// <param name="uri">The requested Uri, such as new Uri("http://Myserver/Mypath/Myfile.asp").</param>
+        /// <param name="method">The HTTP method used to open the connection, such as GET, POST, PUT, or PROPFIND.</param>
+        /// <param name="proxy">Proxy to use with this request</param>
+        /// <param name="credentials">Credentials to use when authenticating</param>
+        /// <returns>A new HTML document.</returns>
         public HtmlDocument Load(Uri uri, string method, IWebProxy proxy, ICredentials credentials)
         {
             if (UsingCache)
@@ -1418,7 +1422,7 @@ namespace HtmlAgilityPack
             }
 
             HtmlDocument doc;
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
             if (uri.Scheme == Uri.UriSchemeFile)
 #else
             // TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
@@ -1429,7 +1433,7 @@ namespace HtmlAgilityPack
             }
             else
             {
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
                 if (uri.Scheme == Uri.UriSchemeFile)
 #else
                 // TODO: Check if UriSchemeHttps is still internal in NETSTANDARD 2.0
@@ -1453,7 +1457,7 @@ namespace HtmlAgilityPack
             return doc;
         }
 #endif
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
         /// <summary>
         /// Loads an HTML document from an Internet resource and saves it to the specified XmlTextWriter.
         /// </summary>
@@ -1465,12 +1469,12 @@ namespace HtmlAgilityPack
             doc.Save(writer);
         }
 #endif
-#if NET45 || NETSTANDARD
-/// <summary>
-/// Loads an HTML document from an Internet resource and saves it to the specified XmlTextWriter.
-/// </summary>
-/// <param name="htmlUrl">The requested URL, such as "http://Myserver/Mypath/Myfile.asp".</param>
-/// <param name="writer">The XmlTextWriter to which you want to save to.</param>
+#if NET45 || NETSTANDARD1_3 || NETSTANDARD1_6
+        /// <summary>
+        /// Loads an HTML document from an Internet resource and saves it to the specified XmlTextWriter.
+        /// </summary>
+        /// <param name="htmlUrl">The requested URL, such as "http://Myserver/Mypath/Myfile.asp".</param>
+        /// <param name="writer">The XmlTextWriter to which you want to save to.</param>
         public void LoadHtmlAsXml(string htmlUrl, XmlWriter writer)
         {
             HtmlDocument doc = Load(htmlUrl);
@@ -1545,7 +1549,7 @@ namespace HtmlAgilityPack
             return len;
         }
 
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
         private HttpStatusCode Get(Uri uri, string method, string path, HtmlDocument doc, IWebProxy proxy,
             ICredentials creds)
         {
@@ -1672,7 +1676,7 @@ namespace HtmlAgilityPack
 
             _requestDuration = Environment.TickCount - tc;
             _responseUri = resp.ResponseUri;
-
+            var statusCode = resp.StatusCode;
             bool html = IsHtmlContent(resp.ContentType);
             bool isUnknown = string.IsNullOrEmpty(resp.ContentType);
 
@@ -1782,7 +1786,7 @@ namespace HtmlAgilityPack
                 resp.Close();
             }
 
-            return resp.StatusCode;
+            return statusCode;
         }
 #else
         private HttpStatusCode Get(Uri uri, string method, string path, HtmlDocument doc, IWebProxy proxy,
@@ -2014,7 +2018,7 @@ namespace HtmlAgilityPack
             // note: some headers are collection (ex: www-authenticate)
             // we don't handle that here
             XmlDocument doc = new XmlDocument();
-#if NETSTANDARD
+#if NETSTANDARD1_3 || NETSTANDARD1_6
             doc.Load(File.OpenRead(GetCacheHeadersPath(requestUri)));
 #else
             doc.Load(GetCacheHeadersPath(requestUri));
@@ -2037,7 +2041,7 @@ namespace HtmlAgilityPack
             return GetCachePath(uri) + ".h.xml";
         }
 
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
         private bool IsCacheHtmlContent(string path)
         {
             string ct = GetContentTypeForExtension(Path.GetExtension(path), null);
@@ -2055,7 +2059,7 @@ namespace HtmlAgilityPack
             return contentEncoding.ToLowerInvariant().StartsWith("gzip");
         }
 
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
         private HtmlDocument LoadUrl(Uri uri, string method, WebProxy proxy, NetworkCredential creds)
         {
             HtmlDocument doc = new HtmlDocument();
@@ -2072,7 +2076,7 @@ namespace HtmlAgilityPack
         }
 #endif
 
-#if NET45 || NETSTANDARD
+#if NET45 || NETSTANDARD1_3 || NETSTANDARD1_6
         private HtmlDocument LoadUrl(Uri uri, string method, IWebProxy proxy, ICredentials creds)
         {
             HtmlDocument doc = new HtmlDocument();
@@ -2087,7 +2091,7 @@ namespace HtmlAgilityPack
             return doc;
         }
 #endif
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
         private void SaveCacheHeaders(Uri requestUri, HttpWebResponse resp)
         {
             // we cache the original headers aside the cached document.
@@ -2113,7 +2117,7 @@ namespace HtmlAgilityPack
         }
 #endif
 
-#if NET45 || NETSTANDARD
+#if NET45 || NETSTANDARD1_3 || NETSTANDARD1_6
         private void SaveCacheHeaders(Uri requestUri, HttpResponseMessage resp)
         {
             // we cache the original headers aside the cached document.
@@ -2138,11 +2142,11 @@ namespace HtmlAgilityPack
         }
 #endif
 
-#if NET45 || NETSTANDARD
-/// <summary>
-/// Begins the process of downloading an internet resource
-/// </summary>
-/// <param name="url">Url to the html document</param>
+#if NET45 || NETSTANDARD1_3 || NETSTANDARD1_6
+        /// <summary>
+        /// Begins the process of downloading an internet resource
+        /// </summary>
+        /// <param name="url">Url to the html document</param>
         public Task<HtmlDocument> LoadFromWebAsync(string url)
         {
             return LoadFromWebAsync(new Uri(url), null, null);

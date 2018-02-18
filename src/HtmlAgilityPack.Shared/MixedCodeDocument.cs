@@ -212,7 +212,7 @@ namespace HtmlAgilityPack
         /// <param name="path">The complete file path to be read.</param>
         public void Load(string path)
         {
-#if NETSTANDARD
+#if NETSTANDARD1_3 || NETSTANDARD1_6
             Load(new StreamReader(File.OpenRead(path)));
 #else
             Load(new StreamReader(path));
@@ -226,7 +226,7 @@ namespace HtmlAgilityPack
         /// <param name="detectEncodingFromByteOrderMarks">Indicates whether to look for byte order marks at the beginning of the file.</param>
         public void Load(string path, bool detectEncodingFromByteOrderMarks)
         {
-#if NETSTANDARD
+#if NETSTANDARD1_3 || NETSTANDARD1_6
             Load(new StreamReader(File.OpenRead(path), detectEncodingFromByteOrderMarks));
 #else
             Load(new StreamReader(path, detectEncodingFromByteOrderMarks));
@@ -240,7 +240,7 @@ namespace HtmlAgilityPack
         /// <param name="encoding">The character encoding to use.</param>
         public void Load(string path, Encoding encoding)
         {
-#if NETSTANDARD
+#if NETSTANDARD1_3 || NETSTANDARD1_6
             Load(new StreamReader(File.OpenRead(path), encoding));
 #else
             Load(new StreamReader(path, encoding));
@@ -255,7 +255,7 @@ namespace HtmlAgilityPack
         /// <param name="detectEncodingFromByteOrderMarks">Indicates whether to look for byte order marks at the beginning of the file.</param>
         public void Load(string path, Encoding encoding, bool detectEncodingFromByteOrderMarks)
         {
-#if NETSTANDARD
+#if NETSTANDARD1_3 || NETSTANDARD1_6
             Load(new StreamReader(File.OpenRead(path), encoding, detectEncodingFromByteOrderMarks));
 #else
             Load(new StreamReader(path, encoding, detectEncodingFromByteOrderMarks));
@@ -271,7 +271,7 @@ namespace HtmlAgilityPack
         /// <param name="buffersize">The minimum buffer size.</param>
         public void Load(string path, Encoding encoding, bool detectEncodingFromByteOrderMarks, int buffersize)
         {
-#if NETSTANDARD
+#if NETSTANDARD1_3 || NETSTANDARD1_6
             Load(new StreamReader(File.OpenRead(path), encoding, detectEncodingFromByteOrderMarks, buffersize));
 #else
             Load(new StreamReader(path, encoding, detectEncodingFromByteOrderMarks, buffersize));
@@ -337,7 +337,7 @@ namespace HtmlAgilityPack
         /// <param name="filename">The location of the file where you want to save the document.</param>
         public void Save(string filename)
         {
-#if NETSTANDARD
+#if NETSTANDARD1_3 || NETSTANDARD1_6
             StreamWriter sw = new StreamWriter(File.OpenWrite(filename), GetOutEncoding());
 #else
             StreamWriter sw = new StreamWriter(filename, false, GetOutEncoding());
@@ -352,7 +352,7 @@ namespace HtmlAgilityPack
         /// <param name="encoding">The character encoding to use.</param>
         public void Save(string filename, Encoding encoding)
         {
-#if NETSTANDARD
+#if NETSTANDARD1_3 || NETSTANDARD1_6
             StreamWriter sw = new StreamWriter(File.OpenWrite(filename), encoding);
 #else
             StreamWriter sw = new StreamWriter(filename, false, encoding);

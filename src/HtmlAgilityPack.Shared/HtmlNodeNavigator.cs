@@ -141,7 +141,7 @@ namespace HtmlAgilityPack
             Reset();
         }
 
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
         /// <summary>
         /// Initializes a new instance of the HtmlNavigator and loads an HTML document from a file.
         /// </summary>
@@ -752,7 +752,7 @@ namespace HtmlAgilityPack
                 return;
             }
 
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
             StackFrame sf = new StackFrame(1);
             string name = sf.GetMethod().Name;
 #else

@@ -5,7 +5,7 @@
 // More projects: http://www.zzzprojects.com/
 // Copyright © ZZZ Projects Inc. 2014 - 2017. All rights reserved.
 
-#if !NETSTANDARD && !METRO
+#if !NETSTANDARD1_3 && !NETSTANDARD1_6 && !METRO
 using System;
 using System.Diagnostics;
 
@@ -13,7 +13,7 @@ namespace HtmlAgilityPack
 {
     internal class HtmlConsoleListener : TraceListener
     {
-        #region Public Methods
+#region Public Methods
 
         public override void Write(string Message)
         {
@@ -35,7 +35,7 @@ namespace HtmlAgilityPack
             Write(Message + "\n", Category);
         }
 
-        #endregion
+#endregion
     }
 }
 #endif

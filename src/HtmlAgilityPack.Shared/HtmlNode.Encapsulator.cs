@@ -176,7 +176,7 @@ namespace HtmlAgilityPack
         public static bool IsDefinedAttr(Type type, Type attributeType)
         {
 
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
             if (type.IsDefined(typeof(HasXPathAttribute),false) == true)
             {
                 return true;
@@ -188,7 +188,7 @@ namespace HtmlAgilityPack
 #endif
 
 
-#if NETSTANDARD
+#if NETSTANDARD1_3 || NETSTANDARD1_6
             if (type.GetTypeInfo().IsDefined(typeof(HasXPathAttribute)) == true)
             {
                 return true;
@@ -230,12 +230,12 @@ namespace HtmlAgilityPack
         {
             PropertyInfo[] properties = null;
 
-#if !NETSTANDARD
-            properties= type.GetProperties();
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
+            properties = type.GetProperties();
 #endif
 
 
-#if NETSTANDARD
+#if NETSTANDARD1_3 || NETSTANDARD1_6
             properties = type.GetTypeInfo().GetProperties();
 #endif
 
@@ -263,12 +263,12 @@ namespace HtmlAgilityPack
             }
             else
             {
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
                 return typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType);
 #endif
 
 
-#if NETSTANDARD
+#if NETSTANDARD1_3 || NETSTANDARD1_6
                 return typeof(IEnumerable).GetTypeInfo().IsAssignableFrom(propertyInfo.PropertyType);
 #endif
 
@@ -285,12 +285,12 @@ namespace HtmlAgilityPack
         public static IEnumerable<Type> GetGenericTypes(PropertyInfo propertyInfo)
         {
 
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
             return propertyInfo.PropertyType.GetGenericArguments();
 #endif
 
 
-#if NETSTANDARD
+#if NETSTANDARD1_3 || NETSTANDARD1_6
             return propertyInfo.PropertyType.GetTypeInfo().GetGenericArguments();
 #endif
 
@@ -306,12 +306,12 @@ namespace HtmlAgilityPack
         /// <returns>Method info of requested method.</returns>
         public static MethodInfo GetMethodByItsName(Type type, string methodName)
         {
-#if !NETSTANDARD
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
             return type.GetMethod(methodName);
 #endif
 
 
-#if NETSTANDARD
+#if NETSTANDARD1_3 || NETSTANDARD1_6
             return type.GetTypeInfo().GetMethod(methodName);
 #endif
 

@@ -5,7 +5,7 @@
 // More projects: http://www.zzzprojects.com/
 // Copyright © ZZZ Projects Inc. 2014 - 2017. All rights reserved.
 
-#if !NETSTANDARD && !METRO
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6) && !METRO
 using System;
 using System.IO;
 using System.Xml;
