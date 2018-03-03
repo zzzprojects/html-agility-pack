@@ -349,7 +349,7 @@ namespace HtmlAgilityPack
                 if (_innerhtml != null)
                     return _innerhtml;
 
-                if (_innerstartindex < 0)
+                if (_innerstartindex < 0 || _innerlength < 0)
                     return string.Empty;
 
                 return _ownerdocument.Text.Substring(_innerstartindex, _innerlength);
@@ -532,7 +532,7 @@ namespace HtmlAgilityPack
                     return _outerhtml;
                 }
 
-                if (_outerstartindex < 0)
+                if (_outerstartindex < 0 || _outerlength < 0) 
                 {
                     return string.Empty;
                 }

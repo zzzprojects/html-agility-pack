@@ -22,7 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using Microsoft.Win32;
-#if NET45 || NETSTANDARD1_3 || NETSTANDARD1_6
+#if FX45 || NETSTANDARD
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Threading;
@@ -2142,7 +2142,7 @@ namespace HtmlAgilityPack
         }
 #endif
 
-#if NET45 || NETSTANDARD1_3 || NETSTANDARD1_6
+#if FX45 || NETSTANDARD
         /// <summary>
         /// Begins the process of downloading an internet resource
         /// </summary>

@@ -1563,8 +1563,10 @@ namespace HtmlAgilityPack
                         {
                             if (_fullcomment)
                             {
-                                if ((Text[_index - 2] != '-') ||
-                                    (Text[_index - 3] != '-'))
+                                if (((Text[_index - 2] != '-') || (Text[_index - 3] != '-')) 
+                                    &&  
+                                    ((Text[_index - 2] != '!') || (Text[_index - 3] != '-') ||
+                                     (Text[_index - 4] != '-')))
                                 {
                                     continue;
                                 }
