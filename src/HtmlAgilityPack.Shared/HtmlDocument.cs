@@ -233,7 +233,7 @@ namespace HtmlAgilityPack
 
         /// <summary>
         /// Gets the document's declared encoding.
-        /// Declared encoding is determined using the meta http-equiv="content-type" content="text/html;charset=XXXXX" html node.
+        /// Declared encoding is determined using the meta http-equiv="content-type" content="text/html;charset=XXXXX" html node (pre-HTML5) or the meta charset="XXXXX" html node (HTML5).
         /// </summary>
         public Encoding DeclaredEncoding
         {
@@ -1725,7 +1725,7 @@ namespace HtmlAgilityPack
             bool isImplicitEnd = false;
 
             var parent = _lastparentnode.Name;
-            var nodeName = Text.Substring(_currentnode._namestartindex, _index - _currentnode._namestartindex - 1);
+            var nodeName = Text.Substring(_currentnode._namestartindex, _index - _currentnode._namestartindex - 1).ToLowerInvariant();
 
             switch (parent)
             {
@@ -1737,6 +1737,9 @@ namespace HtmlAgilityPack
                     break;
                 case "dt":
                     isImplicitEnd = nodeName == "dt" || nodeName == "dd";
+                    break;
+                case "li":
+                    isImplicitEnd = nodeName == "li";
                     break;
                 case "p":
                     isImplicitEnd = nodeName == "p";
@@ -1757,7 +1760,7 @@ namespace HtmlAgilityPack
             bool isExplicitEnd = false;
 
             var parent = _lastparentnode.Name;
-            var nodeName = Text.Substring(_currentnode._namestartindex, _index - _currentnode._namestartindex - 1);
+            var nodeName = Text.Substring(_currentnode._namestartindex, _index - _currentnode._namestartindex - 1).ToLowerInvariant();
 
             switch (parent)
             {
@@ -2024,7 +2027,7 @@ namespace HtmlAgilityPack
 
         #endregion
 
-        #region Nested type: ParseState
+            #region Nested type: ParseState
 
         private enum ParseState
         {

@@ -3,6 +3,8 @@ using System.Linq;
 using System.Net;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
 
@@ -32,15 +34,51 @@ namespace HtmlAgilityPack.Tests
         }
 
         [Test]
-        public void StackOverflow()
+        public void HtmlAgilityPack_AttributeCollectionBug()
         {
-            // url not work, ???? 
-            var url = "http://rewarding.me/active-tel-domains/index.php/index.php?rescan=amour.tel&w=A&url=&by=us&limits=0";
-            var request = WebRequest.Create(url);
-            var htmlDocument = new HtmlDocument();
-            htmlDocument.Load((request.GetResponse()).GetResponseStream());
-            Stream memoryStream = new MemoryStream();
-            htmlDocument.Save(memoryStream);
+            { 
+            const string firstAttrName = "first";
+            const string secondAttrName = "second";
+            const string value = "value";
+
+            HtmlNode firstNode = HtmlNode.CreateNode("<div></div>");
+            firstNode.Attributes.Add(firstAttrName, value);
+
+            HtmlNode secondNode = HtmlNode.CreateNode("<div></div>");
+            secondNode.Attributes.Add(secondAttrName, value);
+       
+            secondNode.Attributes[0] = firstNode.Attributes[0];
+
+            Assert.IsNotNull(secondNode.Attributes[0]);
+            Assert.AreEqual(firstAttrName, secondNode.Attributes[0].Name);
+
+            Assert.IsNotNull(secondNode.Attributes[firstAttrName], $"'{firstAttrName}' should exist in the collection");
+            Assert.AreEqual(firstAttrName, secondNode.Attributes[firstAttrName].Name);
+
+            Assert.IsNull(secondNode.Attributes   [secondAttrName], $"{secondAttrName} should not exist in the collection");
+            }
+
+            {
+                const string firstAttrName = "first";
+                const string secondAttrName = "second";
+                const string value = "value";
+
+                HtmlNode firstNode = HtmlNode.CreateNode("<div></div>");
+                firstNode.Attributes.Add(firstAttrName, value);
+
+                HtmlNode secondNode = HtmlNode.CreateNode("<div></div>");
+                secondNode.Attributes.Add(secondAttrName, value);
+                var a = secondNode.Attributes[secondAttrName];
+                secondNode.Attributes[secondAttrName] = firstNode.Attributes[firstAttrName];
+
+                Assert.IsNotNull(secondNode.Attributes[firstAttrName]);
+                Assert.AreEqual(firstAttrName, secondNode.Attributes[firstAttrName].Name);
+
+                Assert.IsNotNull(secondNode.Attributes[0], $"'{firstAttrName}' should exist in the collection");
+                Assert.AreEqual(firstAttrName, secondNode.Attributes[firstAttrName].Name);
+
+                Assert.IsNull(secondNode.Attributes[secondAttrName], $"{secondAttrName} should not exist in the collection");
+            }
         }
 
         [Test]
@@ -230,6 +268,33 @@ namespace HtmlAgilityPack.Tests
             Assert.AreEqual(divNode.Attributes.Count, newNode.Attributes.Count);
             Assert.AreEqual(attribute1.Value, attribute2.Value);
             Assert.AreEqual(attribute1.QuoteType, attribute2.QuoteType);
+        }
+
+        [Test]
+        public void TestCommentNode()
+        {
+            var html =
+                @"<!DOCTYPE html>
+<html>
+<body>
+<!--title='Title' >
+<!--title='Title'--!>
+<!--title = 'Title'-->
+<!--title='Title'--!>
+<h1>This is <b>bold</b> headddding</h1>
+	<p>This is <u>underlinyed</u> paragraph</p>
+	<h2>This is <i>italic</i> heading</h2>
+</body>
+</html> ";
+
+            var htmlDoc = new HtmlAgilityPack.HtmlDocument();
+            htmlDoc.LoadHtml(html);
+
+            var h1 = htmlDoc.DocumentNode.SelectNodes("//h1");
+            var comments = htmlDoc.DocumentNode.SelectNodes("//comment()");
+
+            Assert.AreEqual(h1.Count, 1);
+            Assert.AreEqual(comments.Count, 4);
         }
 
         [Test]
@@ -687,6 +752,20 @@ namespace HtmlAgilityPack.Tests
 
         }
 
+
+        [Test]
+        public void GetEncapsulatedData()
+        {
+            HtmlWeb stackoverflowSite = new HtmlWeb();
+            HtmlDocument htmlDocument = stackoverflowSite.Load("https://stackoverflow.com/");
+            StackOverflowPage stackOverflowPage = htmlDocument.DocumentNode.GetEncapsulatedData<StackOverflowPage>();
+            IEnumerable<StackOverflowQuestion> filtered = stackOverflowPage.Questions.OrderByDescending(new Func<StackOverflowQuestion, int>(x => x.Statistics.Votes));
+           
+            Assert.IsTrue(filtered.Count() > 5);
+            Assert.IsTrue(filtered.ElementAt(0).Statistics.Votes > 0);
+
+        }
+
         [Test]
         public void CompareLowerCulture()
         {
@@ -730,6 +809,99 @@ namespace HtmlAgilityPack.Tests
             Assert.AreEqual(15, doc1.DocumentNode.ChildNodes[4].ChildNodes.Count);
 
             Assert.AreEqual(0, doc1.DocumentNode.OwnerDocument.ParseErrors.Count());
+        }
+
+
+        [HasXPath]
+        public class StackOverflowPage
+        {
+            [XPath("//*[@id='question-mini-list']/div/div")]
+            public IEnumerable<StackOverflowQuestion> Questions { get; set; }
+
+            [XPath("//*[@id='hot-network-questions']/ul//li")]
+            public IEnumerable<HotNetworkQuestion> GetHotNetworkQuestions { get; set; }
+
+        }
+
+        [HasXPath]
+        [DebuggerDisplay("StackOverflowQuestion : {Question.QuestionTitle}")]
+        public class StackOverflowQuestion
+        {
+            [XPath("/div[@class='cp']")]
+            public StatisticsBox Statistics { get; set; }
+
+
+            [XPath("/div[@class='summary']")]
+            public QuestionBox Question { get; set; }
+
+
+            [XPath("/div[@class='summary']/div[@class='started']")]
+            public UserBox User { get; set; }
+
+        }
+
+        [HasXPath]
+        [DebuggerDisplay("Votes={Votes} , Answers={Answers} , Views={Views}")]
+        public class StatisticsBox
+        {
+            [XPath("/div[1]/div/span")]
+            public int Votes { get; set; }
+
+            [XPath("/div[2]/div/span")]
+            public int Answers { get; set; }
+
+            [XPath("/div[3]/div/span")]
+            public string Views { get; set; }
+
+
+        }
+
+        [HasXPath]
+        [DebuggerDisplay("QuestionTitle={QuestionTitle}")]
+        public class QuestionBox
+        {
+            [XPath("/h3/a")]
+            public string QuestionTitle { get; set; }
+
+            [XPath("/h3/a", "href")]
+            public string QuestionLink { get; set; }
+
+            [XPath("/div[starts-with(@class,'tags')]//a")]
+            public IEnumerable<string> Tags { get; set; }
+        }
+
+        [HasXPath]
+        [DebuggerDisplay("UserID={UserID} , ReputationScore={ReputationScore}")]
+        public class UserBox
+        {
+            [XPath("/a[1]/span", "title")]
+            public DateTime ExactTime { get; set; }
+
+            [XPath("/a[1]/span")]
+            public string RelativeTime { get; set; }
+
+            [XPath("/a[2]")]
+            public string UserID { get; set; }
+
+            [XPath("a[2]", "href")]
+            public string UserLink { get; set; }
+
+            [XPath("/span[@class='reputation-score']")]
+            public string ReputationScore { get; set; }
+        }
+
+        [HasXPath]
+        [DebuggerDisplay("Question Title={QuestionTitle}")]
+        public class HotNetworkQuestion
+        {
+            [XPath("/div", "title")]
+            public string QuestionCategory { get; set; }
+
+            [XPath("/a")]
+            public string QuestionTitle { get; set; }
+
+            [XPath("/a", "href")]
+            public string QuestionLink { get; set; }
         }
     }
 }
