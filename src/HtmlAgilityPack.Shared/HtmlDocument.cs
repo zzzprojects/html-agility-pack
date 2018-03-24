@@ -1965,52 +1965,59 @@ namespace HtmlAgilityPack
                 return;
             if (node.Name != "meta") // all nodes names are lowercase
                 return;
+            string charset = null;
             HtmlAttribute att = node.Attributes["http-equiv"];
-            if (att == null)
-                return;
-            if (string.Compare(att.Value, "content-type", StringComparison.OrdinalIgnoreCase) != 0)
-                return;
-            HtmlAttribute content = node.Attributes["content"];
-            if (content != null)
+            if (att != null)
             {
-                string charset = NameValuePairList.GetNameValuePairsValue(content.Value, "charset");
-                if (!string.IsNullOrEmpty(charset))
+                if (string.Compare(att.Value, "content-type", StringComparison.OrdinalIgnoreCase) != 0)
+                    return;
+                HtmlAttribute content = node.Attributes["content"];
+                if (content != null)
+                    charset = NameValuePairList.GetNameValuePairsValue(content.Value, "charset");
+            }
+            else
+            {
+                att = node.Attributes["charset"];
+                if (att != null)
+                    charset = att.Value;
+            }
+
+            if (!string.IsNullOrEmpty(charset))
+            {
+                // The following check fixes the the bug described at: http://htmlagilitypack.codeplex.com/WorkItem/View.aspx?WorkItemId=25273
+                if (string.Equals(charset, "utf8", StringComparison.OrdinalIgnoreCase))
+                    charset = "utf-8";
+                try
                 {
-                    // The following check fixes the the bug described at: http://htmlagilitypack.codeplex.com/WorkItem/View.aspx?WorkItemId=25273
-                    if (string.Equals(charset, "utf8", StringComparison.OrdinalIgnoreCase))
-                        charset = "utf-8";
-                    try
-                    {
-                        _declaredencoding = Encoding.GetEncoding(charset);
-                    }
-                    catch (ArgumentException)
-                    {
-                        _declaredencoding = null;
-                    }
+                    _declaredencoding = Encoding.GetEncoding(charset);
+                }
+                catch (ArgumentException)
+                {
+                    _declaredencoding = null;
+                }
 
-                    if (_onlyDetectEncoding)
-                    {
-                        throw new EncodingFoundException(_declaredencoding);
-                    }
+                if (_onlyDetectEncoding)
+                {
+                    throw new EncodingFoundException(_declaredencoding);
+                }
 
-                    if (_streamencoding != null)
-                    {
+                if (_streamencoding != null)
+                {
 #if SILVERLIGHT || PocketPC || METRO || NETSTANDARD1_3 || NETSTANDARD1_6
-                        if (_declaredencoding.WebName != _streamencoding.WebName)
+                    if (_declaredencoding.WebName != _streamencoding.WebName)
 #else
-                        if (_declaredencoding != null)
-                            if (_declaredencoding.CodePage != _streamencoding.CodePage)
+                    if (_declaredencoding != null)
+                        if (_declaredencoding.CodePage != _streamencoding.CodePage)
 #endif
-                            {
-                                AddError(
-                                    HtmlParseErrorCode.CharsetMismatch,
-                                    _line, _lineposition,
-                                    _index, node.OuterHtml,
-                                    "Encoding mismatch between StreamEncoding: " +
-                                    _streamencoding.WebName + " and DeclaredEncoding: " +
-                                    _declaredencoding.WebName);
-                            }
-                    }
+                        {
+                            AddError(
+                                HtmlParseErrorCode.CharsetMismatch,
+                                _line, _lineposition,
+                                _index, node.OuterHtml,
+                                "Encoding mismatch between StreamEncoding: " +
+                                _streamencoding.WebName + " and DeclaredEncoding: " +
+                                _declaredencoding.WebName);
+                        }
                 }
             }
         }
