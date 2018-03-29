@@ -1,4 +1,4 @@
-﻿// Description: Html Agility Pack - HTML Parsers, selectors, traversors, manupulators.
+// Description: Html Agility Pack - HTML Parsers, selectors, traversors, manupulators.
 // Website & Documentation: http://html-agility-pack.net
 // Forum & Issues: https://github.com/zzzprojects/html-agility-pack
 // License: https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE
@@ -11,6 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.ComponentModel;
 
 namespace HtmlAgilityPack
 {
@@ -24,6 +25,27 @@ namespace HtmlAgilityPack
         /// <returns>Returns an object of type T including Encapsulated data.</returns>
         public T GetEncapsulatedData<T>(HtmlDocument htmlDocument = null)
         {
+            return (T)GetEncapsulatedData(typeof(T), htmlDocument);
+        }
+
+
+
+        /// <summary>
+        /// Fill an object and go through it's properties and fill them too.
+        /// </summary>
+        /// <param name="targetType">Type of object to want to fill. It should have atleast one property that defined XPath.</param>
+        /// <param name="htmlDocument">If htmlDocument includes data , leave this parameter null. Else pass your specific htmldocument.</param>
+        /// <returns>Returns an object of type targetType including Encapsulated data.</returns>
+        public object GetEncapsulatedData(Type targetType, HtmlDocument htmlDocument = null)
+        {
+
+            #region SettingPrerequisite
+
+            if (targetType == null)
+            {
+                throw new ArgumentNullException("Parameter targetType is null");
+            }
+
             HtmlDocument source = null;
 
             if (htmlDocument == null)
@@ -35,137 +57,267 @@ namespace HtmlAgilityPack
                 source = htmlDocument;
             }
 
-            T targetObject = Activator.CreateInstance<T>();
+
+
+            object targetObject;
+
+            if (targetType.IsInstantiable() == false) // if it can not create instanse of T because of lack of constructor in type T.
+            {
+                throw new MissingMethodException("Parameterless Constructor excpected for " + targetType.FullName);
+            }
+            else
+            {
+                targetObject = Activator.CreateInstance(targetType);
+            }
+
+            #endregion SettingPrerequisite
 
             #region targetObject_Defined_XPath
-            if (Tools.IsDefinedAttr(typeof(T), (typeof(HasXPathAttribute))) == true) // Object has xpath attribute (Defined HasXPath)
+            if (targetType.IsDefinedAttribute(typeof(HasXPathAttribute)) == true) // Object has xpath attribute (Defined HasXPath)
             {
+
                 // Store list of properties that defined xpath attribute
-                IEnumerable<PropertyInfo> validProperties = Tools.GetPropertiesDefinedXPath(typeof(T));
-
-                foreach (PropertyInfo propertyInfo in validProperties)
+                IEnumerable<PropertyInfo> validProperties = targetType.GetPropertiesDefinedXPath();
+                if (validProperties.CountOfIEnumerable() == 0) // if no XPath property exist in type T while T defined HasXpath attribute.
                 {
-                    XPathAttribute xPathAttribute = (propertyInfo.GetCustomAttributes(typeof(XPathAttribute), false) as IList)[0] as XPathAttribute; // Get xpath attribute from valid properties
-
-                    #region Property_IsNOT_IEnumerable
-                    if (Tools.IsIEnumerable(propertyInfo) == false) // Property is None-IEnumerable
+                    throw new MissingXPathException("Type " + targetType.FullName +
+                        " defined HasXPath Attribute but it does not have any property with XPath Attribte.");
+                }
+                else
+                {
+                    // Fill targetObject variable Properties ( T targetObject )
+                    foreach (PropertyInfo propertyInfo in validProperties)
                     {
-                        HtmlNode htmlNode = source.DocumentNode.SelectSingleNode(xPathAttribute.XPath);
+                        // Get xpath attribute from valid properties
+                        // for .Net old versions:
+                        XPathAttribute xPathAttribute = (propertyInfo.GetCustomAttributes(typeof(XPathAttribute), false) as IList)[0] as XPathAttribute;
 
-                        #region Property_Is_HasXPath_UserDefinedClass
-                        if (Tools.IsDefinedAttr(propertyInfo.PropertyType, (typeof(HasXPathAttribute))) == true) // Property is None-IEnumerable HasXPath-user-defined class
+
+                        #region Property_IsNOT_IEnumerable
+                        if (propertyInfo.IsIEnumerable() == false) // Property is None-IEnumerable
                         {
-                            HtmlDocument innerHtmlDocument = new HtmlDocument();
-                            innerHtmlDocument.LoadHtml(htmlNode.InnerHtml);
 
-                            MethodInfo getEncapsulatedData = Tools.GetMethodByItsName(typeof(HtmlNode), "GetEncapsulatedData").MakeGenericMethod(propertyInfo.PropertyType);
-                            object o = getEncapsulatedData.Invoke(innerHtmlDocument.DocumentNode, new object[] { innerHtmlDocument });
+                            HtmlNode htmlNode = null;
 
-                            propertyInfo.SetValue(targetObject, o, null);
-                        }
-                        #endregion Property_Is_HasXPath_UserDefinedClass
-
-                        #region Property_Is_SimpleType
-                        // Property is None-IEnumerable value-type or .Net class or user-defined class (does not deifned xpath and shouldn't have property that defined xpath )
-                        else
-                        {
-                            string result = string.Empty;
-
-                            if (xPathAttribute.AttributeName == null) // It target None-IEnumerable value of HTMLTag 
+                            // try to fill htmlNode based on XPath given
+                            try
                             {
-                                result = Tools.GetNodeValueBasedOnXPathReturnType<string>(htmlNode, xPathAttribute);
+                                htmlNode = source.DocumentNode.SelectSingleNode(xPathAttribute.XPath);
                             }
-                            else // It target None-IEnumerable attribute of HTMLTag
+                            catch // if it can not select node based on given xpath
                             {
-                                result = htmlNode.GetAttributeValue(xPathAttribute.AttributeName, "Html Tag Attribute Not Specified");
+                                throw new NodeNotFoundException("Cannot find node with giving XPath to bind to " + propertyInfo.PropertyType.FullName + " " + propertyInfo.Name);
                             }
 
-                            propertyInfo.SetValue(targetObject, Convert.ChangeType(result, propertyInfo.PropertyType), null);
-                        }
-                        #endregion Property_Is_SimpleType
-                    }
-                    #endregion Property_IsNOT_IEnumerable
-
-                    #region Property_Is_IEnumerable
-                    else // Property is IEnumerable<T>
-                    {
-                        IList<Type> T_Types = Tools.GetGenericTypes(propertyInfo) as IList<Type>; // Get T type
-
-                        if (T_Types == null || T_Types.Count == 0)
-                        {
-                            throw new NotImplementedException();
-                        }
-
-                        else if (T_Types.Count > 1)
-                        {
-                            throw new NotImplementedException();
-                        }
-
-                        else if (T_Types.Count == 1) // It is NOT something like Dictionary<Tkey , Tvalue>
-                        {
-                            HtmlNodeCollection nodeCollection = source.DocumentNode.SelectNodes(xPathAttribute.XPath);
-
-                            IList result = Tools.CreateIListOfType(T_Types[0]);
-
-                            #region Property_Is_IEnumerable<HasXPath-UserDefinedClass>
-                            if (Tools.IsDefinedAttr(T_Types[0], typeof(HasXPathAttribute)) == true) // T is IEnumerable HasXPath-user-defined class (T type Defined XPath properties)
+                            if (htmlNode == null)
                             {
-                                foreach (HtmlNode node in nodeCollection)
+                                throw new NodeNotFoundException("Cannot find node with givig XPath to bind to " +
+                                    propertyInfo.PropertyType.FullName + " " + propertyInfo.Name);
+                            }
+
+
+                            #region Property_Is_HasXPath_UserDefinedClass
+                            // Property is None-IEnumerable HasXPath-user-defined class
+                            if (propertyInfo.PropertyType.IsDefinedAttribute(typeof(HasXPathAttribute)) == true)
+                            {
+                                HtmlDocument innerHtmlDocument = new HtmlDocument();
+
+                                innerHtmlDocument.LoadHtml(htmlNode.InnerHtml);
+
+                                object o = GetEncapsulatedData(propertyInfo.PropertyType, innerHtmlDocument);
+
+                                propertyInfo.SetValue(targetObject, o, null);
+                            }
+                            #endregion Property_Is_HasXPath_UserDefinedClass
+
+                            #region Property_Is_SimpleType
+                            // Property is None-IEnumerable value-type or .Net class or user-defined class.
+                            // AND does not deifned xpath and shouldn't have property that defined xpath.
+                            else
+                            {
+                                string result = string.Empty;
+
+                                if (xPathAttribute.AttributeName == null) // It target None-IEnumerable value of HTMLTag 
                                 {
-                                    HtmlDocument innerHtmlDocument = new HtmlDocument();
-                                    innerHtmlDocument.LoadHtml(node.InnerHtml);
-
-                                    MethodInfo getEncapsulatedData = Tools.GetMethodByItsName(typeof(HtmlNode), "GetEncapsulatedData").MakeGenericMethod(T_Types[0]);
-                                    object o = getEncapsulatedData.Invoke(innerHtmlDocument.DocumentNode, new object[] { innerHtmlDocument });
-
-                                    result.Add(o);
+                                    result = Tools.GetNodeValueBasedOnXPathReturnType<string>(htmlNode, xPathAttribute);
                                 }
-                            }
-                            #endregion Property_Is_IEnumerable<HasXPath-UserDefinedClass>
-
-                            #region Property_Is_IEnumerable<SimpleClass>
-                            else // T is value-type or .Net class or user-defined class ( without xpath )
-                            {
-                                if (xPathAttribute.AttributeName == null) // It target value
+                                else // It target None-IEnumerable attribute of HTMLTag
                                 {
-                                    result = Tools.GetNodesValuesBasedOnXPathReturnType(nodeCollection, xPathAttribute, T_Types[0]);
+                                    result = htmlNode.GetAttributeValue(xPathAttribute.AttributeName, null);
                                 }
-                                else // It target attribute
+
+                                if (result == null)
+                                {
+                                    throw new NodeAttributeNotFoundException("Can not find " +
+                                        xPathAttribute.AttributeName + " Attribute in " + htmlNode.Name +
+                                        " related to " + propertyInfo.PropertyType.FullName + " " + propertyInfo.Name);
+                                }
+
+
+                                object resultCastedToTargetPropertyType;
+
+                                try
+                                {
+                                    resultCastedToTargetPropertyType = Convert.ChangeType(result, propertyInfo.PropertyType);
+                                }
+                                catch (FormatException)
+                                {
+                                    throw new FormatException("Can not convert Invalid string to " + propertyInfo.PropertyType.FullName + " " + propertyInfo.Name);
+                                }
+                                catch (Exception ex)
+                                {
+                                    throw new Exception("Unhandled Exception : " + ex.Message);
+                                }
+
+
+
+                                propertyInfo.SetValue(targetObject, resultCastedToTargetPropertyType, null);
+                            }
+                            #endregion Property_Is_SimpleType
+                        }
+                        #endregion Property_IsNOT_IEnumerable
+
+
+                        #region Property_Is_IEnumerable
+                        else // Property is IEnumerable<T>
+                        {
+                            IList<Type> T_Types = propertyInfo.GetGenericTypes() as IList<Type>; // Get T type
+
+                            if (T_Types == null || T_Types.Count == 0)
+                            {
+                                throw new ArgumentException(propertyInfo.Name + " should have one generic argument.");
+                            }
+
+                            else if (T_Types.Count > 1)
+                            {
+                                throw new ArgumentException(propertyInfo.Name + " should have one generic argument.");
+                            }
+
+                            else if (T_Types.Count == 1) // It is NOT something like Dictionary<Tkey , Tvalue>
+                            {
+
+                                HtmlNodeCollection nodeCollection;
+
+                                // try to fill nodeCollection based on given xpath.
+                                try
+                                {
+                                    nodeCollection = source.DocumentNode.SelectNodes(xPathAttribute.XPath);
+                                }
+                                catch
+                                {
+                                    throw new NodeNotFoundException("Cannot find node with givig XPath to bind to " + propertyInfo.PropertyType.FullName + " " + propertyInfo.Name);
+                                }
+
+                                if (nodeCollection == null || nodeCollection.Count == 0)
+                                {
+                                    throw new NodeNotFoundException("Cannot find node with givig XPath to bind to " + propertyInfo.PropertyType.FullName + " " + propertyInfo.Name);
+                                }
+
+
+                                IList result = T_Types[0].CreateIListOfType();
+
+                                #region Property_Is_IEnumerable<HasXPath-UserDefinedClass>
+                                if (T_Types[0].IsDefinedAttribute(typeof(HasXPathAttribute)) == true) // T is IEnumerable HasXPath-user-defined class (T type Defined XPath properties)
                                 {
                                     foreach (HtmlNode node in nodeCollection)
                                     {
-                                        result.Add(Convert.ChangeType(node.GetAttributeValue(xPathAttribute.AttributeName, "Html Tag Attribute Not Specified"), T_Types[0]));
+                                        HtmlDocument innerHtmlDocument = new HtmlDocument();
+                                        innerHtmlDocument.LoadHtml(node.InnerHtml);
+
+                                        object o = GetEncapsulatedData(T_Types[0], innerHtmlDocument);
+
+                                        result.Add(o);
                                     }
                                 }
+                                #endregion Property_Is_IEnumerable<HasXPath-UserDefinedClass>
+
+                                #region Property_Is_IEnumerable<SimpleClass>
+                                else // T is value-type or .Net class or user-defined class ( without xpath )
+                                {
+                                    if (xPathAttribute.AttributeName == null) // It target value
+                                    {
+                                        try
+                                        {
+                                            result = Tools.GetNodesValuesBasedOnXPathReturnType(nodeCollection, xPathAttribute, T_Types[0]);
+                                        }
+                                        catch (FormatException)
+                                        {
+                                            throw new FormatException("Can not convert Invalid string in node collection to " + T_Types[0].FullName + " " + propertyInfo.Name);
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            throw new Exception("Unhandled Exception : " + ex.Message);
+                                        }
+                                    }
+                                    else // It target attribute
+                                    {
+                                        foreach (HtmlNode node in nodeCollection)
+                                        {
+                                            string nodeAttributeValue = node.GetAttributeValue(xPathAttribute.AttributeName, null);
+                                            if (nodeAttributeValue == null)
+                                            {
+                                                throw new NodeAttributeNotFoundException("Can not find " + xPathAttribute.AttributeName + " Attribute in " + node.Name + " related to " +
+                                                propertyInfo.PropertyType.FullName + " " + propertyInfo.Name);
+                                            }
+
+                                            object resultCastedToTargetPropertyType;
+
+
+                                            try
+                                            {
+                                                resultCastedToTargetPropertyType = Convert.ChangeType(nodeAttributeValue, T_Types[0]);
+                                            }
+                                            catch (FormatException) // if it can not cast result(string) to type of property.
+                                            {
+                                                throw new FormatException("Can not convert Invalid string to " + T_Types[0].FullName + " " + propertyInfo.Name);
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                throw new Exception("Unhandled Exception : " + ex.Message);
+                                            }
+
+
+                                            result.Add(resultCastedToTargetPropertyType);
+                                        }
+                                    }
+                                }
+                                #endregion Property_Is_IEnumerable<SimpleClass>
+
+                                if (result == null || result.Count == 0)
+                                {
+                                    throw new Exception("Cannot fill " + propertyInfo.PropertyType.FullName + " " + propertyInfo.Name + " because it is null.");
+                                }
+
+                                propertyInfo.SetValue(targetObject, result, null);
                             }
-                            #endregion Property_Is_IEnumerable<SimpleClass>
-
-                            propertyInfo.SetValue(targetObject, result, null);
                         }
+                        #endregion Property_IsNOT_IEnumerable
                     }
-                    #endregion Property_IsNOT_IEnumerable
-                }
 
-                return targetObject;
+                    return targetObject;
+                }
             }
             #endregion targetObject_Defined_XPath
 
             #region targetObject_NOTDefined_XPath
             else // Object doesen't have xpath attribute
             {
-                throw new NotImplementedException();
+                throw new MissingXPathException("Type T must define HasXPath attribute and include properties with XPath attribute.");
             }
             #endregion targetObject_NOTDefined_XPath
         }
+
+
+
     }
+
+
 
     /// <summary>
     /// Includes tools that GetEncapsulatedData method uses them.
     /// </summary>
-    public static class Tools
+    internal static class Tools
     {
-
-
 
         /// <summary>
         /// Determine if a type define an attribute or not , supporting both .NetStandard and .NetFramework2.0
@@ -173,11 +325,21 @@ namespace HtmlAgilityPack
         /// <param name="type">Type you want to test it.</param>
         /// <param name="attributeType">Attribute that type must have or not.</param>
         /// <returns>If true , The type parameter define attributeType parameter.</returns>
-        public static bool IsDefinedAttr(Type type, Type attributeType)
+        internal static bool IsDefinedAttribute(this Type type, Type attributeType)
         {
 
+            if (type == null)
+            {
+                throw new ArgumentNullException("Parameter type is null when checking type defined attributeType or not.");
+            }
+
+            if (attributeType == null)
+            {
+                throw new ArgumentNullException("Parameter attributeType is null when checking type defined attributeType or not.");
+            }
+
 #if !(NETSTANDARD1_3 || NETSTANDARD1_6)
-            if (type.IsDefined(typeof(HasXPathAttribute),false) == true)
+            if (type.IsDefined(attributeType,false) == true)
             {
                 return true;
             }
@@ -189,7 +351,7 @@ namespace HtmlAgilityPack
 
 
 #if NETSTANDARD1_3 || NETSTANDARD1_6
-            if (type.GetTypeInfo().IsDefined(typeof(HasXPathAttribute)) == true)
+            if (type.GetTypeInfo().IsDefined(attributeType) == true)
             {
                 return true;
             }
@@ -199,25 +361,7 @@ namespace HtmlAgilityPack
             }
 #endif
 
-            throw new NotImplementedException("Can't Target any platform.");
-        }
-
-
-        /// <summary>
-        /// Find property infos that defined specific attribute.
-        /// </summary>
-        /// <param name="properties">Array of property infos that should examin.</param>
-        /// <param name="attributeType">The type of attribute that property infos should have.</param>
-        /// <returns>IEnumerable of property infos that defined specific attribute.</returns>
-        public static IEnumerable<PropertyInfo> LinqWherePropertyInfoDefinedAttribute(PropertyInfo[] properties, Type attributeType)
-        {
-            foreach (PropertyInfo property in properties)
-            {
-                if (property.IsDefined(attributeType, false))
-                {
-                    yield return property;
-                }
-            }
+            throw new NotImplementedException("Can't Target any platform when checking " + type.FullName + " is a " + attributeType.FullName + " or not.");
         }
 
 
@@ -226,9 +370,15 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="type">Type that you want to find it's XPath-Defined properties.</param>
         /// <returns>IEnumerable of property infos of a type , that defined specific attribute.</returns>
-        public static IEnumerable<PropertyInfo> GetPropertiesDefinedXPath(Type type)
+        internal static IEnumerable<PropertyInfo> GetPropertiesDefinedXPath(this Type type)
         {
+            if (type == null)
+            {
+                throw new ArgumentNullException("Parameter type is null while retrieving properties defined XPathAttribute of Type type.");
+            }
+
             PropertyInfo[] properties = null;
+
 
 #if !(NETSTANDARD1_3 || NETSTANDARD1_6)
             properties = type.GetProperties();
@@ -240,13 +390,10 @@ namespace HtmlAgilityPack
 #endif
 
 
-            return LinqWherePropertyInfoDefinedAttribute(properties, typeof(XPathAttribute));
-            //throw new NotImplementedException("Can't Target any platform.");
+            return properties.HAPWhere(x => x.IsDefined(typeof(XPathAttribute), false) == true);
+
+            throw new NotImplementedException("Can't Target any platform while retrieving properties defined XPathAttribute of Type type.");
         }
-
-
-
-
 
 
         /// <summary>
@@ -254,9 +401,16 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="propertyInfo">The property info you want to test.</param>
         /// <returns>True if property info is IEnumerable.</returns>
-        public static bool IsIEnumerable(PropertyInfo propertyInfo)
+        internal static bool IsIEnumerable(this PropertyInfo propertyInfo)
         {
             //return propertyInfo.PropertyType.GetInterface(typeof(IEnumerable<>).FullName) != null;
+
+            if (propertyInfo == null)
+            {
+                throw new ArgumentNullException("Parameter propertyInfo is null while checking propertyInfo for being IEnumerable or not.");
+            }
+
+
             if (propertyInfo.PropertyType == typeof(string))
             {
                 return false;
@@ -272,7 +426,7 @@ namespace HtmlAgilityPack
                 return typeof(IEnumerable).GetTypeInfo().IsAssignableFrom(propertyInfo.PropertyType);
 #endif
 
-                throw new NotImplementedException("Can't Target any platform.");
+                throw new NotImplementedException("Can't Target any platform while checking propertyInfo for being IEnumerable or not.");
             }
         }
 
@@ -282,8 +436,13 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="propertyInfo">IEnumerable-Implemented property</param>
         /// <returns>List of generic types.</returns>
-        public static IEnumerable<Type> GetGenericTypes(PropertyInfo propertyInfo)
+        internal static IEnumerable<Type> GetGenericTypes(this PropertyInfo propertyInfo)
         {
+
+            if (propertyInfo == null)
+            {
+                throw new ArgumentNullException("Parameter propertyInfo is null while Getting generic types of Property.");
+            }
 
 #if !(NETSTANDARD1_3 || NETSTANDARD1_6)
             return propertyInfo.PropertyType.GetGenericArguments();
@@ -294,7 +453,7 @@ namespace HtmlAgilityPack
             return propertyInfo.PropertyType.GetTypeInfo().GetGenericArguments();
 #endif
 
-            throw new NotImplementedException("Can't Target any platform.");
+            throw new NotImplementedException("Can't Target any platform while Getting generic types of Property.");
         }
 
 
@@ -304,8 +463,18 @@ namespace HtmlAgilityPack
         /// <param name="type">Type of class include requested method.</param>
         /// <param name="methodName">Name of requested method as string.</param>
         /// <returns>Method info of requested method.</returns>
-        public static MethodInfo GetMethodByItsName(Type type, string methodName)
+        internal static MethodInfo GetMethodByItsName(this Type type, string methodName)
         {
+            if (type == null)
+            {
+                throw new ArgumentNullException("Parameter type is null while Getting method from it.");
+            }
+
+            if (methodName == null || methodName == "")
+            {
+                throw new ArgumentNullException("Parameter methodName is null while Getting method from Type type.");
+            }
+
 #if !(NETSTANDARD1_3 || NETSTANDARD1_6)
             return type.GetMethod(methodName);
 #endif
@@ -315,7 +484,7 @@ namespace HtmlAgilityPack
             return type.GetTypeInfo().GetMethod(methodName);
 #endif
 
-            throw new NotImplementedException("Can't Target any platform.");
+            throw new NotImplementedException("Can't Target any platform while getting Method methodName from Type type.");
         }
 
 
@@ -324,12 +493,18 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="type">Type that you want to make a List of it.</param>
         /// <returns>Returns IList of given type.</returns>
-        public static IList CreateIListOfType(Type type)
+        internal static IList CreateIListOfType(this Type type)
         {
+            if (type == null)
+            {
+                throw new ArgumentNullException("Parameter type is null while creating List<type>.");
+            }
+
             Type listType = typeof(List<>);
             Type constructedListType = listType.MakeGenericType(type);
             return Activator.CreateInstance(constructedListType) as IList;
         }
+
 
 
 
@@ -340,21 +515,46 @@ namespace HtmlAgilityPack
         /// <param name="htmlNode">A htmlNode instance.</param>
         /// <param name="xPathAttribute">Attribute that includes ReturnType</param>
         /// <returns>String that choosen from HtmlNode as result.</returns>
-        public static T GetNodeValueBasedOnXPathReturnType<T>(HtmlNode htmlNode, XPathAttribute xPathAttribute)
+        internal static T GetNodeValueBasedOnXPathReturnType<T>(HtmlNode htmlNode, XPathAttribute xPathAttribute)
         {
+            if (htmlNode == null)
+            {
+                throw new ArgumentNullException("parameter html node is null");
+            }
+
+            if (xPathAttribute == null)
+            {
+                throw new ArgumentNullException("parameter xpathAttribute is null");
+            }
+
+            object result;
+            Type TType = typeof(T);
+
             switch (xPathAttribute.NodeReturnType)
             {
                 case ReturnType.InnerHtml:
-                    return (T)Convert.ChangeType(htmlNode.InnerHtml, typeof(T));
+                    {
+                        result = Convert.ChangeType(htmlNode.InnerHtml, TType);
+                    }
+                    break;
+
 
                 case ReturnType.InnerText:
-                    return (T)Convert.ChangeType(htmlNode.InnerText, typeof(T));
+                    {
+                        result = Convert.ChangeType(htmlNode.InnerText, TType);
+                    }
+                    break;
 
                 case ReturnType.OuterHtml:
-                    return (T)Convert.ChangeType(htmlNode.OuterHtml, typeof(T));
+                    {
+                        result = Convert.ChangeType(htmlNode.OuterHtml, TType);
+                    }
+                    break;
 
                 default: throw new NotImplementedException();
             }
+
+            return (T)result;
         }
 
 
@@ -365,12 +565,24 @@ namespace HtmlAgilityPack
         /// <param name="xPathAttribute">A <see cref="XPathAttribute"/> instnce incules <see cref="ReturnType"/>.</param>
         /// <param name="listGenericType">Type of IList generic you want.</param>
         /// <returns></returns>
-        public static IList GetNodesValuesBasedOnXPathReturnType(HtmlNodeCollection htmlNodeCollection, XPathAttribute xPathAttribute, Type listGenericType)
+        internal static IList GetNodesValuesBasedOnXPathReturnType(HtmlNodeCollection htmlNodeCollection, XPathAttribute xPathAttribute, Type listGenericType)
         {
-            IList result = CreateIListOfType(listGenericType);
+            if (htmlNodeCollection == null || htmlNodeCollection.Count == 0)
+            {
+                throw new ArgumentNullException("parameter htmlNodeCollection is null or empty.");
+            }
+
+            if (xPathAttribute == null)
+            {
+                throw new ArgumentNullException("parameter xpathAttribute is null");
+            }
+
+
+            IList result = listGenericType.CreateIListOfType();
 
             switch (xPathAttribute.NodeReturnType)
             {
+
                 case ReturnType.InnerHtml:
                     {
                         foreach (HtmlNode node in htmlNodeCollection)
@@ -379,6 +591,8 @@ namespace HtmlAgilityPack
                         }
                     }
                     break;
+
+
                 case ReturnType.InnerText:
                     {
                         foreach (HtmlNode node in htmlNodeCollection)
@@ -387,6 +601,8 @@ namespace HtmlAgilityPack
                         }
                     }
                     break;
+
+
                 case ReturnType.OuterHtml:
                     {
                         foreach (HtmlNode node in htmlNodeCollection)
@@ -395,9 +611,106 @@ namespace HtmlAgilityPack
                         }
                     }
                     break;
+
             }
 
             return result;
+        }
+
+
+        /// <summary>
+        /// Simulate Func method to use in Lambada Expression.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="arg"></param>
+        /// <returns></returns>
+        internal delegate TResult HAPFunc<T, TResult>(T arg);
+
+
+        /// <summary>
+        /// This method works like Where method in LINQ.
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        internal static IEnumerable<TSource> HAPWhere<TSource>(this IEnumerable<TSource> source, HAPFunc<TSource, bool> predicate)
+        {
+            foreach (TSource item in source)
+            {
+                if (predicate(item))
+                {
+                    yield return item;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Check if the type can instantiated.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        internal static bool IsInstantiable(this Type type)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException("type is null");
+            }
+
+
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
+            // checking for having parameterless constructor.
+            if (type.GetConstructor(Type.EmptyTypes) == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }      
+#endif
+
+
+#if NETSTANDARD1_3 || NETSTANDARD1_6
+            // checking for having parameterless constructor.
+            if (type.GetTypeInfo().DeclaredConstructors.HAPWhere(x => x.GetParameters().Length == 0).CountOfIEnumerable() == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+#endif
+
+            throw new NotImplementedException("Can't Target any platform while getting Method methodName from Type type.");
+
+
+        }
+
+
+        /// <summary>
+        /// Returns count of elements stored in IEnumerable of T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        internal static int CountOfIEnumerable<T>(this IEnumerable<T> source)
+        {
+
+            if (source == null)
+            {
+                throw new ArgumentNullException("Parameter source is null while counting the IEnumerable");
+            }
+
+            int counter = 0;
+            foreach (T item in source)
+            {
+                counter++;
+            }
+            return counter;
         }
 
 
@@ -448,6 +761,47 @@ namespace HtmlAgilityPack
             AttributeName = attributeName;
         }
     }
+
+
+
+
+    public class NodeNotFoundException : Exception
+    {
+        public NodeNotFoundException() { }
+        public NodeNotFoundException(string message) : base(message) { }
+        public NodeNotFoundException(string message, Exception inner) : base(message, inner) { }
+    }
+
+
+
+    public class NodeAttributeNotFoundException : Exception
+    {
+        public NodeAttributeNotFoundException() { }
+        public NodeAttributeNotFoundException(string message) : base(message) { }
+        public NodeAttributeNotFoundException(string message, Exception inner) : base(message, inner) { }
+    }
+
+
+    public class MissingXPathException : Exception
+    {
+        public MissingXPathException() { }
+        public MissingXPathException(string message) : base(message) { }
+        public MissingXPathException(string message, Exception inner) : base(message, inner) { }
+    }
+
 }
 
+#pragma warning disable 1685
+namespace System.Runtime.CompilerServices
+{
+    [AttributeUsage(AttributeTargets.Method |
+    AttributeTargets.Class | AttributeTargets.Assembly)]
+    public sealed class ExtensionAttribute : Attribute
+    {
+    }
+}
+
+
 #endif
+
+
