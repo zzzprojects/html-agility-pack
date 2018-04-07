@@ -95,6 +95,7 @@ namespace HtmlAgilityPack
         private bool _useCookies;
         private bool _usingCache;
         private bool _usingCacheAndLoad;
+        private bool _usingCacheIfExists;
         private string _userAgent = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:x.x.x) Gecko/20041107 Firefox/x.x";
 
         /// <summary>
@@ -816,6 +817,16 @@ namespace HtmlAgilityPack
 
                 _cacheOnly = value;
             }
+        }
+
+        /// <summary>
+        /// Gets or Sets a value indicating whether to get document from the cache if exists, otherwise from the web
+        /// A value indicating whether to get document from the cache if exists, otherwise from the web
+        /// </summary>
+        public bool UsingCacheIfExists
+        {
+            get { return _usingCacheIfExists; }
+            set { _usingCacheIfExists = value; }
         }
 
         /// <summary>
@@ -1584,6 +1595,7 @@ namespace HtmlAgilityPack
             _fromCache = false;
             _requestDuration = 0;
             int tc = Environment.TickCount;
+
             if (UsingCache)
             {
                 cachePath = GetCachePath(req.RequestUri);
@@ -1593,23 +1605,26 @@ namespace HtmlAgilityPack
                     oldFile = true;
                 }
             }
-
-            if (_cacheOnly)
+            
+            if (_cacheOnly || _usingCacheIfExists)
             {
-                if (!File.Exists(cachePath))
+                if (File.Exists(cachePath))
+                {
+                    if (path != null)
+                    {
+                        IOLibrary.CopyAlways(cachePath, path);
+                        // touch the file
+                        if (cachePath != null) File.SetLastWriteTime(path, File.GetLastWriteTime(cachePath));
+                    }
+
+                    _fromCache = true;
+                    return HttpStatusCode.NotModified;
+
+                }
+                else if (_cacheOnly)
                 {
                     throw new HtmlWebException("File was not found at cache path: '" + cachePath + "'");
                 }
-
-                if (path != null)
-                {
-                    IOLibrary.CopyAlways(cachePath, path);
-                    // touch the file
-                    if (cachePath != null) File.SetLastWriteTime(path, File.GetLastWriteTime(cachePath));
-                }
-
-                _fromCache = true;
-                return HttpStatusCode.NotModified;
             }
 
             if (_useCookies)
@@ -1835,21 +1850,24 @@ namespace HtmlAgilityPack
                     }
                 }
 
-                if (_cacheOnly)
+                if (_cacheOnly || _usingCacheIfExists)
                 {
-                    if (!File.Exists(cachePath))
-                    {
-                        throw new HtmlWebException("File was not found at cache path: '" + cachePath + "'");
-                    }
+	                if (File.Exists(cachePath))
+	                {
+		                if (path != null)
+		                {
+			                IOLibrary.CopyAlways(cachePath, path);
+			                // touch the file
+			                if (cachePath != null) File.SetLastWriteTime(path, File.GetLastWriteTime(cachePath));
+		                }
+		                _fromCache = true;
+		                return HttpStatusCode.NotModified;
 
-                    if (path != null)
-                    {
-                        IOLibrary.CopyAlways(cachePath, path);
-                        // touch the file
-                        if (cachePath != null) File.SetLastWriteTime(path, File.GetLastWriteTime(cachePath));
-                    }
-                    _fromCache = true;
-                    return HttpStatusCode.NotModified;
+	                }
+	                else if (_cacheOnly)
+	                {
+		                throw new HtmlWebException("File was not found at cache path: '" + cachePath + "'");
+	                }
                 }
 
                 if (_useCookies)

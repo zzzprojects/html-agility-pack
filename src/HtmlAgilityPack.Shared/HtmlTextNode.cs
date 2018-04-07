@@ -3,7 +3,7 @@
 // Forum & Issues: https://github.com/zzzprojects/html-agility-pack
 // License: https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE
 // More projects: http://www.zzzprojects.com/
-// Copyright Â© ZZZ Projects Inc. 2014 - 2017. All rights reserved.
+// Copyright © ZZZ Projects Inc. 2014 - 2017. All rights reserved.
 
 namespace HtmlAgilityPack
 {
@@ -16,7 +16,7 @@ namespace HtmlAgilityPack
 
         private string _text;
 
-        #endregion Fields
+        #endregion
 
         #region Constructors
 
@@ -26,7 +26,7 @@ namespace HtmlAgilityPack
         {
         }
 
-        #endregion Constructors
+        #endregion
 
         #region Properties
 
@@ -76,6 +76,6 @@ namespace HtmlAgilityPack
             }
         }
 
-        #endregion Properties
+        #endregion
     }
 }

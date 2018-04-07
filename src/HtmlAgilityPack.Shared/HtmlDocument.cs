@@ -1767,6 +1767,9 @@ namespace HtmlAgilityPack
                 case "title":
                     isExplicitEnd = nodeName == "title";
                     break;
+                case "p":
+                    isExplicitEnd = nodeName == "div";
+                    break;
                 case "table":
                     isExplicitEnd = nodeName == "table";
                     break;

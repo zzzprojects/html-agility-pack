@@ -1,4 +1,4 @@
-// Description: Html Agility Pack - HTML Parsers, selectors, traversors, manupulators.
+﻿// Description: Html Agility Pack - HTML Parsers, selectors, traversors, manupulators.
 // Website & Documentation: http://html-agility-pack.net
 // Forum & Issues: https://github.com/zzzprojects/html-agility-pack
 // License: https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE
@@ -11,7 +11,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using System.ComponentModel;
 
 namespace HtmlAgilityPack
 {
@@ -339,7 +338,7 @@ namespace HtmlAgilityPack
             }
 
 #if !(NETSTANDARD1_3 || NETSTANDARD1_6)
-            if (type.IsDefined(attributeType,false) == true)
+            if (type.IsDefined(attributeType, false) == true)
             {
                 return true;
             }
@@ -669,7 +668,7 @@ namespace HtmlAgilityPack
             else
             {
                 return true;
-            }      
+            }
 #endif
 
 
@@ -699,7 +698,6 @@ namespace HtmlAgilityPack
         /// <returns></returns>
         internal static int CountOfIEnumerable<T>(this IEnumerable<T> source)
         {
-
             if (source == null)
             {
                 throw new ArgumentNullException("Parameter source is null while counting the IEnumerable");
