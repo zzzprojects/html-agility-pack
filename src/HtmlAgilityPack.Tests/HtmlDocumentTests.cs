@@ -811,6 +811,49 @@ namespace HtmlAgilityPack.Tests
             Assert.AreEqual(0, doc1.DocumentNode.OwnerDocument.ParseErrors.Count());
         }
 
+        [Test]
+        public void SanitizeXmlElementNameWithColon()
+        {
+            var input = @"<RootElement xmlns:MyNamespace=""value"">
+  <value:element />
+</RootElement>";
+            var htmlDoc = new HtmlAgilityPack.HtmlDocument();
+            htmlDoc.LoadHtml(input);
+            htmlDoc.OptionDefaultStreamEncoding = System.Text.Encoding.UTF8; 
+            htmlDoc.OptionOutputAsXml = true;
+            htmlDoc.OptionOutputOriginalCase = true;
+            var xmlDoc = htmlDoc.DocumentNode.WriteTo();
+
+            var expected = @"<?xml version=""1.0"" encoding=""utf-8""?>" +
+                           @"<RootElement xmlns:MyNamespace=""value"">
+  <_value3a_element></_value3a_element>
+</RootElement>";
+
+            Assert.AreEqual(expected, xmlDoc);
+        }
+
+        [Test]
+        public void DoesNotSanitizeXmlElementNameWithColonWhenConfiguredToPreserveXmlNamespaces()
+        {
+            var input = @"<RootElement xmlns:MyNamespace=""value"">
+  <value:element />
+</RootElement>";
+            var htmlDoc = new HtmlAgilityPack.HtmlDocument();
+            htmlDoc.LoadHtml(input);
+            htmlDoc.OptionDefaultStreamEncoding = System.Text.Encoding.UTF8; 
+            htmlDoc.OptionOutputAsXml = true;
+            htmlDoc.OptionOutputOriginalCase = true;
+            htmlDoc.OptionPreserveXmlNamespaces = true;
+            var xmlDoc = htmlDoc.DocumentNode.WriteTo();
+
+            var expected = @"<?xml version=""1.0"" encoding=""utf-8""?>" +
+                           @"<RootElement xmlns:MyNamespace=""value"">
+  <value:element></value:element>
+</RootElement>";
+
+            Assert.AreEqual(expected, xmlDoc);
+        }
+
 
         [HasXPath]
         public class StackOverflowPage
