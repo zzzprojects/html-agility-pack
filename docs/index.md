@@ -344,7 +344,7 @@ var nodes = doc.DocumentNode.Descendants("input")
 						<ul class="list-content">
 							<li><a href="http://html-agility-pack.net/manipulation">AppendChild</a></li>
 							<li><a href="http://html-agility-pack.net/manipulation">CreateNode</a></li>
-							<li><a href="http://html-agility-pack.net/manipulation">InsertAfert</a></li>				
+							<li><a href="http://html-agility-pack.net/manipulation">InsertAfter</a></li>				
 							<li><a href="http://html-agility-pack.net/manipulation">PreprendChild</a></li>
 						</ul>
 						
