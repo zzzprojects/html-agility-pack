@@ -96,7 +96,7 @@
   <Import Project="..\HtmlAgilityPack.Shared\HtmlAgilityPack.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del /f /q $(SolutionDir)..\Nuget\lib\Net40-client\*
-copy "$(TargetDir)Html*.*" $(SolutionDir)..\Nuget\lib\Net40-client\</PostBuildEvent>
+    <PostBuildEvent>del /f /q "$(SolutionDir)..\Nuget\lib\Net40-client\*"
+copy "$(TargetDir)Html*.*" "$(SolutionDir)..\Nuget\lib\Net40-client\"</PostBuildEvent>
   </PropertyGroup>
 </Project>
