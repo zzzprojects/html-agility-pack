@@ -125,7 +125,7 @@ namespace HtmlAgilityPack
 
 
         /// <summary>
-        /// If used together <see cref="OptionOutputAsXml"/> and enabled, Xml namespaces in element names are preserved. Default is false. 
+        /// If used together with <see cref="OptionOutputAsXml"/> and enabled, Xml namespaces in element names are preserved. Default is false.
         /// </summary>
         public bool OptionPreserveXmlNamespaces;
 
