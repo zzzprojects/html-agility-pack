@@ -17,8 +17,8 @@
     <Company>ZZZ Projects Inc.</Company>
     <Product>Html Agility Pack</Product>
     <Description />
-    <PostBuildEvent>del /f /q $(SolutionDir)..\Nuget\lib\NetStandard1_6\*
-copy "$(TargetDir)Html*.*" $(SolutionDir)..\Nuget\lib\NetStandard1_6\*</PostBuildEvent>
+    <PostBuildEvent>del /f /q "$(SolutionDir)..\Nuget\lib\NetStandard1_6\*"
+copy "$(TargetDir)Html*.*" "$(SolutionDir)..\Nuget\lib\NetStandard1_6\*"</PostBuildEvent>
     <Authors>ZZZ Projects Inc.</Authors>
     <AssemblyVersion>1.6.0.0</AssemblyVersion>
     <FileVersion>1.6.0.0</FileVersion>
