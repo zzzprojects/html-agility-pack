@@ -654,6 +654,31 @@ namespace HtmlAgilityPack.Tests
         }
 
         [Test]
+        public void BackslashClosedEmptyHtmlElement()
+        {
+            {
+                var html = @"<html><body><br>bar</body></html>";
+                var document = new HtmlDocument();
+                document.LoadHtml(html);
+                Assert.AreEqual(html, document.DocumentNode.OuterHtml);
+
+                var element = document.DocumentNode.SelectSingleNode("//*[text()[contains(., 'bar')]]");
+                Assert.AreEqual("body", element.Name);
+                Assert.AreEqual("/html[1]/body[1]", element.XPath);
+            }
+
+            {
+                var html = @"<html><body><br\>bar</body></html>";
+                var document = new HtmlDocument();
+                document.LoadHtml(html);
+                Assert.AreEqual(html.Replace(@"<br\>", "<br>"), document.DocumentNode.OuterHtml);
+                var element = document.DocumentNode.SelectSingleNode("//*[text()[contains(., 'bar')]]");
+                Assert.AreEqual("body", element.Name);
+                Assert.AreEqual("/html[1]/body[1]", element.XPath);
+            }
+        }
+
+        [Test]
         public void DeEntitize()
         {
             var html = @"mouse&apos;s house";
