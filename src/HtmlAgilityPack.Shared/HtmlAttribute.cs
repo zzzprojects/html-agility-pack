@@ -68,6 +68,22 @@ namespace HtmlAgilityPack
         }
 
         /// <summary>
+        /// Gets the stream position of the value of this attribute in the document, relative to the start of the document.
+        /// </summary>
+        public int ValueStartIndex
+        {
+            get { return _valuestartindex; }
+        }
+
+        /// <summary>
+        /// Gets the length of the value.
+        /// </summary>
+        public int ValueLength
+        {
+            get { return _valuelength; }
+        }
+
+        /// <summary>
         /// Gets the qualified name of the attribute.
         /// </summary>
         public string Name

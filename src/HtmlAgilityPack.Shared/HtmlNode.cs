@@ -228,7 +228,10 @@ namespace HtmlAgilityPack
             get { return !HasClosingAttributes ? new HtmlAttributeCollection(this) : _endnode.Attributes; }
         }
 
-        internal HtmlNode EndNode
+        /// <summary>
+        /// Gets the closing tag of the node, null if the node is self-closing.
+        /// </summary>
+        public HtmlNode EndNode
         {
             get { return _endnode; }
         }
@@ -459,6 +462,30 @@ namespace HtmlAgilityPack
         {
             get { return _lineposition; }
             internal set { _lineposition = value; }
+        }
+
+        /// <summary>
+        /// Gets the stream position of the area between the opening and closing tag of the node, relative to the start of the document.
+        /// </summary>
+        public int InnerStartIndex
+        {
+            get { return _innerstartindex; }
+        }
+
+        /// <summary>
+        /// Gets the length of the area between the opening and closing tag of the node.
+        /// </summary>
+        public int InnerLength
+        {
+            get { return _innerlength; }
+        }
+
+        /// <summary>
+        /// Gets the length of the entire node, opening and closing tag included.
+        /// </summary>
+        public int OuterLength
+        {
+            get { return _outerlength; }
         }
 
         /// <summary>
