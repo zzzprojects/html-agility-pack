@@ -123,7 +123,6 @@ namespace HtmlAgilityPack
         /// </summary>
         public bool OptionOutputAsXml;
 
-
         /// <summary>
         /// If used together with <see cref="OptionOutputAsXml"/> and enabled, Xml namespaces in element names are preserved. Default is false.
         /// </summary>
@@ -321,7 +320,7 @@ namespace HtmlAgilityPack
                 if (((name[i] >= 'a') && (name[i] <= 'z')) ||
                     ((name[i] >= 'A') && (name[i] <= 'Z')) ||
                     ((name[i] >= '0') && (name[i] <= '9')) ||
-                    ((isAttribute || preserveXmlNamespaces) && name[i] == ':') ||
+                    ((isAttribute && name[i] == ':' || preserveXmlNamespaces) && name[i] == ':') ||
                     //                    (name[i]==':') || (name[i]=='_') || (name[i]=='-') || (name[i]=='.')) // these are bads in fact
                     (name[i] == '_') || (name[i] == '-') || (name[i] == '.'))
                 {

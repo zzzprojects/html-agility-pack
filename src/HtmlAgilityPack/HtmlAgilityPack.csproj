@@ -43,7 +43,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;FX20</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\HtmlAgilityPack.xml</DocumentationFile>
@@ -95,7 +95,9 @@
   <Import Project="..\HtmlAgilityPack.Shared\HtmlAgilityPack.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del /f /q "$(SolutionDir)..\Nuget\lib\Net20\*"
-copy "$(TargetDir)Html*.*" "$(SolutionDir)..\Nuget\lib\Net20\"</PostBuildEvent>
+    <PostBuildEvent>if $(ConfigurationName) == Release (
+del /f /"q $(SolutionDir)..\Nuget\lib\Net20\*"
+copy "$(TargetDir)Html*.*" "$(SolutionDir)..\Nuget\lib\Net20\"
+)</PostBuildEvent>
   </PropertyGroup>
 </Project>

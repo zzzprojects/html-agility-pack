@@ -819,7 +819,7 @@ namespace HtmlAgilityPack.Tests
 </RootElement>";
             var htmlDoc = new HtmlAgilityPack.HtmlDocument();
             htmlDoc.LoadHtml(input);
-            htmlDoc.OptionDefaultStreamEncoding = System.Text.Encoding.UTF8; 
+            htmlDoc.OptionDefaultStreamEncoding = System.Text.Encoding.UTF8;
             htmlDoc.OptionOutputAsXml = true;
             htmlDoc.OptionOutputOriginalCase = true;
             var xmlDoc = htmlDoc.DocumentNode.WriteTo();
@@ -840,7 +840,7 @@ namespace HtmlAgilityPack.Tests
 </RootElement>";
             var htmlDoc = new HtmlAgilityPack.HtmlDocument();
             htmlDoc.LoadHtml(input);
-            htmlDoc.OptionDefaultStreamEncoding = System.Text.Encoding.UTF8; 
+            htmlDoc.OptionDefaultStreamEncoding = System.Text.Encoding.UTF8;
             htmlDoc.OptionOutputAsXml = true;
             htmlDoc.OptionOutputOriginalCase = true;
             htmlDoc.OptionPreserveXmlNamespaces = true;
@@ -853,6 +853,7 @@ namespace HtmlAgilityPack.Tests
 
             Assert.AreEqual(expected, xmlDoc);
         }
+
 
 
         [HasXPath]

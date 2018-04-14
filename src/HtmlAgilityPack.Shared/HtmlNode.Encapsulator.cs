@@ -789,7 +789,7 @@ namespace HtmlAgilityPack
 
 }
 
-#pragma warning disable 1685
+#if FX20 
 namespace System.Runtime.CompilerServices
 {
     [AttributeUsage(AttributeTargets.Method |
@@ -798,8 +798,5 @@ namespace System.Runtime.CompilerServices
     {
     }
 }
-
-
 #endif
-
-
+#endif

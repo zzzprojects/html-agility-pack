@@ -12,16 +12,16 @@
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>HtmlAgilityPack.snk</AssemblyOriginatorKeyFile>
     <AssemblyName>HtmlAgilityPack</AssemblyName>
-    <Version>1.5.6</Version>
-    <Copyright>Copyright © ZZZ Projects Inc. 2014 - 2017</Copyright>
+    <Version>1.8.0</Version>
+    <Copyright>Copyright © ZZZ Projects Inc.</Copyright>
     <Company>ZZZ Projects Inc.</Company>
     <Product>Html Agility Pack</Product>
     <Description />
     <PostBuildEvent>del /f /q "$(SolutionDir)..\Nuget\lib\NetStandard1_6\*"
 copy "$(TargetDir)Html*.*" "$(SolutionDir)..\Nuget\lib\NetStandard1_6\*"</PostBuildEvent>
     <Authors>ZZZ Projects Inc.</Authors>
-    <AssemblyVersion>1.6.0.0</AssemblyVersion>
-    <FileVersion>1.6.0.0</FileVersion>
+    <AssemblyVersion>1.8.0.0</AssemblyVersion>
+    <FileVersion>1.8.0.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
