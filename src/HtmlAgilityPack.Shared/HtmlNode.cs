@@ -1684,7 +1684,7 @@ namespace HtmlAgilityPack
 
                             if (name.Trim().Length == 0)
                                 break;
-                            name = HtmlDocument.GetXmlName(name);
+                            name = HtmlDocument.GetXmlName(name, false, _ownerdocument.OptionPreserveXmlNamespaces);
                         }
                         else
                             break;

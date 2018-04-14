@@ -123,6 +123,12 @@ namespace HtmlAgilityPack
         /// </summary>
         public bool OptionOutputAsXml;
 
+
+        /// <summary>
+        /// If used together with <see cref="OptionOutputAsXml"/> and enabled, Xml namespaces in element names are preserved. Default is false.
+        /// </summary>
+        public bool OptionPreserveXmlNamespaces;
+
         /// <summary>
         /// Defines if attribute value output must be optimized (not bound with double quotes if it is possible). Default is false.
         /// </summary>
@@ -301,10 +307,10 @@ namespace HtmlAgilityPack
         /// <returns>A string that is a valid XML name.</returns>
         public static string GetXmlName(string name)
         {
-            return GetXmlName(name, false);
+            return GetXmlName(name, false, false);
         }
 
-        public static string GetXmlName(string name, bool isAttribute)
+        public static string GetXmlName(string name, bool isAttribute, bool preserveXmlNamespaces)
         {
             string xmlname = string.Empty;
             bool nameisok = true;
@@ -315,7 +321,7 @@ namespace HtmlAgilityPack
                 if (((name[i] >= 'a') && (name[i] <= 'z')) ||
                     ((name[i] >= 'A') && (name[i] <= 'Z')) ||
                     ((name[i] >= '0') && (name[i] <= '9')) ||
-                    (isAttribute && name[i] == ':') ||
+                    ((isAttribute || preserveXmlNamespaces) && name[i] == ':') ||
                     //                    (name[i]==':') || (name[i]=='_') || (name[i]=='-') || (name[i]=='.')) // these are bads in fact
                     (name[i] == '_') || (name[i] == '-') || (name[i] == '.'))
                 {
