@@ -12,4 +12,12 @@ Z.Lab/
 _ReSharper.*
 *.ReSharper.user
 *.resharper.user 
-.vs/
+*.json
+*.sqlite
+*.dll
+*.pdb
+*.xml
+*.lock
+*.ide
+*.ide-shm
+*.ide-wal
