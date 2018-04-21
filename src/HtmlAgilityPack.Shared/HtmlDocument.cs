@@ -1295,7 +1295,7 @@ namespace HtmlAgilityPack
                             continue;
                         }
 
-                        if (_c == '/')
+                        if (_c == '/' || _c == '\\')
                         {
                             CloseParentImplicitExplicitNode();
 
