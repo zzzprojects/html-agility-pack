@@ -2342,6 +2342,8 @@ namespace HtmlAgilityPack
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         public async Task<HtmlDocument> LoadFromWebAsync(Uri uri, Encoding encoding, NetworkCredential credentials, CancellationToken cancellationToken)
         {
+            HtmlDocument doc = new HtmlDocument();
+             
             var clientHandler = new HttpClientHandler();
             if (credentials == null)
                 clientHandler.UseDefaultCredentials = true;
@@ -2351,25 +2353,25 @@ namespace HtmlAgilityPack
             var client = new HttpClient(clientHandler);
 
             var e = await client.GetAsync(uri, cancellationToken).ConfigureAwait(false);
-            if (e.StatusCode == HttpStatusCode.OK)
+
+            var html = string.Empty;
+            if (encoding != null)
             {
-                var html = string.Empty;
-                if (encoding != null)
+                using (var sr = new StreamReader(await e.Content.ReadAsStreamAsync().ConfigureAwait(false), encoding))
                 {
-                    using (var sr = new StreamReader(await e.Content.ReadAsStreamAsync().ConfigureAwait(false), encoding))
-                    {
-                        html = sr.ReadToEnd();
-                    }
+                    html = sr.ReadToEnd();
                 }
-                else
-                    html = await e.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var doc = new HtmlDocument();
-                if (PreHandleDocument != null)
-                    PreHandleDocument(doc);
-                doc.LoadHtml(html);
-                return doc;
             }
-            throw new Exception("Error downloading html");
+            else
+                html = await e.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            if (PreHandleDocument != null)
+                PreHandleDocument(doc);
+
+            if (html != null)
+                doc.LoadHtml(html);
+            
+            return doc;
         }
 #endif
 

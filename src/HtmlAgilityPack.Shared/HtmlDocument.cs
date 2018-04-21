@@ -27,6 +27,9 @@ namespace HtmlAgilityPack
         /// <summary>Default builder to use in the HtmlDocument constructor</summary>
         public static Action<HtmlDocument> DefaultBuilder { get; set; }
 
+        /// <summary>Action to execute before the Parse is executed</summary>
+        public Action<HtmlDocument> ParseExecuting { get; set; }
+
         #endregion
 
         #region Fields
@@ -57,8 +60,9 @@ namespace HtmlAgilityPack
         private int _remainderOffset;
         private ParseState _state;
         private Encoding _streamencoding;
-        internal string Text;
 
+        /// <summary>The HtmlDocument Text. Careful if you modify it.</summary>
+        public string Text;
 
         /// <summary>True to stay backward compatible with previous version of HAP. This option does not guarantee 100% compatibility.</summary>
         public bool BackwardCompatibility = true;
@@ -320,7 +324,7 @@ namespace HtmlAgilityPack
                 if (((name[i] >= 'a') && (name[i] <= 'z')) ||
                     ((name[i] >= 'A') && (name[i] <= 'Z')) ||
                     ((name[i] >= '0') && (name[i] <= '9')) ||
-                    ((isAttribute && name[i] == ':' || preserveXmlNamespaces) && name[i] == ':') ||
+                    ((isAttribute || preserveXmlNamespaces) && name[i] == ':') ||
                     //                    (name[i]==':') || (name[i]=='_') || (name[i]=='-') || (name[i]=='.')) // these are bads in fact
                     (name[i] == '_') || (name[i] == '-') || (name[i] == '.'))
                 {
@@ -1227,6 +1231,11 @@ namespace HtmlAgilityPack
 
         private void Parse()
         {
+            if (ParseExecuting != null)
+            {
+                ParseExecuting(this);
+            }
+
             int lastquote = 0;
             if (OptionComputeChecksum)
             {
@@ -1645,6 +1654,8 @@ namespace HtmlAgilityPack
                                         _currentnode._outerlength);
                                     script._outerlength = _index - 1 - script._outerstartindex;
                                     script._streamposition = script._outerstartindex;
+                                    script._line = _currentnode.Line;
+                                    script._lineposition = _currentnode.LinePosition + _currentnode._namelength + 2;   
                                     _currentnode.AppendChild(script);
 
 
