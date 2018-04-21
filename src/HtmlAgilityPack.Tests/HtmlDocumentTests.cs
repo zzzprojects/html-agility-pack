@@ -620,6 +620,27 @@ namespace HtmlAgilityPack.Tests
         }
 
         [Test]
+        public void TextInsideScriptTagShouldHaveCorrectStreamPosition()
+        {
+            {
+                var document = new HtmlDocument();
+                document.LoadHtml(@"<scrapt>foo</scrapt>");
+                var scraptText = document.DocumentNode.FirstChild.FirstChild;
+                Assert.AreEqual(8, scraptText.StreamPosition);
+                Assert.AreEqual(1, scraptText.Line);
+                Assert.AreEqual(9, scraptText.LinePosition);
+            }
+            {
+                var document = new HtmlDocument();
+                document.LoadHtml(@"<script>foo</script>");
+                var scriptText = document.DocumentNode.FirstChild.FirstChild;
+                Assert.AreEqual(8, scriptText.StreamPosition);
+//            Assert.AreEqual(1, scriptText.Line);
+//            Assert.AreEqual(9, scriptText.LinePosition);
+            }
+        }
+
+        [Test]
         public void TestNumericTag()
         {
             var html = @"<div><1</div>";

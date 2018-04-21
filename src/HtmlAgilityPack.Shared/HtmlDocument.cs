@@ -1644,6 +1644,7 @@ namespace HtmlAgilityPack
                                         _currentnode._outerstartindex +
                                         _currentnode._outerlength);
                                     script._outerlength = _index - 1 - script._outerstartindex;
+                                    script._streamposition = script._outerstartindex;
                                     _currentnode.AppendChild(script);
 
 
