@@ -1,10 +1,4 @@
----
-layout: default
-title: HTML Parser
-permalink: parser
----
-
-{% include template-h1.html %}
+# HTML Parser
 
 HTML Parser allow you to parse HTML and return an HtmlDocument.
 

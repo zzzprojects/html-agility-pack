@@ -1,10 +1,4 @@
----
-layout: default
-title: Descendants
-permalink: descendants
----
-
-{% include template-h1.html %}
+# Descendants
 
 ## public IEnumerable < HtmlNode > Descendants([int level = 0])
 

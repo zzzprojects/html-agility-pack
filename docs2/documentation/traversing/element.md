@@ -1,10 +1,4 @@
----
-layout: default
-title: Element
-permalink: element
----
-
-{% include template-h1.html %}
+# Element
 
 ## public HtmlNode Element(string name)
 

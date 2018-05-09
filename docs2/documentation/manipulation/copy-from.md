@@ -1,10 +1,4 @@
----
-layout: default
-title: CopyFrom
-permalink: copy-from
----
-
-{% include template-h1.html %}
+# CopyFrom
 
 ## public void CopyFrom(HtmlNode node)
 

@@ -1,10 +1,4 @@
----
-layout: default
-title: CreateNode
-permalink: create-node
----
-
-{% include template-h1.html %}
+# CreateNode
 
 ## public static HtmlNode CreateNode(string html)
 

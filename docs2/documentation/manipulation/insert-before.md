@@ -1,10 +1,4 @@
----
-layout: default
-title: InsertBefore
-permalink: insert-before
----
-
-{% include template-h1.html %}
+# InsertBefore
 
 ## public HtmlNode InsertBefore(HtmlNode newChild, HtmlNode refChild)
 

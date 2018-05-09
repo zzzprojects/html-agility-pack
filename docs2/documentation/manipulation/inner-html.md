@@ -1,10 +1,4 @@
----
-layout: default
-title: InnerHtml
-permalink: inner-html
----
-
-{% include template-h1.html %}
+# InnerHtml
 
 ## public virtual string InnerHtml { get; set; }
 

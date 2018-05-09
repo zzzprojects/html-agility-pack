@@ -1,10 +1,4 @@
----
-layout: default
-title: From Web
-permalink: from-web
----
-
-{% include template-h1.html %}
+# From Web
 
 ## Load Html From Web
 

@@ -1,10 +1,4 @@
----
-layout: default
-title: PrependChildren
-permalink: prepend-children
----
-
-{% include template-h1.html %}
+# PrependChildren
 
 ## public void PrependChildren(HtmlNodeCollection newChildren)
 

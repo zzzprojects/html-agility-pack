@@ -1,10 +1,4 @@
----
-layout: default
-title: Clone
-permalink: clone
----
-
-{% include template-h1.html %}
+# Clone
 
 ## public HtmlNode Clone()
 

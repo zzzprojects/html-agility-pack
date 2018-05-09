@@ -1,10 +1,4 @@
----
-layout: default
-title: HTML Manipulation
-permalink: manipulation
----
-
-{% include template-h1.html %}
+# HTML Manipulation
 
 Traversing allow you to traverse through HTML node.
 

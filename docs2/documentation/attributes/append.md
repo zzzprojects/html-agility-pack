@@ -1,10 +1,4 @@
----
-layout: default
-title: Append
-permalink: append
----
-
-{% include template-h1.html %}
+# Append
 
 ## public HtmlAttribute Append(string name)
 

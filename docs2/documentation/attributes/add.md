@@ -1,10 +1,4 @@
----
-layout: default
-title: Add
-permalink: add
----
-
-{% include template-h1.html %}
+# Add
 
 ## public void Add(HtmlAttribute item)
 

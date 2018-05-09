@@ -1,10 +1,4 @@
----
-layout: default
-title: HTML Selectors
-permalink: selectors
----
-
-{% include template-h1.html %}
+# HTML Selectors
 
 Selectors allow you to select HTML node from HtmlDocument.
 

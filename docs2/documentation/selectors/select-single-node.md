@@ -1,10 +1,4 @@
----
-layout: default
-title: HTML SelectSingleNode
-permalink: select-single-node
----
-
-{% include template-h1.html %}
+# HTML SelectSingleNode
 
 ## SelectSingleNode Method
 

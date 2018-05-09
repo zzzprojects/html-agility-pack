@@ -1,10 +1,4 @@
----
-layout: default
-title: HTML Traversing
-permalink: traversing
----
-
-{% include template-h1.html %}
+# HTML Traversing
 
 Traversing allow you to traverse through HTML node.
 

@@ -1,10 +1,4 @@
----
-layout: default
-title: ChildNodes
-permalink: child-nodes
----
-
-{% include template-h1.html %}
+# ChildNodes
 
 ## public HtmlNodeCollection ChildNodes { get; }
 

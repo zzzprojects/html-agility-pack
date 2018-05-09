@@ -1,10 +1,4 @@
----
-layout: default
-title: RemoveChild
-permalink: remove-child
----
-
-{% include template-h1.html %}
+# RemoveChild
 
 ## public HtmlNode RemoveChild(HtmlNode oldChild) 
 

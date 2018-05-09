@@ -1,10 +1,4 @@
----
-layout: default
-title: RemoveAll
-permalink: remove-all
----
-
-{% include template-h1.html %}
+# RemoveAll
 
 ## public void RemoveAll() 
 

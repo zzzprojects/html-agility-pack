@@ -1,10 +1,4 @@
----
-layout: default
-title: HTML Writer
-permalink: writer
----
-
-{% include template-h1.html %}
+# HTML Writer
 
 Save HtmlDocument && Write HtmlNode
 

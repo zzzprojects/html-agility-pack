@@ -1,10 +1,4 @@
----
-layout: default
-title: HTML SelectNodes
-permalink: select-nodes
----
-
-{% include template-h1.html %}
+# HTML SelectNodes
 
 ## SelectNodes Method
 

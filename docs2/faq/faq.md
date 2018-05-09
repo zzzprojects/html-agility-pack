@@ -1,10 +1,4 @@
----
-layout: default
-title: FAQ
-permalink: faq
----
-
-{% include template-h1.html %}
+# FAQ
 
 _Soon availaible_
 

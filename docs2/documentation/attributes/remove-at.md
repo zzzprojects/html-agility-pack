@@ -1,10 +1,4 @@
----
-layout: default
-title: RemoveAt
-permalink: remove-at
----
-
-{% include template-h1.html %}
+# RemoveAt
 
 ## public void RemoveAt(int index)
 

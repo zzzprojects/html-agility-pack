@@ -1,10 +1,4 @@
----
-layout: default
-title: WriteTo
-permalink: write-to
----
-
-{% include template-h1.html %}
+# WriteTo
 
 ## public string WriteTo()
 

@@ -1,10 +1,4 @@
----
-layout: default
-title: From File
-permalink: from-file
----
-
-{% include template-h1.html %}
+# From File
 
 ## Load Html From File
 

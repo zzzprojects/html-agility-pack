@@ -1,10 +1,4 @@
----
-layout: default
-title: OuterHtml
-permalink: outer-html
----
-
-{% include template-h1.html %}
+# OuterHtml
 
 ## public virtual string OuterHtml { get; }
 

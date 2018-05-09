@@ -1,10 +1,4 @@
----
-layout: default
-title: HTML Attributes
-permalink: attributes
----
-
-{% include template-h1.html %}
+# HTML Attributes
 
 Traversing allow you to traverse through HTML node.
 

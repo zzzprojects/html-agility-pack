@@ -1,10 +1,4 @@
----
-layout: default
-title: Html Agility Pack Tutorials & Examples
-permalink: tutorials
----
-
-<h1 class="text-center" style="margin-bottom: 60px; font-size: 60px">Html Agility Pack Tutorials & Examples</h1>
+# Html Agility Pack Tutorials & Examples
 
 <div id="banner-leaderboard"><a href='http://entityframework-extensions.net/?z=hap&y=leaderboard'><img src='{{ site.github.url }}/images/banners/entityframework-extensions-728x90.jpg'></a></div>
 

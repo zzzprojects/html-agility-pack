@@ -1,10 +1,4 @@
----
-layout: default
-title: Contact us
-permalink: contact-us
----
-
-{% include template-h1.html %}
+# Contact us
 
 ## Test our `Outstanding` Support
 We usually answer within the next business day, hour, or minutes!

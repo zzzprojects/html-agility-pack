@@ -1,10 +1,4 @@
----
-layout: default
-title: ReplaceChild
-permalink: replace-child
----
-
-{% include template-h1.html %}
+# ReplaceChild
 
 ## public HtmlNode ReplaceChild(HtmlNode newChild, HtmlNode oldChild)
 

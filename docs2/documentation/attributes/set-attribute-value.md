@@ -1,10 +1,4 @@
----
-layout: default
-title: SetAttributeValue
-permalink: set-attribute-value
----
-
-{% include template-h1.html %}
+# SetAttributeValue
 
 ## public HtmlAttribute SetAttributeValue(string name, string value)
 

@@ -1,10 +1,4 @@
----
-layout: default
-title: HTML Utilities
-permalink: utilities
----
-
-{% include template-h1.html %}
+# HTML Utilities
 
 HtmlDocument Utilities
 

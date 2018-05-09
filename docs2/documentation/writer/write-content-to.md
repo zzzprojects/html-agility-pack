@@ -1,10 +1,4 @@
----
-layout: default
-title: WriteContentTo
-permalink: write-content-to
----
-
-{% include template-h1.html %}
+# WriteContentTo
 
 ## public void WriteContentTo()
 

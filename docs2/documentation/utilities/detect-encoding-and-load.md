@@ -1,10 +1,4 @@
----
-layout: default
-title: DetectEncodingAndLoad
-permalink: detect-encoding-and-load
----
-
-{% include template-h1.html %}
+# DetectEncodingAndLoad
 
 ## public void DetectEncodingAndLoad(string path)
 

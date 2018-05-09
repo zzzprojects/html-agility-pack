@@ -1,10 +1,4 @@
----
-layout: default
-title: Third Party Library
-permalink: third-party-library
----
-
-{% include template-h1.html %}
+# Third Party Library
 
 - Css Selectors
    - [Fizzler](#fizzler)

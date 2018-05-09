@@ -1,10 +1,4 @@
----
-layout: default
-title: HAP - API
-permalink: api
----
-
-{% include template-h1.html %}
+# HAP - API
 
 <ul>
   <li><a href="parser">Parser</a></li>

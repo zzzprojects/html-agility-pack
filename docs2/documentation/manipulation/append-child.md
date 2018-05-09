@@ -1,10 +1,4 @@
----
-layout: default
-title: AppendChild
-permalink: append-child
----
-
-{% include template-h1.html %}
+# AppendChild
 
 ## public HtmlNode AppendChild(HtmlNode newChild)
 

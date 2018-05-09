@@ -1,10 +1,4 @@
----
-layout: default
-title: InnerText
-permalink: inner-text
----
-
-{% include template-h1.html %}
+# InnerText
 
 ## public virtual string InnerText { get; }
 

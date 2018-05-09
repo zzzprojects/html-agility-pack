@@ -1,10 +1,4 @@
----
-layout: default
-title: Save
-permalink: save
----
-
-{% include template-h1.html %}
+# Save
 
 ## public void Save(Stream outStream)
 

@@ -1,10 +1,4 @@
----
-layout: default
-title: RemoveAllChildren
-permalink: remove-all-children
----
-
-{% include template-h1.html %}
+# RemoveAllChildren
 
 ## public void RemoveAll() 
 

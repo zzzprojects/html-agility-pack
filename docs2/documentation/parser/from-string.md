@@ -1,10 +1,4 @@
----
-layout: default
-title: From String
-permalink: from-string
----
-
-{% include template-h1.html %}
+# From String
 
 ## Load Html From String
 

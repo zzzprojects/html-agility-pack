@@ -1,10 +1,4 @@
----
-layout: default
-title: Remove
-permalink: remove-attribute
----
-
-{% include template-h1.html %}
+# Remove
 
 ## public void Remove()
 

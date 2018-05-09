@@ -1,10 +1,4 @@
----
-layout: default
-title: DetectEncoding
-permalink: detect-encoding
----
-
-{% include template-h1.html %}
+# DetectEncoding
 
 ## public Encoding DetectEncoding(Stream stream)
 

@@ -1,10 +1,4 @@
----
-layout: default
-title: PrependChild
-permalink: prepend-child
----
-
-{% include template-h1.html %}
+# PrependChild
 
 ## public HtmlNode PrependChild(HtmlNode newChild)
 

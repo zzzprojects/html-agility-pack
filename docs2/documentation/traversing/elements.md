@@ -1,10 +1,4 @@
----
-layout: default
-title: Elements
-permalink: elements
----
-
-{% include template-h1.html %}
+# Elements
 
 ## public IEnumerable < HtmlNode > Elements(string name)
 

@@ -1,10 +1,4 @@
----
-layout: default
-title: InsertAfter
-permalink: insert-after
----
-
-{% include template-h1.html %}
+# InsertAfter
 
 ## public HtmlNode InsertAfter(HtmlNode newChild, HtmlNode refChild)
 
