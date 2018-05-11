@@ -233,7 +233,12 @@ namespace HtmlAgilityPack
         /// <returns>The appended attribute.</returns>
         public HtmlAttribute Append(HtmlAttribute newAttribute)
         {
-            if (newAttribute == null)
+	        if (_ownernode.NodeType == HtmlNodeType.Text || _ownernode.NodeType == HtmlNodeType.Comment)
+	        {
+				throw new Exception("A Text or Comment node cannot have attributes.");
+	        }
+				  
+			if (newAttribute == null)
             {
                 throw new ArgumentNullException("newAttribute");
             }

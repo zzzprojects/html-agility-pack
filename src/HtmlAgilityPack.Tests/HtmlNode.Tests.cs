@@ -40,5 +40,32 @@ namespace HtmlAgilityPack.Tests
             Assert.IsNotNull(InnerHtml);
             Assert.IsNotNull(InnerText);
         }
-    }
+
+
+	    [Test]
+	    public void checkAttributForTextComment()
+	    {
+		    var doc = new HtmlAgilityPack.HtmlDocument();
+		    doc.LoadHtml(@"<html><body><div id='foo'><span> some</span> text</div></body></html>");
+		    var div = doc.GetElementbyId("foo");
+		    int count = 0;
+		    Exception exception = null;
+		    foreach (var textNode in div.ChildNodes)
+		    {
+			    try
+			    {
+				    textNode.Id = "1";
+				    count++;
+			    }
+			    catch (Exception e)
+			    {
+				    exception = e;
+
+			    }
+		    }
+
+		    Assert.AreEqual(count, 1);
+		    Assert.IsNotNull(exception);
+	    }
+	}
 }

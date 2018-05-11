@@ -96,6 +96,7 @@ namespace HtmlAgilityPack
             ElementsFlags.Add("script", HtmlElementFlag.CData);
             ElementsFlags.Add("style", HtmlElementFlag.CData);
             ElementsFlags.Add("noxhtml", HtmlElementFlag.CData);
+            ElementsFlags.Add("textarea", HtmlElementFlag.CData);
 
             // tags that can not contain other tags
             ElementsFlags.Add("base", HtmlElementFlag.Empty);

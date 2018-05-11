@@ -149,6 +149,21 @@ namespace HtmlAgilityPack.Tests
             Assert.AreEqual("http://something.com", a.Value);
         }
 
+        [Test]
+        public void testTEXTAREA()
+        {
+            {
+                var doc = new HtmlAgilityPack.HtmlDocument();
+                doc.LoadHtml(@"<script><div>hello</div></script><TEXTAREA>Text in the <div>hello</div>area</TEXTAREA>");
+                HtmlNodeCollection divs = doc.DocumentNode.SelectNodes("//div");
+
+                Assert.IsNull(divs);
+
+                HtmlNode ta = doc.DocumentNode.SelectSingleNode("//textarea");
+                Assert.IsTrue(ta.InnerHtml.Contains("div"));
+            }
+        }
+
         //[Test]
         //public void CreateComment()
         //{
