@@ -1,4 +1,4 @@
-# From Web
+# From Browser
 
 ## Load Html From Browser
 
