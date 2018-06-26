@@ -13,7 +13,7 @@ namespace HtmlAgilityPack
         /// </summary>
         public HtmlDocument Document{get;set;}
         /// <summary>
-        /// If an error occured when loading the document, null if not
+        /// If an error occurred when loading the document, null if not
         /// </summary>
         public Exception Error;
 
