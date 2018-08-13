@@ -40,7 +40,7 @@ Removes the specified child node. RemoveChild method is a member of **HtmlAgilit
 
 oldChild: The node being removed. May not be null.
 
-keepGrandChildren: true to keep grand children of the node, false otherwise.
+keepGrandChildren: true to keep grandchildren of the node, false otherwise.
 
 ### Returns:
 
