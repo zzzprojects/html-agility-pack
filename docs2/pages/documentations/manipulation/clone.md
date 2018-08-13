@@ -10,7 +10,7 @@ The duplicate of the node.
 
 ### Example
 
-The following example creates a buplicate of the node. 
+The following example creates a duplicate of the node. 
 
 ```csharp
 
