@@ -14,7 +14,7 @@ The node removed.
 
 ### Examples
 
-The following example remove the child Node h1.
+The following example remove the child node h1.
 
 ```csharp
 
@@ -40,7 +40,7 @@ Removes the specified child node. RemoveChild method is a member of **HtmlAgilit
 
 oldChild: The node being removed. May not be null.
 
-keepGrandChildren: true to keep grand children ofthe node, false otherwise.
+keepGrandChildren: true to keep grand children of the node, false otherwise.
 
 ### Returns:
 
@@ -48,7 +48,7 @@ The node removed.
 
 ### Examples
 
-The following example remove the child node but will keep grand child node.
+The following example remove the child node but will keep grandchild one.
 
 ```csharp
 
