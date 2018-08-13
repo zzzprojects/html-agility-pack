@@ -17,14 +17,14 @@ Traversing allow you to traverse through HTML node.
 
 | Name | Description |
 | :--- | :---------- |
-| [Ancestors()](ancestors) | Gets all the ancestor of the node.  |
-| [Ancestors(String)](ancestors#public-ienumerable--htmlnode--ancestorsstring-name) | Gets ancestors with matching name. |
+| [Ancestors()](ancestors) | Gets all the ancestors of the node.  |
+| [Ancestors(String)](ancestors#public-ienumerable--htmlnode--ancestorsstring-name) | Gets ancestors with matching names. |
 | [AncestorsAndSelf()](ancestors-and-self) | Gets all anscestor nodes and the current node. |
 | [AncestorsAndSelf(String)](ancestors-and-self#public-ienumerable--htmlnode--ancestorsandselfstring-name) | Gets all anscestor nodes and the current node with matching name. |
-| [DescendantNodes](descendant-nodes) | Gets all Descendant nodes for this node and each of child nodes |
+| [DescendantNodes](descendant-nodes) | Gets all descendant nodes for this node and each of child nodes |
 | [DescendantNodesAndSelf](descendant-nodes-and-self) | Returns a collection of all descendant nodes of this element, in document order |
-| [Descendants()](descendants) | Gets all Descendant nodes in enumerated list |
-| [Descendants(String)](descendants#public-ienumerable--htmlnode--descendantsstring-name) | Get all descendant nodes with matching name |
+| [Descendants()](descendants) | Gets all descendant nodes in enumerated list |
+| [Descendants(String)](descendants#public-ienumerable--htmlnode--descendantsstring-name) | Get all descendant nodes with matching names |
 | [DescendantsAndSelf()](descendants-and-self) | Returns a collection of all descendant nodes of this element, in document order |
 | [DescendantsAndSelf(String)](descendants-and-self#public-ienumerable--htmlnode--descendantsandselfstring-name) | Gets all descendant nodes including this node |
 | [Element](element) | Gets first generation child node matching name |

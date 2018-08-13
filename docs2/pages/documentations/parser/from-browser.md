@@ -2,7 +2,7 @@
 
 ## Load Html From Browser
 
-HtmlWeb.Load method gets an HTML document from an web browser. It makes possible to wait for JavaScript to be run by customizing the isBrowserScriptCompleted parameter. 
+HtmlWeb.Load method gets an HTML document from a web browser. It makes it possible to wait for JavaScript to be run by customizing the isBrowserScriptCompleted parameter. 
 
 ### Example
 

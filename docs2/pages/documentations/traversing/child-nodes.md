@@ -6,7 +6,7 @@ Gets all the children of the node. ChildNodes is a member of **HtmlAgilityPack.H
 
 ### Example
 
-The following example displays all the children element of the node.
+The following example displays all the children elements of the node.
 
 ```csharp
 
