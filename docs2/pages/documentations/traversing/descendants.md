@@ -45,11 +45,11 @@ name: The name of the descendant node.
 
 ### Returns:
 
-Returns a collection of all descendant nodes with matching name.
+Returns a collection of all descendant nodes with matching names.
 
 ### Example
 
-The following example displays the name of all the descendant nodes with matching name.
+The following example displays the name of all the descendant nodes with matching names.
 
 ```csharp
 
