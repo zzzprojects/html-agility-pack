@@ -48,7 +48,7 @@ The node removed.
 
 ### Examples
 
-The following example remove the child node but will keep grandchild one.
+The following example remove the child node but will keep grandchild node.
 
 ```csharp
 
