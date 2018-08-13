@@ -2,7 +2,7 @@
 
 ## public IEnumerable < HtmlNode > Elements(string name)
 
-Gets first generation child nodes with matching name. Elements method is a member of **HtmlAgilityPack.HtmlNode**
+Gets first generation child nodes with matching names. Elements method is a member of **HtmlAgilityPack.HtmlNode**
 
 ### Parameters:
 
@@ -10,11 +10,11 @@ name: The name of the child node.
 
 ### Returns:
 
-Returns a collection of first generation child nodes with matching name.
+Returns a collection of first generation child nodes with matching names.
 
 ### Example
 
-The following example displays the first generation child nodes with matching name.
+The following example displays the first-generation child nodes with matching names.
 
 ```csharp
 
