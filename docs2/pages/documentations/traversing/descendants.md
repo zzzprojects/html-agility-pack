@@ -37,7 +37,7 @@ Click [here](https://dotnetfiddle.net/gygZsT) to run this example.
 
 ## public IEnumerable < HtmlNode > Descendants(string name)
 
-Get all descendant nodes with matching name. Descendants method is a member of **HtmlAgilityPack.HtmlNode**
+Get all descendant nodes with matching names. Descendants method is a member of **HtmlAgilityPack.HtmlNode**
 
 ### Parameters:
 
