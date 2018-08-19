@@ -1167,20 +1167,30 @@ namespace HtmlAgilityPack
                 throw new HtmlWebException("Cache is not enabled. Set UsingCache to true first.");
             }
 
-            string cachePath;
+			string cachePath;
             if (uri.AbsolutePath == "/")
             {
                 cachePath = Path.Combine(_cachePath, ".htm");
             }
             else
             {
-                if (uri.AbsolutePath[uri.AbsolutePath.Length - 1] == Path.AltDirectorySeparatorChar)
+
+	            string absolutePathWithoutBadChar = uri.AbsolutePath;
+
+	            string invalid = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
+
+	            foreach (char c in invalid)
+	            {
+		            absolutePathWithoutBadChar = absolutePathWithoutBadChar.Replace(c.ToString(), "");
+	            }
+
+				if (uri.AbsolutePath[uri.AbsolutePath.Length - 1] == Path.AltDirectorySeparatorChar)
                 {
-                    cachePath = Path.Combine(_cachePath, (uri.Host + uri.AbsolutePath.TrimEnd(Path.AltDirectorySeparatorChar)).Replace('/', '\\') + ".htm");
+                    cachePath = Path.Combine(_cachePath, (uri.Host + absolutePathWithoutBadChar.TrimEnd(Path.AltDirectorySeparatorChar)).Replace('/', '\\') + ".htm");
                 }
                 else
                 {
-                    cachePath = Path.Combine(_cachePath, (uri.Host + uri.AbsolutePath.Replace('/', '\\')));
+                    cachePath = Path.Combine(_cachePath, (uri.Host + absolutePathWithoutBadChar.Replace('/', '\\')));
                 }
             }
 

@@ -1744,7 +1744,7 @@ namespace HtmlAgilityPack
                         else
                             WriteContentTo(outText, level);
 
-                        if (!_isImplicitEnd)
+                        if (_ownerdocument.OptionOutputAsXml || !_isImplicitEnd)
                         {
                             outText.Write("</" + name);
                             if (!_ownerdocument.OptionOutputAsXml)

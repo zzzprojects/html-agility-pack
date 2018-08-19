@@ -291,7 +291,7 @@ namespace HtmlAgilityPack
         {
             foreach (HtmlNode node in items)
             {
-                if (node.Name.IndexOf(name, StringComparison.OrdinalIgnoreCase) != -1)
+                if (node.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
                     return node;
                 if (!node.HasChildNodes) continue;
                 HtmlNode returnNode = FindFirst(node.ChildNodes, name);

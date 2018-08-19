@@ -60,6 +60,7 @@ namespace HtmlAgilityPack
         private int _remainderOffset;
         private ParseState _state;
         private Encoding _streamencoding;
+        private bool _useHtmlEncodingForStream;
 
         /// <summary>The HtmlDocument Text. Careful if you modify it.</summary>
         public string Text;
@@ -313,7 +314,20 @@ namespace HtmlAgilityPack
             return GetXmlName(name, false, false);
         }
 
-        public static string GetXmlName(string name, bool isAttribute, bool preserveXmlNamespaces)
+#if !METRO
+		public void UseAttributeOriginalName(string tagName)
+	    {
+		    foreach (var nod in this.DocumentNode.SelectNodes("//" + tagName))
+		    {
+			    foreach (var attribut in nod.Attributes)
+			    {
+				    attribut.UseOriginalName = true;
+			    }
+		    }
+		}
+#endif
+
+		public static string GetXmlName(string name, bool isAttribute, bool preserveXmlNamespaces)
         {
             string xmlname = string.Empty;
             bool nameisok = true;
@@ -498,6 +512,19 @@ namespace HtmlAgilityPack
         /// <returns>The detected encoding.</returns>
         public Encoding DetectEncoding(Stream stream)
         {
+            return DetectEncoding(stream, false);
+        }
+
+        /// <summary>
+        /// Detects the encoding of an HTML stream.
+        /// </summary>
+        /// <param name="stream">The input stream. May not be null.</param>
+        /// <param name="checkHtml">The html is checked.</param>
+        /// <returns>The detected encoding.</returns>
+        public Encoding DetectEncoding(Stream stream, bool checkHtml)
+        {
+            _useHtmlEncodingForStream = checkHtml;
+
             if (stream == null)
             {
                 throw new ArgumentNullException("stream");
@@ -539,7 +566,7 @@ namespace HtmlAgilityPack
             }
 
             StreamReader sr = reader as StreamReader;
-            if (sr != null)
+            if (sr != null && !_useHtmlEncodingForStream)
             {
                 Text = sr.ReadToEnd();
                 _streamencoding = sr.CurrentEncoding;
@@ -565,7 +592,7 @@ namespace HtmlAgilityPack
             return _streamencoding;
         }
 
-
+     
         /// <summary>
         /// Detects the encoding of an HTML text.
         /// </summary>
@@ -1719,15 +1746,24 @@ namespace HtmlAgilityPack
             {
                 hasNodeToClose = false;
 
+                bool forceExplicitEnd = false;
+
                 // CHECK if parent must be implicitely closed
                 if (IsParentImplicitEnd())
                 {
-                    CloseParentImplicitEnd();
-                    hasNodeToClose = true;
+                    if (OptionOutputAsXml)
+                    {
+                        forceExplicitEnd = true;
+                    }
+                    else
+                    {
+                        CloseParentImplicitEnd();
+                        hasNodeToClose = true;
+                    }
                 }
 
                 // CHECK if parent must be explicitely closed
-                if (IsParentExplicitEnd())
+                if (forceExplicitEnd || IsParentExplicitEnd())
                 {
                     CloseParentExplicitEnd();
                     hasNodeToClose = true;
