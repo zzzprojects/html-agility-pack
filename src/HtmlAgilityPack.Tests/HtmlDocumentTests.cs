@@ -740,6 +740,18 @@ namespace HtmlAgilityPack.Tests
         }
 
         [Test]
+        public void TestHandleNestedAnchors()
+        {
+            var inHtml =       "<a><a>";
+            var expectedHtml = "<a><a></a>";
+
+            var doc = new HtmlDocument();
+            doc.LoadHtml(inHtml);
+
+            Assert.AreEqual(expectedHtml, doc.DocumentNode.OuterHtml);
+        }
+
+        [Test]
         public void TestInnerText()
         {
             var inHtml = @"<html>

@@ -1774,6 +1774,10 @@ namespace HtmlAgilityPack
                             {
                                 outText.Write("></" + name + ">");
                             }
+                            else 
+                            {
+                                outText.Write(">");
+                            }
                         }
                     }
 
