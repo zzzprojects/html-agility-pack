@@ -8,7 +8,7 @@ HtmlDocument.Load method loads an HTML document from a file.
 
 The following example loads Html from file.
 
-```csharp
+```csharp {:gist="118d4dd3f8fbf12926947603da392fb4"}
 
 var path = @"test.html";
 		
