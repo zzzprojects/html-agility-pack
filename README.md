@@ -11,7 +11,7 @@ Have a question? Ask questions and find answers from over 2500 questions.
 ## Tutorials & Examples
 Need help to getting started? Find answers you need through tutorials and online examples.
 
-[Tutorials](http://html-agility-pack.net/tutorials)
+[Tutorials](https://html-agility-pack.net/tutorials)
 
 ## Issue Tracker
 Found a bug? Have suggestion? Report it and get support from our professional team.
@@ -20,7 +20,7 @@ Found a bug? Have suggestion? Report it and get support from our professional te
 
 --- 
 
-[ZZZ Projects](http://www.zzzprojects.com/) is the new home of Html Agility Pack since 2017-05-01. We do not plan to provide support by mail or on GitHub until the online documentation is completed.
+[ZZZ Projects](https://zzzprojects.com/) is the new home of Html Agility Pack since 2017-05-01. We do not plan to provide support by mail or on GitHub until the online documentation is completed.
 
 We plan to start to provide support starting on 2017-07-01
 
