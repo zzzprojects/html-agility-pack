@@ -978,7 +978,7 @@ namespace HtmlAgilityPack
             // child nodes
             foreach (HtmlNode child in _childnodes)
             {
-                HtmlNode newchild = child.Clone();
+                HtmlNode newchild = child.CloneNode(deep);
                 node.AppendChild(newchild);
             }
 
@@ -1774,6 +1774,10 @@ namespace HtmlAgilityPack
                             {
                                 outText.Write("></" + name + ">");
                             }
+                            else
+                            {
+                                outText.Write(">");
+                            }
                         }
                     }
 
@@ -2300,7 +2304,7 @@ namespace HtmlAgilityPack
 
             foreach (var att in classAttributes)
             {
-                var classNames = att.Value.Split(new string[] {" "}, StringSplitOptions.RemoveEmptyEntries);
+                var classNames = att.Value.Split(null as char[], StringSplitOptions.RemoveEmptyEntries);
 
                 foreach (var className in classNames)
                 {
@@ -2318,7 +2322,7 @@ namespace HtmlAgilityPack
 
             foreach (var @class in classes)
             {
-                var classNames = @class.Split(' ');
+                var classNames = @class.Split(null as char[], StringSplitOptions.RemoveEmptyEntries);
                 foreach (var theClassName in classNames)
                 {
                     if (theClassName == className)
