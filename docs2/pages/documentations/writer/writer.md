@@ -1,6 +1,6 @@
 # HTML Writer
 
-Save HtmlDocument && Write HtmlNode
+Save HtmlDocument & Write HtmlNode
 
 ## HtmlDocument - Methods
 
