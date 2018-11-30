@@ -24,7 +24,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DefineConstants>TRACE;RELEASE;NETSTANDARD2_0;NETSTANDARD</DefineConstants>
+    <DefineConstants>RELEASE;NETSTANDARD2_0;NETSTANDARD</DefineConstants>
     <DocumentationFile>bin\Release\netstandard2.0\HtmlAgilityPack.xml</DocumentationFile>
   </PropertyGroup>
 
