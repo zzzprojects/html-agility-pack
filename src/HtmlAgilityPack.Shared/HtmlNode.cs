@@ -565,9 +565,7 @@ namespace HtmlAgilityPack
                     return string.Empty;
                 }
 
-                if (_ownerdocument.Text != null && _outerstartindex + _outerlength <= _ownerdocument.Text.Length)
-                    return _ownerdocument.Text.Substring(_outerstartindex, _outerlength);
-                return string.Empty;
+                return _ownerdocument.Text.Substring(_outerstartindex, _outerlength);
             }
         }
 

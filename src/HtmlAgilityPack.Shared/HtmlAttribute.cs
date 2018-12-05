@@ -170,10 +170,7 @@ namespace HtmlAgilityPack
 
                 if (_value == null)
                 {
-                    if (_ownerdocument.Text != null && _valuestartindex + _valuelength <= _ownerdocument.Text.Length)
-                        _value = _ownerdocument.Text.Substring(_valuestartindex, _valuelength);
-                    else
-                        _value = "";
+                    _value = _ownerdocument.Text.Substring(_valuestartindex, _valuelength);
 
                     if (!_ownerdocument.BackwardCompatibility)
                     {
