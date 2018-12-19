@@ -1,6 +1,6 @@
 # HTML Manipulation
 
-Traversing allow you to traverse through HTML node.
+Manipulation allow you to manipulate the HTML document.
 
 ## Properties
 
