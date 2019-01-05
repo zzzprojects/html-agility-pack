@@ -104,7 +104,7 @@ namespace HtmlAgilityPack
         public bool OptionFixNestedTags; // fix li, tr, th, td tags
 
         /// <summary>
-        /// Defines if output must conform to XML, instead of HTML.
+        /// Defines if output must conform to XML, instead of HTML. Default is false.
         /// </summary>
         public bool OptionOutputAsXml;
 
@@ -114,7 +114,7 @@ namespace HtmlAgilityPack
         public bool OptionOutputOptimizeAttributeValues;
 
         /// <summary>
-        /// Defines if name must be output with it's original case. Useful for asp.net tags and attributes
+        /// Defines if name must be output with it's original case. Useful for asp.net tags and attributes. Default is false.
         /// </summary>
         public bool OptionOutputOriginalCase;
 
