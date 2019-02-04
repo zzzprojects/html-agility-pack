@@ -40,7 +40,7 @@ namespace HtmlAgilityPack
 		internal int _innerstartindex;
 		internal int _line;
 		internal int _lineposition;
-	    private string _name;
+		private string _name;
 		internal int _namelength;
 		internal int _namestartindex;
 		internal HtmlNode _nextnode;
@@ -1374,10 +1374,11 @@ namespace HtmlAgilityPack
 				throw new ArgumentNullException("newChildren");
 			}
 
-			foreach (HtmlNode newChild in newChildren)
+			for ( int i = newChildren.Count ; --i >= 0 ; )
 			{
-				PrependChild(newChild);
+				PrependChild( newChildren[i] );
 			}
+
 		}
 
 		/// <summary>
@@ -1647,7 +1648,7 @@ namespace HtmlAgilityPack
 #if SILVERLIGHT || PocketPC || METRO || NETSTANDARD1_3 || NETSTANDARD1_6
 						outText.Write("<?xml version=\"1.0\" encoding=\"" + _ownerdocument.GetOutEncoding().WebName + "\"?>");
 #else
-                        outText.Write("<?xml version=\"1.0\" encoding=\"" + _ownerdocument.GetOutEncoding().BodyName + "\"?>");
+						outText.Write("<?xml version=\"1.0\" encoding=\"" + _ownerdocument.GetOutEncoding().BodyName + "\"?>");
 #endif
 						// check there is a root element
 						if (_ownerdocument.DocumentNode.HasChildNodes)
@@ -1803,9 +1804,9 @@ namespace HtmlAgilityPack
 													  "version=\"1.0\" encoding=\"" +
 													  _ownerdocument.GetOutEncoding().WebName + "\"");
 #else
-                    writer.WriteProcessingInstruction("xml",
-                        "version=\"1.0\" encoding=\"" +
-                        _ownerdocument.GetOutEncoding().BodyName + "\"");
+					writer.WriteProcessingInstruction("xml",
+						"version=\"1.0\" encoding=\"" +
+						_ownerdocument.GetOutEncoding().BodyName + "\"");
 #endif
 
 					if (HasChildNodes)

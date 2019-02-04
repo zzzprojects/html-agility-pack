@@ -15,17 +15,17 @@ namespace HtmlAgilityPack
 	[DebuggerDisplay("Name: {OriginalName}")]
 	public partial class HtmlNode
 	{
-        #region Consts
-        internal const string DepthLevelExceptionMessage = "The document is too complex to parse";
-        #endregion
+		#region Consts
+		internal const string DepthLevelExceptionMessage = "The document is too complex to parse";
+		#endregion
 
-        #region Fields
+		#region Fields
 
-        internal HtmlAttributeCollection _attributes;
+		internal HtmlAttributeCollection _attributes;
 		internal HtmlNodeCollection _childnodes;
 		internal HtmlNode _endnode;
 
-        private bool _changed;
+		private bool _changed;
 		internal string _innerhtml;
 		internal int _innerlength;
 		internal int _innerstartindex;
@@ -117,10 +117,10 @@ namespace HtmlAgilityPack
 			//<br> see above
 			ElementsFlags.Add("br", HtmlElementFlag.Empty | HtmlElementFlag.Closed);
 
-		    if (!HtmlDocument.DisableBehavaiorTagP)
-		    {
-		        ElementsFlags.Add("p", HtmlElementFlag.Empty | HtmlElementFlag.Closed);
-            }
+			if (!HtmlDocument.DisableBehavaiorTagP)
+			{
+				ElementsFlags.Add("p", HtmlElementFlag.Empty | HtmlElementFlag.Closed);
+			}
 		}
 
 		/// <summary>
@@ -169,7 +169,7 @@ namespace HtmlAgilityPack
 
 			if ((-1 != index) || (type == HtmlNodeType.Comment) || (type == HtmlNodeType.Text)) return;
 			// innerhtml and outerhtml must be calculated
-            SetChanged();
+			SetChanged();
 		}
 
 		#endregion
@@ -334,7 +334,7 @@ namespace HtmlAgilityPack
 			{
 				if (_changed)
 				{
-                    UpdateHtml();
+					UpdateHtml();
 					return _innerhtml;
 				}
 
@@ -467,7 +467,7 @@ namespace HtmlAgilityPack
 			{
 				if (_changed)
 				{
-                    UpdateHtml();
+					UpdateHtml();
 					return _outerhtml;
 				}
 
@@ -569,20 +569,20 @@ namespace HtmlAgilityPack
 			// REVIEW: this is *not* optimum...
 			HtmlDocument doc = new HtmlDocument();
 			doc.LoadHtml(html);
-            if(!doc.DocumentNode.IsSingleElementNode())
-            {
-                throw new Exception("Multiple node elments can't be created.");
-            }
+			if(!doc.DocumentNode.IsSingleElementNode())
+			{
+				throw new Exception("Multiple node elments can't be created.");
+			}
 
-            var element = doc.DocumentNode.FirstChild;
+			var element = doc.DocumentNode.FirstChild;
 
-            while (element != null)
-            {
-                if (element.NodeType == HtmlNodeType.Element && element.OuterHtml != "\r\n")
-                    return element;
+			while (element != null)
+			{
+				if (element.NodeType == HtmlNodeType.Element && element.OuterHtml != "\r\n")
+					return element;
 
-                element = element.NextSibling;
-            }
+				element = element.NextSibling;
+			}
 			return doc.DocumentNode.FirstChild;
 		}
 
@@ -758,7 +758,7 @@ namespace HtmlAgilityPack
 
 			ChildNodes.Append(newChild);
 			_ownerdocument.SetIdForNode(newChild, newChild.GetId());
-            SetChanged();
+			SetChanged();
 			return newChild;
 		}
 
@@ -910,8 +910,8 @@ namespace HtmlAgilityPack
 			{
 				foreach (HtmlAttribute att in node.Attributes)
 				{
-                    HtmlAttribute newatt = att.Clone();
-                    Attributes.Append(newatt);
+					HtmlAttribute newatt = att.Clone();
+					Attributes.Append(newatt);
 				}
 			}
 
@@ -933,24 +933,24 @@ namespace HtmlAgilityPack
 		/// <summary>
 		/// Gets all Descendant nodes for this node and each of child nodes
 		/// </summary>
-        /// <param name="level">The depth level of the node to parse in the html tree</param>
+		/// <param name="level">The depth level of the node to parse in the html tree</param>
 		/// <returns>the current element as an HtmlNode</returns>
 		[Obsolete("Use Descendants() instead, the results of this function will change in a future version")]
 		public IEnumerable<HtmlNode> DescendantNodes(int level=0)
-        {
-            if (level > HtmlDocument.MaxDepthLevel)
-            {
-                throw new ArgumentException(HtmlNode.DepthLevelExceptionMessage);
-            }
+		{
+			if (level > HtmlDocument.MaxDepthLevel)
+			{
+				throw new ArgumentException(HtmlNode.DepthLevelExceptionMessage);
+			}
 
-            foreach (HtmlNode node in ChildNodes)
+			foreach (HtmlNode node in ChildNodes)
 			{
 				yield return node;
 
-                foreach (HtmlNode descendant in node.DescendantNodes(level+1))
-                {
-                    yield return descendant;
-                }
+				foreach (HtmlNode descendant in node.DescendantNodes(level+1))
+				{
+					yield return descendant;
+				}
 			}
 		}
 
@@ -964,35 +964,35 @@ namespace HtmlAgilityPack
 			return DescendantsAndSelf();
 		}
 
-	    /// <summary>
-	    /// Gets all Descendant nodes in enumerated list
-	    /// </summary>
-	    /// <returns></returns>
-        public IEnumerable<HtmlNode> Descendants()
-	    {
-            // DO NOT REMOVE, the empty method is required for Fizzler third party library
-	        return Descendants(0);
-	    }
+		/// <summary>
+		/// Gets all Descendant nodes in enumerated list
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<HtmlNode> Descendants()
+		{
+			// DO NOT REMOVE, the empty method is required for Fizzler third party library
+			return Descendants(0);
+		}
 
-        /// <summary>
-        /// Gets all Descendant nodes in enumerated list
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<HtmlNode> Descendants(int level)
-        {
-            if (level > HtmlDocument.MaxDepthLevel)
-            {
-                throw new ArgumentException(HtmlNode.DepthLevelExceptionMessage);
-            }
+		/// <summary>
+		/// Gets all Descendant nodes in enumerated list
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<HtmlNode> Descendants(int level)
+		{
+			if (level > HtmlDocument.MaxDepthLevel)
+			{
+				throw new ArgumentException(HtmlNode.DepthLevelExceptionMessage);
+			}
 
-            foreach (HtmlNode node in ChildNodes)
+			foreach (HtmlNode node in ChildNodes)
 			{
 				yield return node;
 
-                foreach (HtmlNode descendant in node.Descendants(level+1))
-                {
-                    yield return descendant;
-                }
+				foreach (HtmlNode descendant in node.Descendants(level+1))
+				{
+					yield return descendant;
+				}
 			}
 		}
 
@@ -1017,11 +1017,11 @@ namespace HtmlAgilityPack
 		{
 			yield return this;
 
-            foreach (HtmlNode n in Descendants())
-            {
-                HtmlNode el = n;
-                if (el != null)
-                    yield return el;
+			foreach (HtmlNode n in Descendants())
+			{
+				HtmlNode el = n;
+				if (el != null)
+					yield return el;
 			}
 		}
 
@@ -1190,7 +1190,7 @@ namespace HtmlAgilityPack
 			if (_childnodes != null) _childnodes.Insert(index + 1, newChild);
 
 			_ownerdocument.SetIdForNode(newChild, newChild.GetId());
-            SetChanged();
+			SetChanged();
 			return newChild;
 		}
 
@@ -1232,7 +1232,7 @@ namespace HtmlAgilityPack
 			if (_childnodes != null) _childnodes.Insert(index, newChild);
 
 			_ownerdocument.SetIdForNode(newChild, newChild.GetId());
-            SetChanged();
+			SetChanged();
 			return newChild;
 		}
 
@@ -1249,7 +1249,7 @@ namespace HtmlAgilityPack
 			}
 			ChildNodes.Prepend(newChild);
 			_ownerdocument.SetIdForNode(newChild, newChild.GetId());
-            SetChanged();
+			SetChanged();
 			return newChild;
 		}
 
@@ -1264,10 +1264,11 @@ namespace HtmlAgilityPack
 				throw new ArgumentNullException("newChildren");
 			}
 
-			foreach (HtmlNode newChild in newChildren)
+			for ( int i = newChildren.Count ; --i >= 0 ; )
 			{
-				PrependChild(newChild);
+				PrependChild( newChildren[i] );
 			}
+
 		}
 
 		/// <summary>
@@ -1275,11 +1276,11 @@ namespace HtmlAgilityPack
 		/// </summary>
 		public void Remove()
 		{
-		    if (ParentNode != null)
-		    {
-                ParentNode.ChildNodes.Remove(this);
-            }
-        }
+			if (ParentNode != null)
+			{
+				ParentNode.ChildNodes.Remove(this);
+			}
+		}
 
 		/// <summary>
 		/// Removes all the children and/or attributes of the current node.
@@ -1300,7 +1301,7 @@ namespace HtmlAgilityPack
 					_endnode._attributes.Clear();
 				}
 			}
-            SetChanged();
+			SetChanged();
 		}
 
 		/// <summary>
@@ -1322,7 +1323,7 @@ namespace HtmlAgilityPack
 				}
 			}
 			_childnodes.Clear();
-            SetChanged();
+			SetChanged();
 		}
 
 		/// <summary>
@@ -1353,7 +1354,7 @@ namespace HtmlAgilityPack
 				_childnodes.Remove(index);
 
 			_ownerdocument.SetIdForNode(null, oldChild.GetId());
-            SetChanged();
+			SetChanged();
 			return oldChild;
 		}
 
@@ -1382,7 +1383,7 @@ namespace HtmlAgilityPack
 				}
 			}
 			RemoveChild(oldChild);
-            SetChanged();
+			SetChanged();
 			return oldChild;
 		}
 
@@ -1420,7 +1421,7 @@ namespace HtmlAgilityPack
 
 			_ownerdocument.SetIdForNode(null, oldChild.GetId());
 			_ownerdocument.SetIdForNode(newChild, newChild.GetId());
-            SetChanged();
+			SetChanged();
 			return newChild;
 		}
 
@@ -1445,19 +1446,19 @@ namespace HtmlAgilityPack
 			return att;
 		}
 
-        /// <summary>
-        /// Saves all the children of the node to the specified TextWriter.
-        /// </summary>
-        /// <param name="outText">The TextWriter to which you want to save.</param>
-        /// <param name="level">Identifies the level we are in starting at root with 0</param>
-        public void WriteContentTo(TextWriter outText, int level=0)
-        {
-            if (level > HtmlDocument.MaxDepthLevel)
-            {
-                throw new ArgumentException(HtmlNode.DepthLevelExceptionMessage);
-            }
+		/// <summary>
+		/// Saves all the children of the node to the specified TextWriter.
+		/// </summary>
+		/// <param name="outText">The TextWriter to which you want to save.</param>
+		/// <param name="level">Identifies the level we are in starting at root with 0</param>
+		public void WriteContentTo(TextWriter outText, int level=0)
+		{
+			if (level > HtmlDocument.MaxDepthLevel)
+			{
+				throw new ArgumentException(HtmlNode.DepthLevelExceptionMessage);
+			}
 
-            if (_childnodes == null)
+			if (_childnodes == null)
 			{
 				return;
 			}
@@ -1484,10 +1485,10 @@ namespace HtmlAgilityPack
 		/// Saves the current node to the specified TextWriter.
 		/// </summary>
 		/// <param name="outText">The TextWriter to which you want to save.</param>
-        /// <param name="level">identifies the level we are in starting at root with 0</param>
+		/// <param name="level">identifies the level we are in starting at root with 0</param>
 		public void WriteTo(TextWriter outText, int level=0)
 		{
-            string html;
+			string html;
 			switch (_nodetype)
 			{
 				case HtmlNodeType.Comment:
@@ -1632,7 +1633,7 @@ namespace HtmlAgilityPack
 
 				case HtmlNodeType.Document:
 #if SILVERLIGHT || PocketPC || METRO || NETSTANDARD
-                    writer.WriteProcessingInstruction("xml",
+					writer.WriteProcessingInstruction("xml",
 													  "version=\"1.0\" encoding=\"" +
 													  _ownerdocument.GetOutEncoding().WebName + "\"");
 #else
@@ -1694,21 +1695,21 @@ namespace HtmlAgilityPack
 
 		#region Internal Methods
 
-        internal void SetChanged()
-        {
-            _changed = true;
-            if (ParentNode != null)
-            {
-                ParentNode.SetChanged();
-            }
-        }
+		internal void SetChanged()
+		{
+			_changed = true;
+			if (ParentNode != null)
+			{
+				ParentNode.SetChanged();
+			}
+		}
 
-        private void UpdateHtml()
-        {
-            _innerhtml = WriteContentTo();
-            _outerhtml = WriteTo();
-            _changed = false;
-        }
+		private void UpdateHtml()
+		{
+			_innerhtml = WriteContentTo();
+			_outerhtml = WriteTo();
+			_changed = false;
+		}
 
 		internal static string GetXmlComment(HtmlCommentNode comment)
 		{
@@ -1730,13 +1731,13 @@ namespace HtmlAgilityPack
 		}
 
 		internal void CloseNode(HtmlNode endnode, int level=0)
-        {
-            if (level > HtmlDocument.MaxDepthLevel)
-            {
-                throw new ArgumentException(HtmlNode.DepthLevelExceptionMessage);
-            }
+		{
+			if (level > HtmlDocument.MaxDepthLevel)
+			{
+				throw new ArgumentException(HtmlNode.DepthLevelExceptionMessage);
+			}
 
-            if (!_ownerdocument.OptionAutoCloseOnEnd)
+			if (!_ownerdocument.OptionAutoCloseOnEnd)
 			{
 				// close all children
 				if (_childnodes != null)
@@ -1791,7 +1792,7 @@ namespace HtmlAgilityPack
 			HtmlAttribute att = Attributes["id"] ?? _ownerdocument.CreateAttribute("id");
 			att.Value = id;
 			_ownerdocument.SetIdForNode(this, att.Value);
-            SetChanged();
+			SetChanged();
 		}
 
 		internal void WriteAttribute(TextWriter outText, HtmlAttribute att)
@@ -1904,209 +1905,209 @@ namespace HtmlAgilityPack
 			return Name + "[" + i + "]";
 		}
 
-        private bool IsSingleElementNode()
-        {
-            int count = 0;
-            var element = FirstChild;
+		private bool IsSingleElementNode()
+		{
+			int count = 0;
+			var element = FirstChild;
 
-            while (element != null)
-            {
-                if (element.NodeType == HtmlNodeType.Element && element.OuterHtml != "\r\n")
-                    count++;
+			while (element != null)
+			{
+				if (element.NodeType == HtmlNodeType.Element && element.OuterHtml != "\r\n")
+					count++;
 
-                element = element.NextSibling;
-            }
+				element = element.NextSibling;
+			}
 
-            return count <= 1 ? true : false;
-        }
-        #endregion
+			return count <= 1 ? true : false;
+		}
+		#endregion
 
-        #region Class Helper
+		#region Class Helper
 
-	    /// <summary>
-	    /// Adds one or more classes to this node.
-	    /// </summary>
-	    /// <param name="name">The node list to add. May not be null.</param>
-	    public void AddClass(string name)
-	    {
-	        AddClass(name, false);
-	    }
+		/// <summary>
+		/// Adds one or more classes to this node.
+		/// </summary>
+		/// <param name="name">The node list to add. May not be null.</param>
+		public void AddClass(string name)
+		{
+			AddClass(name, false);
+		}
 
-	    /// <summary>
-	    /// Adds one or more classes to this node.
-	    /// </summary>
-	    /// <param name="name">The node list to add. May not be null.</param>
-	    /// <param name="throwError">true to throw Error if class name exists, false otherwise.</param>
-	    public void AddClass(string name, bool throwError)
-	    {
-	        var classAttributes = Attributes.AttributesWithName("class");
+		/// <summary>
+		/// Adds one or more classes to this node.
+		/// </summary>
+		/// <param name="name">The node list to add. May not be null.</param>
+		/// <param name="throwError">true to throw Error if class name exists, false otherwise.</param>
+		public void AddClass(string name, bool throwError)
+		{
+			var classAttributes = Attributes.AttributesWithName("class");
 
-	        if (!IsEmpty(classAttributes))
-	        {
-	            foreach (HtmlAttribute att in classAttributes)
-	            {
-	                if (att.Value.Equals(name) || att.Value.Contains(name))
-	                {
-	                    if (throwError)
-	                    {
-	                        throw new Exception(HtmlDocument.HtmlExceptionClassExists);
-	                    }
-	                }
-	                else
-	                {
-	                    SetAttributeValue(att.Name, att.Value + " " + name);
-	                }
-	            }
-	        }
-	        else
-	        {
-	            HtmlAttribute attribute = _ownerdocument.CreateAttribute("class", name);
-	            Attributes.Append(attribute);
-	        }
-	    }
+			if (!IsEmpty(classAttributes))
+			{
+				foreach (HtmlAttribute att in classAttributes)
+				{
+					if (att.Value.Equals(name) || att.Value.Contains(name))
+					{
+						if (throwError)
+						{
+							throw new Exception(HtmlDocument.HtmlExceptionClassExists);
+						}
+					}
+					else
+					{
+						SetAttributeValue(att.Name, att.Value + " " + name);
+					}
+				}
+			}
+			else
+			{
+				HtmlAttribute attribute = _ownerdocument.CreateAttribute("class", name);
+				Attributes.Append(attribute);
+			}
+		}
 
-	    /// <summary>
-	    /// Removes the class attribute from the node.
-	    /// </summary>
-	    public void RemoveClass()
-	    {
-	        RemoveClass(false);
-	    }
+		/// <summary>
+		/// Removes the class attribute from the node.
+		/// </summary>
+		public void RemoveClass()
+		{
+			RemoveClass(false);
+		}
 
-	    /// <summary>
-	    /// Removes the class attribute from the node.
-	    /// </summary>
-	    /// <param name="throwError">true to throw Error if class name doesn't exist, false otherwise.</param>
-	    public void RemoveClass(bool throwError)
-	    {
-	        var classAttributes = Attributes.AttributesWithName("class");
-	        if (IsEmpty(classAttributes) && throwError)
-	        {
-	            throw new Exception(HtmlDocument.HtmlExceptionClassDoesNotExist);
-	        }
+		/// <summary>
+		/// Removes the class attribute from the node.
+		/// </summary>
+		/// <param name="throwError">true to throw Error if class name doesn't exist, false otherwise.</param>
+		public void RemoveClass(bool throwError)
+		{
+			var classAttributes = Attributes.AttributesWithName("class");
+			if (IsEmpty(classAttributes) && throwError)
+			{
+				throw new Exception(HtmlDocument.HtmlExceptionClassDoesNotExist);
+			}
 
-	        foreach (var att in classAttributes)
-	        {
-	            Attributes.Remove(att);
-	        }
-	    }
+			foreach (var att in classAttributes)
+			{
+				Attributes.Remove(att);
+			}
+		}
 
-	    /// <summary>
-	    /// Removes the specified class from the node.
-	    /// </summary>
-	    /// <param name="name">The class being removed. May not be <c>null</c>.</param>
-	    public void RemoveClass(string name)
-	    {
-	        RemoveClass(name, false);
-	    }
+		/// <summary>
+		/// Removes the specified class from the node.
+		/// </summary>
+		/// <param name="name">The class being removed. May not be <c>null</c>.</param>
+		public void RemoveClass(string name)
+		{
+			RemoveClass(name, false);
+		}
 
-	    /// <summary>
-	    /// Removes the specified class from the node.
-	    /// </summary>
-	    /// <param name="name">The class being removed. May not be <c>null</c>.</param>
-	    /// <param name="throwError">true to throw Error if class name doesn't exist, false otherwise.</param>
-	    public void RemoveClass(string name, bool throwError)
-	    {
-	        var classAttributes = Attributes.AttributesWithName("class");
-	        if (IsEmpty(classAttributes) && throwError)
-	        {
-	            throw new Exception(HtmlDocument.HtmlExceptionClassDoesNotExist);
-	        }
+		/// <summary>
+		/// Removes the specified class from the node.
+		/// </summary>
+		/// <param name="name">The class being removed. May not be <c>null</c>.</param>
+		/// <param name="throwError">true to throw Error if class name doesn't exist, false otherwise.</param>
+		public void RemoveClass(string name, bool throwError)
+		{
+			var classAttributes = Attributes.AttributesWithName("class");
+			if (IsEmpty(classAttributes) && throwError)
+			{
+				throw new Exception(HtmlDocument.HtmlExceptionClassDoesNotExist);
+			}
 
-	        else
-	        {
-	            foreach (var att in classAttributes)
-	            {
-	                if (att.Value.Equals(name))
-	                {
-	                    Attributes.Remove(att);
-	                }
-	                else if (att.Value.Contains(name))
-	                {
-	                    string[] classNames = att.Value.Split(' ');
+			else
+			{
+				foreach (var att in classAttributes)
+				{
+					if (att.Value.Equals(name))
+					{
+						Attributes.Remove(att);
+					}
+					else if (att.Value.Contains(name))
+					{
+						string[] classNames = att.Value.Split(' ');
 
-	                    string newClassNames = "";
+						string newClassNames = "";
 
-	                    foreach (string item in classNames)
-	                    {
-	                        if (!item.Equals(name))
-	                            newClassNames += item + " ";
-	                    }
+						foreach (string item in classNames)
+						{
+							if (!item.Equals(name))
+								newClassNames += item + " ";
+						}
 
-	                    newClassNames = newClassNames.Trim();
-	                    SetAttributeValue(att.Name, newClassNames);
-	                }
-	                else
-	                {
-	                    if (throwError)
-	                    {
-	                        throw new Exception(HtmlDocument.HtmlExceptionClassDoesNotExist);
-	                    }
-	                }
-	                if (string.IsNullOrEmpty(att.Value))
-	                {
-	                    Attributes.Remove(att);
-	                }
-	            }
-	        }
-	    }
+						newClassNames = newClassNames.Trim();
+						SetAttributeValue(att.Name, newClassNames);
+					}
+					else
+					{
+						if (throwError)
+						{
+							throw new Exception(HtmlDocument.HtmlExceptionClassDoesNotExist);
+						}
+					}
+					if (string.IsNullOrEmpty(att.Value))
+					{
+						Attributes.Remove(att);
+					}
+				}
+			}
+		}
 
-	    /// <summary>
-	    /// Replaces the class name oldClass with newClass name.
-	    /// </summary>
-	    /// <param name="newClass">The new class name.</param>
-	    /// <param name="oldClass">The class being replaced.</param>
-	    public void ReplaceClass(string newClass, string oldClass)
-	    {
-	        ReplaceClass(newClass, oldClass, false);
-	    }
+		/// <summary>
+		/// Replaces the class name oldClass with newClass name.
+		/// </summary>
+		/// <param name="newClass">The new class name.</param>
+		/// <param name="oldClass">The class being replaced.</param>
+		public void ReplaceClass(string newClass, string oldClass)
+		{
+			ReplaceClass(newClass, oldClass, false);
+		}
 
-	    /// <summary>
-	    /// Replaces the class name oldClass with newClass name.
-	    /// </summary>
-	    /// <param name="newClass">The new class name.</param>
-	    /// <param name="oldClass">The class being replaced.</param>
-	    /// <param name="throwError">true to throw Error if class name doesn't exist, false otherwise.</param>
-	    public void ReplaceClass(string newClass, string oldClass, bool throwError)
-	    {
-	        if (string.IsNullOrEmpty(newClass))
-	        {
-	            RemoveClass(oldClass);
-	        }
+		/// <summary>
+		/// Replaces the class name oldClass with newClass name.
+		/// </summary>
+		/// <param name="newClass">The new class name.</param>
+		/// <param name="oldClass">The class being replaced.</param>
+		/// <param name="throwError">true to throw Error if class name doesn't exist, false otherwise.</param>
+		public void ReplaceClass(string newClass, string oldClass, bool throwError)
+		{
+			if (string.IsNullOrEmpty(newClass))
+			{
+				RemoveClass(oldClass);
+			}
 
-	        if (string.IsNullOrEmpty(oldClass))
-	        {
-	            AddClass(newClass);
-	        }
+			if (string.IsNullOrEmpty(oldClass))
+			{
+				AddClass(newClass);
+			}
 
-	        var classAttributes = Attributes.AttributesWithName("class");
+			var classAttributes = Attributes.AttributesWithName("class");
 
-	        if (IsEmpty(classAttributes) && throwError)
-	        {
-	            throw new Exception(HtmlDocument.HtmlExceptionClassDoesNotExist);
-	        }
+			if (IsEmpty(classAttributes) && throwError)
+			{
+				throw new Exception(HtmlDocument.HtmlExceptionClassDoesNotExist);
+			}
 
-	        foreach (var att in classAttributes)
-	        {
-                if (att.Value.Equals(oldClass) || att.Value.Contains(oldClass))
-                {
-                    string newClassNames = att.Value.Replace(oldClass, newClass);
-                    SetAttributeValue(att.Name, newClassNames);
-                }
-                else if (throwError)
-                {
-                    throw new Exception(HtmlDocument.HtmlExceptionClassDoesNotExist);
-                }
-	        }
-	    }
+			foreach (var att in classAttributes)
+			{
+				if (att.Value.Equals(oldClass) || att.Value.Contains(oldClass))
+				{
+					string newClassNames = att.Value.Replace(oldClass, newClass);
+					SetAttributeValue(att.Name, newClassNames);
+				}
+				else if (throwError)
+				{
+					throw new Exception(HtmlDocument.HtmlExceptionClassDoesNotExist);
+				}
+			}
+		}
 
-        private bool IsEmpty(IEnumerable en)
-	    {
-         
-	        foreach (var c in en) { return false; }
-	        return true;
-	    }
+		private bool IsEmpty(IEnumerable en)
+		{
+		 
+			foreach (var c in en) { return false; }
+			return true;
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }
