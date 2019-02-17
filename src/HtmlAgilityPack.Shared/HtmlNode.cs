@@ -478,7 +478,7 @@ namespace HtmlAgilityPack
 		/// </summary>
 		public int InnerLength
 		{
-			get { return _innerlength; }
+			get { return InnerHtml.Length; }
 		}
 
 		/// <summary>
@@ -486,8 +486,8 @@ namespace HtmlAgilityPack
 		/// </summary>
 		public int OuterLength
 		{
-			get { return _outerlength; }
-		}
+		    get { return OuterHtml.Length; }
+        }
 
 		/// <summary>
 		/// Gets or sets this node's name.
@@ -1369,16 +1369,16 @@ namespace HtmlAgilityPack
 		/// <param name="newChildren">The node list to add. May not be <c>null</c>.</param>
 		public void PrependChildren(HtmlNodeCollection newChildren)
 		{
-			if (newChildren == null)
-			{
-				throw new ArgumentNullException("newChildren");
-			}
+		    if (newChildren == null)
+		    {
+		        throw new ArgumentNullException("newChildren");
+		    }
 
-			foreach (HtmlNode newChild in newChildren)
-			{
-				PrependChild(newChild);
-			}
-		}
+		    for (int i = newChildren.Count - 1; i >= 0; i--)
+		    {
+		        PrependChild(newChildren[i]);
+		    }
+        }
 
 		/// <summary>
 		/// Removes node from parent collection
@@ -1947,7 +1947,7 @@ namespace HtmlAgilityPack
 				_innerlength = endnode._outerstartindex - _innerstartindex;
 
 				// update full length
-				_outerlength = (endnode._outerstartindex + endnode._outerlength) - _outerstartindex;
+				_outerlength = (endnode._outerstartindex + endnode._outerlength) - _outerstartindex; 
 			}
 		}
 
