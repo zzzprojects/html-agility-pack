@@ -1822,7 +1822,7 @@ namespace HtmlAgilityPack
                     break;
                 case "p":
                     isExplicitEnd = nodeName == "div";
-                    break;
+					break;
                 case "table":
                     isExplicitEnd = nodeName == "table";
                     break;
@@ -2083,7 +2083,7 @@ namespace HtmlAgilityPack
 
         #endregion
 
-            #region Nested type: ParseState
+        #region Nested type: ParseState
 
         private enum ParseState
         {

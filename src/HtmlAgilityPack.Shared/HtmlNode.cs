@@ -1756,7 +1756,10 @@ namespace HtmlAgilityPack
 
 					else
 					{
-						if (IsEmptyElement(Name))
+
+						if (IsEmptyElement(Name) 
+						    && name != "p" // never consider "P" as an empty element when writing, only parsing for backward compatibility
+						    )
 						{
 							if ((_ownerdocument.OptionWriteEmptyNodes) || (_ownerdocument.OptionOutputAsXml))
 								outText.Write(" />");
