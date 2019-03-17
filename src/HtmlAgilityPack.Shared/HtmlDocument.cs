@@ -22,7 +22,7 @@ namespace HtmlAgilityPack
         #region Manager
 
         /// <summary>True to disable, false to enable the behavaior tag p.</summary>
-        public static bool DisableBehavaiorTagP;
+        public static bool DisableBehavaiorTagP = true;
 
         /// <summary>Default builder to use in the HtmlDocument constructor</summary>
         public static Action<HtmlDocument> DefaultBuilder { get; set; }
