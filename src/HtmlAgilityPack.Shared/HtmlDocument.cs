@@ -1795,7 +1795,32 @@ namespace HtmlAgilityPack
                     isImplicitEnd = nodeName == "li";
                     break;
                 case "p":
-                    isImplicitEnd = nodeName == "p";
+                    isImplicitEnd = nodeName == "address"
+                                    || nodeName == "article"
+                                    || nodeName == "aside"
+                                    || nodeName == "blockquote"
+                                    || nodeName == "dir"
+                                    || nodeName == "div"
+                                    || nodeName == "dl"
+                                    || nodeName == "fieldset"
+                                    || nodeName == "footer"
+                                    || nodeName == "form"
+                                    || nodeName == "h1"
+                                    || nodeName == "h2"
+                                    || nodeName == "h3"
+                                    || nodeName == "h4"
+                                    || nodeName == "h5"
+                                    || nodeName == "h6"
+                                    || nodeName == "header"
+                                    || nodeName == "hr"
+                                    || nodeName == "menu"
+                                    || nodeName == "nav"
+                                    || nodeName == "ol"
+                                    || nodeName == "p"
+                                    || nodeName == "pre"
+                                    || nodeName == "section"
+                                    || nodeName == "table"
+                                    || nodeName == "ul";
                     break;
                 case "option":
                     isImplicitEnd = nodeName == "option";
