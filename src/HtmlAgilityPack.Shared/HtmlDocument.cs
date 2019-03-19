@@ -21,8 +21,32 @@ namespace HtmlAgilityPack
     {
         #region Manager
 
-        /// <summary>True to disable, false to enable the behavaior tag p.</summary>
-        public static bool DisableBehavaiorTagP = true;
+        internal static bool _disableBehaviorTagP = true;
+
+        /// <summary>True to disable, false to enable the behavior tag p.</summary>
+        public static bool DisableBehaviorTagP
+        {
+            get => _disableBehaviorTagP;
+            set
+            {
+                if (value)
+                {
+                    if (HtmlNode.ElementsFlags.ContainsKey("p"))
+                    {
+                        HtmlNode.ElementsFlags.Remove("p");
+                    }
+                }
+                else
+                {
+                    if (!HtmlNode.ElementsFlags.ContainsKey("p"))
+                    {
+                        HtmlNode.ElementsFlags.Add("p", HtmlElementFlag.Empty | HtmlElementFlag.Closed);
+                    }
+                }
+
+                _disableBehaviorTagP = value;
+            }
+        }
 
         /// <summary>Default builder to use in the HtmlDocument constructor</summary>
         public static Action<HtmlDocument> DefaultBuilder { get; set; }
@@ -1795,7 +1819,7 @@ namespace HtmlAgilityPack
                     isImplicitEnd = nodeName == "li";
                     break;
                 case "p":
-                    if (DisableBehavaiorTagP)
+                    if (DisableBehaviorTagP)
                     {
                         isImplicitEnd = nodeName == "address"
                                         || nodeName == "article"

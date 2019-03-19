@@ -128,7 +128,7 @@ namespace HtmlAgilityPack
 			//<br> see above
 			ElementsFlags.Add("br", HtmlElementFlag.Empty | HtmlElementFlag.Closed);
 
-		    if (!HtmlDocument.DisableBehavaiorTagP)
+		    if (!HtmlDocument.DisableBehaviorTagP)
 		    {
 		        ElementsFlags.Add("p", HtmlElementFlag.Empty | HtmlElementFlag.Closed);
 		    }
@@ -1900,6 +1900,38 @@ namespace HtmlAgilityPack
 			}
 		}
 
+		internal void UpdateLastNode()
+		{
+			HtmlNode newLast = null;
+			if (_prevwithsamename == null || !_prevwithsamename._starttag)
+			{
+				foreach (var openNode in _ownerdocument.Openednodes)
+				{
+					if ((openNode.Key < _outerstartindex || openNode.Key > (_outerstartindex + _outerlength)) && openNode.Value._name == _name)
+					{
+						if (newLast == null && openNode.Value._starttag)
+						{
+							newLast = openNode.Value;
+						}
+						else if (newLast !=null && newLast.InnerStartIndex < openNode.Key && openNode.Value._starttag)
+						{
+							newLast = openNode.Value;
+						}
+					}
+				}
+			}
+			else
+			{
+				newLast = _prevwithsamename;
+			}
+			
+
+			if (newLast != null)
+			{
+				_ownerdocument.Lastnodes[newLast.Name] = newLast;
+			}
+		}
+
 		internal void CloseNode(HtmlNode endnode, int level = 0)
 		{
 			if (level > HtmlDocument.MaxDepthLevel)
@@ -1937,6 +1969,12 @@ namespace HtmlAgilityPack
 				{
 					_ownerdocument.Lastnodes.Remove(Name);
 					_ownerdocument.UpdateLastParentNode();
+
+
+					if (_starttag && !String.IsNullOrEmpty(Name))
+					{
+						UpdateLastNode();
+					}
 				}
 
 				if (endnode == this)
