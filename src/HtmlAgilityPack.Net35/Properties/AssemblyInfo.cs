@@ -1,4 +1,4 @@
-// HtmlAgilityPack V1.0 - Simon Mourier <simon underscore mourier at hotmail dot com>
+﻿// HtmlAgilityPack V1.0 - Simon Mourier <simon underscore mourier at hotmail dot com>
 
 using System;
 using System.Reflection;
@@ -21,7 +21,7 @@ using System.Security;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ZZZ Projects Inc.")]
 [assembly: AssemblyProduct("Html Agility Pack")]
-[assembly: AssemblyCopyright("Copyright � ZZZ Projects Inc.")]
+[assembly: AssemblyCopyright("Copyright © ZZZ Projects Inc.")]
 [assembly: AssemblyTrademark("SQL & .NET Tools")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(true)]
