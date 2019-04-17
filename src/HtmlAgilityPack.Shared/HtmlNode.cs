@@ -75,65 +75,11 @@ namespace HtmlAgilityPack
 		/// Gets the name of a text node. It is actually defined as '#text'.
 		/// </summary>
 		public static readonly string HtmlNodeTypeNameText = "#text";
-
-		/// <summary>
-		/// Gets a collection of flags that define specific behaviors for specific element nodes.
-		/// The table contains a DictionaryEntry list with the lowercase tag name as the Key, and a combination of HtmlElementFlags as the Value.
-		/// </summary>
-		public static Dictionary<string, HtmlElementFlag> ElementsFlags;
-
+        
 		#endregion
 
 		#region Constructors
-
-		/// <summary>
-		/// Initialize HtmlNode. Builds a list of all tags that have special allowances
-		/// </summary>
-		static HtmlNode()
-		{
-			// tags whose content may be anything
-			ElementsFlags = new Dictionary<string, HtmlElementFlag>(StringComparer.OrdinalIgnoreCase);
-			ElementsFlags.Add("script", HtmlElementFlag.CData);
-			ElementsFlags.Add("style", HtmlElementFlag.CData);
-			ElementsFlags.Add("noxhtml", HtmlElementFlag.CData);
-			ElementsFlags.Add("textarea", HtmlElementFlag.CData);
-
-			// tags that can not contain other tags
-			ElementsFlags.Add("base", HtmlElementFlag.Empty);
-			ElementsFlags.Add("link", HtmlElementFlag.Empty);
-			ElementsFlags.Add("meta", HtmlElementFlag.Empty);
-			ElementsFlags.Add("isindex", HtmlElementFlag.Empty);
-			ElementsFlags.Add("hr", HtmlElementFlag.Empty);
-			ElementsFlags.Add("col", HtmlElementFlag.Empty);
-			ElementsFlags.Add("img", HtmlElementFlag.Empty);
-			ElementsFlags.Add("param", HtmlElementFlag.Empty);
-			ElementsFlags.Add("embed", HtmlElementFlag.Empty);
-			ElementsFlags.Add("frame", HtmlElementFlag.Empty);
-			ElementsFlags.Add("wbr", HtmlElementFlag.Empty);
-			ElementsFlags.Add("bgsound", HtmlElementFlag.Empty);
-			ElementsFlags.Add("spacer", HtmlElementFlag.Empty);
-			ElementsFlags.Add("keygen", HtmlElementFlag.Empty);
-			ElementsFlags.Add("area", HtmlElementFlag.Empty);
-			ElementsFlags.Add("input", HtmlElementFlag.Empty);
-			ElementsFlags.Add("basefont", HtmlElementFlag.Empty);
-			ElementsFlags.Add("source", HtmlElementFlag.Empty);
-			ElementsFlags.Add("form", HtmlElementFlag.CanOverlap);
-
-			//// they sometimes contain, and sometimes they don 't...
-			//ElementsFlags.Add("option", HtmlElementFlag.Empty);
-
-			// tag whose closing tag is equivalent to open tag:
-			// <p>bla</p>bla will be transformed into <p>bla</p>bla
-			// <p>bla<p>bla will be transformed into <p>bla<p>bla and not <p>bla></p><p>bla</p> or <p>bla<p>bla</p></p>
-			//<br> see above
-			ElementsFlags.Add("br", HtmlElementFlag.Empty | HtmlElementFlag.Closed);
-
-		    if (!HtmlDocument.DisableBehaviorTagP)
-		    {
-		        ElementsFlags.Add("p", HtmlElementFlag.Empty | HtmlElementFlag.Closed);
-		    }
-        }
-
+        
 		/// <summary>
 		/// Initializes HtmlNode, providing type, owner and where it exists in a collection
 		/// </summary>
@@ -627,7 +573,7 @@ namespace HtmlAgilityPack
 		/// </summary>
 		/// <param name="name">The name of the element node to check. May not be <c>null</c>.</param>
 		/// <returns>true if the name is the name of an element node that can be kept overlapped, <c>false</c> otherwise.</returns>
-		public static bool CanOverlapElement(string name)
+		public bool CanOverlapElement(string name)
 		{
 			if (name == null)
 			{
@@ -635,7 +581,7 @@ namespace HtmlAgilityPack
 			}
 
 			HtmlElementFlag flag;
-			if (!ElementsFlags.TryGetValue(name, out flag))
+			if (!_ownerdocument.ElementsFlags.TryGetValue(name, out flag))
 			{
 				return false;
 			}
@@ -676,7 +622,7 @@ namespace HtmlAgilityPack
 		/// </summary>
 		/// <param name="name">The name of the element node to check. May not be null.</param>
 		/// <returns>true if the name is the name of a CDATA element node, false otherwise.</returns>
-		public static bool IsCDataElement(string name)
+		public bool IsCDataElement(string name)
 		{
 			if (name == null)
 			{
@@ -684,7 +630,7 @@ namespace HtmlAgilityPack
 			}
 
 			HtmlElementFlag flag;
-			if (!ElementsFlags.TryGetValue(name, out flag))
+			if (!_ownerdocument.ElementsFlags.TryGetValue(name, out flag))
 			{
 				return false;
 			}
@@ -697,7 +643,7 @@ namespace HtmlAgilityPack
 		/// </summary>
 		/// <param name="name">The name of the element node to check. May not be null.</param>
 		/// <returns>true if the name is the name of a closed element node, false otherwise.</returns>
-		public static bool IsClosedElement(string name)
+		public bool IsClosedElement(string name)
 		{
 			if (name == null)
 			{
@@ -705,7 +651,7 @@ namespace HtmlAgilityPack
 			}
 
 			HtmlElementFlag flag;
-			if (!ElementsFlags.TryGetValue(name, out flag))
+			if (!_ownerdocument.ElementsFlags.TryGetValue(name, out flag))
 			{
 				return false;
 			}
@@ -718,7 +664,7 @@ namespace HtmlAgilityPack
 		/// </summary>
 		/// <param name="name">The name of the element node to check. May not be null.</param>
 		/// <returns>true if the name is the name of an empty element node, false otherwise.</returns>
-		public static bool IsEmptyElement(string name)
+		public bool IsEmptyElement(string name)
 		{
 			if (name == null)
 			{
@@ -743,7 +689,7 @@ namespace HtmlAgilityPack
 			}
 
 			HtmlElementFlag flag;
-			if (!ElementsFlags.TryGetValue(name, out flag))
+			if (!_ownerdocument.ElementsFlags.TryGetValue(name, out flag))
 			{
 				return false;
 			}
@@ -756,7 +702,7 @@ namespace HtmlAgilityPack
 		/// </summary>
 		/// <param name="text">The text to check. May not be null.</param>
 		/// <returns>true or false.</returns>
-		public static bool IsOverlappedClosingElement(string text)
+		public bool IsOverlappedClosingElement(string text)
 		{
 			if (text == null)
 			{

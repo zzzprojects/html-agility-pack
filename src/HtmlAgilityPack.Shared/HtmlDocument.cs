@@ -24,23 +24,23 @@ namespace HtmlAgilityPack
         internal static bool _disableBehaviorTagP = true;
 
         /// <summary>True to disable, false to enable the behavior tag p.</summary>
-        public static bool DisableBehaviorTagP
+        public bool DisableBehaviorTagP
         {
             get => _disableBehaviorTagP;
             set
             {
                 if (value)
                 {
-                    if (HtmlNode.ElementsFlags.ContainsKey("p"))
+                    if (ElementsFlags.ContainsKey("p"))
                     {
-                        HtmlNode.ElementsFlags.Remove("p");
+                        ElementsFlags.Remove("p");
                     }
                 }
                 else
                 {
-                    if (!HtmlNode.ElementsFlags.ContainsKey("p"))
+                    if (!ElementsFlags.ContainsKey("p"))
                     {
-                        HtmlNode.ElementsFlags.Add("p", HtmlElementFlag.Empty | HtmlElementFlag.Closed);
+                        ElementsFlags.Add("p", HtmlElementFlag.Empty | HtmlElementFlag.Closed);
                     }
                 }
 
@@ -53,6 +53,49 @@ namespace HtmlAgilityPack
 
         /// <summary>Action to execute before the Parse is executed</summary>
         public Action<HtmlDocument> ParseExecuting { get; set; }
+
+        
+		void InitElementsFlags()
+		{
+			// tags whose content may be anything
+			ElementsFlags = new Dictionary<string, HtmlElementFlag>(StringComparer.OrdinalIgnoreCase);
+			ElementsFlags.Add("script", HtmlElementFlag.CData);
+			ElementsFlags.Add("style", HtmlElementFlag.CData);
+			ElementsFlags.Add("noxhtml", HtmlElementFlag.CData);
+			ElementsFlags.Add("textarea", HtmlElementFlag.CData);
+
+			// tags that can not contain other tags
+			ElementsFlags.Add("base", HtmlElementFlag.Empty);
+			ElementsFlags.Add("link", HtmlElementFlag.Empty);
+			ElementsFlags.Add("meta", HtmlElementFlag.Empty);
+			ElementsFlags.Add("isindex", HtmlElementFlag.Empty);
+			ElementsFlags.Add("hr", HtmlElementFlag.Empty);
+			ElementsFlags.Add("col", HtmlElementFlag.Empty);
+			ElementsFlags.Add("img", HtmlElementFlag.Empty);
+			ElementsFlags.Add("param", HtmlElementFlag.Empty);
+			ElementsFlags.Add("embed", HtmlElementFlag.Empty);
+			ElementsFlags.Add("frame", HtmlElementFlag.Empty);
+			ElementsFlags.Add("wbr", HtmlElementFlag.Empty);
+			ElementsFlags.Add("bgsound", HtmlElementFlag.Empty);
+			ElementsFlags.Add("spacer", HtmlElementFlag.Empty);
+			ElementsFlags.Add("keygen", HtmlElementFlag.Empty);
+			ElementsFlags.Add("area", HtmlElementFlag.Empty);
+			ElementsFlags.Add("input", HtmlElementFlag.Empty);
+			ElementsFlags.Add("basefont", HtmlElementFlag.Empty);
+			ElementsFlags.Add("source", HtmlElementFlag.Empty);
+			ElementsFlags.Add("form", HtmlElementFlag.CanOverlap);
+
+			//// they sometimes contain, and sometimes they don 't...
+			//ElementsFlags.Add("option", HtmlElementFlag.Empty);
+
+			// tag whose closing tag is equivalent to open tag:
+			// <p>bla</p>bla will be transformed into <p>bla</p>bla
+			// <p>bla<p>bla will be transformed into <p>bla<p>bla and not <p>bla></p><p>bla</p> or <p>bla<p>bla</p></p>
+			//<br> see above
+			ElementsFlags.Add("br", HtmlElementFlag.Empty | HtmlElementFlag.Closed);
+
+        }
+
 
         #endregion
 
@@ -213,6 +256,12 @@ namespace HtmlAgilityPack
             {"th", new[] {"tr", "table"}},
             {"td", new[] {"tr", "table"}},
         };
+        
+        /// <summary>
+        /// Gets a collection of flags that define specific behaviors for specific element nodes.
+        /// The table contains a DictionaryEntry list with the lowercase tag name as the Key, and a combination of HtmlElementFlags as the Value.
+        /// </summary>
+        public Dictionary<string, HtmlElementFlag> ElementsFlags { get; set; }
 
         #endregion
 
@@ -223,6 +272,8 @@ namespace HtmlAgilityPack
         /// </summary>
         public HtmlDocument()
         {
+            InitElementsFlags();
+
             if (DefaultBuilder != null)
             {
                 DefaultBuilder(this);
@@ -974,7 +1025,7 @@ namespace HtmlAgilityPack
             // find last node of this kind
             if (prev == null)
             {
-                if (HtmlNode.IsClosedElement(_currentnode.Name))
+                if (_currentnode.IsClosedElement(_currentnode.Name))
                 {
                     // </br> will be seen as <br>
                     _currentnode.CloseNode(_currentnode);
@@ -1015,7 +1066,7 @@ namespace HtmlAgilityPack
                     // node has no parent
                     // node is not a closed node
 
-                    if (HtmlNode.CanOverlapElement(_currentnode.Name))
+                    if (_currentnode.CanOverlapElement(_currentnode.Name))
                     {
                         // this is a hack: add it as a text node
                         HtmlNode closenode = CreateNode(HtmlNodeType.Text, _currentnode._outerstartindex);
@@ -1028,7 +1079,7 @@ namespace HtmlAgilityPack
                     }
                     else
                     {
-                        if (HtmlNode.IsEmptyElement(_currentnode.Name))
+                        if (_currentnode.IsEmptyElement(_currentnode.Name))
                         {
                             AddError(
                                 HtmlParseErrorCode.EndTagNotRequired,
@@ -1076,7 +1127,7 @@ namespace HtmlAgilityPack
             if (!error)
             {
                 if ((_lastparentnode != null) &&
-                    ((!HtmlNode.IsClosedElement(_currentnode.Name)) ||
+                    ((!_currentnode.IsClosedElement(_currentnode.Name)) ||
                      (_currentnode._starttag)))
                 {
                     UpdateLastParentNode();
@@ -2010,14 +2061,14 @@ namespace HtmlAgilityPack
                         _lastparentnode = _currentnode;
                     }
 
-                    if (HtmlNode.IsCDataElement(CurrentNodeName()))
+                    if (_currentnode.IsCDataElement(CurrentNodeName()))
                     {
                         _state = ParseState.PcData;
                         return true;
                     }
 
-                    if ((HtmlNode.IsClosedElement(_currentnode.Name)) ||
-                        (HtmlNode.IsEmptyElement(_currentnode.Name)))
+                    if ((_currentnode.IsClosedElement(_currentnode.Name)) ||
+                        (_currentnode.IsEmptyElement(_currentnode.Name)))
                     {
                         close = true;
                     }
