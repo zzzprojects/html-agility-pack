@@ -618,6 +618,12 @@ namespace HtmlAgilityPack
 			}
 		}
 
+
+		/// <summary>
+		/// The depth of the node relative to the opening root html element. This value is used to determine if a document has to many nested html nodes which can cause stack overflows
+		/// </summary>
+		public int Depth { get; set; }
+
 		#endregion
 
 		#region Public Methods
@@ -1856,6 +1862,23 @@ namespace HtmlAgilityPack
 				WriteTo(sw);
 				sw.Flush();
 				return sw.ToString();
+			}
+		}
+
+		/// <summary>
+		/// Sets the parent Html node and properly determines the current node's depth using the parent node's depth.
+		/// </summary>
+		public void SetParent(HtmlNode parent)
+		{
+			if (parent == null)
+				return;
+
+			ParentNode = parent;
+			if (OwnerDocument.OptionMaxNestedChildNodes > 0)
+			{
+				Depth = parent.Depth + 1;
+				if (Depth > OwnerDocument.OptionMaxNestedChildNodes)
+					throw new Exception(string.Format("Document has more than {0} nested tags. This is likely due to the page not closing tags properly.", OwnerDocument.OptionMaxNestedChildNodes));
 			}
 		}
 
