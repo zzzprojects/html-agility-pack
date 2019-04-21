@@ -9,6 +9,7 @@ HtmlWeb.Load method gets an HTML document from a web browser. It makes it possib
 The following example loads an Html from the WebBrowser and waits until the text is set for the DIV.
 
 ```csharp
+using System.Windows.Forms;
 
 string url = "http://html-agility-pack/from-browser";
 
