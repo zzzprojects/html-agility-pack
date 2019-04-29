@@ -945,33 +945,19 @@ namespace HtmlAgilityPack
             }
 
             string contentType = "";
-#if !NETSTANDARD2_0
-            var helper = new PermissionHelper();
-            if (!helper.GetIsRegistryAvailable())
-            {
-                //if (MimeTypes.ContainsKey(extension))
-                //    contentType = MimeTypes[extension];
-                //else
-                //    contentType = def;
-            }
+	        if (!extension.StartsWith("."))
+	        {
+		        extension = "." + extension;
+	        }
 
-            if (!helper.GetIsDnsAvailable())
-            {
+			if (!MimeTypeMap.Mappings.TryGetValue(extension, out contentType))
+	        {
+		        contentType = def;
+	        }
 
-                //do something.... not at full trust
-                try
-                {
-                    RegistryKey reg = Registry.ClassesRoot;
-                    reg = reg.OpenSubKey(extension, false);
-                    if (reg != null) contentType = (string) reg.GetValue("", def);
-                }
-                catch (Exception)
-                {
-                    contentType = def;
-                }
-            }
-#endif
-            return contentType;
+
+
+			return contentType;
         }
 
         /// <summary>
@@ -987,38 +973,24 @@ namespace HtmlAgilityPack
                 return def;
             }
 
-            string ext = "";
-#if !NETSTANDARD2_0
-            var helper = new PermissionHelper();
-            if (!helper.GetIsRegistryAvailable())
-            {
-                //if (MimeTypes.ContainsValue(contentType))
-                //{
-                //    foreach (KeyValuePair<string, string> pair in MimeTypes)
-                //        if (pair.Value == contentType)
-                //            return pair.Value;
-                //}
-                return def;
-            }
+	        if (contentType.StartsWith("."))
+	        {
+		        throw new ArgumentException("Requested mime type is not valid: " + contentType);
+	        }
 
-            if (helper.GetIsRegistryAvailable())
-            {
+			string ext = "";
 
-                try
-                {
-                    RegistryKey reg = Registry.ClassesRoot;
-                    reg = reg.OpenSubKey(@"MIME\Database\Content Type\" + contentType, false);
-                    if (reg != null) ext = (string) reg.GetValue("Extension", def);
-                }
-                catch (Exception)
-                {
-                    ext = def;
-                }
-            }
-#endif
+	        if (!MimeTypeMap.Mappings.TryGetValue(contentType, out ext))
+	        {
+		        ext = def;
+	        }
 
-            return ext;
+			return ext;
         }
+
+
+
+
 
         /// <summary>
         /// Creates an instance of the given type from the specified Internet resource.
@@ -2419,7 +2391,17 @@ namespace HtmlAgilityPack
 
         internal string WebBrowserOuterHtml(object webBrowser)
         {
-            var documentProperty = webBrowser.GetType().GetProperty("Document");
+	        try
+	        { 
+		        var responseUriProperty = webBrowser.GetType().GetProperty("Url");
+		        _responseUri = (Uri)responseUriProperty.GetValue(webBrowser, null);
+			}
+	        catch  
+	        { 
+				// silence catch
+	        }
+
+			var documentProperty = webBrowser.GetType().GetProperty("Document");
             var document = documentProperty.GetValue(webBrowser, null);
 
             var getElementsByTagNameMethod = document.GetType().GetMethod("GetElementsByTagName", new Type[] {typeof(string)});
@@ -2430,8 +2412,8 @@ namespace HtmlAgilityPack
 
             var outerHtmlProperty = firstElement.GetType().GetProperty("OuterHtml");
             var outerHtml = outerHtmlProperty.GetValue(firstElement, null);
-
-            return (string) outerHtml;
+			
+			return (string) outerHtml;
         }
 
         /// <summary>Loads HTML using a WebBrowser and Application.DoEvents.</summary>
@@ -2542,8 +2524,8 @@ namespace HtmlAgilityPack
                 }
 
                 var documentText = WebBrowserOuterHtml(webBrowser);
-
-                doc.LoadHtml(documentText);
+				 
+				doc.LoadHtml(documentText);
             }
 
             return doc;
@@ -2553,64 +2535,5 @@ namespace HtmlAgilityPack
         #endregion
     }
 
-#if !NETSTANDARD
-    /// <summary>
-    /// Wraps getting AppDomain permissions
-    /// </summary>
-    public class PermissionHelper : IPermissionHelper
-    {
-        /// <summary>
-        /// Checks to see if Registry access is available to the caller
-        /// </summary>
-        /// <returns></returns>
-        public bool GetIsRegistryAvailable()
-        {
-#if FX40
-            var permissionSet = new PermissionSet(PermissionState.None);
-            var writePermission = new RegistryPermission(PermissionState.Unrestricted);
-            permissionSet.AddPermission(writePermission);
-
-            return permissionSet.IsSubsetOf(AppDomain.CurrentDomain.PermissionSet);
-#else
-            return SecurityManager.IsGranted(new RegistryPermission(PermissionState.Unrestricted));
-#endif
-        }
-
-        /// <summary>
-        /// Checks to see if DNS information is available to the caller
-        /// </summary>
-        /// <returns></returns>
-        public bool GetIsDnsAvailable()
-        {
-#if FX40
-            var permissionSet = new PermissionSet(PermissionState.None);
-            var writePermission = new DnsPermission(PermissionState.Unrestricted);
-            permissionSet.AddPermission(writePermission);
-
-            return permissionSet.IsSubsetOf(AppDomain.CurrentDomain.PermissionSet);
-#else
-            return SecurityManager.IsGranted(new DnsPermission(PermissionState.Unrestricted));
-#endif
-        }
-    }
-#endif
-
-    /// <summary>
-    /// An interface for getting permissions of the running application
-    /// </summary>
-    public interface IPermissionHelper
-    {
-        /// <summary>
-        /// Checks to see if Registry access is available to the caller
-        /// </summary>
-        /// <returns></returns>
-        bool GetIsRegistryAvailable();
-
-        /// <summary>
-        /// Checks to see if DNS information is available to the caller
-        /// </summary>
-        /// <returns></returns>
-        bool GetIsDnsAvailable();
-    }
 }
 #endif
