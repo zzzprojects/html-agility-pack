@@ -211,6 +211,16 @@ namespace HtmlAgilityPack.Tests
         }
 
         [Test]
+        public void CreateTextNodeWithHtml()
+        {
+            var doc = new HtmlDocument();
+            var a = doc.CreateTextNode("<b>Hello World</b>");
+            Assert.AreEqual("<b>Hello World</b>", a.InnerText);
+            doc.DocumentNode.AppendChild(a);
+            Assert.AreEqual("&lt;bgt;Hello World&lt;/b&gt;", doc.DocumentNode.OuterHtml);
+        }
+
+        [Test]
         public void HtmlEncode()
         {
             var result = HtmlDocument.HtmlEncode("http://something.com\"&<>");
