@@ -3,7 +3,7 @@
 // Forum & Issues: https://github.com/zzzprojects/html-agility-pack
 // License: https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE
 // More projects: http://www.zzzprojects.com/
-// Copyright © ZZZ Projects Inc. 2014 - 2017. All rights reserved.
+// Copyright ?ZZZ Projects Inc. 2014 - 2017. All rights reserved.
 
 #if !METRO
 
@@ -55,7 +55,7 @@ namespace HtmlAgilityPack
         public delegate void PostResponseHandler(HttpWebRequest request, HttpWebResponse response);
 #endif
 
-#if NET45 || NETSTANDARD1_3 || NETSTANDARD1_6
+#if NETSTANDARD1_3 || NETSTANDARD1_6
 /// <summary>
 /// Represents the method that will handle the PostResponse event.
 /// </summary>
@@ -72,7 +72,7 @@ namespace HtmlAgilityPack
         /// </summary>
         public delegate bool PreRequestHandler(HttpWebRequest request);
 #endif
-#if NET45 || NETSTANDARD1_3 || NETSTANDARD1_6
+#if NETSTANDARD1_3 || NETSTANDARD1_6
 /// <summary>
 /// Represents the method that will handle the PostResponse event.
 /// </summary>
