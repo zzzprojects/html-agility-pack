@@ -406,6 +406,45 @@ namespace HtmlAgilityPack
 			}
 		}
 
+        /// <summary>Gets direct inner text.</summary>
+        /// <returns>The direct inner text.</returns>
+		public virtual string GetDirectInnerText()
+		{
+			if (!_ownerdocument.BackwardCompatibility)
+			{
+				if (HasChildNodes)
+				{
+					StringBuilder sb = new StringBuilder();
+					AppendDirectInnerText(sb);
+					return sb.ToString();
+				}
+
+				return GetCurrentNodeText();
+			}
+
+			if (_nodetype == HtmlNodeType.Text)
+				return ((HtmlTextNode)this).Text;
+
+			// Don't display comment or comment child nodes
+			if (_nodetype == HtmlNodeType.Comment)
+				return "";
+
+			if (!HasChildNodes)
+				return string.Empty;
+
+			string s = null;
+            foreach (HtmlNode node in ChildNodes)
+            {
+                if (node._nodetype == HtmlNodeType.Text)
+                {
+                    s += ((HtmlTextNode)node).Text;
+                }
+            }
+	
+			return s;
+	 
+		}
+
 		internal string GetCurrentNodeText()
 		{
 			if (_nodetype == HtmlNodeType.Text)
@@ -422,6 +461,22 @@ namespace HtmlAgilityPack
 			}
 
 			return "";
+		}
+
+		internal void AppendDirectInnerText(StringBuilder sb)
+		{
+			if (_nodetype == HtmlNodeType.Text)
+			{
+				sb.Append(GetCurrentNodeText());
+			}
+
+			if (!HasChildNodes) return;
+
+			foreach (HtmlNode node in ChildNodes)
+			{
+				sb.Append(node.GetCurrentNodeText());
+			}
+			return; 
 		}
 
 		internal void AppendInnerText(StringBuilder sb)

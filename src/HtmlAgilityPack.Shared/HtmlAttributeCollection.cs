@@ -106,6 +106,17 @@ namespace HtmlAgilityPack
 
 
         /// <summary>
+        /// Adds a new attribute to the collection with the given values
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        public void Add(string name, string value)
+        {
+            Append(name, value);
+        }
+
+
+        /// <summary>
         /// Adds supplied item to collection
         /// </summary>
         /// <param name="item"></param>
@@ -114,10 +125,30 @@ namespace HtmlAgilityPack
             Append(item);
         }
 
-        /// <summary>
-        /// Explicit clear
-        /// </summary>
-        void ICollection<HtmlAttribute>.Clear()
+        /// <summary>Adds a range supplied items to collection.</summary>
+        /// <param name="items">An IEnumerable&lt;HtmlAttribute&gt; of items to append to this.</param>
+        public void AddRange(IEnumerable<HtmlAttribute> items)
+	    {
+		    foreach (var item in items)
+		    { 
+				Append(item);
+			}
+	    }
+
+        /// <summary>Adds a range supplied items to collection using a dictionary.</summary>
+        /// <param name="items">A Dictionary&lt;string,string&gt; of items to append to this.</param>
+        public void AddRange(Dictionary<string, string> items)
+	    {
+		    foreach (var item in items)
+            {
+                Add(item.Key, item.Value);
+            }
+	    }
+
+		/// <summary>
+		/// Explicit clear
+		/// </summary>
+		void ICollection<HtmlAttribute>.Clear()
         {
             items.Clear();
         }
@@ -215,16 +246,6 @@ namespace HtmlAgilityPack
         #endregion
 
         #region Public Methods
-
-        /// <summary>
-        /// Adds a new attribute to the collection with the given values
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
-        public void Add(string name, string value)
-        {
-            Append(name, value);
-        }
 
         /// <summary>
         /// Inserts the specified attribute as the last attribute in the collection.

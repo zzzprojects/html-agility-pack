@@ -2332,9 +2332,19 @@ namespace HtmlAgilityPack
             else
                 clientHandler.Credentials = credentials;
 
+			if (CaptureRedirect)
+            {
+				// https://stackoverflow.com/questions/10453892/how-can-i-get-system-net-http-httpclient-to-not-follow-302-redirects
+				clientHandler.AllowAutoRedirect = false;
+	        }
+
             var client = new HttpClient(clientHandler);
 
-            var e = await client.GetAsync(uri, cancellationToken).ConfigureAwait(false);
+			//https://stackoverflow.com/questions/44076962/how-do-i-set-a-default-user-agent-on-an-httpclient
+			client.DefaultRequestHeaders.Add("User-Agent", this.UserAgent);
+	     
+
+			var e = await client.GetAsync(uri, cancellationToken).ConfigureAwait(false);
 
             var html = string.Empty;
             if (encoding != null)
