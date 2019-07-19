@@ -56,6 +56,7 @@ namespace HtmlAgilityPack
 		internal bool _starttag;
 		internal int _streamposition;
 		internal bool _isImplicitEnd;
+		internal bool _isPcData;
 
 		#endregion
 
@@ -95,8 +96,9 @@ namespace HtmlAgilityPack
 			ElementsFlags = new Dictionary<string, HtmlElementFlag>(StringComparer.OrdinalIgnoreCase);
 			ElementsFlags.Add("script", HtmlElementFlag.CData);
 			ElementsFlags.Add("style", HtmlElementFlag.CData);
-			ElementsFlags.Add("noxhtml", HtmlElementFlag.CData);
+			ElementsFlags.Add("noxhtml", HtmlElementFlag.CData); // can't found.
 			ElementsFlags.Add("textarea", HtmlElementFlag.CData);
+			ElementsFlags.Add("title", HtmlElementFlag.CData);
 
 			// tags that can not contain other tags
 			ElementsFlags.Add("base", HtmlElementFlag.Empty);
@@ -369,7 +371,7 @@ namespace HtmlAgilityPack
 		}
 
 		/// <summary>
-		/// Gets or Sets the text between the start and end tags of the object.
+		/// Gets the text between the start and end tags of the object.
 		/// </summary>
 		public virtual string InnerText
 		{
@@ -386,7 +388,7 @@ namespace HtmlAgilityPack
 
 					return GetCurrentNodeText();
 				}
-
+				 
 				if (_nodetype == HtmlNodeType.Text)
 					return ((HtmlTextNode) this).Text;
 
@@ -396,7 +398,7 @@ namespace HtmlAgilityPack
 
 				// note: right now, this method is *slow*, because we recompute everything.
 				// it could be optimized like innerhtml
-				if (!HasChildNodes)
+				if (!HasChildNodes || _isPcData)
 					return string.Empty;
 
 				string s = null;
@@ -480,13 +482,13 @@ namespace HtmlAgilityPack
 		}
 
 		internal void AppendInnerText(StringBuilder sb)
-		{
+		{ 
 			if (_nodetype == HtmlNodeType.Text)
 			{
 				sb.Append(GetCurrentNodeText());
 			}
 
-			if (!HasChildNodes) return;
+			if (!HasChildNodes || _isPcData) return;
 
 			foreach (HtmlNode node in ChildNodes)
 			{
@@ -2092,7 +2094,7 @@ namespace HtmlAgilityPack
 
 			string name;
 			string quote = att.QuoteType == AttributeValueQuote.DoubleQuote ? "\"" : "'";
-			if (_ownerdocument.OptionOutputAsXml)
+            if (_ownerdocument.OptionOutputAsXml)
 			{
 				name = _ownerdocument.OptionOutputUpperCase ? att.XmlName.ToUpperInvariant(): att.XmlName;
 				if (_ownerdocument.OptionOutputOriginalCase)
@@ -2115,13 +2117,14 @@ namespace HtmlAgilityPack
 					}
 				}
 
-				if (_ownerdocument.OptionOutputOptimizeAttributeValues)
+                var value = att.QuoteType == AttributeValueQuote.DoubleQuote ? att.Value.Replace("\"", "&quot;") : att.Value.Replace("'", "&#39;");
+                if (_ownerdocument.OptionOutputOptimizeAttributeValues)
 					if (att.Value.IndexOfAny(new char[] {(char) 10, (char) 13, (char) 9, ' '}) < 0)
 						outText.Write(" " + name + "=" + att.Value);
 					else
-						outText.Write(" " + name + "=" + quote + att.Value + quote);
+						outText.Write(" " + name + "=" + quote + value + quote);
 				else
-					outText.Write(" " + name + "=" + quote + att.Value + quote);
+					outText.Write(" " + name + "=" + quote + value + quote);
 			}
 		}
 

@@ -70,7 +70,7 @@ namespace HtmlAgilityPack
         private Encoding _declaredencoding;
         private HtmlNode _documentnode;
         private bool _fullcomment;
-        private int _index;
+		private int _index;
         internal Dictionary<string, HtmlNode> Lastnodes = new Dictionary<string, HtmlNode>();
         private HtmlNode _lastparentnode;
         private int _line;
@@ -1208,7 +1208,7 @@ namespace HtmlAgilityPack
 
         private bool IsValidTag()
         {
-            bool isValidTag = _c == '<' && _index < Text.Length && (Char.IsLetter(Text[_index]) || Text[_index] == '/' || Text[_index] == '!' || Text[_index] == '%');
+            bool isValidTag = _c == '<' && _index < Text.Length && (Char.IsLetter(Text[_index]) || Text[_index] == '/' || Text[_index] == '?' || Text[_index] == '!' || Text[_index] == '%');
             return isValidTag;
         }
 
@@ -1260,9 +1260,9 @@ namespace HtmlAgilityPack
             _state = ParseState.WhichTag;
             if ((_index - 1) <= (Text.Length - 2))
             {
-                if (Text[_index] == '!')
+	            if (Text[_index] == '!' || Text[_index] == '?')
                 {
-                    PushNodeStart(HtmlNodeType.Comment, _index - 1, _lineposition -1);
+					PushNodeStart(HtmlNodeType.Comment, _index - 1, _lineposition -1);
                     PushNodeNameStart(true, _index);
                     PushNodeNameEnd(_index + 1);
                     _state = ParseState.Comment;
@@ -1276,7 +1276,7 @@ namespace HtmlAgilityPack
                         else
                         {
                             _fullcomment = false;
-                        }
+						}
                     }
 
                     return true;
@@ -1635,7 +1635,7 @@ namespace HtmlAgilityPack
                         {
                             if (_fullcomment)
                             {
-                                if (((Text[_index - 2] != '-') || (Text[_index - 3] != '-')) 
+	                            if (((Text[_index - 2] != '-') || (Text[_index - 3] != '-')) 
                                     &&  
                                     ((Text[_index - 2] != '!') || (Text[_index - 3] != '-') ||
                                      (Text[_index - 4] != '-')))
@@ -1706,18 +1706,20 @@ namespace HtmlAgilityPack
                                 int c = Text[_index - 1 + 2 + _currentnode.Name.Length];
                                 if ((c == '>') || (IsWhiteSpace(c)))
                                 {
-                                    // add the script as a text node
-                                    HtmlNode script = CreateNode(HtmlNodeType.Text,
+									// add the script as a text node
+									HtmlNode script = CreateNode(HtmlNodeType.Text,
                                         _currentnode._outerstartindex +
                                         _currentnode._outerlength);
                                     script._outerlength = _index - 1 - script._outerstartindex;
                                     script._streamposition = script._outerstartindex;
                                     script._line = _currentnode.Line;
                                     script._lineposition = _currentnode.LinePosition + _currentnode._namelength + 2;
-									_currentnode.AppendChild(script);
+
+                                    _currentnode.AppendChild(script);
+                                    _currentnode._isPcData = true;
 
 
-                                    PushNodeStart(HtmlNodeType.Element, _index - 1, _lineposition -1);
+									PushNodeStart(HtmlNodeType.Element, _index - 1, _lineposition -1);
                                     PushNodeNameStart(false, _index - 1 + 2);
                                     _state = ParseState.Tag;
                                     IncrementPosition();
@@ -1744,13 +1746,21 @@ namespace HtmlAgilityPack
             Lastnodes.Clear();
         }
 
-        private void PushAttributeNameEnd(int index)
-        {
-            _currentattribute._namelength = index - _currentattribute._namestartindex;
-            _currentnode.Attributes.Append(_currentattribute);
-        }
+        // In this moment, we don't have value. 
+        // Potential: "\"", "'", "[", "]", "<", ">", "-", "|", "/", "\\"
+        private static List<string> BlockAttributes = new List<string>() { "\"", "'" };
 
-        private void PushAttributeNameStart(int index, int lineposition)
+	    private void PushAttributeNameEnd(int index)
+	    {
+		    _currentattribute._namelength = index - _currentattribute._namestartindex;
+
+		    if (_currentattribute.Name != null && !BlockAttributes.Contains(_currentattribute.Name))
+		    {
+			    _currentnode.Attributes.Append(_currentattribute);
+		    }
+	    }
+
+		private void PushAttributeNameStart(int index, int lineposition)
         {
             _currentattribute = CreateAttribute();
             _currentattribute._namestartindex = index;
