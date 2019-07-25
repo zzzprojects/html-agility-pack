@@ -56,7 +56,7 @@ namespace HtmlAgilityPack
 		internal bool _starttag;
 		internal int _streamposition;
 		internal bool _isImplicitEnd;
-		internal bool _isPcData;
+		internal bool _isHideInnerText;
 
 		#endregion
 
@@ -81,7 +81,7 @@ namespace HtmlAgilityPack
 		/// Gets a collection of flags that define specific behaviors for specific element nodes.
 		/// The table contains a DictionaryEntry list with the lowercase tag name as the Key, and a combination of HtmlElementFlags as the Value.
 		/// </summary>
-		public static Dictionary<string, HtmlElementFlag> ElementsFlags;
+		public static Dictionary<string, HtmlElementFlag> ElementsFlags; 
 
 		#endregion
 
@@ -377,18 +377,40 @@ namespace HtmlAgilityPack
 		{
 			get
 			{
+				string result;
+				string name = this.Name;
+	 
+				if (name != null)
+				{
+					name = name.ToLowerInvariant();
+
+					bool isDisplayScriptingText = (name == "head" || name == "script" || name == "style"); 
+
+					result = InternalInnerText(isDisplayScriptingText);
+				}
+				else
+				{
+                    result = InternalInnerText(false);
+				} 
+			 
+				return result;
+			}
+		}
+
+		internal virtual string InternalInnerText(bool isDisplayScriptingText)
+		{  
 				if (!_ownerdocument.BackwardCompatibility)
 				{
 					if (HasChildNodes)
 					{
 						StringBuilder sb = new StringBuilder();
-						AppendInnerText(sb);
+						AppendInnerText(sb, isDisplayScriptingText);
 						return sb.ToString();
 					}
 
 					return GetCurrentNodeText();
 				}
-				 
+
 				if (_nodetype == HtmlNodeType.Text)
 					return ((HtmlTextNode) this).Text;
 
@@ -398,18 +420,17 @@ namespace HtmlAgilityPack
 
 				// note: right now, this method is *slow*, because we recompute everything.
 				// it could be optimized like innerhtml
-				if (!HasChildNodes || _isPcData)
+				if (!HasChildNodes || ( _isHideInnerText && !isDisplayScriptingText))
 					return string.Empty;
 
 				string s = null;
 				foreach (HtmlNode node in ChildNodes)
-					s += node.InnerText;
+					s += node.InternalInnerText(isDisplayScriptingText);
 				return s;
-			}
-		}
+        }
 
-        /// <summary>Gets direct inner text.</summary>
-        /// <returns>The direct inner text.</returns>
+		/// <summary>Gets direct inner text.</summary>
+		/// <returns>The direct inner text.</returns>
 		public virtual string GetDirectInnerText()
 		{
 			if (!_ownerdocument.BackwardCompatibility)
@@ -481,18 +502,18 @@ namespace HtmlAgilityPack
 			return; 
 		}
 
-		internal void AppendInnerText(StringBuilder sb)
+		internal void AppendInnerText(StringBuilder sb, bool isShowHideInnerText)
 		{ 
 			if (_nodetype == HtmlNodeType.Text)
 			{
 				sb.Append(GetCurrentNodeText());
 			}
 
-			if (!HasChildNodes || _isPcData) return;
+			if (!HasChildNodes || (_isHideInnerText && !isShowHideInnerText)) return;
 
 			foreach (HtmlNode node in ChildNodes)
 			{
-				node.AppendInnerText(sb);
+				node.AppendInnerText(sb, isShowHideInnerText);
 			}
 		}
 

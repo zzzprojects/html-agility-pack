@@ -1716,8 +1716,14 @@ namespace HtmlAgilityPack
                                     script._lineposition = _currentnode.LinePosition + _currentnode._namelength + 2;
 
                                     _currentnode.AppendChild(script);
-                                    _currentnode._isPcData = true;
 
+									// https://www.w3schools.com/jsref/prop_node_innertext.asp
+									// textContent returns the text content of all elements, while innerText returns the content of all elements, except for <script> and <style> elements.
+									// innerText will not return the text of elements that are hidden with CSS (textContent will). ==> The parser do not support that.
+									if (_currentnode.Name.ToLowerInvariant().Equals("script")  || _currentnode.Name.ToLowerInvariant().Equals("style"))
+                                    {
+	                                    _currentnode._isHideInnerText = true;
+									}
 
 									PushNodeStart(HtmlNodeType.Element, _index - 1, _lineposition -1);
                                     PushNodeNameStart(false, _index - 1 + 2);
