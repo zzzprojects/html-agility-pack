@@ -934,7 +934,7 @@ namespace HtmlAgilityPack.Tests
         }
 
         [Test]
-        public void GetClasses_WhereClassWithWhitespacePassed_ShouldReturnTrue()
+        public void GetClasses_WhereClassWithWhitespacePassed_ShouldNotBeEmpty()
         {
             var input = @"<a class="" disabled""></a>";
             var htmlDoc = new HtmlDocument();
