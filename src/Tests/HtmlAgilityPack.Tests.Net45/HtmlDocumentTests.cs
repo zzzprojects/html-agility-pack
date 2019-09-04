@@ -921,7 +921,29 @@ namespace HtmlAgilityPack.Tests
             Assert.AreEqual(expected, xmlDoc);
         }
 
+        [Test]
+        public void HasClass_WhereClassWithWhitespacePassed_ShouldReturnTrue()
+        {
+            var input = @"<a class="" disabled""></a>";
+            var htmlDoc = new HtmlDocument();
 
+            htmlDoc.LoadHtml(input);
+
+            var aTag = htmlDoc.DocumentNode.SelectSingleNode("//a");
+            Assert.True(aTag.HasClass("disabled"));
+        }
+
+        [Test]
+        public void GetClasses_WhereClassWithWhitespacePassed_ShouldNotBeEmpty()
+        {
+            var input = @"<a class="" disabled""></a>";
+            var htmlDoc = new HtmlDocument();
+
+            htmlDoc.LoadHtml(input);
+
+            var aTag = htmlDoc.DocumentNode.SelectSingleNode("//a");
+            Assert.IsNotEmpty(aTag.GetClasses());
+        }
 
         [HasXPath]
         public class StackOverflowPage
