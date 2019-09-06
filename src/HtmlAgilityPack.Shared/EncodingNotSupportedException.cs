@@ -29,7 +29,7 @@ namespace HtmlAgilityPack
 
         #region Properties
 
-        internal string Encoding
+        public string Encoding
         {
             get { return _encoding; }
         }
