@@ -1677,11 +1677,22 @@ namespace HtmlAgilityPack
             bool html = IsHtmlContent(resp.ContentType);
             bool isUnknown = string.IsNullOrEmpty(resp.ContentType);
 
-            Encoding respenc = !string.IsNullOrEmpty(resp.ContentEncoding)
-                ? Encoding.GetEncoding(resp.ContentEncoding)
-                : null;
-            if (OverrideEncoding != null)
-                respenc = OverrideEncoding;
+            Encoding respenc = OverrideEncoding;
+            if (respenc == null && !string.IsNullOrEmpty(resp.ContentEncoding))
+            {
+                try
+                {
+                    Encoding.GetEncoding(resp.ContentEncoding);
+                }
+                catch (ArgumentException ex)
+                {
+                    if (ex.ParamName == "name")
+                    {
+                        throw new EncodingNotSupportedException(resp.ContentEncoding);
+                    }
+                    throw ex;
+                }
+            }
 
             if (CaptureRedirect)
             {
