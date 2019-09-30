@@ -3,7 +3,7 @@
 // Forum & Issues: https://github.com/zzzprojects/html-agility-pack
 // License: https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE
 // More projects: http://www.zzzprojects.com/
-// Copyright © ZZZ Projects Inc. 2014 - 2017. All rights reserved.
+// Copyright Â© ZZZ Projects Inc. 2014 - 2017. All rights reserved.
 
 using System;
 using System.Collections;
@@ -423,10 +423,10 @@ namespace HtmlAgilityPack
 				if (!HasChildNodes || ( _isHideInnerText && !isDisplayScriptingText))
 					return string.Empty;
 
-				string s = null;
+				var s = new StringBuilder;
 				foreach (HtmlNode node in ChildNodes)
-					s += node.InternalInnerText(isDisplayScriptingText);
-				return s;
+					s.Append(node.InternalInnerText(isDisplayScriptingText));
+				return s.ToString();
         }
 
 		/// <summary>Gets direct inner text.</summary>
