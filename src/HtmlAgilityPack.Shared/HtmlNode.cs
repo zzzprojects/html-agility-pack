@@ -3,7 +3,7 @@
 // Forum & Issues: https://github.com/zzzprojects/html-agility-pack
 // License: https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE
 // More projects: http://www.zzzprojects.com/
-// Copyright Â© ZZZ Projects Inc. 2014 - 2017. All rights reserved.
+// Copyright © ZZZ Projects Inc. 2014 - 2017. All rights reserved.
 
 using System;
 using System.Collections;
@@ -377,7 +377,7 @@ namespace HtmlAgilityPack
 		{
 			get
 			{
-				string result;
+				var sb = new StringBuilder(); 
 				string name = this.Name;
 	 
 				if (name != null)
@@ -385,51 +385,56 @@ namespace HtmlAgilityPack
 					name = name.ToLowerInvariant();
 
 					bool isDisplayScriptingText = (name == "head" || name == "script" || name == "style"); 
-
-					result = InternalInnerText(isDisplayScriptingText);
+					 
+					InternalInnerText(sb, isDisplayScriptingText);
 				}
 				else
-				{
-                    result = InternalInnerText(false);
+				{ 
+					InternalInnerText(sb, false);
 				} 
 			 
-				return result;
+				return sb.ToString();
 			}
 		}
 
-		internal virtual string InternalInnerText(bool isDisplayScriptingText)
-		{  
-				if (!_ownerdocument.BackwardCompatibility)
-				{
-					if (HasChildNodes)
-					{
-						StringBuilder sb = new StringBuilder();
-						AppendInnerText(sb, isDisplayScriptingText);
-						return sb.ToString();
-					}
+        internal virtual void InternalInnerText(StringBuilder sb, bool isDisplayScriptingText)
+        {
+            if (!_ownerdocument.BackwardCompatibility)
+            {
+                if (HasChildNodes)
+                {
+                    AppendInnerText(sb, isDisplayScriptingText);
+                    return;
+                }
 
-					return GetCurrentNodeText();
-				}
+                sb.Append(GetCurrentNodeText());
+                return;
+            }
 
-				if (_nodetype == HtmlNodeType.Text)
-					return ((HtmlTextNode) this).Text;
+            if (_nodetype == HtmlNodeType.Text)
+            {
+                sb.Append(((HtmlTextNode) this).Text);
+                return;
+            }
 
-				// Don't display comment or comment child nodes
-				if (_nodetype == HtmlNodeType.Comment)
-					return "";
+            // Don't display comment or comment child nodes
+            if (_nodetype == HtmlNodeType.Comment)
+            {
+                return;
+            }
 
-				// note: right now, this method is *slow*, because we recompute everything.
-				// it could be optimized like innerhtml
-				if (!HasChildNodes || ( _isHideInnerText && !isDisplayScriptingText))
-					return string.Empty;
+            // note: right now, this method is *slow*, because we recompute everything.
+            // it could be optimized like innerhtml
+            if (!HasChildNodes || (_isHideInnerText && !isDisplayScriptingText))
+            {
+                return;
+            }
 
-				var s = new StringBuilder;
-				foreach (HtmlNode node in ChildNodes)
-					s.Append(node.InternalInnerText(isDisplayScriptingText));
-				return s.ToString();
+            foreach (HtmlNode node in ChildNodes)
+                node.InternalInnerText(sb, isDisplayScriptingText);
         }
 
-		/// <summary>Gets direct inner text.</summary>
+        /// <summary>Gets direct inner text.</summary>
 		/// <returns>The direct inner text.</returns>
 		public virtual string GetDirectInnerText()
 		{
@@ -453,18 +458,18 @@ namespace HtmlAgilityPack
 				return "";
 
 			if (!HasChildNodes)
-				return string.Empty;
+				return string.Empty; 
 
-			string s = null;
-            foreach (HtmlNode node in ChildNodes)
+			var s = new StringBuilder();
+			foreach (HtmlNode node in ChildNodes)
             {
                 if (node._nodetype == HtmlNodeType.Text)
                 {
-                    s += ((HtmlTextNode)node).Text;
+                    s.Append(((HtmlTextNode)node).Text);
                 }
             }
 	
-			return s;
+			return s.ToString();
 	 
 		}
 

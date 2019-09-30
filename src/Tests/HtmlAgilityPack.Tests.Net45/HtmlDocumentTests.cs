@@ -33,7 +33,21 @@ namespace HtmlAgilityPack.Tests
             return doc;
         }
 
+
         [Test]
+        public void SelectEventAttributesTest()
+        {
+	        String xpath = "//* [@onkeypress or @onkeydown or @onkeyup or @onclick or @ondblclick or @onmousedown or @onmouseup or @onmouseover or @onmousemove or @onmouseout or @onmouseenter or @onmouseleave or @onmousewheel or @oncontextmenu or @onabort or @onbeforeunload or @onerror or @onload or @onmove or @onresize or @onscroll or @onstop or @onunload or @onreset or @onsubmit or @onblur or @onchange or @onfocus or @onfocusin or @onfocusout or @oninput or @onbeforeactivate or @onactivate or @onbefordeactivate or @ondeactivate or @onbounce or @onfinish or @onstart or @onbeforecopy or @onbeforecut or @onbeforeeditfocus or @onbeforepaste or @onbeforeupdate or @oncopy or @oncut or @ondrag or @ondragdrop or @ondragend or @ondragenter or @ondragleave or @ondragover or @ondragstart or @ondrop or @onlosecapture or @onpaste or @onselect or @onselectstart or @oncontrolselect or @onmovestart or @onmoveend or @onafterupdate or @oncellchange or @ondataavailable or @ondatasetchanged or @ondatasetcomplete or @onerrorupdate or @onrowenter or @onrowexit or @onrowsdelete or @onrowsinserted or @onafterprint or @onbeforeprint or @onfilterchange or @onhelp or @onpropertychange or @onreadystatechange]";
+	        var doc = new HtmlAgilityPack.HtmlDocument();
+	        doc.LoadHtml(@"<html><body><div id='foo' onclick='bar'><span> some</span> text</div></body></html>");
+	        for (int i = 0; i < 100000; i++)
+	        {
+		        doc.DocumentNode.SelectNodes(xpath).ToList();
+	        }
+        }
+
+
+		[Test]
         public void HtmlAgilityPack_AttributeCollectionBug()
         {
             { 
@@ -81,6 +95,31 @@ namespace HtmlAgilityPack.Tests
             }
         }
 
+//		[Test]
+//	    public void spanTest()
+//	    {
+//	        // fix has been cancelled for now
+//		    const string test = @"<html>
+//<body>
+//<span>
+//<p>Foo</span></p>
+//<p>Bar</p>
+//</body></html>";
+//		    HtmlDocument doc = new HtmlDocument();
+//		    doc.LoadHtml(test);
+
+//	        const string expected = @"<html>
+//<body>
+//<span>
+//<p>Foo</p>
+//<p>Bar</p>
+//</span>
+//</body></html>";
+
+
+//            Assert.AreEqual(expected, doc.DocumentNode.OuterHtml); ;
+//		}
+
         [Test]
         public void TextInsideScriptTagShouldHaveCorrectStreamPosition()
         {
@@ -90,7 +129,7 @@ namespace HtmlAgilityPack.Tests
                 var scraptText = document.DocumentNode.FirstChild.FirstChild;
                 Assert.AreEqual(8, scraptText.StreamPosition);
                 Assert.AreEqual(1, scraptText.Line);
-                Assert.AreEqual(9, scraptText.LinePosition);
+                Assert.AreEqual(8, scraptText.LinePosition);
             }
             {
                 var document = new HtmlDocument();
@@ -98,7 +137,7 @@ namespace HtmlAgilityPack.Tests
                 var scriptText = document.DocumentNode.FirstChild.FirstChild;
                 Assert.AreEqual(8, scriptText.StreamPosition);
                 Assert.AreEqual(1, scriptText.Line);
-                Assert.AreEqual(9, scriptText.LinePosition);
+                Assert.AreEqual(8, scriptText.LinePosition);
             }
             {
                 var document = new HtmlAgilityPack.HtmlDocument();
@@ -108,7 +147,7 @@ namespace HtmlAgilityPack.Tests
                 //   var aa = scraptText.FirstChild;
                 Assert.AreEqual(10, scraptText.StreamPosition);
                 Assert.AreEqual(2, scraptText.Line);
-                Assert.AreEqual(9, scraptText.LinePosition);
+                Assert.AreEqual(8, scraptText.LinePosition);
             }
 
 
@@ -119,7 +158,7 @@ namespace HtmlAgilityPack.Tests
                 var scriptText = document.DocumentNode.LastChild.FirstChild;
                 Assert.AreEqual(10, scriptText.StreamPosition);
                 Assert.AreEqual(2, scriptText.Line);
-                Assert.AreEqual(9, scriptText.LinePosition);
+                Assert.AreEqual(8, scriptText.LinePosition);
             }
         }
 
@@ -469,24 +508,24 @@ namespace HtmlAgilityPack.Tests
             Assert.AreEqual(System.Text.Encoding.UTF8, encoding);
         }
 
-        [Test]
-        public void TestLoadWithCache()
-        {
-            var dir = _contentDirectory + "cache";
-            Directory.CreateDirectory(dir);
+        //[Test]
+        //public void TestLoadWithCache()
+        //{
+        //    var dir = _contentDirectory + "cache";
+        //    Directory.CreateDirectory(dir);
 
-            var web = new HtmlAgilityPack.HtmlWeb()
-            {
-                CachePath = dir,
-                UsingCache = true
-            };
+        //    var web = new HtmlAgilityPack.HtmlWeb()
+        //    {
+        //        CachePath = dir,
+        //        UsingCache = true
+        //    };
 
-            var url = "http://html-agility-pack.net/";
-            var docCache = web.Load(url);
+        //    var url = "http://html-agility-pack.net/";
+        //    var docCache = web.Load(url);
 
-            var docLoad = new HtmlAgilityPack.HtmlWeb().Load(url);
-            Assert.AreEqual(docLoad.DocumentNode.OuterHtml, docCache.DocumentNode.OuterHtml);
-        }
+        //    var docLoad = new HtmlAgilityPack.HtmlWeb().Load(url);
+        //    Assert.AreEqual(docLoad.DocumentNode.OuterHtml, docCache.DocumentNode.OuterHtml);
+        //}
 
         [Test]
         public void OuterHtmlHasBeenCalled_RemoveCalled_SubsequentOuterHtmlCallsAreBroken()
@@ -824,7 +863,7 @@ namespace HtmlAgilityPack.Tests
         public void GetEncapsulatedData()
         {
             HtmlWeb stackoverflowSite = new HtmlWeb();
-            HtmlDocument htmlDocument = stackoverflowSite.Load("https://stackoverflow.com/");
+            HtmlDocument htmlDocument = stackoverflowSite.Load("https://stackoverflow.com/?tab=interesting");
             StackOverflowPage stackOverflowPage = htmlDocument.DocumentNode.GetEncapsulatedData<StackOverflowPage>();
             IEnumerable<StackOverflowQuestion> filtered = stackOverflowPage.Questions.OrderByDescending(new Func<StackOverflowQuestion, int>(x => x.Statistics.Votes));
            
@@ -900,6 +939,30 @@ namespace HtmlAgilityPack.Tests
         }
 
         [Test]
+        public void HasClass_WhereClassWithWhitespacePassed_ShouldReturnTrue()
+        {
+            var input = @"<a class="" disabled""></a>";
+            var htmlDoc = new HtmlDocument();
+
+            htmlDoc.LoadHtml(input);
+
+            var aTag = htmlDoc.DocumentNode.SelectSingleNode("//a");
+            Assert.True(aTag.HasClass("disabled"));
+        }
+
+        [Test]
+        public void GetClasses_WhereClassWithWhitespacePassed_ShouldNotBeEmpty()
+        {
+            var input = @"<a class="" disabled""></a>";
+            var htmlDoc = new HtmlDocument();
+
+            htmlDoc.LoadHtml(input);
+
+            var aTag = htmlDoc.DocumentNode.SelectSingleNode("//a");
+            Assert.IsNotEmpty(aTag.GetClasses());
+        }
+
+        [Test]
         public void DoesNotSanitizeXmlElementNameWithColonWhenConfiguredToPreserveXmlNamespaces()
         {
             var input = @"<RootElement xmlns:MyNamespace=""value"">
@@ -922,27 +985,225 @@ namespace HtmlAgilityPack.Tests
         }
 
         [Test]
-        public void HasClass_WhereClassWithWhitespacePassed_ShouldReturnTrue()
+        public void ChangesToPHandling()
         {
-            var input = @"<a class="" disabled""></a>";
-            var htmlDoc = new HtmlDocument();
+            var input = "<p>Begin<div>Inner</div>End</p>";
+            var doc = new HtmlAgilityPack.HtmlDocument();
+            doc.LoadHtml(input);
+            var docNode = doc.DocumentNode;
 
-            htmlDoc.LoadHtml(input);
-
-            var aTag = htmlDoc.DocumentNode.SelectSingleNode("//a");
-            Assert.True(aTag.HasClass("disabled"));
+            // Check tree is correct
+            
+            Assert.AreEqual(3, docNode.ChildNodes.Count);
+            Assert.AreEqual("p", docNode.ChildNodes[0].Name);
+            Assert.AreEqual("div", docNode.ChildNodes[1].Name);
+            Assert.AreEqual("#text", docNode.ChildNodes[2].Name);
+            Assert.AreEqual("Begin", docNode.ChildNodes[0].InnerText);
+            Assert.AreEqual("Inner", docNode.ChildNodes[1].InnerText);
+            Assert.AreEqual("End", docNode.ChildNodes[2].InnerText);
         }
 
         [Test]
-        public void GetClasses_WhereClassWithWhitespacePassed_ShouldNotBeEmpty()
+        public void ChangesToPHandlingFalse()
         {
-            var input = @"<a class="" disabled""></a>";
-            var htmlDoc = new HtmlDocument();
+            HtmlDocument.DisableBehaviorTagP = false;
 
-            htmlDoc.LoadHtml(input);
+            var input = "<p>Begin<div>Inner</div>End</p>";
+            var doc = new HtmlAgilityPack.HtmlDocument();
+            doc.LoadHtml(input);
+            var docNode = doc.DocumentNode;
 
-            var aTag = htmlDoc.DocumentNode.SelectSingleNode("//a");
-            Assert.IsNotEmpty(aTag.GetClasses());
+            try
+            {
+                // Check tree is correct
+                Assert.AreEqual(1, docNode.ChildNodes.Count);
+                Assert.AreEqual("p", docNode.ChildNodes[0].Name);
+
+                var pRootNode = docNode.ChildNodes[0];
+                Assert.AreEqual(3, pRootNode.ChildNodes.Count);
+                Assert.AreEqual("Begin", pRootNode.ChildNodes[0].InnerText);
+                Assert.AreEqual("Inner", pRootNode.ChildNodes[1].InnerText);
+                Assert.AreEqual("End", pRootNode.ChildNodes[2].InnerText);
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+            finally
+            {
+                HtmlDocument.DisableBehaviorTagP = true;
+            }
+        }
+
+        [Test]
+        public void AttributeValue()
+        {
+            {
+                Assert.AreEqual("&quot;&#39;", WebUtility.HtmlEncode("\"'"));
+            }
+            {
+                var input = "<div>z</div>";
+                var doc = new HtmlAgilityPack.HtmlDocument();
+                doc.BackwardCompatibility = true;
+                doc.LoadHtml(input);
+                var divNode = doc.DocumentNode.ChildNodes[0];
+
+                divNode.Attributes.Add("name", "value1value2");
+                Assert.AreEqual("value1value2", divNode.Attributes[0].Value);
+                Assert.AreEqual("<div name=\"value1value2\">z</div>", doc.DocumentNode.InnerHtml);
+            }
+
+            {
+                var input = "<div>z</div>";
+                var doc = new HtmlAgilityPack.HtmlDocument();
+                doc.BackwardCompatibility = true;
+                doc.LoadHtml(input);
+                var divNode = doc.DocumentNode.ChildNodes[0];
+
+                divNode.Attributes.Add("name", "value1\"value2");
+                Assert.AreEqual("value1\"value2", divNode.Attributes[0].Value);
+                Assert.AreEqual("<div name=\"value1&quot;value2\">z</div>", doc.DocumentNode.InnerHtml);
+            }
+
+            {
+                var input = "<div>z</div>";
+                var doc = new HtmlAgilityPack.HtmlDocument();
+                doc.BackwardCompatibility = true;
+                doc.LoadHtml(input);
+                var divNode = doc.DocumentNode.ChildNodes[0];
+
+                divNode.Attributes.Add("name", "value1&quot;value2");
+                Assert.AreEqual("value1&quot;value2", divNode.Attributes[0].Value);
+                Assert.AreEqual("<div name=\"value1&quot;value2\">z</div>", doc.DocumentNode.InnerHtml);
+            }
+
+            {
+                var input = "<div>z</div>";
+                var doc = new HtmlAgilityPack.HtmlDocument();
+                doc.BackwardCompatibility = true;
+                doc.LoadHtml(input);
+                var divNode = doc.DocumentNode.ChildNodes[0];
+
+                divNode.Attributes.Add("name", "value1'value2");
+                divNode.Attributes[0].QuoteType = AttributeValueQuote.SingleQuote;
+                Assert.AreEqual("value1'value2", divNode.Attributes[0].Value);
+                Assert.AreEqual("<div name='value1&#39;value2'>z</div>", doc.DocumentNode.InnerHtml);
+            }
+
+            {
+                var input = "<div>z</div>";
+                var doc = new HtmlAgilityPack.HtmlDocument();
+                doc.BackwardCompatibility = true;
+                doc.LoadHtml(input);
+                var divNode = doc.DocumentNode.ChildNodes[0];
+
+                divNode.Attributes.Add("name", "value1&#39;value2");
+                divNode.Attributes[0].QuoteType = AttributeValueQuote.SingleQuote;
+                Assert.AreEqual("value1&#39;value2", divNode.Attributes[0].Value);
+                Assert.AreEqual("<div name='value1&#39;value2'>z</div>", doc.DocumentNode.InnerHtml);
+            }
+
+            {
+                var input = "<div>z</div>";
+                var doc = new HtmlAgilityPack.HtmlDocument();
+                doc.BackwardCompatibility = false;
+                doc.LoadHtml(input);
+                var divNode = doc.DocumentNode.ChildNodes[0];
+
+                divNode.Attributes.Add("name", "value1value2");
+                Assert.AreEqual("value1value2", divNode.Attributes[0].Value);
+                Assert.AreEqual("<div name=\"value1value2\">z</div>", doc.DocumentNode.InnerHtml);
+            }
+
+            {
+                var input = "<div>z</div>";
+                var doc = new HtmlAgilityPack.HtmlDocument();
+                doc.BackwardCompatibility = false;
+                doc.LoadHtml(input);
+                var divNode = doc.DocumentNode.ChildNodes[0];
+
+                divNode.Attributes.Add("name", "value1\"value2");
+                Assert.AreEqual("value1\"value2", divNode.Attributes[0].Value);
+                Assert.AreEqual("<div name=\"value1&quot;value2\">z</div>", doc.DocumentNode.InnerHtml);
+            }
+
+            {
+                var input = "<div>z</div>";
+                var doc = new HtmlAgilityPack.HtmlDocument();
+                doc.BackwardCompatibility = false;
+                doc.LoadHtml(input);
+                var divNode = doc.DocumentNode.ChildNodes[0];
+
+                divNode.Attributes.Add("name", "value1&quot;value2");
+                Assert.AreEqual("value1&quot;value2", divNode.Attributes[0].Value);
+                Assert.AreEqual("<div name=\"value1&quot;value2\">z</div>", doc.DocumentNode.InnerHtml);
+            }
+
+            {
+                var input = "<div>z</div>";
+                var doc = new HtmlAgilityPack.HtmlDocument();
+                doc.BackwardCompatibility = false;
+                doc.LoadHtml(input);
+                var divNode = doc.DocumentNode.ChildNodes[0];
+
+                divNode.Attributes.Add("name", "value1'value2");
+                divNode.Attributes[0].QuoteType = AttributeValueQuote.SingleQuote;
+                Assert.AreEqual("value1'value2", divNode.Attributes[0].Value);
+                Assert.AreEqual("<div name='value1&#39;value2'>z</div>", doc.DocumentNode.InnerHtml);
+            }
+
+            {
+                var input = "<div>z</div>";
+                var doc = new HtmlAgilityPack.HtmlDocument();
+                doc.BackwardCompatibility = false;
+                doc.LoadHtml(input);
+                var divNode = doc.DocumentNode.ChildNodes[0];
+
+                divNode.Attributes.Add("name", "value1&#39;value2");
+                divNode.Attributes[0].QuoteType = AttributeValueQuote.SingleQuote;
+                Assert.AreEqual("value1&#39;value2", divNode.Attributes[0].Value);
+                Assert.AreEqual("<div name='value1&#39;value2'>z</div>", doc.DocumentNode.InnerHtml);
+            }
+
+        }
+
+        [Test]
+        public void AttributeSerialization()
+        {
+            HtmlDocument doc1 = new HtmlDocument()
+            {
+                OptionEmptyCollection = true,
+                OptionAutoCloseOnEnd = true,
+                OptionWriteEmptyNodes = true,
+                // Disable backward compatibility to enable automatic html decoding
+                BackwardCompatibility = false
+            };
+
+            HtmlDocument doc2 = new HtmlDocument()
+            {
+                OptionEmptyCollection = true,
+                OptionAutoCloseOnEnd = true,
+                OptionWriteEmptyNodes = true,
+                // Disable backward compatibility to enable automatic html decoding
+                BackwardCompatibility = false
+            };
+
+
+
+            string html = @"
+<html>
+<body>
+Hello Button: <input type=""button"" value=""ClickMe"" onClick=""var a=&gt;&quot;&#39;&gt;&lt;img src=&#x6a;&#x61;&#x76;&#x61;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x3a;alert(29)&gt; alert('');"">
+</body>
+</html>";
+            doc1.LoadHtml(html);
+            int beforeSerializtionSrcElementsCount = doc1.DocumentNode.SelectNodes("//* [@src]").Count;
+            StringWriter stringWriter = new StringWriter();
+            doc1.Save(stringWriter);
+            String htmlAfterSerialization = stringWriter.ToString();
+            doc2.LoadHtml(htmlAfterSerialization);
+            Assert.AreEqual(beforeSerializtionSrcElementsCount, doc2.DocumentNode.SelectNodes("//* [@src]").Count);
+
         }
 
         [HasXPath]
