@@ -2011,20 +2011,23 @@ namespace HtmlAgilityPack
 			HtmlNode newLast = null;
 			if (_prevwithsamename == null || !_prevwithsamename._starttag)
 			{
-				foreach (var openNode in _ownerdocument.Openednodes)
-				{
-					if ((openNode.Key < _outerstartindex || openNode.Key > (_outerstartindex + _outerlength)) && openNode.Value._name == _name)
-					{
-						if (newLast == null && openNode.Value._starttag)
-						{
-							newLast = openNode.Value;
-						}
-						else if (newLast !=null && newLast.InnerStartIndex < openNode.Key && openNode.Value._starttag)
-						{
-							newLast = openNode.Value;
-						}
-					}
-				}
+                if (_ownerdocument.Openednodes != null)
+                {
+                    foreach (var openNode in _ownerdocument.Openednodes)
+                    {
+                        if ((openNode.Key < _outerstartindex || openNode.Key > (_outerstartindex + _outerlength)) && openNode.Value._name == _name)
+                        {
+                            if (newLast == null && openNode.Value._starttag)
+                            {
+                                newLast = openNode.Value;
+                            }
+                            else if (newLast != null && newLast.InnerStartIndex < openNode.Key && openNode.Value._starttag)
+                            {
+                                newLast = openNode.Value;
+                            }
+                        }
+                    }
+                }
 			}
 			else
 			{

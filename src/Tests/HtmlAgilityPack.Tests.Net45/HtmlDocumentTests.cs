@@ -1206,6 +1206,27 @@ Hello Button: <input type=""button"" value=""ClickMe"" onClick=""var a=&gt;&quot
 
         }
 
+        [Test]
+        public void LoadHtml_WhenHtmlHasUnclosedTags_AndOptionCheckSyntaxFalse_ShouldNotThrowException()
+        {
+            var html = "<div>Some simple <p> html</div>";
+            var htmlDoc = new HtmlDocument { OptionCheckSyntax = false };
+
+            htmlDoc.LoadHtml(html);
+
+            using (var memoryStream = new MemoryStream())
+            {
+                htmlDoc.Save(memoryStream);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                using (var streamReader = new StreamReader(memoryStream))
+                {
+                    string parsedHtml = streamReader.ReadToEnd();
+                    Assert.IsNotEmpty(parsedHtml);
+                }
+            }
+            Assert.Zero(htmlDoc.ParseErrors.Count());
+        }
+
         [HasXPath]
         public class StackOverflowPage
         {
