@@ -3,7 +3,7 @@
 // Forum & Issues: https://github.com/zzzprojects/html-agility-pack
 // License: https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE
 // More projects: http://www.zzzprojects.com/
-// Copyright © ZZZ Projects Inc. 2014 - 2017. All rights reserved.
+// Copyright Â© ZZZ Projects Inc. 2014 - 2017. All rights reserved.
 
 using System;
 using System.Collections;
@@ -788,10 +788,11 @@ namespace HtmlAgilityPack
                 if ((code > 127) ||
                     (entitizeQuotAmpAndLtGt && ((code == 34) || (code == 38) || (code == 60) || (code == 62))))
                 {
-                    string entity;
-                    EntityName.TryGetValue(code, out entity);
+                    string entity = null;
+                    if (useNames)
+                        EntityName.TryGetValue(code, out entity);
 
-                    if ((entity == null) || (!useNames))
+                    if (entity == null))
                     {
                         sb.Append("&#" + code + ";");
                     }
