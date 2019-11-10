@@ -57,5 +57,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Trace.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Trace.FullFramework.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)XPathContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)XPathFunctionAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)XPathVariable.cs" />
   </ItemGroup>
 </Project>
