@@ -1,4 +1,4 @@
-﻿/* First released in 'Dawnx', it is now available to HAP under the MIT protocol */
+﻿/* First released in Dawnx library, it is now available to HAP under the MIT License */
 
 using System.Xml.XPath;
 using System.Xml.Xsl;
