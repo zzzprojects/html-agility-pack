@@ -83,6 +83,8 @@ namespace HtmlAgilityPack
 
         #region Fields
 
+        private IHttpWebRequestFactory _requestFactory;
+
         private bool _autoDetectEncoding = true;
         private bool _cacheOnly;
 
@@ -928,6 +930,19 @@ namespace HtmlAgilityPack
 
         #endregion
 
+        #region Constructors
+
+        public HtmlWeb() : this(new HttpWebRequestFactory())
+        {
+        }
+
+        internal HtmlWeb(IHttpWebRequestFactory requestFactory)
+        {
+            _requestFactory = requestFactory;
+        }
+
+        #endregion
+
         #region Public Methods
 
 #if !(NETSTANDARD1_3 || NETSTANDARD1_6)
@@ -1547,10 +1562,10 @@ namespace HtmlAgilityPack
             ICredentials creds)
         {
             string cachePath = null;
-            HttpWebRequest req;
+            IHttpWebRequest req;
             bool oldFile = false;
 
-            req = WebRequest.Create(uri) as HttpWebRequest;
+            req = _requestFactory.Create(uri);
             req.Method = method;
             req.UserAgent = UserAgent;
             if (CaptureRedirect)
@@ -1617,7 +1632,7 @@ namespace HtmlAgilityPack
             if (PreRequest != null)
             {
                 // allow our user to change the request at will
-                if (!PreRequest(req))
+                if (!PreRequest(req.Request))
                 {
                     return HttpStatusCode.ResetContent;
                 }
@@ -1632,16 +1647,16 @@ namespace HtmlAgilityPack
                 //                }
             }
 
-            HttpWebResponse resp;
+            IHttpWebResponse resp;
 
             try
             {
-                resp = req.GetResponse() as HttpWebResponse;
+                resp = req.GetResponse();
             }
             catch (WebException we)
             {
                 _requestDuration = Environment.TickCount - tc;
-                resp = (HttpWebResponse) we.Response;
+                resp = we.Response == null ? null : new HttpWebResponseWrapper((HttpWebResponse) we.Response);
                 if (resp == null)
                 {
                     if (oldFile)
@@ -1668,7 +1683,7 @@ namespace HtmlAgilityPack
             // allow our user to get some info from the response
             if (PostResponse != null)
             {
-                PostResponse(req, resp);
+                PostResponse(req.Request, resp.Response);
             }
 
             _requestDuration = Environment.TickCount - tc;
@@ -2103,7 +2118,7 @@ namespace HtmlAgilityPack
         }
 #endif
 #if !(NETSTANDARD1_3 || NETSTANDARD1_6)
-        private void SaveCacheHeaders(Uri requestUri, HttpWebResponse resp)
+        private void SaveCacheHeaders(Uri requestUri, IHttpWebResponse resp)
         {
             // we cache the original headers aside the cached document.
             string file = GetCacheHeadersPath(requestUri);
