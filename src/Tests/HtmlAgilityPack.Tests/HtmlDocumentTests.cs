@@ -22,14 +22,14 @@ namespace HtmlAgilityPack.Tests
         {
              
 
-            _contentDirectory = Path.GetDirectoryName(typeof(HtmlDocumentTests).Assembly.Location).ToString() + "\\files\\";
+            _contentDirectory = Path.Combine(Path.GetDirectoryName(typeof(HtmlDocumentTests).Assembly.Location).ToString(), "files");
             //   _contentDirectory = Path.Combine(@"C:\Users\Jonathan\Desktop\Z\zzzproject\HtmlAgilityPack\HtmlAgilityPack.Tests\bin\Debug\files\");
         }
 
         private HtmlDocument GetMshomeDocument()
         {
             var doc = new HtmlDocument();
-            doc.Load(_contentDirectory + "mshome.htm");
+            doc.Load(Path.Combine(_contentDirectory, "mshome.htm"));
             return doc;
         }
 
@@ -246,10 +246,10 @@ namespace HtmlAgilityPack.Tests
             var doc = GetMshomeDocument();
             var doc1desc =
                 doc.DocumentNode.Descendants().Where(x => !string.IsNullOrWhiteSpace(x.InnerText)).ToList();
-            doc.Save(_contentDirectory + "testsaveparse.html");
+            doc.Save(Path.Combine(_contentDirectory, "testsaveparse.html"));
 
             var doc2 = new HtmlDocument();
-            doc2.Load(_contentDirectory + "testsaveparse.html");
+            doc2.Load(Path.Combine(_contentDirectory, "testsaveparse.html"));
             var doc2desc =
                 doc2.DocumentNode.Descendants().Where(x => !string.IsNullOrWhiteSpace(x.InnerText)).ToList();
             Assert.AreEqual(doc1desc.Count, doc2desc.Count);
@@ -472,7 +472,7 @@ namespace HtmlAgilityPack.Tests
         [Test]
         public void TestLoadWithCache()
         {
-            var dir = _contentDirectory + "cache";
+            var dir = Path.Combine(_contentDirectory, "cache");
             Directory.CreateDirectory(dir);
 
             var web = new HtmlAgilityPack.HtmlWeb()
@@ -837,7 +837,7 @@ namespace HtmlAgilityPack.Tests
         public void CompareLowerCulture()
         {
 
-            string html = File.ReadAllText(_contentDirectory + "regression.html");
+            string html = File.ReadAllText(Path.Combine(_contentDirectory, "regression.html"));
             HtmlNode node1 = null;
             // Test 1
             CultureInfo cul1 = CultureInfo.CreateSpecificCulture("en-US");
@@ -866,7 +866,7 @@ namespace HtmlAgilityPack.Tests
         public void OverFlowNotEndTag()
         {
 
-            string html = File.ReadAllText(_contentDirectory + "overflow.html");
+            string html = File.ReadAllText(Path.Combine(_contentDirectory, "overflow.html"));
             HtmlNode node1 = null;
             // Test 1
              
