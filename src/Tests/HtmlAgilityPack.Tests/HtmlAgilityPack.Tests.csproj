@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net40;net45;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>net40;net45;netcoreapp2.1</TargetFrameworks>
     <AssemblyName>HtmlAgilityPack.Tests</AssemblyName>
     <RootNamespace>HtmlAgilityPack.Tests</RootNamespace>
     <Version>1.0.0</Version>
@@ -21,7 +21,7 @@
     <ProjectReference Include="..\..\HtmlAgilityPack.Net45\HtmlAgilityPack.Net45.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
     <ProjectReference Include="..\..\HtmlAgilityPack.NetStandard2_0\HtmlAgilityPack.NetStandard2_0.csproj" />
   </ItemGroup>
 
@@ -34,20 +34,21 @@
 
   <ItemGroup>
     <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
-    <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" />
+    <!-- <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" /> -->
     <PackageReference Include="Moq" Version="4.2.1510.2205" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
-    <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" />
+    <!-- <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" /> -->
     <PackageReference Include="MSTest.TestFramework" Version="2.0.0" />
     <PackageReference Include="Moq" Version="4.13.1" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
     <PackageReference Include="Moq" Version="4.13.1" />
