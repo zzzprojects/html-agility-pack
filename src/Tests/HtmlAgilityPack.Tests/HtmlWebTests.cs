@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using Moq;
 using NUnit.Framework;
 
@@ -146,6 +147,82 @@ namespace HtmlAgilityPack.Tests
                 exception = e;
             }
             Assert.That(exception, Is.InstanceOf(typeof(EncodingNotSupportedException)));
+        }
+
+        [Test]
+        public void TestLoadOverridingEncoding()
+        {
+            var factoryMock = new Mock<IHttpWebRequestFactory>();
+            factoryMock.Setup(x => x.Create(It.IsAny<Uri>()))
+                .Returns<Uri>(u =>
+                {
+                    var reqMock = new Mock<IHttpWebRequest>();
+                    reqMock.Setup(x => x.Request).Returns(null as HttpWebRequest);
+                    reqMock.Setup(x => x.GetResponse()).Returns(() =>
+                    {
+                        var resMock = new Mock<IHttpWebResponse>();
+                        resMock.Setup(x => x.ResponseUri).Returns(u);
+                        resMock.Setup(x => x.StatusCode).Returns(HttpStatusCode.OK);
+                        resMock.Setup(x => x.ContentType).Returns("text/html; charset=UTF-8");
+                        resMock.Setup(x => x.ContentEncoding).Returns("identity");
+                        resMock.Setup(x => x.Headers).Returns(() =>
+                        {
+                            var headers = new WebHeaderCollection();
+                            headers.Add("Transfer-Encoding", "chunked");
+                            headers.Add("Connection", "keep-alive");
+                            headers.Add("X-Cache-Hits", "4");
+                            headers.Add("Cache-Control", "no-store, must-revalidate, no-cache, max-age=0");
+                            headers.Add("X-Chef", "Gennaro");
+                            headers.Add("Pragma", "public");
+                            headers.Add("X-Cache-Keep", "3600.000");
+                            headers.Add("Vary", "Accept-Encoding");
+                            headers.Add("X-Country-Code", "NZ");
+                            headers.Add("X-Cache-Status", "MISS");
+                            headers.Add("X-Backend", "i_04400f0cd28e027e7_10_170_21_65");
+                            headers.Add("Date", "Fri, 15 Nov 2019 07:44:42 GMT");
+                            headers.Add("X-Cache-TTL-Remaining", "595.653");
+                            headers.Add("Server", "ZENEDGE");
+                            headers.Add("X-Zen-Fury", "efadaddb4a91c6f51faaa477a91c047faa84f52d");
+                            headers.Add("X-Cache", "FoodCache");
+                            headers.Add("Accept-Ranges", "bytes");
+                            headers.Add("Age", "3004");
+                            headers.Add("X-Cache-Age", "3004.347");
+                            headers.Add("X-Cdn", "Served-By-Zenedge");
+                            headers.Add("Content-Type", "text/html; charset=UTF-8");
+                            headers.Add("Last-Modified", "Thu, 01 Jan 1970 00:00:00 GMT");
+                            headers.Add("Expires", "Fri, 15 Nov 2019 08:44:41 GMT");
+                            headers.Add("Content-Encoding", "identity");
+                            return headers;
+                        });
+                        resMock.Setup(x => x.GetResponseStream()).Returns(
+                            () => new MemoryStream());
+                        resMock.Setup(x => x.LastModified).Returns(DateTime.UtcNow);
+                        return resMock.Object;
+                    });
+                    return reqMock.Object;
+                });
+
+            var url = new Uri("https://www.jamieoliver.com/recipes/chicken-recipes/chicken-tofu-noodle-soup/");
+            var htmlWeb = new HtmlWeb(factoryMock.Object);
+            HtmlDocument doc = null;
+            try
+            {
+                doc = htmlWeb.Load(url);
+                Assert.Fail("Load should fail when receiving a response with 'Content-Encoding: identity' in the headers.");
+            }
+            catch (EncodingNotSupportedException)
+            {
+                try
+                {
+                    htmlWeb.OverrideEncoding = Encoding.UTF8;
+                    doc = htmlWeb.Load(url);
+                }
+                catch (Exception e)
+                {
+                    Assert.Fail("Load failed even though the invalid encoding was adjusted by overriding it.");
+                }
+            }
+            Assert.That(doc, Is.Not.Null);
         }
     }
 }
