@@ -6,6 +6,8 @@
 // Copyright © ZZZ Projects Inc. 2014 - 2017. All rights reserved.
 
 
+using System;
+
 namespace HtmlAgilityPack
 {
     /// <summary>
