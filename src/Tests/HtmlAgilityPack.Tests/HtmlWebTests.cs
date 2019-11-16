@@ -9,7 +9,6 @@ namespace HtmlAgilityPack.Tests
     [TestFixture]
     class HtmlWebTests
     {
-
         [Test]
         public void TestLoad()
         {

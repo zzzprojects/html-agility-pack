@@ -38,12 +38,10 @@
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
-    <!-- <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" /> -->
     <PackageReference Include="Moq" Version="4.2.1510.2205" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
-    <!-- <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" /> -->
     <PackageReference Include="MSTest.TestFramework" Version="2.0.0" />
     <PackageReference Include="Moq" Version="4.13.1" />
   </ItemGroup>
