@@ -98,7 +98,7 @@ namespace TestCodeGen.Generator
                 // generate code for mocking IHttpWebResponse.Headers property
                 var headers = res.Headers;
                 code4Headers = headers.AllKeys
-                    .Select(k => $"{Indent(7)}headers.Add(\"" + k + "\", \"" + headers[k].Replace("\"", "\\\"") + "\");")
+                    .Select(k => $@"{Indent(7)}headers.Add(""{k}"", ""{headers[k].Replace("\"", "\\\"")}"");")
                     .DefaultIfEmpty()
                     .Aggregate((a, b) => $"{a}{Environment.NewLine}{b}");
 
@@ -157,6 +157,7 @@ namespace TestCodeGen.Generator
                     Content = regexNewLine.Replace($@"using System;
 using System.IO;
 using System.Net;
+using System.Reflection;
 using Moq;
 using NUnit.Framework;
 
@@ -171,7 +172,7 @@ namespace HtmlAgilityPack.Tests
 {Indent(2)}public void Setup()
 {Indent(2)}{{
 {Indent(3)}_contentDir = Path.Combine(
-{Indent(4)}Path.GetDirectoryName(typeof(HtmlDocumentTests).Assembly.Location),
+{Indent(4)}Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
 {Indent(4)}""files"");
 {Indent(2)}}}
 
@@ -200,7 +201,7 @@ namespace HtmlAgilityPack.Tests
 {Indent(4)}}});
 
 {Indent(3)}var htmlWeb = new HtmlWeb(factoryMock.Object);
-{Indent(3)}htmlWeb.Load(new Uri(""{Url.OriginalString}""));
+{Indent(3)}var doc = htmlWeb.Load(new Uri(""{Url.OriginalString}""));
 {Indent(2)}}}
 {Indent(1)}}}
 }}
