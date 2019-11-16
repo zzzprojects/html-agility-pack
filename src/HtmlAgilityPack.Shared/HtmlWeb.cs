@@ -83,7 +83,9 @@ namespace HtmlAgilityPack
 
         #region Fields
 
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
         private IHttpWebRequestFactory _requestFactory;
+#endif
 
         private bool _autoDetectEncoding = true;
         private bool _cacheOnly;
@@ -932,6 +934,7 @@ namespace HtmlAgilityPack
 
         #region Constructors
 
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6)
         public HtmlWeb() : this(new HttpWebRequestFactory())
         {
         }
@@ -940,6 +943,7 @@ namespace HtmlAgilityPack
         {
             _requestFactory = requestFactory;
         }
+#endif
 
         #endregion
 
