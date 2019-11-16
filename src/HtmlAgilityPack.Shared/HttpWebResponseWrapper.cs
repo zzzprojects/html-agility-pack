@@ -40,7 +40,7 @@ namespace HtmlAgilityPack
 
         public void Dispose()
         {
-#if NET20 || NET35 || NET40
+#if !(FX20 || FX35 || FX40)
 			_response.Dispose();
 #endif
         }
