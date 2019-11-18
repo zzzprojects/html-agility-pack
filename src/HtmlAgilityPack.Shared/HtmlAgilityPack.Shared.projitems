@@ -17,6 +17,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)crc32.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EncodingNotSupportedException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EncodingFoundException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HtmlAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HtmlAttributeCollection.cs" />
@@ -57,5 +58,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Trace.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Trace.FullFramework.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IHttpWebRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpWebRequestWrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IHttpWebResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpWebResponseWrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IHttpWebRequestFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HttpWebRequestFactory.cs" />
   </ItemGroup>
 </Project>
