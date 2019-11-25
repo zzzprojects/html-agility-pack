@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml;
 
@@ -2275,8 +2276,9 @@ namespace HtmlAgilityPack
 			if (!IsEmpty(classAttributes))
 			{
 				foreach (HtmlAttribute att in classAttributes)
-				{
-					if (att.Value.Equals(name) || att.Value.Contains(name))
+				{ 
+					// Check class solo, check class in First with other class, check Class no first.
+					if (att.Value != null && att.Value.Split(' ').ToList().Any(x => x.Equals(name)))
 					{
 						if (throwError)
 						{
@@ -2357,7 +2359,7 @@ namespace HtmlAgilityPack
 					{
 						Attributes.Remove(att);
 					}
-					else if (att.Value.Contains(name))
+					else if (att.Value != null && att.Value.Split(' ').ToList().Any(x => x.Equals(name)))
 					{
 						string[] classNames = att.Value.Split(' ');
 

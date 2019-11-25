@@ -3,7 +3,7 @@
 // Forum & Issues: https://github.com/zzzprojects/html-agility-pack
 // License: https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE
 // More projects: http://www.zzzprojects.com/
-// Copyright Â© ZZZ Projects Inc. 2014 - 2017. All rights reserved.
+// Copyright © ZZZ Projects Inc. 2014 - 2017. All rights reserved.
 
 #if !METRO
 
@@ -1677,10 +1677,16 @@ namespace HtmlAgilityPack
             bool html = IsHtmlContent(resp.ContentType);
             bool isUnknown = string.IsNullOrEmpty(resp.ContentType);
 
-            Encoding respenc = !string.IsNullOrEmpty(html ? resp.CharacterSet : resp.ContentEncoding)
-                ? Encoding.GetEncoding(html ? resp.CharacterSet : resp.ContentEncoding)
-                : null;
-            if (OverrideEncoding != null)
+			// keep old code because logic on  ReadDocumentEncoding(HtmlNode node), now use resp.CharacterSet here.
+			// for futur maybe harmonise.
+			//Encoding respenc = !string.IsNullOrEmpty(resp.ContentEncoding)
+			// ? Encoding.GetEncoding(resp.ContentEncoding)
+			// : null;
+
+			Encoding respenc = !string.IsNullOrEmpty(html ? resp.CharacterSet : resp.ContentEncoding)
+				? Encoding.GetEncoding(html ? resp.CharacterSet : resp.ContentEncoding)
+				: null;
+			if (OverrideEncoding != null)
                 respenc = OverrideEncoding;
 
             if (CaptureRedirect)
@@ -1774,7 +1780,7 @@ namespace HtmlAgilityPack
                         }
                         catch
                         {
-                            // ThatÂ’s fine, the content type was unknown so probably not HTML
+                            // That’s fine, the content type was unknown so probably not HTML
                             // Perhaps trying to figure if the content contains some HTML before would be a better idea.
                         }
                     }
@@ -2000,7 +2006,7 @@ namespace HtmlAgilityPack
                             }
                             catch
                             {
-                                // ThatÂ’s fine, the content type was unknown so probably not HTML
+                                // That’s fine, the content type was unknown so probably not HTML
                                 // Perhaps trying to figure if the content contains some HTML before would be a better idea.
                             }
                         }
