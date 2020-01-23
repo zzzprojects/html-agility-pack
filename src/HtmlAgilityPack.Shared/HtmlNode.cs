@@ -2146,8 +2146,10 @@ namespace HtmlAgilityPack
 						return;
 					}
 				}
+				
+				
 
-                var value = att.QuoteType == AttributeValueQuote.DoubleQuote ? att.Value.Replace("\"", "&quot;") : att.Value.Replace("'", "&#39;");
+				var value = att.QuoteType == AttributeValueQuote.DoubleQuote ? !att.Value.StartsWith("@") ? att.Value.Replace("\"", "&quot;") : att.Value : att.Value.Replace("'", "&#39;");
                 if (_ownerdocument.OptionOutputOptimizeAttributeValues)
 					if (att.Value.IndexOfAny(new char[] {(char) 10, (char) 13, (char) 9, ' '}) < 0)
 						outText.Write(" " + name + "=" + att.Value);
