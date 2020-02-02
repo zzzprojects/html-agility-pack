@@ -83,7 +83,7 @@ namespace HtmlAgilityPack
         } 
 
         /// <summary>
-        /// Selects the first XmlNode that matches the XPath expression.
+        /// Selects the first XmlNode that matches the <see cref="XPath"/> expression.
         /// </summary>
         /// <param name="xpath">The XPath expression. May not be null.</param>
         /// <returns>The first <see cref="HtmlNode"/> that matches the XPath query or a null reference if no matching node was found.</returns>
@@ -106,7 +106,7 @@ namespace HtmlAgilityPack
         }
 
         /// <summary>
-        /// Selects a list of nodes matching the <see cref="XPath"/> expression.
+        /// Selects the first XmlNode that matches the <see cref="XPath"/> expression.
         /// </summary>
         /// <param name="xpath">The XPath expression.</param>
         /// <returns>An <see cref="HtmlNodeCollection"/> containing a collection of nodes matching the <see cref="XPath"/> query, or <c>null</c> if no node matched the XPath expression.</returns>
