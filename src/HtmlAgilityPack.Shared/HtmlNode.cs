@@ -3,7 +3,7 @@
 // Forum & Issues: https://github.com/zzzprojects/html-agility-pack
 // License: https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE
 // More projects: http://www.zzzprojects.com/
-// Copyright © ZZZ Projects Inc. 2014 - 2017. All rights reserved.
+// Copyright Â© ZZZ Projects Inc. 2014 - 2017. All rights reserved.
 
 using System;
 using System.Collections;
@@ -745,7 +745,7 @@ namespace HtmlAgilityPack
 			doc.LoadHtml(html);
 			if (!doc.DocumentNode.IsSingleElementNode())
 			{
-				throw new Exception("Multiple node elments can't be created.");
+				throw new Exception("Multiple node elements can't be created.");
 			}
 
 			var element = doc.DocumentNode.FirstChild;
