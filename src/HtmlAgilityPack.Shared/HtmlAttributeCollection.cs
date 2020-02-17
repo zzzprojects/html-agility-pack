@@ -20,7 +20,7 @@ namespace HtmlAgilityPack
 
         internal Dictionary<string, HtmlAttribute> Hashitems = new Dictionary<string, HtmlAttribute>(StringComparer.OrdinalIgnoreCase);
         private HtmlNode _ownernode;
-        private List<HtmlAttribute> items = new List<HtmlAttribute>();
+        internal List<HtmlAttribute> items = new List<HtmlAttribute>();
 
         #endregion
 

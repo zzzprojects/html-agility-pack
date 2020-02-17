@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -1253,6 +1254,50 @@ namespace HtmlAgilityPack
 					yield return node;
 		}
 
+        /// <summary>Gets data attribute.</summary>
+        /// <param name="key">The key.</param>
+        /// <returns>The data attribute.</returns>
+		public HtmlAttribute GetDataAttribute(string key)
+        {
+            return Attributes.Hashitems.SingleOrDefault(x => x.Key.Equals("data-" + key, StringComparison.OrdinalIgnoreCase)).Value;
+        }
+
+        /// <summary>Gets the data attributes in this collection.</summary>
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the data attributes in this
+        /// collection.
+        /// </returns>
+		public IEnumerable<HtmlAttribute> GetDataAttributes()
+		{ 
+			return Attributes.Hashitems.Where(x => x.Key.StartsWith("data-", StringComparison.OrdinalIgnoreCase)).Select(x => x.Value).ToList();
+		}
+
+        /// <summary>Gets the attributes in this collection.</summary>
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the attributes in this collection.
+        /// </returns>
+		public IEnumerable<HtmlAttribute> GetAttributes()
+		{
+			return Attributes.items;
+		}
+
+        /// <summary>Gets the attributes in this collection.</summary>
+        /// <param name="attributeNames">A variable-length parameters list containing attribute names.</param>
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the attributes in this collection.
+        /// </returns>
+		public IEnumerable<HtmlAttribute> GetAttributes(params string[] attributeNames)
+		{ 
+			List<HtmlAttribute> list = new List<HtmlAttribute>();
+
+			foreach(var name in attributeNames)
+			{
+				list.Add(Attributes[name]);
+			}
+
+			return list;
+		}
+
 		/// <summary>
 		/// Helper method to get the value of an attribute of this node. If the attribute is not found, the default value will be returned.
 		/// </summary>
@@ -1261,25 +1306,14 @@ namespace HtmlAgilityPack
 		/// <returns>The value of the attribute if found, the default value if not found.</returns>
 		public string GetAttributeValue(string name, string def)
 		{
-			if (name == null)
-			{
-				throw new ArgumentNullException("name");
-			}
+#if METRO || NETSTANDARD1_3 || NETSTANDARD1_6
+            return GetAttributeValue(name, def);
+#else
+            return GetAttributeValue<string>(name, def);
+#endif
+        }
 
-			if (!HasAttributes)
-			{
-				return def;
-			}
-
-			HtmlAttribute att = Attributes[name];
-			if (att == null)
-			{
-				return def;
-			}
-
-			return att.Value;
-		}
-
+#if METRO || NETSTANDARD1_3 || NETSTANDARD1_6
 		/// <summary>
 		/// Helper method to get the value of an attribute of this node. If the attribute is not found, the default value will be returned.
 		/// </summary>
@@ -1347,14 +1381,59 @@ namespace HtmlAgilityPack
 				return def;
 			}
 		}
+#else
+        /// <summary>
+        /// Helper method to get the value of an attribute of this node. If the attribute is not found,
+        /// the default value will be returned.
+        /// </summary>
+        /// <param name="name">The name of the attribute to get. May not be <c>null</c>.</param>
+        /// <param name="def">The default value to return if not found.</param>
+        /// <returns>The value of the attribute if found, the default value if not found.</returns>
+        public T GetAttributeValue<T>(string name, T def) 
+		{
+			if (name == null)
+			{
+				throw new ArgumentNullException("name");
+			}
 
-		/// <summary>
-		/// Inserts the specified node immediately after the specified reference node.
-		/// </summary>
-		/// <param name="newChild">The node to insert. May not be <c>null</c>.</param>
-		/// <param name="refChild">The node that is the reference node. The newNode is placed after the refNode.</param>
-		/// <returns>The node being inserted.</returns>
-		public HtmlNode InsertAfter(HtmlNode newChild, HtmlNode refChild)
+			if (!HasAttributes)
+			{
+				return def;
+			}
+
+			HtmlAttribute att = Attributes[name];
+			if (att == null)
+			{
+				return def;
+			}
+			 
+			TypeConverter converter = TypeDescriptor.GetConverter(typeof(T));
+
+			try
+			{
+				if (converter != null && converter.CanConvertTo(att.Value.GetType()))
+				{  
+					return (T)converter.ConvertTo(att.Value, typeof(T)); 
+				}
+				else
+				{
+					return (T) (object) att.Value;
+				}
+			}
+			catch
+			{
+				return def;
+			}
+		}
+#endif
+
+        /// <summary>
+        /// Inserts the specified node immediately after the specified reference node.
+        /// </summary>
+        /// <param name="newChild">The node to insert. May not be <c>null</c>.</param>
+        /// <param name="refChild">The node that is the reference node. The newNode is placed after the refNode.</param>
+        /// <returns>The node being inserted.</returns>
+        public HtmlNode InsertAfter(HtmlNode newChild, HtmlNode refChild)
 		{
 			if (newChild == null)
 			{
@@ -1966,9 +2045,9 @@ namespace HtmlAgilityPack
 			}
 		}
 
-		#endregion
+#endregion
 
-		#region Internal Methods
+#region Internal Methods
 
 		internal void SetChanged()
 		{
@@ -2212,9 +2291,9 @@ namespace HtmlAgilityPack
 			}
 		}
 
-		#endregion
+#endregion
 
-		#region Private Methods
+#region Private Methods
 
 		private string GetRelativeXpath()
 		{
@@ -2253,9 +2332,9 @@ namespace HtmlAgilityPack
 			return count <= 1 ? true : false;
 		}
 
-		#endregion
+#endregion
 
-		#region Class Helper
+#region Class Helper
 
 		/// <summary>
 		/// Adds one or more classes to this node.
@@ -2497,6 +2576,6 @@ namespace HtmlAgilityPack
 			return true;
 		}
 
-		#endregion
+#endregion
 	}
 }
