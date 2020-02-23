@@ -99,8 +99,10 @@ namespace HtmlAgilityPack
                 {
                     Append(value);
                 }
-
-                this[items.IndexOf(currentValue)] = value;
+                else
+                {
+	                this[items.IndexOf(currentValue)] = value;
+                }
             }
         }
 
