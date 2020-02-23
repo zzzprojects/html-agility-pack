@@ -110,7 +110,7 @@ namespace HtmlAgilityPack
 
                             if (htmlNode == null)
                             {
-                                throw new NodeNotFoundException("Cannot find node with givig XPath to bind to " +
+                                throw new NodeNotFoundException("Cannot find node with giving XPath to bind to " +
                                     propertyInfo.PropertyType.FullName + " " + propertyInfo.Name);
                             }
 
@@ -204,12 +204,12 @@ namespace HtmlAgilityPack
                                 }
                                 catch
                                 {
-                                    throw new NodeNotFoundException("Cannot find node with givig XPath to bind to " + propertyInfo.PropertyType.FullName + " " + propertyInfo.Name);
+                                    throw new NodeNotFoundException("Cannot find node with giving XPath to bind to " + propertyInfo.PropertyType.FullName + " " + propertyInfo.Name);
                                 }
 
                                 if (nodeCollection == null || nodeCollection.Count == 0)
                                 {
-                                    throw new NodeNotFoundException("Cannot find node with givig XPath to bind to " + propertyInfo.PropertyType.FullName + " " + propertyInfo.Name);
+                                    throw new NodeNotFoundException("Cannot find node with giving XPath to bind to " + propertyInfo.PropertyType.FullName + " " + propertyInfo.Name);
                                 }
 
 
