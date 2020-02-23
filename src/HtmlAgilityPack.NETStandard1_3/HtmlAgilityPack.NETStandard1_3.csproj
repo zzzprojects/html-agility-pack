@@ -9,10 +9,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
-    <PostBuildEvent>del /f /q "..\..\..\..\Nuget\lib\NetStandard1_3\*"
-copy "Html*.*" "..\..\..\..\Nuget\lib\NetStandard1_3\*"</PostBuildEvent>
     <PackageId>HtmlAgilityPack</PackageId>
-    <Version>1.8.0</Version>
+    <Version>1.11.1</Version>
     <Authors>ZZZ Projects Inc.</Authors>
     <Company>ZZZ Projects Inc.</Company>
     <Product>Html Agility Pack</Product>
@@ -20,17 +18,18 @@ copy "Html*.*" "..\..\..\..\Nuget\lib\NetStandard1_3\*"</PostBuildEvent>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>HtmlAgilityPack.snk</AssemblyOriginatorKeyFile>
     <AssemblyName>HtmlAgilityPack</AssemblyName>
-    <AssemblyVersion>1.8.0.0</AssemblyVersion>
-    <FileVersion>1.8.0.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD1_3</DefineConstants>
+    <DocumentationFile>bin\Debug\netstandard1.3\HtmlAgilityPack.xml</DocumentationFile>
+    <OutputPath>bin\Debug\netstandard1.3\</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DefineConstants>TRACE;NETSTANDARD;NETSTANDARD1_3</DefineConstants>
     <DocumentationFile>bin\Release\netstandard1.3\HtmlAgilityPack.xml</DocumentationFile>
+    <OutputPath>bin\Release\netstandard1.3\</OutputPath>
   </PropertyGroup>
 
   <Import Project="..\HtmlAgilityPack.Shared\HtmlAgilityPack.Shared.projitems" Label="Shared" />

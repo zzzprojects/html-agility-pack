@@ -220,9 +220,9 @@ namespace HtmlAgilityPack
             if (next == node)
                 throw new InvalidProgramException("Unexpected error.");
 
-            node._nextnode = next;
-            node._parentnode = _parentnode;
-        }
+            node._nextnode = next; 
+			node.SetParent(_parentnode);
+		}
 
         /// <summary>
         /// Remove node
@@ -291,7 +291,7 @@ namespace HtmlAgilityPack
         {
             foreach (HtmlNode node in items)
             {
-                if (node.Name.IndexOf(name, StringComparison.OrdinalIgnoreCase) != -1)
+                if (node.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
                     return node;
                 if (!node.HasChildNodes) continue;
                 HtmlNode returnNode = FindFirst(node.ChildNodes, name);
@@ -315,8 +315,8 @@ namespace HtmlAgilityPack
             _items.Add(node);
             node._prevnode = last;
             node._nextnode = null;
-            node._parentnode = _parentnode;
-            if (last == null) return;
+	        node.SetParent(_parentnode);
+			if (last == null) return;
             if (last == node)
                 throw new InvalidProgramException("Unexpected error.");
 
@@ -363,9 +363,9 @@ namespace HtmlAgilityPack
                 throw new InvalidProgramException("Unexpected error.");
             node._nextnode = first;
             node._prevnode = null;
-            node._parentnode = _parentnode;
+	        node.SetParent(_parentnode);
 
-            if (first != null)
+			if (first != null)
                 first._prevnode = node;
         }
 
@@ -415,9 +415,9 @@ namespace HtmlAgilityPack
                 throw new InvalidProgramException("Unexpected error.");
 
             node._nextnode = next;
-            node._parentnode = _parentnode;
+	        node.SetParent(_parentnode);
 
-            oldnode._prevnode = null;
+			oldnode._prevnode = null;
             oldnode._nextnode = null;
             oldnode._parentnode = null;
         }

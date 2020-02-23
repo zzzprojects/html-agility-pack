@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace HtmlAgilityPack
@@ -21,6 +22,10 @@ namespace HtmlAgilityPack
     public class HtmlEntity
     {
         #region Static Members
+
+#if !FX20 && !FX35
+        public static bool UseWebUtility { get; set; }
+#endif
 
         private static readonly int _maxEntitySize;
         private static Dictionary<int, string> _entityName;
@@ -782,29 +787,49 @@ namespace HtmlAgilityPack
                 return text;
 
             StringBuilder sb = new StringBuilder(text.Length);
-            for (int i = 0; i < text.Length; i++)
-            {
-                int code = text[i];
-                if ((code > 127) ||
-                    (entitizeQuotAmpAndLtGt && ((code == 34) || (code == 38) || (code == 60) || (code == 62))))
-                {
-                    string entity;
-                    EntityName.TryGetValue(code, out entity);
 
-                    if ((entity == null) || (!useNames))
+#if !FX20 && !FX35
+            if (UseWebUtility)
+            {
+                TextElementEnumerator enumerator = StringInfo.GetTextElementEnumerator(text);
+                while (enumerator.MoveNext())
+                {
+                    sb.Append(System.Net.WebUtility.HtmlEncode(enumerator.GetTextElement()));
+                }
+            }
+            else
+            {
+#endif
+                for (int i = 0; i < text.Length; i++)
+                {
+                    int code = text[i];
+                    if ((code > 127) ||
+                        (entitizeQuotAmpAndLtGt && ((code == 34) || (code == 38) || (code == 60) || (code == 62))))
                     {
-                        sb.Append("&#" + code + ";");
+                        string entity = null;
+
+                        if (useNames)
+                        {
+                            EntityName.TryGetValue(code, out entity);
+                        }
+
+                        if (entity == null)
+                        {
+                            sb.Append("&#" + code + ";");
+                        }
+                        else
+                        {
+                            sb.Append("&" + entity + ";");
+                        }
                     }
                     else
                     {
-                        sb.Append("&" + entity + ";");
+                        sb.Append(text[i]);
                     }
                 }
-                else
-                {
-                    sb.Append(text[i]);
-                }
+#if !FX20 && !FX35
             }
+#endif
 
             return sb.ToString();
         }

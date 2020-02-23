@@ -20,7 +20,7 @@ namespace HtmlAgilityPack
 
         internal Dictionary<string, HtmlAttribute> Hashitems = new Dictionary<string, HtmlAttribute>(StringComparer.OrdinalIgnoreCase);
         private HtmlNode _ownernode;
-        private List<HtmlAttribute> items = new List<HtmlAttribute>();
+        internal List<HtmlAttribute> items = new List<HtmlAttribute>();
 
         #endregion
 
@@ -99,9 +99,22 @@ namespace HtmlAgilityPack
                 {
                     Append(value);
                 }
-
-                this[items.IndexOf(currentValue)] = value;
+                else
+                {
+	                this[items.IndexOf(currentValue)] = value;
+                }
             }
+        }
+
+
+        /// <summary>
+        /// Adds a new attribute to the collection with the given values
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        public void Add(string name, string value)
+        {
+            Append(name, value);
         }
 
 
@@ -114,10 +127,30 @@ namespace HtmlAgilityPack
             Append(item);
         }
 
-        /// <summary>
-        /// Explicit clear
-        /// </summary>
-        void ICollection<HtmlAttribute>.Clear()
+        /// <summary>Adds a range supplied items to collection.</summary>
+        /// <param name="items">An IEnumerable&lt;HtmlAttribute&gt; of items to append to this.</param>
+        public void AddRange(IEnumerable<HtmlAttribute> items)
+	    {
+		    foreach (var item in items)
+		    { 
+				Append(item);
+			}
+	    }
+
+        /// <summary>Adds a range supplied items to collection using a dictionary.</summary>
+        /// <param name="items">A Dictionary&lt;string,string&gt; of items to append to this.</param>
+        public void AddRange(Dictionary<string, string> items)
+	    {
+		    foreach (var item in items)
+            {
+                Add(item.Key, item.Value);
+            }
+	    }
+
+		/// <summary>
+		/// Explicit clear
+		/// </summary>
+		void ICollection<HtmlAttribute>.Clear()
         {
             items.Clear();
         }
@@ -217,23 +250,18 @@ namespace HtmlAgilityPack
         #region Public Methods
 
         /// <summary>
-        /// Adds a new attribute to the collection with the given values
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
-        public void Add(string name, string value)
-        {
-            Append(name, value);
-        }
-
-        /// <summary>
         /// Inserts the specified attribute as the last attribute in the collection.
         /// </summary>
         /// <param name="newAttribute">The attribute to insert. May not be null.</param>
         /// <returns>The appended attribute.</returns>
         public HtmlAttribute Append(HtmlAttribute newAttribute)
         {
-            if (newAttribute == null)
+	        if (_ownernode.NodeType == HtmlNodeType.Text || _ownernode.NodeType == HtmlNodeType.Comment)
+	        {
+				throw new Exception("A Text or Comment node cannot have attributes.");
+	        }
+				  
+			if (newAttribute == null)
             {
                 throw new ArgumentNullException("newAttribute");
             }
