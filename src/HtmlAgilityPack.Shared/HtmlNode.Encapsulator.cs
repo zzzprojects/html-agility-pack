@@ -11,6 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Xml.XPath;
 
 namespace HtmlAgilityPack
 {
@@ -45,7 +46,7 @@ namespace HtmlAgilityPack
                 throw new ArgumentNullException("Parameter targetType is null");
             }
 
-            HtmlDocument source = null;
+            HtmlDocument source;
 
             if (htmlDocument == null)
             {
@@ -103,10 +104,17 @@ namespace HtmlAgilityPack
                             {
                                 htmlNode = source.DocumentNode.SelectSingleNode(xPathAttribute.XPath);
                             }
-                            catch // if it can not select node based on given xpath
+                            catch (XPathException ex) // if it can not select node based on given xpath
                             {
-                                throw new NodeNotFoundException("Cannot find node with giving XPath to bind to " + propertyInfo.PropertyType.FullName + " " + propertyInfo.Name);
+                                throw new XPathException(ex.Message + " That means you have a syntax error in XPath property of this Property : " +
+                                    propertyInfo.PropertyType.FullName + " " + propertyInfo.Name);
                             }
+                            catch (Exception ex)
+                            {
+                                throw new NodeNotFoundException("Cannot find node with giving XPath to bind to " +
+                                    propertyInfo.PropertyType.FullName + " " + propertyInfo.Name, ex);
+                            }
+
 
                             if (htmlNode == null)
                             {
@@ -202,10 +210,17 @@ namespace HtmlAgilityPack
                                 {
                                     nodeCollection = source.DocumentNode.SelectNodes(xPathAttribute.XPath);
                                 }
-                                catch
+                                catch (XPathException ex)
                                 {
-                                    throw new NodeNotFoundException("Cannot find node with giving XPath to bind to " + propertyInfo.PropertyType.FullName + " " + propertyInfo.Name);
+                                    throw new XPathException(ex.Message + " That means you have a syntax error in XPath property of this Property : " +
+                                        propertyInfo.PropertyType.FullName + " " + propertyInfo.Name);
                                 }
+                                catch (Exception ex)
+                                {
+                                    throw new NodeNotFoundException("Cannot find node with giving XPath to bind to " +
+                                        propertyInfo.PropertyType.FullName + " " + propertyInfo.Name, ex);
+                                }
+
 
                                 if (nodeCollection == null || nodeCollection.Count == 0)
                                 {
@@ -720,8 +735,19 @@ namespace HtmlAgilityPack
     /// </summary>
     public enum ReturnType
     {
+        /// <summary>
+        /// The text between the start and end tags of the object.        
+        /// </summary>
         InnerText,
+
+        /// <summary>
+        /// The HTML between the start and end tags of the object
+        /// </summary>
         InnerHtml,
+
+        /// <summary>
+        /// The object and its content in HTML
+        /// </summary>
         OuterHtml
     }
 
@@ -743,16 +769,37 @@ namespace HtmlAgilityPack
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
     public sealed class XPathAttribute : Attribute
     {
+        /// <summary>
+        /// XPath Expression that is used to find related html node.
+        /// </summary>
         public string XPath { get; }
+
+        /// <summary>
+        /// Html Attribute name
+        /// </summary>
         public string AttributeName { get; set; }
+
+        /// <summary>
+        /// The methode of output
+        /// </summary>
         public ReturnType NodeReturnType { get; set; }
 
+        /// <summary>
+        /// Specify Xpath to find related Html Node.
+        /// </summary>
+        /// <param name="xpathString"></param>
+        /// <param name="nodeReturnType"></param>
         public XPathAttribute(string xpathString, ReturnType nodeReturnType = ReturnType.InnerText)
         {
             XPath = xpathString;
             NodeReturnType = nodeReturnType;
         }
 
+        /// <summary>
+        /// Specify Xpath and Attribute to find related Html Node and its attribute value.
+        /// </summary>
+        /// <param name="xpathString"></param>
+        /// <param name="attributeName"></param>
         public XPathAttribute(string xpathString, string attributeName)
         {
             XPath = xpathString;
@@ -762,28 +809,78 @@ namespace HtmlAgilityPack
 
 
 
-
+    /// <summary>
+    /// Exception that often occures when there is no way to bind a XPath to a Html Tag.
+    /// </summary>
     public class NodeNotFoundException : Exception
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public NodeNotFoundException() { }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
         public NodeNotFoundException(string message) : base(message) { }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="inner"></param>
         public NodeNotFoundException(string message, Exception inner) : base(message, inner) { }
     }
 
 
-
+    /// <summary>
+    /// Exception that often occures when there is no way to bind a XPath to a HtmlTag Attribute.
+    /// </summary>
     public class NodeAttributeNotFoundException : Exception
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public NodeAttributeNotFoundException() { }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
         public NodeAttributeNotFoundException(string message) : base(message) { }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="inner"></param>
         public NodeAttributeNotFoundException(string message, Exception inner) : base(message, inner) { }
     }
 
 
+    /// <summary>
+    /// Exception that often occures when there is no property that assigned with XPath Property in Class.
+    /// </summary>
     public class MissingXPathException : Exception
     {
+
+        /// <summary>
+        /// 
+        /// </summary>
         public MissingXPathException() { }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
         public MissingXPathException(string message) : base(message) { }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="inner"></param>
         public MissingXPathException(string message, Exception inner) : base(message, inner) { }
     }
 
