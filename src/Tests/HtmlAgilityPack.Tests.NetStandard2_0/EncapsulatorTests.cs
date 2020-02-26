@@ -19,7 +19,16 @@ namespace HtmlAgilityPack.Tests.NetStandard2_0
             Assert.NotNull(stackOverflowPage);
         }
 
+        [Fact]
+        public void Dictionary_Test()
+        {
+            HtmlWeb wortSite = new HtmlWeb();
+            HtmlDocument htmlDocument = wortSite.Load("https://wort.ir/woerterbuch/deutsch-persisch/Buch");
 
+            Word wort = htmlDocument.DocumentNode.GetEncapsulatedData<Word>();
+
+            Assert.NotNull(wort);
+        }
     }
 
     #region StackOverFlow_TestClasses
@@ -129,5 +138,58 @@ namespace HtmlAgilityPack.Tests.NetStandard2_0
     }
 
     #endregion #region StackOverFlow_TestClasses
+
+
+
+    #region Dictionary_TestClasses
+
+    [HasXPath]
+    [DebuggerDisplay("Word={Text}")]
+    public class Word
+    {
+        [XPath("//*[@id='content-wrapper']/div/h1/text()")]
+        public string Text { get; set; }
+
+        [XPath("//*[@id='accordion']/div")]
+        public List<Def> Defs { get; set; } = new List<Def>();
+    }
+
+    [HasXPath]
+    [DebuggerDisplay("{Deu} : {Fa}")]
+    public class Def
+    {
+        [XPath("/div[1]/div[@class='panel-title definition']/a/span[@class='de']")]
+        public string Deu { get; set; }
+
+
+        [XPath("/div[1]/div[@class='panel-title definition']/a/span[@class='fa']")]
+        public string Fa { get; set; }
+
+
+        
+        [XPath("/div[2]/div[@class='panel-body']/div")]
+        public IEnumerable<Example> Examples { get; set; }
+        
+
+    }
+
+
+    [HasXPath]
+    [DebuggerDisplay("{DeuEx} : {Fa}")]
+    public class Example
+    {
+
+
+        [XPath("/div[@class='row']/div[@class='fa-example-wrapper']/p[@class='fa text-right']")]
+        public string DeuEx { get; set; }
+
+
+        [XPath("/div[@class='row']/div[@class='de-example-wrapper']/p[@class='de text-left']")]
+        public string Fa { get; set; }
+
+    }
+
+    #endregion Dictionary_TestClasses
+
 
 }
