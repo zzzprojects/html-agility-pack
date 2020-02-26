@@ -13,4 +13,8 @@
     <PackageReference Include="coverlet.collector" Version="1.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\HtmlAgilityPack.NetStandard2_0\HtmlAgilityPack.NetStandard2_0.csproj" />
+  </ItemGroup>
+
 </Project>
