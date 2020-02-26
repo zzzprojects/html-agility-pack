@@ -606,6 +606,46 @@ namespace HtmlAgilityPack.Tests
         }
 
         [Test]
+        public void TestAttributeQuote1()
+        {
+	        var html = @"
+<html>
+	<body>
+		<div id='foo'  myprop=""@GetMyProp(""myKey"")"">text</div> 
+	</body>
+</html>
+";
+
+            var doc = new HtmlDocument();
+	        doc.LoadHtml(html);
+	        var node = doc.DocumentNode.SelectNodes("//div");
+	        var attr = node[0].Attributes["myprop"]; 
+	        attr.Value = "@GetMyProp(\"myKey2\")"; 
+	        var t = doc.DocumentNode.OuterHtml;
+            Assert.IsTrue(!t.Contains("&quot"));
+        }
+
+        [Test]
+        public void TestAttributeQuote2()
+        {
+	        var html = @"
+<html>
+	<body> 
+		<div id='foo2'  myprop2=""(""myKey"")"">text</div>
+	</body>
+</html>
+";
+            var doc = new HtmlDocument();
+	        doc.LoadHtml(html);
+	        var node = doc.DocumentNode.SelectNodes("//div"); 
+	        var attr = node[0].Attributes["myprop2"];
+	        attr.Value = "(\"myKey\")"; 
+	        var t = doc.DocumentNode.OuterHtml;
+	        Assert.IsTrue(t.Contains("&quot"));
+        }
+
+
+        [Test]
         public void TestAttributeValue()
         {
             var html = @"<!DOCTYPE html><html><body data-foo='http://example.com/path?productId=9788762505032&amp;title=something'><p>This is <u>underlined</u> paragraph</p></body></html>";
@@ -859,18 +899,18 @@ namespace HtmlAgilityPack.Tests
         }
 
 
-        [Test]
-        public void GetEncapsulatedData()
-        {
-            HtmlWeb stackoverflowSite = new HtmlWeb();
-            HtmlDocument htmlDocument = stackoverflowSite.Load("https://stackoverflow.com/?tab=interesting");
-            StackOverflowPage stackOverflowPage = htmlDocument.DocumentNode.GetEncapsulatedData<StackOverflowPage>();
-            IEnumerable<StackOverflowQuestion> filtered = stackOverflowPage.Questions.OrderByDescending(new Func<StackOverflowQuestion, int>(x => x.Statistics.Votes));
+        //[Test]
+        //public void GetEncapsulatedData()
+        //{
+        //    HtmlWeb stackoverflowSite = new HtmlWeb();
+        //    HtmlDocument htmlDocument = stackoverflowSite.Load("https://stackoverflow.com/?tab=interesting");
+        //    StackOverflowPage stackOverflowPage = htmlDocument.DocumentNode.GetEncapsulatedData<StackOverflowPage>();
+        //    IEnumerable<StackOverflowQuestion> filtered = stackOverflowPage.Questions.OrderByDescending(new Func<StackOverflowQuestion, int>(x => x.Statistics.Votes));
            
-            Assert.IsTrue(filtered.Count() > 5);
-            Assert.IsTrue(filtered.ElementAt(0).Statistics.Votes > 0);
+        //    Assert.IsTrue(filtered.Count() > 5);
+        //    Assert.IsTrue(filtered.ElementAt(0).Statistics.Votes > 0);
 
-        }
+        //}
 
         [Test]
         public void CompareLowerCulture()
