@@ -157,21 +157,34 @@ namespace HtmlAgilityPack.Tests.NetStandard2_0
     [HasXPath]
     [DebuggerDisplay("{Deu} : {Fa}")]
     public class Def
-    {
+    {        
+
         [XPath("/div[1]/div[@class='panel-title definition']/a/span[@class='de']")]
         public string Deu { get; set; }
 
 
+        
         [XPath("/div[1]/div[@class='panel-title definition']/a/span[@class='fa']")]
         public string Fa { get; set; }
 
+        [SkipNodeNotFound]
+        [XPath("/div[2]/div[@class='panel-body']/div")]
+        public string FirstExampleAsString { get; set; }
 
-        
+        [SkipNodeNotFound]
+        [XPath("/div[2]/div[@class='panel-body']/div")]
+        public Example FirstExample { get; set; }
+
+        [SkipNodeNotFound]
+        [XPath("/div[2]/div[@class='panel-body']/div")]
+        public IEnumerable<String> ExamplesAsString { get; set; }
+
+        [SkipNodeNotFound]
         [XPath("/div[2]/div[@class='panel-body']/div")]
         public IEnumerable<Example> Examples { get; set; }
         
-
     }
+
 
 
     [HasXPath]
@@ -180,12 +193,12 @@ namespace HtmlAgilityPack.Tests.NetStandard2_0
     {
 
 
-        [XPath("/div[@class='row']/div[@class='fa-example-wrapper']/p[@class='fa text-right']")]
-        public string DeuEx { get; set; }
-
-
-        [XPath("/div[@class='row']/div[@class='de-example-wrapper']/p[@class='de text-left']")]
+        [XPath("/div[@class='row']/div/p[@class='fa text-right']")]
         public string Fa { get; set; }
+
+
+        [XPath("/div[@class='row']/div/p[@class='de text-left']")]
+        public string DeuEx { get; set; }
 
     }
 
