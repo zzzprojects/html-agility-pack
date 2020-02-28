@@ -1,4 +1,4 @@
-﻿// Description: Html Agility Pack - HTML Parsers, selectors, traversors, manupulators.
+// Description: Html Agility Pack - HTML Parsers, selectors, traversors, manupulators.
 // Website & Documentation: http://html-agility-pack.net
 // Forum & Issues: https://github.com/zzzprojects/html-agility-pack
 // License: https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE
@@ -21,9 +21,38 @@ namespace HtmlAgilityPack
         /// Fill an object and go through it's properties and fill them too.
         /// </summary>
         /// <typeparam name="T">Type of object to want to fill. It should have atleast one property that defined XPath.</typeparam>
+        /// <returns>Returns an object of type T including Encapsulated data.</returns>
+        /// <exception cref="ArgumentException">Why it's thrown.</exception>
+        /// <exception cref="ArgumentNullException">Why it's thrown.</exception>
+        /// <exception cref="MissingMethodException">Why it's thrown.</exception>
+        /// <exception cref="MissingXPathException">Why it's thrown.</exception>
+        /// <exception cref="XPathException">Why it's thrown.</exception>
+        /// <exception cref="NodeNotFoundException">Why it's thrown.</exception>
+        /// <exception cref="NodeAttributeNotFoundException">Why it's thrown.</exception>
+        /// <exception cref="FormatException">Why it's thrown.</exception>                
+        /// <exception cref="Exception">Why it's thrown.</exception>
+        public T GetEncapsulatedData<T>()
+        {
+            return (T)GetEncapsulatedData(typeof(T), null);
+        }
+
+
+        /// <summary>
+        /// Fill an object and go through it's properties and fill them too.
+        /// </summary>
+        /// <typeparam name="T">Type of object to want to fill. It should have atleast one property that defined XPath.</typeparam>
         /// <param name="htmlDocument">If htmlDocument includes data , leave this parameter null. Else pass your specific htmldocument.</param>
         /// <returns>Returns an object of type T including Encapsulated data.</returns>
-        public T GetEncapsulatedData<T>(HtmlDocument htmlDocument = null)
+        /// <exception cref="ArgumentException">Why it's thrown.</exception>
+        /// <exception cref="ArgumentNullException">Why it's thrown.</exception>
+        /// <exception cref="MissingMethodException">Why it's thrown.</exception>
+        /// <exception cref="MissingXPathException">Why it's thrown.</exception>
+        /// <exception cref="XPathException">Why it's thrown.</exception>
+        /// <exception cref="NodeNotFoundException">Why it's thrown.</exception>
+        /// <exception cref="NodeAttributeNotFoundException">Why it's thrown.</exception>
+        /// <exception cref="FormatException">Why it's thrown.</exception>                
+        /// <exception cref="Exception">Why it's thrown.</exception>
+        public T GetEncapsulatedData<T>(HtmlDocument htmlDocument)
         {
             return (T)GetEncapsulatedData(typeof(T), htmlDocument);
         }
@@ -36,6 +65,15 @@ namespace HtmlAgilityPack
         /// <param name="targetType">Type of object to want to fill. It should have atleast one property that defined XPath.</param>
         /// <param name="htmlDocument">If htmlDocument includes data , leave this parameter null. Else pass your specific htmldocument.</param>
         /// <returns>Returns an object of type targetType including Encapsulated data.</returns>
+        /// <exception cref="ArgumentException">Why it's thrown.</exception>
+        /// <exception cref="ArgumentNullException">Why it's thrown.</exception>
+        /// <exception cref="MissingMethodException">Why it's thrown.</exception>
+        /// <exception cref="MissingXPathException">Why it's thrown.</exception>
+        /// <exception cref="XPathException">Why it's thrown.</exception>
+        /// <exception cref="NodeNotFoundException">Why it's thrown.</exception>
+        /// <exception cref="NodeAttributeNotFoundException">Why it's thrown.</exception>
+        /// <exception cref="FormatException">Why it's thrown.</exception>                
+        /// <exception cref="Exception">Why it's thrown.</exception>
         public object GetEncapsulatedData(Type targetType, HtmlDocument htmlDocument = null)
         {
 
@@ -788,8 +826,18 @@ namespace HtmlAgilityPack
         /// Specify Xpath to find related Html Node.
         /// </summary>
         /// <param name="xpathString"></param>
-        /// <param name="nodeReturnType"></param>
-        public XPathAttribute(string xpathString, ReturnType nodeReturnType = ReturnType.InnerText)
+        public XPathAttribute(string xpathString)
+        {
+            XPath = xpathString;
+            NodeReturnType = ReturnType.InnerText;
+        }
+
+        /// <summary>
+        /// Specify Xpath to find related Html Node.
+        /// </summary>
+        /// <param name="xpathString"></param>
+        /// <param name="nodeReturnType">Specify you want the output include html text too.</param>
+        public XPathAttribute(string xpathString, ReturnType nodeReturnType)
         {
             XPath = xpathString;
             NodeReturnType = nodeReturnType;
