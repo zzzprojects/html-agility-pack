@@ -413,7 +413,7 @@ namespace HtmlAgilityPack
             }
 #endif
 
-            throw new NotImplementedException("Can't Target any platform when checking " + type.FullName + " is a " + attributeType.FullName + " or not.");
+            throw new Exception("Can't Target any platform when checking " + type.FullName + " is a " + attributeType.FullName + " or not.");
         }
 
 
@@ -444,7 +444,7 @@ namespace HtmlAgilityPack
 
             return properties.HAPWhere(x => x.IsDefined(typeof(XPathAttribute), false) == true);
 
-            throw new NotImplementedException("Can't Target any platform while retrieving properties defined XPathAttribute of Type type.");
+            throw new Exception("Can't Target any platform while retrieving properties defined XPathAttribute of Type type.");
         }
 
 
@@ -478,7 +478,7 @@ namespace HtmlAgilityPack
                 return typeof(IEnumerable).GetTypeInfo().IsAssignableFrom(propertyInfo.PropertyType);
 #endif
 
-                throw new NotImplementedException("Can't Target any platform while checking propertyInfo for being IEnumerable or not.");
+                throw new Exception("Can't Target any platform while checking propertyInfo for being IEnumerable or not.");
             }
         }
 
@@ -505,7 +505,7 @@ namespace HtmlAgilityPack
             return propertyInfo.PropertyType.GetTypeInfo().GetGenericArguments();
 #endif
 
-            throw new NotImplementedException("Can't Target any platform while Getting generic types of Property.");
+            throw new Exception("Can't Target any platform while Getting generic types of Property.");
         }
 
 
@@ -536,7 +536,7 @@ namespace HtmlAgilityPack
             return type.GetTypeInfo().GetMethod(methodName);
 #endif
 
-            throw new NotImplementedException("Can't Target any platform while getting Method methodName from Type type.");
+            throw new Exception("Can't Target any platform while getting Method methodName from Type type.");
         }
 
 
@@ -603,7 +603,7 @@ namespace HtmlAgilityPack
                     }
                     break;
 
-                default: throw new NotImplementedException();
+                default: throw new Exception();
             }
 
             return (T)result;
@@ -737,7 +737,7 @@ namespace HtmlAgilityPack
             }
 #endif
 
-            throw new NotImplementedException("Can't Target any platform while getting Method methodName from Type type.");
+            throw new Exception("Can't Target any platform while getting Method methodName from Type type.");
 
 
         }
