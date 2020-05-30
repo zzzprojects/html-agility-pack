@@ -1307,9 +1307,25 @@ namespace HtmlAgilityPack
 		public string GetAttributeValue(string name, string def)
 		{
 #if METRO || NETSTANDARD1_3 || NETSTANDARD1_6
-            return GetAttributeValue(name, def);
+            if (name == null)
+			{
+				throw new ArgumentNullException("name");
+			}
+
+			if (!HasAttributes)
+			{
+				return def;
+			}
+
+			HtmlAttribute att = Attributes[name];
+			if (att == null)
+			{
+				return def;
+			}
+
+			return att.Value;
 #else
-            return GetAttributeValue<string>(name, def);
+			return GetAttributeValue<string>(name, def);
 #endif
         } 
 
