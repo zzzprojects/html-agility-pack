@@ -435,6 +435,48 @@ namespace HtmlAgilityPack
         }
 
         /// <summary>
+        /// Creates a duplicate of the Document
+        /// </summary>
+        /// <returns></returns>
+        public HtmlDocument Clone()
+        {
+            HtmlDocument cloned = new HtmlDocument();
+
+            cloned._onlyDetectEncoding = _onlyDetectEncoding;
+
+            cloned.OptionCheckSyntax = OptionCheckSyntax;
+            cloned.OptionUseIdAttribute = OptionUseIdAttribute;
+            cloned.OptionCheckSyntax = OptionCheckSyntax;
+            cloned.OptionCheckSyntax = OptionCheckSyntax;
+
+            if (cloned.OptionCheckSyntax)
+            {
+                cloned.Openednodes = new Dictionary<int, HtmlNode>();
+            }
+            else
+            {
+                cloned.Openednodes = null;
+            }
+
+            if (cloned.OptionUseIdAttribute)
+            {
+                cloned.Nodesid = new Dictionary<string, HtmlNode>(StringComparer.OrdinalIgnoreCase);
+            }
+            else
+            {
+                cloned.Nodesid = null;
+            }
+
+            cloned.Text = Text;
+            cloned._streamencoding = _streamencoding;
+            cloned._declaredencoding = _declaredencoding;
+
+            cloned.DocumentNode.CopyFrom(DocumentNode, true);
+
+            return cloned;
+        }
+
+        /// <summary>
         /// Creates an HTML attribute with the specified name.
         /// </summary>
         /// <param name="name">The name of the attribute. May not be null.</param>
