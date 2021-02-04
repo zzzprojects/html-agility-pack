@@ -17,7 +17,8 @@ NuGet: https://www.nuget.org/packages/HtmlAgilityPack/
 
 ## Support
 Have a question? You can contact us at info@zzzprojects.com.
-You can also consult thousands of questions on 
+
+You can also consult thousands of HAP questions on 
 [Stack Overflow](https://stackoverflow.com/questions/tagged/html-agility-pack)
 
 ## Tutorials & Examples
