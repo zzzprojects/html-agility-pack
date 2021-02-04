@@ -13,9 +13,23 @@ Need help to getting started? Find answers you need through tutorials and online
 
 [Tutorials](https://html-agility-pack.net/tutorials)
 
-## Issue Tracker
-Found a bug? Have suggestion? Report it and get support from our professional team.
+## Report an issue or give us feedback
+You can help us improve by giving us feedback about any problems you're having.
 
-[Issues](https://github.com/zzzprojects/html-agility-pack/issues)
- 
+Here is what to include in your report to make sure we implement a solution as quickly as possible: 
+1. Description
+Describe the issue or proposed feature.
+2. Exception
+If you are seeing an exception, include the full exceptions details (message and stack trace).
+3. Fiddle or Project (Optional)
+If you are able,
+Provide a Fiddle that reproduces the issue: https://dotnetfiddle.net/Uqe9sf
+Or provide a project/solution that we can run to reproduce the issue.
+•	Make sure the project compile
+•	Make sure to provide only the code that is required to reproduce the issue, not the whole project
+•	You can send a private code here: info@zzzprojects.com
+Otherwise, make sure to include as much information as possible to help our team to reproduce the issue.
+4. Any further technical details
+Any relevant detail can help us
+
 
