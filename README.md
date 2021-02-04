@@ -49,4 +49,62 @@ Otherwise, make sure to include as much information as possible to help our team
 
 4. Any further technical details
 
+## Contribute
+
+You want to help us? 
+Your donation directly helps us maintaining and growing ZZZ Free Projects. We can’t thank you enough for your support.
+
+### Why should I contribute to free & open source library?
+We all love free and open source libraries!
+But there is a catch! Nothing is free in this world.
+Contributions allow us to spend more of our time on:
+
+• Bug Fix
+
+• Content Writing
+
+• Development
+
+• Support (GitHub, Mail, Stack Overflow)
+
+We NEED your help. In 2020 alone, we spent over 3000 hours maintaining our open source libraries.
+### How much should I contribute?
+Any amount is much appreciated. All our libraries together have more than 10 million downloads, if everyone could contribute a tiny amount, it would help us to make the .NET community a better place to code!
+### Where will my contribution go?
+100% of contributions go toward support & development for our open source projects;
+
+• Development of new projects
+• Faster Support
+
+• New Major Releases
+
+Can I get an invoice for significant contribution? (only happened once… not worth mentioning if they want one of course we will do it)
+
+Contact us for more information: info@zzzprojects.com
+
+
+Another great free way to contribute is  **spreading the word** about the library:
+
+ - Blog it
+ - Comment it
+ - Fork it
+ - Star it
+ - Share it
+ 
+A **HUGE THANKS** for your help.
+
+## More Projects
+
+**Entity Framework**
+- [EntityFramework Extensions](https://entityframework-extensions.net/)
+- [EntityFramework Plus](https://entityframework-plus.net)
+
+**Bulk Operations**
+- [Bulk Operations](https://bulk-operations.net/)
+- [Dapper Plus](https://dapper-plus.net/)
+
+**Expression Evaluator**
+- [Eval-SQL.NET](https://eval-sql.net/)
+- [Eval-Expression.NET](https://eval-expression.net/)
+
 
