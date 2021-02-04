@@ -80,8 +80,6 @@ We NEED your help. In 2020 alone, we spent over 3000 hours maintaining our open 
 ### How much should I contribute?
 Any amount is much appreciated. All our libraries together have more than 10 million downloads, if everyone could contribute a tiny amount, it would help us to make the .NET community a better place to code!
 
-Contact us for more information: info@zzzprojects.com
-
 Another great free way to contribute is  **spreading the word** about the library:
 
  - Blog it
