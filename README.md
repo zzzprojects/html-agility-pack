@@ -68,20 +68,19 @@ Contributions allow us to spend more of our time on:
 • Support (GitHub, Mail, Stack Overflow)
 
 We NEED your help. In 2020 alone, we spent over 3000 hours maintaining our open source libraries.
-### How much should I contribute?
-Any amount is much appreciated. All our libraries together have more than 10 million downloads, if everyone could contribute a tiny amount, it would help us to make the .NET community a better place to code!
+
 ### Where will my contribution go?
 100% of contributions go toward support & development for our open source projects;
 
 • Development of new projects
+
 • Faster Support
 
 • New Major Releases
-
-Can I get an invoice for significant contribution? (only happened once… not worth mentioning if they want one of course we will do it)
+### How much should I contribute?
+Any amount is much appreciated. All our libraries together have more than 10 million downloads, if everyone could contribute a tiny amount, it would help us to make the .NET community a better place to code!
 
 Contact us for more information: info@zzzprojects.com
-
 
 Another great free way to contribute is  **spreading the word** about the library:
 
