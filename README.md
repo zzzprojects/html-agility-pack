@@ -3,13 +3,13 @@ This is an agile HTML parser that builds a read/write DOM and supports plain XPA
 
 NuGet: https://www.nuget.org/packages/HtmlAgilityPack/
 
-## Stack Overflow Support
-Have a question? Ask questions and find answers from over 2500 questions.
-
+## Support
+Have a question? You can contact us at info@zzzprojects.com.
+You can also consult thousands of questions on stackoverflow: 
 [Stack Overflow](https://stackoverflow.com/questions/tagged/html-agility-pack)
 
 ## Tutorials & Examples
-Need help to getting started? Find answers you need through tutorials and online examples.
+Need help to getting started? Find the answers you need through tutorials and online examples.
 
 [Tutorials](https://html-agility-pack.net/tutorials)
 
@@ -35,6 +35,5 @@ Or provide a project/solution that we can run to reproduce the issue.
 Otherwise, make sure to include as much information as possible to help our team to reproduce the issue.
 
 4. Any further technical details
-Any relevant detail can help us
 
 
