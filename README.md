@@ -25,10 +25,15 @@ If you are seeing an exception, include the full exceptions details (message and
 If you are able,
 Provide a Fiddle that reproduces the issue: https://dotnetfiddle.net/Uqe9sf
 Or provide a project/solution that we can run to reproduce the issue.
+
 •	Make sure the project compile
+
 •	Make sure to provide only the code that is required to reproduce the issue, not the whole project
+
 •	You can send a private code here: info@zzzprojects.com
+
 Otherwise, make sure to include as much information as possible to help our team to reproduce the issue.
+
 4. Any further technical details
 Any relevant detail can help us
 
