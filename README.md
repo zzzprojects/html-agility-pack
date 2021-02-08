@@ -15,39 +15,18 @@ This is an agile HTML parser that builds a read/write DOM and supports plain XPA
 
 NuGet: https://www.nuget.org/packages/HtmlAgilityPack/
 
-## Support
-Have a question? You can contact us at info@zzzprojects.com.
+## Usefull links
 
-You can also consult thousands of HAP questions on 
-[Stack Overflow](https://stackoverflow.com/questions/tagged/html-agility-pack)
+[HTML Agility Pack Website](https://html-agility-pack.net/)
 
-## Tutorials & Examples
-Need help to getting started? Find the answers you need through tutorials and online examples.
+[Documentation](https://html-agility-pack.net/documentation)
+
+[Online examples](https://html-agility-pack.net/online-examples) 
 
 [Tutorials](https://html-agility-pack.net/tutorials)
 
-## Report an issue or give us feedback
-You can help us improve by giving us feedback about any problems you're having.
-
-Here is what to include in your report to make sure we implement a solution as quickly as possible: 
-1. Description
-Describe the issue or proposed feature.
-2. Exception
-If you are seeing an exception, include the full exceptions details (message and stack trace).
-3. Fiddle or Project (Optional)
-If you are able,
-Provide a Fiddle that reproduces the issue: https://dotnetfiddle.net/Uqe9sf
-Or provide a project/solution that we can run to reproduce the issue.
-
-  •	Make sure the project compile
-  
-  •	Make sure to provide only the code that is required to reproduce the issue, not the whole project
-  
-  •	You can send a private code here: info@zzzprojects.com
-
-Otherwise, make sure to include as much information as possible to help our team to reproduce the issue.
-
-4. Any further technical details
+You can also consult thousands of HAP questions on 
+[Stack Overflow](https://stackoverflow.com/questions/tagged/html-agility-pack)
 
 ## Contribute
 
@@ -57,36 +36,17 @@ Your donation directly helps us maintaining and growing ZZZ Free Projects. We ca
 ### Why should I contribute to free & open source library?
 We all love free and open source libraries!
 But there is a catch! Nothing is free in this world.
-Contributions allow us to spend more of our time on:
+Contributions allow us to spend more of our time on: Bug Fix, Content Writing, Development and Support.
 
-• Bug Fix
-
-• Content Writing
-
-• Development
-
-• Support (GitHub, Mail, Stack Overflow)
-
-We NEED your help. In 2020 alone, we spent over 3000 hours maintaining our open source libraries.
+We NEED your help. Last year alone, we spent over 3000 hours maintaining all our open source libraries.
 
 ### Where will my contribution go?
-100% of contributions go toward support & development for our open source projects;
+100% of contributions go toward support & development for all our open source projects
 
-• Development of new projects
-
-• Faster Support
-
-• New Major Releases
 ### How much should I contribute?
-Any amount is much appreciated. All our libraries together have more than 10 million downloads, if everyone could contribute a tiny amount, it would help us to make the .NET community a better place to code!
+Any amount is much appreciated. All our libraries together have more than 100 million downloads, if everyone could contribute a tiny amount, it would help us to make the .NET community a better place to code!
 
-Another great free way to contribute is  **spreading the word** about the library:
-
- - Blog it
- - Comment it
- - Fork it
- - Star it
- - Share it
+Another great free way to contribute is  **spreading the word** about the library!
  
 A **HUGE THANKS** for your help.
 
@@ -94,14 +54,9 @@ A **HUGE THANKS** for your help.
 
 **Entity Framework**
 - [EntityFramework Extensions](https://entityframework-extensions.net/)
-- [EntityFramework Plus](https://entityframework-plus.net)
-
-**Bulk Operations**
-- [Bulk Operations](https://bulk-operations.net/)
 - [Dapper Plus](https://dapper-plus.net/)
-
-**Expression Evaluator**
-- [Eval-SQL.NET](https://eval-sql.net/)
-- [Eval-Expression.NET](https://eval-expression.net/)
+- [C# Eval Expression](https://eval-expression.net/)
+- and much more! 
+To view all our free and paid librariries visit our [website](https://zzzprojects.com/)
 
 
