@@ -57,6 +57,6 @@ A **HUGE THANKS** for your help.
 - [Dapper Plus](https://dapper-plus.net/)
 - [C# Eval Expression](https://eval-expression.net/)
 - and much more! 
-To view all our free and paid librariries visit our [website](https://zzzprojects.com/)
+To view all our free and paid librariries visit our [website](https://zzzprojects.com/).
 
 
