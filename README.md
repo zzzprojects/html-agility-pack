@@ -17,13 +17,11 @@ NuGet: https://www.nuget.org/packages/HtmlAgilityPack/
 
 ## Usefull links
 
-[HTML Agility Pack Website](https://html-agility-pack.net/)
+[Website](https://html-agility-pack.net/)
 
 [Documentation](https://html-agility-pack.net/documentation)
 
 [Online examples](https://html-agility-pack.net/online-examples) 
-
-[Tutorials](https://html-agility-pack.net/tutorials)
 
 You can also consult thousands of HAP questions on 
 [Stack Overflow](https://stackoverflow.com/questions/tagged/html-agility-pack)
@@ -38,7 +36,7 @@ We all love free and open source libraries!
 But there is a catch! Nothing is free in this world.
 Contributions allow us to spend more of our time on: Bug Fix, Content Writing, Development and Support.
 
-We NEED your help. Last year alone, we spent over 3000 hours maintaining all our open source libraries.
+We NEED your help. Last year alone, we spent over **3000 hours** maintaining all our open source libraries.
 
 ### Where will my contribution go?
 100% of contributions go toward support & development for all our open source projects
@@ -52,11 +50,8 @@ A **HUGE THANKS** for your help.
 
 ## More Projects
 
-**Entity Framework**
 - [EntityFramework Extensions](https://entityframework-extensions.net/)
 - [Dapper Plus](https://dapper-plus.net/)
 - [C# Eval Expression](https://eval-expression.net/)
 - and much more! 
 To view all our free and paid librariries visit our [website](https://zzzprojects.com/).
-
-
