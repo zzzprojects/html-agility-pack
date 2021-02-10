@@ -28,14 +28,13 @@ NuGet: https://www.nuget.org/packages/HtmlAgilityPack/
 You want to help us? 
 Your donation directly helps us maintaining and growing ZZZ Free Projects. We can’t thank you enough for your support.
 
-### Why should I contribute to free & open source library?
+### Why should I contribute to this free & open source library?
 We all love free and open source libraries!
 But there is a catch! Nothing is free in this world.
 Contributions allow us to spend more of our time on: Bug Fix, Content Writing, Development and Support.
 
 We NEED your help. Last year alone, we spent over **3000 hours** maintaining all our open source libraries.
 
-### Where will my contribution go?
 100% of contributions go toward support & development for all our open source projects
 
 ### How much should I contribute?
