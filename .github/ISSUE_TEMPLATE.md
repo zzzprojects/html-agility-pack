@@ -1,4 +1,4 @@
-Here is what to include in your report to make sure we implement a solution as quickly as possible. 
+Here is what to include in your request to make sure we implement a solution as quickly as possible. 
 
 ### 1. Description
 Describe the issue or propose a feature.
