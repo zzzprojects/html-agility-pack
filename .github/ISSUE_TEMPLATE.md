@@ -27,5 +27,5 @@ Otherwise, make sure to include as much information as possible to help our team
 Add any relevant detail can help us, such as: 
 
 - HAP version:
-- NET version (net472, .net core 3.1, etc.)
+- NET version (.net 4.7.2, .net core 3.1, etc.)
 
