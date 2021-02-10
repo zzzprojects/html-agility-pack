@@ -34,7 +34,6 @@ But there is a catch! Nothing is free in this world.
 Contributions allow us to spend more of our time on: Bug Fix, Content Writing, Development and Support.
 
 We NEED your help. Last year alone, we spent over **3000 hours** maintaining all our open source libraries.
-100% of contributions go toward support & development for all our open source projects.
 
 ### How much should I contribute?
 Any amount is much appreciated. All our libraries together have more than 100 million downloads, if everyone could contribute a tiny amount, it would help us to make the .NET community a better place to code!
