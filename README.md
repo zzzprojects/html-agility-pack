@@ -17,13 +17,10 @@ NuGet: https://www.nuget.org/packages/HtmlAgilityPack/
 
 ## Usefull links
 
--[Website](https://html-agility-pack.net/)
-
--[Documentation](https://html-agility-pack.net/documentation)
-
--[Online Examples](https://html-agility-pack.net/online-examples) 
-
--You can also consult thousands of HAP questions on 
+- [Website](https://html-agility-pack.net/)
+- [Documentation](https://html-agility-pack.net/documentation)
+- [Online Examples](https://html-agility-pack.net/online-examples) 
+- You can also consult thousands of HAP questions on 
 [Stack Overflow](https://stackoverflow.com/questions/tagged/html-agility-pack)
 
 ## Contribute
