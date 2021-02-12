@@ -1,4 +1,4 @@
-### Library Powered By
+## Library Powered By
 
 This library is powered by [Entity Framework Extensions](https://entityframework-extensions.net/?z=github&y=entityframework-plus)
 
