@@ -1,1 +1,4 @@
-custom: https://zzzprojects.com/contribute
+github: [zzzprojects, html-agility-pack]
+patreon: zzzprojects
+tidelift: nuget/html-agility-pack
+custom: ["https://zzzprojects.com/contribute",https://html-agility-pack.net/]
