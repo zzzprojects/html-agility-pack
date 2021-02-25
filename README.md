@@ -15,7 +15,7 @@ It is an agile HTML parser that builds a read/write DOM and supports plain XPATH
 
 NuGet: https://www.nuget.org/packages/HtmlAgilityPack/
 
-## Usefull links
+## Useful links
 
 - [Website](https://html-agility-pack.net/)
 - [Documentation](https://html-agility-pack.net/documentation)
