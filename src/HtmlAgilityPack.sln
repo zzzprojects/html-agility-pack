@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.29806.167
+VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FBD7AB4B-A0C8-4EE0-B1A9-6F26223097E9}"
 EndProject
@@ -17,10 +17,9 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HtmlAgilityPack.Shared", "H
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlAgilityPack.Tests.Net45", "Tests\HtmlAgilityPack.Tests.Net45\HtmlAgilityPack.Tests.Net45.csproj", "{F7D2CBBC-E23E-478E-865B-6BE445B55EC8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HtmlAgilityPack.Tests.NetStandard2_0", "Tests\HtmlAgilityPack.Tests.NetStandard2_0\HtmlAgilityPack.Tests.NetStandard2_0.csproj", "{E16A53F8-892C-46AF-B76B-7A9DCAB475DB}"
-EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		HtmlAgilityPack.Shared\HtmlAgilityPack.Shared.projitems*{083d99cd-f083-4122-aa96-4e3a84f3ec01}*SharedItemsImports = 5
 		HtmlAgilityPack.Shared\HtmlAgilityPack.Shared.projitems*{1028002a-bbe2-4ff2-94b7-a8368a8f6887}*SharedItemsImports = 4
 		HtmlAgilityPack.Shared\HtmlAgilityPack.Shared.projitems*{5ba9a0d7-173f-4c4f-affa-3dd6dc2f9a79}*SharedItemsImports = 13
 		HtmlAgilityPack.Shared\HtmlAgilityPack.Shared.projitems*{8dcfde1c-263f-41d4-b518-9b7ee06f7d52}*SharedItemsImports = 4
@@ -118,26 +117,6 @@ Global
 		{F7D2CBBC-E23E-478E-865B-6BE445B55EC8}.Release|x64.Build.0 = Release|Any CPU
 		{F7D2CBBC-E23E-478E-865B-6BE445B55EC8}.Release|x86.ActiveCfg = Release|Any CPU
 		{F7D2CBBC-E23E-478E-865B-6BE445B55EC8}.Release|x86.Build.0 = Release|Any CPU
-		{E16A53F8-892C-46AF-B76B-7A9DCAB475DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E16A53F8-892C-46AF-B76B-7A9DCAB475DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E16A53F8-892C-46AF-B76B-7A9DCAB475DB}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{E16A53F8-892C-46AF-B76B-7A9DCAB475DB}.Debug|ARM.Build.0 = Debug|Any CPU
-		{E16A53F8-892C-46AF-B76B-7A9DCAB475DB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{E16A53F8-892C-46AF-B76B-7A9DCAB475DB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{E16A53F8-892C-46AF-B76B-7A9DCAB475DB}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{E16A53F8-892C-46AF-B76B-7A9DCAB475DB}.Debug|x64.Build.0 = Debug|Any CPU
-		{E16A53F8-892C-46AF-B76B-7A9DCAB475DB}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{E16A53F8-892C-46AF-B76B-7A9DCAB475DB}.Debug|x86.Build.0 = Debug|Any CPU
-		{E16A53F8-892C-46AF-B76B-7A9DCAB475DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E16A53F8-892C-46AF-B76B-7A9DCAB475DB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E16A53F8-892C-46AF-B76B-7A9DCAB475DB}.Release|ARM.ActiveCfg = Release|Any CPU
-		{E16A53F8-892C-46AF-B76B-7A9DCAB475DB}.Release|ARM.Build.0 = Release|Any CPU
-		{E16A53F8-892C-46AF-B76B-7A9DCAB475DB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{E16A53F8-892C-46AF-B76B-7A9DCAB475DB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{E16A53F8-892C-46AF-B76B-7A9DCAB475DB}.Release|x64.ActiveCfg = Release|Any CPU
-		{E16A53F8-892C-46AF-B76B-7A9DCAB475DB}.Release|x64.Build.0 = Release|Any CPU
-		{E16A53F8-892C-46AF-B76B-7A9DCAB475DB}.Release|x86.ActiveCfg = Release|Any CPU
-		{E16A53F8-892C-46AF-B76B-7A9DCAB475DB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -148,7 +127,6 @@ Global
 		{083D99CD-F083-4122-AA96-4E3A84F3EC01} = {4E506C9F-6514-4055-AAA8-DC89D85558FE}
 		{5BA9A0D7-173F-4C4F-AFFA-3DD6DC2F9A79} = {4E506C9F-6514-4055-AAA8-DC89D85558FE}
 		{F7D2CBBC-E23E-478E-865B-6BE445B55EC8} = {FBD7AB4B-A0C8-4EE0-B1A9-6F26223097E9}
-		{E16A53F8-892C-46AF-B76B-7A9DCAB475DB} = {FBD7AB4B-A0C8-4EE0-B1A9-6F26223097E9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E5870022-9E57-469B-A27E-E840C436B2EF}

@@ -379,7 +379,8 @@ namespace HtmlAgilityPack
 		{
 			get
 			{
-				var sb = new StringBuilder(); 
+				var sb = new StringBuilder();
+                int depthLevel = 0;
 				string name = this.Name;
 	 
 				if (name != null)
@@ -388,20 +389,27 @@ namespace HtmlAgilityPack
 
 					bool isDisplayScriptingText = (name == "head" || name == "script" || name == "style"); 
 					 
-					InternalInnerText(sb, isDisplayScriptingText);
+					InternalInnerText(sb, isDisplayScriptingText, depthLevel);
 				}
 				else
 				{ 
-					InternalInnerText(sb, false);
+					InternalInnerText(sb, false, depthLevel);
 				} 
 			 
 				return sb.ToString();
 			}
 		}
 
-        internal virtual void InternalInnerText(StringBuilder sb, bool isDisplayScriptingText)
+        internal virtual void InternalInnerText(StringBuilder sb, bool isDisplayScriptingText, int depthLevel)
         {
-            if (!_ownerdocument.BackwardCompatibility)
+            depthLevel++;
+
+            if (depthLevel > HtmlDocument.MaxDepthLevel)
+            {
+                throw new Exception($"Maximum deep level reached: {HtmlDocument.MaxDepthLevel}");
+            }
+
+			if (!_ownerdocument.BackwardCompatibility)
             {
                 if (HasChildNodes)
                 {
@@ -433,7 +441,7 @@ namespace HtmlAgilityPack
             }
 
             foreach (HtmlNode node in ChildNodes)
-                node.InternalInnerText(sb, isDisplayScriptingText);
+                node.InternalInnerText(sb, isDisplayScriptingText, depthLevel);
         }
 
         /// <summary>Gets direct inner text.</summary>
@@ -557,6 +565,14 @@ namespace HtmlAgilityPack
 		{
 			get { return _innerstartindex; }
 		}
+
+		/// <summary>
+        /// Gets the stream position of the area of the beginning of the tag, relative to the start of the document.
+        /// </summary>
+        public int OuterStartIndex
+        {
+            get { return _outerstartindex; }
+        }
 
 		/// <summary>
 		/// Gets the length of the area between the opening and closing tag of the node.
@@ -1780,7 +1796,7 @@ namespace HtmlAgilityPack
 		{
 			if (level > HtmlDocument.MaxDepthLevel)
 			{
-				throw new ArgumentException(HtmlNode.DepthLevelExceptionMessage);
+                throw new ArgumentException(HtmlNode.DepthLevelExceptionMessage);
 			}
 
 			if (_childnodes == null)
@@ -1826,9 +1842,16 @@ namespace HtmlAgilityPack
 							outText.Write(commentNode.Comment);
 						}
 						else
-						{
-							outText.Write("<!--" + GetXmlComment(commentNode) + " -->");
-						}
+                        {
+                            if (OwnerDocument.OptionXmlForceOriginalComment)
+                            {
+                                outText.Write(commentNode.Comment);
+							}
+                            else
+                            {
+                                outText.Write("<!--" + GetXmlComment(commentNode) + " -->");
+							}
+                        }
 					}
 					else
 						outText.Write(html);
@@ -2226,8 +2249,14 @@ namespace HtmlAgilityPack
 				return;
 			}
 
+			var quoteType = OwnerDocument.GlobalAttributeValueQuote ?? att.QuoteType;
+            if (quoteType == AttributeValueQuote.Initial)
+            {
+                quoteType = att.InternalQuoteType;
+            }
+
 			string name;
-			string quote = att.QuoteType == AttributeValueQuote.DoubleQuote ? "\"" : "'";
+			string quote = quoteType == AttributeValueQuote.DoubleQuote ? "\"" : quoteType == AttributeValueQuote.SingleQuote ? "'" : "";
             if (_ownerdocument.OptionOutputAsXml)
 			{
 				name = _ownerdocument.OptionOutputUpperCase ? att.XmlName.ToUpperInvariant(): att.XmlName;
@@ -2253,7 +2282,8 @@ namespace HtmlAgilityPack
 				
 				
 
-				var value = att.QuoteType == AttributeValueQuote.DoubleQuote ? !att.Value.StartsWith("@") ? att.Value.Replace("\"", "&quot;") : att.Value : att.Value.Replace("'", "&#39;");
+				var value = quoteType == AttributeValueQuote.DoubleQuote ? !att.Value.StartsWith("@") ? att.Value.Replace("\"", "&quot;") :
+				   att.Value : quoteType == AttributeValueQuote.SingleQuote ?  att.Value.Replace("'", "&#39;") : att.Value;
                 if (_ownerdocument.OptionOutputOptimizeAttributeValues)
 					if (att.Value.IndexOfAny(new char[] {(char) 10, (char) 13, (char) 9, ' '}) < 0)
 						outText.Write(" " + name + "=" + att.Value);

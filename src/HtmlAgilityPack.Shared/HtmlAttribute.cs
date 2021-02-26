@@ -148,6 +148,11 @@ namespace HtmlAgilityPack
         }
 
         /// <summary>
+        /// Specifies what type of quote the data should be wrapped in (internal to keep backward compatibility)
+        /// </summary>
+        internal AttributeValueQuote InternalQuoteType { get; set; }
+
+        /// <summary>
         /// Gets the stream position of this attribute in the document, relative to the start of the document.
         /// </summary>
         public int StreamPosition
@@ -305,6 +310,16 @@ namespace HtmlAgilityPack
         /// <summary>
         /// A double quote mark "
         /// </summary>
-        DoubleQuote
+        DoubleQuote,
+
+        /// <summary>
+        /// No quote mark
+        /// </summary>
+        None,
+        
+        /// <summary>
+        /// The initial value (current value)
+        /// </summary>
+        Initial
     }
 }

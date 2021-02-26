@@ -129,6 +129,11 @@ namespace HtmlAgilityPack
         public Encoding OptionDefaultStreamEncoding;
 
         /// <summary>
+        /// Force to take the original comment instead of creating it
+        /// </summary>
+        public bool OptionXmlForceOriginalComment;
+
+        /// <summary>
         /// Defines if source text must be extracted while parsing errors.
         /// If the document has a lot of errors, or cascading errors, parsing performance can be dramatically affected if set to true.
         /// Default is false.
@@ -161,6 +166,9 @@ namespace HtmlAgilityPack
         /// Defines if attribute value output must be optimized (not bound with double quotes if it is possible). Default is false.
         /// </summary>
         public bool OptionOutputOptimizeAttributeValues;
+
+        /// <summary>Defines the global attribute value quote. When specified, it will always win.</summary>
+        public AttributeValueQuote? GlobalAttributeValueQuote;
 
         /// <summary>
         /// Defines if name must be output with it's original case. Useful for asp.net tags and attributes. Default is false.
@@ -991,16 +999,22 @@ namespace HtmlAgilityPack
                     {
                         HtmlNode foundNode = null;
                         Stack<HtmlNode> futureChild = new Stack<HtmlNode>();
-                        for (HtmlNode node = _lastparentnode.LastChild; node != null; node = node.PreviousSibling)
-                        {
-                            if ((node.Name == _currentnode.Name) && (!node.HasChildNodes))
-                            {
-                                foundNode = node;
-                                break;
-                            }
 
-                            futureChild.Push(node);
+                        if (!_currentnode.Name.Equals("br"))
+						{
+                            for (HtmlNode node = _lastparentnode.LastChild; node != null; node = node.PreviousSibling)
+                            {
+                                // br node never can contains other nodes.
+                                if ((node.Name == _currentnode.Name) && (!node.HasChildNodes))
+                                {
+                                    foundNode = node;
+                                    break;
+                                }
+
+                                futureChild.Push(node);
+                            }
                         }
+                        
 
                         if (foundNode != null)
                         {
@@ -1987,7 +2001,16 @@ namespace HtmlAgilityPack
         {
             _currentattribute._valuestartindex = index;
             if (quote == '\'')
+            {
                 _currentattribute.QuoteType = AttributeValueQuote.SingleQuote;
+            }
+
+            _currentattribute.InternalQuoteType = _currentattribute.QuoteType;
+            
+            if (quote == 0)
+            {
+                _currentattribute.InternalQuoteType = AttributeValueQuote.None;
+            }
         }
 
         private bool PushNodeEnd(int index, bool close)

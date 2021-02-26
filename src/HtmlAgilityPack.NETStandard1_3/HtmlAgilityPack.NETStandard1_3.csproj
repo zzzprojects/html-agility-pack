@@ -10,7 +10,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
     <PackageId>HtmlAgilityPack</PackageId>
-    <Version>1.11.24</Version>
+    <Version>1.11.30</Version>
     <Authors>ZZZ Projects Inc.</Authors>
     <Company>ZZZ Projects Inc.</Company>
     <Product>Html Agility Pack</Product>

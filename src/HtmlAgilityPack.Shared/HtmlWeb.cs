@@ -1677,15 +1677,32 @@ namespace HtmlAgilityPack
             bool html = IsHtmlContent(resp.ContentType);
             bool isUnknown = string.IsNullOrEmpty(resp.ContentType);
 
-			// keep old code because logic on  ReadDocumentEncoding(HtmlNode node), now use resp.CharacterSet here.
-			// for futur maybe harmonise.
-			//Encoding respenc = !string.IsNullOrEmpty(resp.ContentEncoding)
-			// ? Encoding.GetEncoding(resp.ContentEncoding)
-			// : null;
+            // keep old code because logic on  ReadDocumentEncoding(HtmlNode node), now use resp.CharacterSet here.
+            // for futur maybe harmonise.
+            //Encoding respenc = !string.IsNullOrEmpty(resp.ContentEncoding)
+            // ? Encoding.GetEncoding(resp.ContentEncoding)
+            // : null;
 
-			Encoding respenc = !string.IsNullOrEmpty(html ? resp.CharacterSet : resp.ContentEncoding)
-				? Encoding.GetEncoding(html ? resp.CharacterSet : resp.ContentEncoding)
-				: null;
+            string characterSet = "";
+            if (!string.IsNullOrEmpty(resp.CharacterSet))
+			{
+                // Example : "\"utf-8\"", no utf or other have " so, just remove...
+                characterSet = resp.CharacterSet.Replace("\"","");
+            }
+
+            Encoding respenc = null;
+
+            try
+			{
+                respenc = !string.IsNullOrEmpty(html ? characterSet : resp.ContentEncoding)
+                ? Encoding.GetEncoding(html ? characterSet : resp.ContentEncoding)
+                : null; 
+            }
+            catch (Exception e )
+			{
+
+			} 
+
 			if (OverrideEncoding != null)
                 respenc = OverrideEncoding;
 
