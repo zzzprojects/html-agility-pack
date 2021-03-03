@@ -42,6 +42,9 @@ Another great free way to contribute is  **spreading the word** about the librar
  
 A **HUGE THANKS** for your help.
 
+[One time donation](https://zzzprojects.com/contribute)
+[Become a sponsor](https://github.com/sponsors/zzzprojects) 
+
 ## More Projects
 
 - [EntityFramework Extensions](https://entityframework-extensions.net/)
