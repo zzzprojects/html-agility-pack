@@ -40,10 +40,11 @@ Any amount is much appreciated. All our libraries together have more than 100 mi
 
 Another great free way to contribute is  **spreading the word** about the library!
  
-A **HUGE THANKS** for your help.
+ [One time donation](https://zzzprojects.com/contribute)
 
-[One time donation](https://zzzprojects.com/contribute)
 [Become a sponsor](https://github.com/sponsors/zzzprojects) 
+
+A **HUGE THANKS** for your help!
 
 ## More Projects
 
