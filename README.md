@@ -11,7 +11,7 @@ This library is powered by [Entity Framework Extensions](https://entityframework
 ---
 
 # What's Html Agility Pack (HAP)?
-It is an agile HTML parser that builds a read/write DOM and supports plain XPATH or XSLT (you actually don't HAVE to understand XPATH nor XSLT to use it, don't worry...). It is a .NET code library that allows you to parse "out of the web" HTML files. The parser is very tolerant with "real world" malformed HTML. The object model is very similar to what proposes System.Xml, but for HTML documents (or streams).
+It is an agile HTML parser that builds a read/write DOM and supports plain XPATH or XSLT (No need to understand XPATH nor XSLT to use it, don't worry...). It is a .NET code library that allows you to parse "out of the web" HTML files. The parser is very tolerant with "real world" malformed HTML. The object model is very similar to what proposes System.Xml, but for HTML documents (or streams).
 
 NuGet: https://www.nuget.org/packages/HtmlAgilityPack/
 
@@ -20,19 +20,19 @@ NuGet: https://www.nuget.org/packages/HtmlAgilityPack/
 - [Website](https://html-agility-pack.net/)
 - [Documentation](https://html-agility-pack.net/documentation)
 - [Online Examples](https://html-agility-pack.net/online-examples) 
-- You can also consult thousands of HAP questions on 
-[Stack Overflow](https://stackoverflow.com/questions/tagged/html-agility-pack)
+- You can also consult thousands of HAP questions on [Stack Overflow](https://stackoverflow.com/questions/tagged/html-agility-pack)
 
 ## Contribute
 
-Want to help us? Your donation directly helps us maintaining and growing ZZZ Free Projects. We can’t thank you enough for your support.
+Want to help us? Your donation directly helps us maintain and grow ZZZ Free Projects. We can’t thank you enough for your support.
 
 ### Why should I contribute to this free & open source library?
 We all love free and open source libraries!
 But there is a catch! Nothing is free in this world.
-Contributions allow us to spend more of our time on: Bug Fix, Content Writing, Development and Support.
 
 We NEED your help. Last year alone, we spent over **3000 hours** maintaining all our open source libraries.
+
+Contributions allow us to spend more of our time on: Bug Fix, Content Writing, Development and Support.
 
 ### How much should I contribute?
 Any amount is much appreciated. All our libraries together have more than **100 million** downloads.
@@ -41,7 +41,7 @@ If everyone could contribute a tiny amount, it would help us to make the .NET co
 
 Another great free way to contribute is  **spreading the word** about the library!
  
- [One-time donation](https://zzzprojects.com/contribute)
+[One-time donation](https://zzzprojects.com/contribute)
 
 [Become a sponsor](https://github.com/sponsors/zzzprojects) 
 
