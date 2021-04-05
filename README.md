@@ -33,7 +33,7 @@ We can't thank you enough for your support 🙏.
 ❤️ [Become a sponsor](https://github.com/sponsors/zzzprojects) 
 
 ### Why should I contribute to this free & open-source library?
-We all love free and open-source libraries! But there is a catch... Nothing is free in this world.
+We all love free and open-source libraries! But there is a catch... nothing is free in this world.
 
 We NEED your help. Last year alone, we spent over **3000 hours** maintaining all our open source libraries.
 
