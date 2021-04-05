@@ -26,9 +26,7 @@ NuGet: https://www.nuget.org/packages/HtmlAgilityPack/
 
 Want to help us? Your donation directly helps us maintain and grow ZZZ Free Projects. 
 
-We can’t thank you enough for your support 🙏.
-
-:thumbsup: [One-time donation](https://zzzprojects.com/contribute)
+We can't thank you enough for your support 🙏.
 
 👍 [One-time donation](https://zzzprojects.com/contribute)
 
