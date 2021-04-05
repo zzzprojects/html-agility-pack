@@ -44,7 +44,7 @@ Any amount is much appreciated. All our free libraries together have more than *
 
 If everyone could contribute a tiny amount, it would help us make the .NET community a better place to code!
 
-Another great free way to contribute is  **spreading the word** about the library!
+Another great free way to contribute is  **spreading the word** about the library.
 
 A **HUGE THANKS** for your help!
 
