@@ -28,9 +28,9 @@ Want to help us? Your donation directly helps us maintain and grow ZZZ Free Proj
 
 We can’t thank you enough for your support 🙏.
 
-[One-time donation](https://zzzprojects.com/contribute)
+👊 [One-time donation](https://zzzprojects.com/contribute)
 
-[Become a sponsor](https://github.com/sponsors/zzzprojects) 
+❤️ [Become a sponsor](https://github.com/sponsors/zzzprojects) 
 
 ### Why should I contribute to this free & open-source library?
 We all love free and open-source libraries!
