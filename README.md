@@ -26,6 +26,10 @@ NuGet: https://www.nuget.org/packages/HtmlAgilityPack/
 
 Want to help us? Your donation directly helps us maintain and grow ZZZ Free Projects. We can’t thank you enough for your support.
 
+[One-time donation](https://zzzprojects.com/contribute)
+
+[Become a sponsor](https://github.com/sponsors/zzzprojects) 
+
 ### Why should I contribute to this free & open-source library?
 We all love free and open-source libraries!
 But there is a catch! Nothing is free in this world.
@@ -40,12 +44,6 @@ Any amount is much appreciated. All our free libraries together have more than *
 If everyone could contribute a tiny amount, it would help us make the .NET community a better place to code!
 
 Another great free way to contribute is  **spreading the word** about the library!
-
-This project relies on financial contributions from the community. Thank you to all our contributors! 
- 
-[One-time donation](https://zzzprojects.com/contribute)
-
-[Become a sponsor](https://github.com/sponsors/zzzprojects) 
 
 A **HUGE THANKS** for your help!
 
