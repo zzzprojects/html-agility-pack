@@ -41,7 +41,7 @@ If everyone could contribute a tiny amount, it would help us make the .NET commu
 
 Another great free way to contribute is  **spreading the word** about the library!
 
-This project relies on financial contributions from the community. Thank you to all our contributors :). 
+This project relies on financial contributions from the community. Thank you to all our contributors! 
  
 [One-time donation](https://zzzprojects.com/contribute)
 
