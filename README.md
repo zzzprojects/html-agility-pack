@@ -37,7 +37,7 @@ We all love free and open-source libraries! But there is a catch... nothing is f
 
 We NEED your help. Last year alone, we spent over **3000 hours** maintaining all our open source libraries.
 
-Contributions allow us to spend more of our time on: Bug Fix, Content Writing, Development, and Support.
+Contributions allow us to spend more of our time on: Bug Fix, Development, Documentation, and Support.
 
 ### How much should I contribute?
 Any amount is much appreciated. All our free libraries together have more than **100 million** downloads.
