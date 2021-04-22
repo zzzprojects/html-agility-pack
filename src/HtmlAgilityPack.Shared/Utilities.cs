@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace HtmlAgilityPack
 {
@@ -19,5 +20,45 @@ namespace HtmlAgilityPack
                 return defaultValue;
             return value;
         }
+
+#if !(METRO || NETSTANDARD1_3 || NETSTANDARD1_6)
+        internal static object To(this Object @this, Type type)
+        {
+            if (@this != null)
+            {
+                Type targetType = type;
+
+                if (@this.GetType() == targetType)
+                {
+                    return @this;
+                }
+
+                TypeConverter converter = TypeDescriptor.GetConverter(@this);
+                if (converter != null)
+                {
+                    if (converter.CanConvertTo(targetType))
+                    {
+                        return converter.ConvertTo(@this, targetType);
+                    }
+                }
+
+                converter = TypeDescriptor.GetConverter(targetType);
+                if (converter != null)
+                {
+                    if (converter.CanConvertFrom(@this.GetType()))
+                    {
+                        return converter.ConvertFrom(@this);
+                    }
+                }
+
+                if (@this == DBNull.Value)
+                {
+                    return null;
+                }
+            }
+
+            return @this;
+        }
+#endif
     }
 }

@@ -756,10 +756,28 @@ namespace HtmlAgilityPack
 		/// <param name="html">The HTML text.</param>
 		/// <returns>The newly created node instance.</returns>
 		public static HtmlNode CreateNode(string html)
+		{ 
+			return CreateNode(html, null);
+		}
+
+		/// <summary>
+		/// Creates an HTML node from a string representing literal HTML.
+		/// </summary>
+		/// <param name="html">The HTML text.</param>
+		/// <param name="htmlDocumentBuilder">The HTML Document builder.</param>
+		/// <returns>The newly created node instance.</returns>
+		public static HtmlNode CreateNode(string html, Action<HtmlDocument> htmlDocumentBuilder)
 		{
 			// REVIEW: this is *not* optimum...
 			HtmlDocument doc = new HtmlDocument();
+
+			if (htmlDocumentBuilder != null)
+			{
+				htmlDocumentBuilder(doc);
+			}
+
 			doc.LoadHtml(html);
+
 			if (!doc.DocumentNode.IsSingleElementNode())
 			{
 				throw new Exception("Multiple node elments can't be created.");
@@ -1447,20 +1465,11 @@ namespace HtmlAgilityPack
 			{
 				return def;
 			}
-			 
-			TypeConverter converter = TypeDescriptor.GetConverter(typeof(T));
 
-			try
-			{
-				if (converter != null && converter.CanConvertTo(att.Value.GetType()))
-				{  
-					return (T)converter.ConvertTo(att.Value, typeof(T)); 
-				}
-				else
-				{
-					return (T) (object) att.Value;
-				}
-			}
+            try
+            {
+                return (T)att.Value.To(typeof(T));
+            }
 			catch
 			{
 				return def;
@@ -1656,6 +1665,61 @@ namespace HtmlAgilityPack
 			{
 				_ownerdocument.SetIdForNode(null, nodeChildNode.GetId());
 				RemoveAllIDforNode(nodeChildNode);
+			}
+		}
+
+        /// <summary>Move a node already associated and append it to this node instead.</summary>
+        /// <param name="child">The child node to move.</param>
+		public void MoveChild(HtmlNode child)
+		{
+			if (child == null)
+			{
+				throw new ArgumentNullException($"Oops! the '{nameof(child)}' parameter cannot be null.");
+			}
+
+			var oldParent = child.ParentNode; 
+
+			AppendChild(child);
+
+			if (oldParent != null)
+			{
+				oldParent.RemoveChild(child);
+			}
+		}
+
+        /// <summary>Move a children collection already associated and append it to this node instead.</summary>
+        /// <param name="children">The children collection already associated to move to another node.</param>
+		public void MoveChildren(HtmlNodeCollection children)
+		{
+			if (children == null)
+			{
+                throw new ArgumentNullException($"Oops! the '{nameof(children)}' parameter cannot be null.");
+			}
+
+			var oldParent = children.ParentNode;
+
+			AppendChildren(children);
+
+			if (oldParent != null)
+			{
+				oldParent.RemoveChildren(children);
+			}
+		}
+
+        /// <summary>Removes the children collection for this node.</summary>
+        /// <param name="oldChildren">The old children collection to remove.</param>
+		public void RemoveChildren(HtmlNodeCollection oldChildren)
+		{
+			if (oldChildren == null)
+			{
+                throw new ArgumentNullException($"Oops! the '{nameof(oldChildren)}' parameter cannot be null.");
+			}
+
+			var list = oldChildren.ToList();
+
+			foreach (HtmlNode newChild in list)
+			{
+				RemoveChild(newChild);
 			}
 		}
 

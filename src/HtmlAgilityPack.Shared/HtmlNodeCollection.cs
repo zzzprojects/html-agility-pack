@@ -38,6 +38,15 @@ namespace HtmlAgilityPack
 
         #region Properties
 
+        /// <summary>Gets the parent node associated to the collection.</summary>
+        internal HtmlNode ParentNode
+        {
+            get
+            {
+                return _parentnode;
+            }
+        }
+
         /// <summary>
         /// Gets a given node from the list.
         /// </summary>
