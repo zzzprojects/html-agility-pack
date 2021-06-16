@@ -1,7 +1,0 @@
-- Documentation
-   - [Documentation](documentations/documentation.md)
-   - [Release Notes](https://github.com/zzzprojects/html-agility-pack/releases)
-- [3rd Party Libraries](/online-examples)
-- [Knowledge Base](/knowledge-base)
-- [Online Examples](/online-examples)
-- [GitHub](https://github.com/zzzprojects/html-agility-pack)
