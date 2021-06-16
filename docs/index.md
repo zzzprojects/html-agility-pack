@@ -320,7 +320,7 @@ var value = doc.DocumentNode
 	
 <span class="code-green">// With LINQ</span>	
 var nodes = doc.DocumentNode.Descendants("input")
-	.Select(y =&gt; y.Descendants()
+	.Select(y =&gt; y.Descendants())
 	.Where(x =&gt; x.Attributes["class"].Value == "box"))
 	.ToList();</pre>
 							</div>
