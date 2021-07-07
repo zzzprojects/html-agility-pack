@@ -1,0 +1,63 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard1.3;netstandard1.6;netstandard2.0;net20;net35;net40;net45;</TargetFrameworks>
+    <AssemblyName>HtmlAgilityPack</AssemblyName>
+    <RootNamespace>HtmlAgilityPack</RootNamespace>
+    <PackageId>HtmlAgilityPack</PackageId>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <FrameworkPathOverride Condition="'$(TargetFramework)' == 'net20'">$(Net20FrameworkPathOverride)</FrameworkPathOverride>
+    <DefineConstants Condition=" '$(TargetFramework)' == 'net20' ">FX20;$(DefineConstants)</DefineConstants>
+    <FrameworkPathOverride Condition="'$(TargetFramework)' == 'net35'">$(Net35FrameworkPathOverride)</FrameworkPathOverride>
+    <DefineConstants Condition=" '$(TargetFramework)' == 'net35' ">FX35;$(DefineConstants)</DefineConstants>
+    <DefineConstants Condition=" '$(TargetFramework)' == 'net40' ">FX40;$(DefineConstants)</DefineConstants>
+    <DefineConstants Condition=" '$(TargetFramework)' == 'net45' ">FX40;FX45;$(DefineConstants)</DefineConstants>
+    <!--<DefineConstants Condition=" '$(TargetFramework)' == 'netcore45' ">METRO;$(DefineConstants)</DefineConstants>-->
+  </PropertyGroup>
+
+  <Import Project="..\HtmlAgilityPack.Shared\HtmlAgilityPack.Shared.projitems" Label="Shared" />
+
+  <ItemGroup Condition=" 
+             '$(TargetFramework)' == 'net20'
+             ">
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" 
+             '$(TargetFramework)' == 'net35'
+             ">
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" 
+             '$(TargetFramework)' == 'net40' or 
+             '$(TargetFramework)' == 'net45' 
+             ">
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" 
+             '$(TargetFramework)' == 'netstandard1.3' or 
+             '$(TargetFramework)' == 'netstandard1.6' or 
+             '$(TargetFramework)' == 'netstandard2.0' 
+             ">
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="System.Xml.XmlDocument" Version="4.3.0" />
+    <PackageReference Include="System.Xml.XPath" Version="4.3.0" />
+    <PackageReference Include="System.Xml.XPath.XmlDocument" Version="4.3.0" />
+  </ItemGroup>
+</Project>

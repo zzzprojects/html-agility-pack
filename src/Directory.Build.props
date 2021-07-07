@@ -1,0 +1,49 @@
+<Project>
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <Version>1.11.1</Version>
+    <Authors>ZZZ Projects Inc.</Authors>
+    <Company>ZZZ Projects Inc.</Company>
+    <Product>Html Agility Pack</Product>
+    <Copyright>Copyright © ZZZ Projects Inc. 2014 - 2019</Copyright>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)HtmlAgilityPack.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Deterministic>true</Deterministic>
+    <Features>pdb-path-determinism</Features>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Net20FrameworkPathOverride>$(WINDIR)\Microsoft.NET\Framework\v2.0.50727</Net20FrameworkPathOverride>
+    <Net35FrameworkPathOverride>$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client;$(Net20FrameworkPathOverride)</Net35FrameworkPathOverride>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
+    <EmbedUntrackedSources>false</EmbedUntrackedSources>
+    <!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Net.Compilers" Version="3.*" Condition=" '$(OS)' == 'Windows_NT' ">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+  
+</Project>

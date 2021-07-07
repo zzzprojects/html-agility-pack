@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28917.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HtmlAgilityPack", "HtmlAgilityPack\HtmlAgilityPack.csproj", "{C6B167D0-269B-4397-A4D5-02B80D4BCCB2}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HtmlAgilityPack.Shared", "HtmlAgilityPack.Shared\HtmlAgilityPack.Shared.shproj", "{5BA9A0D7-173F-4C4F-AFFA-3DD6DC2F9A79}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E9A5FCC0-8EA7-464F-B2A5-26EB1A4A6F54}"
+	ProjectSection(SolutionItems) = preProject
+		..\.gitattributes = ..\.gitattributes
+		..\.gitignore = ..\.gitignore
+		..\appveyor.yml = ..\appveyor.yml
+		Directory.Build.props = Directory.Build.props
+		HtmlAgilityPack.snk = HtmlAgilityPack.snk
+		..\LICENSE = ..\LICENSE
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		HtmlAgilityPack.Shared\HtmlAgilityPack.Shared.projitems*{5ba9a0d7-173f-4c4f-affa-3dd6dc2f9a79}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C6B167D0-269B-4397-A4D5-02B80D4BCCB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6B167D0-269B-4397-A4D5-02B80D4BCCB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6B167D0-269B-4397-A4D5-02B80D4BCCB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6B167D0-269B-4397-A4D5-02B80D4BCCB2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5B6386F5-8B61-4CE7-A90C-18B537F66A18}
+	EndGlobalSection
+EndGlobal
