@@ -605,7 +605,7 @@ namespace HtmlAgilityPack
 					if (_name == null)
 						_optimizedName = string.Empty;
 					else
-						_optimizedName = _name.ToLowerInvariant();
+						_optimizedName = this.OwnerDocument.OptionDefaultUseOriginalName ? _name : _name.ToLowerInvariant();
 				}
 
 				return _optimizedName;
@@ -2307,7 +2307,7 @@ namespace HtmlAgilityPack
 
 		internal void WriteAttribute(TextWriter outText, HtmlAttribute att)
 		{
-			if (att.Value == null)
+			if (att.Value == null && (!_ownerdocument.OptionPreserveEmptyAttributes || _ownerdocument.OptionOutputAsXml))
 			{
 				// null value attribute are not written
 				return;
@@ -2343,18 +2343,25 @@ namespace HtmlAgilityPack
 						return;
 					}
 				}
-				
-				
 
-				var value = quoteType == AttributeValueQuote.DoubleQuote ? !att.Value.StartsWith("@") ? att.Value.Replace("\"", "&quot;") :
-				   att.Value : quoteType == AttributeValueQuote.SingleQuote ?  att.Value.Replace("'", "&#39;") : att.Value;
-                if (_ownerdocument.OptionOutputOptimizeAttributeValues)
-					if (att.Value.IndexOfAny(new char[] {(char) 10, (char) 13, (char) 9, ' '}) < 0)
-						outText.Write(" " + name + "=" + att.Value);
+
+
+				if (_ownerdocument.OptionPreserveEmptyAttributes && att.IsEmptyAttribute)
+				{
+					outText.Write(" " + name);
+				}
+				else
+				{
+					var value = quoteType == AttributeValueQuote.DoubleQuote ? !att.Value.StartsWith("@") ? att.Value.Replace("\"", "&quot;") :
+					   att.Value : quoteType == AttributeValueQuote.SingleQuote ? att.Value.Replace("'", "&#39;") : att.Value;
+					if (_ownerdocument.OptionOutputOptimizeAttributeValues)
+						if (att.Value.IndexOfAny(new char[] { (char)10, (char)13, (char)9, ' ' }) < 0)
+							outText.Write(" " + name + "=" + att.Value);
+						else
+							outText.Write(" " + name + "=" + quote + value + quote);
 					else
 						outText.Write(" " + name + "=" + quote + value + quote);
-				else
-					outText.Write(" " + name + "=" + quote + value + quote);
+				}
 			}
 		}
 

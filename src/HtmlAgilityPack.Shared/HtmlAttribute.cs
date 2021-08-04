@@ -37,6 +37,8 @@ namespace HtmlAgilityPack
         internal int _valuelength;
         internal int _valuestartindex;
 
+        private bool? _localUseOriginalName;
+
         #endregion
 
         #region Constructors
@@ -83,12 +85,27 @@ namespace HtmlAgilityPack
             get { return _valuelength; }
         }
 
-        public bool UseOriginalName { get; set; } = false;
+        public bool UseOriginalName { get => this._localUseOriginalName ?? this.OwnerDocument.OptionDefaultUseOriginalName; set => this._localUseOriginalName = value; }
 
         /// <summary>
-        /// Gets the qualified name of the attribute.
+        /// True if the attribute is empty attribute ( like disabled attribute in <input disabled></input> )
         /// </summary>
-        public string Name
+        public bool IsEmptyAttribute { get; private set; } = true;
+        /// <summary>
+        /// Sets the attribute to empty attribute ( like disabled attribute in <input disabled></input> )
+        /// </summary>
+        public void SetEmpty()
+        {
+            this.IsEmptyAttribute = true;
+            this._value = null;
+            this._valuestartindex = 0;
+            this._valuelength = 0;
+        }
+
+	    /// <summary>
+		/// Gets the qualified name of the attribute.
+		/// </summary>
+		public string Name
         {
             get
             {
@@ -173,9 +190,15 @@ namespace HtmlAgilityPack
                     return null;
                 }
 
+                if (_value == null && this.IsEmptyAttribute && _valuestartindex == 0 && _valuelength == 0)
+                {
+                    return null;
+                }
+
                 if (_value == null)
                 {
                     _value = _ownerdocument.Text.Substring(_valuestartindex, _valuelength);
+                    this.IsEmptyAttribute = false;
 
                     if (!_ownerdocument.BackwardCompatibility)
                     {
@@ -188,6 +211,7 @@ namespace HtmlAgilityPack
             set
             {
                 _value = value;
+                this.IsEmptyAttribute = false;
 
                 if (_ownernode != null)
                 {
@@ -258,7 +282,10 @@ namespace HtmlAgilityPack
         {
             HtmlAttribute att = new HtmlAttribute(_ownerdocument);
             att.Name = OriginalName;
-            att.Value = Value;
+            if (att.IsEmptyAttribute)
+                att.SetEmpty();
+            else
+                att.Value = Value;
             att.QuoteType = QuoteType;
             return att;
         }
