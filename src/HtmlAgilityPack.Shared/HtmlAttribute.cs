@@ -83,12 +83,12 @@ namespace HtmlAgilityPack
             get { return _valuelength; }
         }
 
-	    public bool UseOriginalName { get; set; } = false;
+        public bool UseOriginalName { get; set; } = false;
 
-	    /// <summary>
-		/// Gets the qualified name of the attribute.
-		/// </summary>
-		public string Name
+        /// <summary>
+        /// Gets the qualified name of the attribute.
+        /// </summary>
+        public string Name
         {
             get
             {
@@ -257,7 +257,7 @@ namespace HtmlAgilityPack
         public HtmlAttribute Clone()
         {
             HtmlAttribute att = new HtmlAttribute(_ownerdocument);
-            att.Name = Name;
+            att.Name = OriginalName;
             att.Value = Value;
             att.QuoteType = QuoteType;
             return att;
