@@ -58,6 +58,7 @@
     <Compile Include="HtmlDocumentTests.cs" />
     <Compile Include="HtmlEntityTest.cs" />
     <Compile Include="HtmlNode.Tests.cs" />
+    <Compile Include="HtmlDocument.PreserveOriginalTest.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -181,6 +181,16 @@ namespace HtmlAgilityPack
         public bool OptionOutputUpperCase;
 
         /// <summary>
+        /// Defines if attributes should use original names by default, rather than lower case. Default is false.
+        /// </summary>
+        public bool OptionDefaultUseOriginalName;
+
+        /// <summary>
+        /// Defines if empty attributes should be preserved when writing. Default is false.
+        /// </summary>
+        public bool OptionPreserveEmptyAttributes;
+
+        /// <summary>
         /// Defines if declared encoding must be read from the document.
         /// Declared encoding is determined using the meta http-equiv="content-type" content="text/html;charset=XXXXX" html node.
         /// Default is true.
