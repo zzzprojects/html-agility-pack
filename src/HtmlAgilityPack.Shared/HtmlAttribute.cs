@@ -36,6 +36,7 @@ namespace HtmlAgilityPack
         internal string _value;
         internal int _valuelength;
         internal int _valuestartindex;
+        private bool? _localUseOriginalName;
 
         #endregion
 
@@ -83,7 +84,19 @@ namespace HtmlAgilityPack
             get { return _valuelength; }
         }
 
-        public bool UseOriginalName { get; set; } = false;
+        /// <summary>Gets or sets a value indicating whether the attribute should use the original name.</summary>
+        /// <value>True if the attribute should use the original name, false if not.</value>
+        public bool UseOriginalName
+        {
+            get
+            {
+                return this._localUseOriginalName ?? this.OwnerDocument.OptionDefaultUseOriginalName;
+            }
+            set
+            {
+                this._localUseOriginalName = value;
+            }
+        }
 
         /// <summary>
         /// Gets the qualified name of the attribute.

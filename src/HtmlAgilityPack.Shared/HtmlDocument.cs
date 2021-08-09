@@ -193,6 +193,11 @@ namespace HtmlAgilityPack
         public string OptionStopperNodeName;
 
         /// <summary>
+        /// Defines if attributes should use original names by default, rather than lower case. Default is false.
+        /// </summary>
+        public bool OptionDefaultUseOriginalName;
+
+        /// <summary>
         /// Defines if the 'id' attribute must be specifically used. Default is true.
         /// </summary>
         public bool OptionUseIdAttribute = true;

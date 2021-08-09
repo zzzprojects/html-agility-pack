@@ -231,6 +231,27 @@ namespace HtmlAgilityPack.Tests
             Assert.AreEqual(a.NodeType, HtmlNodeType.Element);
         }
 
+        [Test]
+        public void TestBr()
+        {
+	        {
+		        var html = @" </br>a</br>";
+
+		        var doc = new HtmlAgilityPack.HtmlDocument();
+		        doc.LoadHtml(html);
+		        var docNode = doc.DocumentNode.InnerHtml;
+                Assert.AreEqual(4, doc.DocumentNode.ChildNodes.Count);
+	        }
+	        {
+		        var html = @" <br>a<br>";
+
+		        var doc = new HtmlAgilityPack.HtmlDocument();
+		        doc.LoadHtml(html);
+		        var docNode = doc.DocumentNode.InnerHtml;
+		        Assert.AreEqual(4, doc.DocumentNode.ChildNodes.Count);
+            }
+        }
+
         //[Test]
         //public void CreateTextNode()
         //{

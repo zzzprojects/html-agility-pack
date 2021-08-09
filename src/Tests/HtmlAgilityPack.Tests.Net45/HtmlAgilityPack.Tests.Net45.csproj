@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HtmlDocument.PreserveOriginalTest.cs" />
     <Compile Include="HtmlDocumentTests.cs" />
     <Compile Include="HtmlEntityTest.cs" />
     <Compile Include="HtmlNode.Tests.cs" />
