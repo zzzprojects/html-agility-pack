@@ -80,7 +80,7 @@ namespace HtmlAgilityPack
             }
 
             return list;
-        } 
+        }
 
         /// <summary>
         /// Selects the first XmlNode that matches the <see cref="XPath"/> expression.

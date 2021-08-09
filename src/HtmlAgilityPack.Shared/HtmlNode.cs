@@ -3,7 +3,7 @@
 // Forum & Issues: https://github.com/zzzprojects/html-agility-pack
 // License: https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE
 // More projects: http://www.zzzprojects.com/
-// Copyright Â© ZZZ Projects Inc. 2014 - 2017. All rights reserved.
+// Copyright © ZZZ Projects Inc. 2014 - 2017. All rights reserved.
 
 using System;
 using System.Collections;
@@ -2327,7 +2327,14 @@ namespace HtmlAgilityPack
 				if (_ownerdocument.OptionOutputOriginalCase)
 					name = att.OriginalName;
 
-				outText.Write(" " + name + "=" + quote + HtmlDocument.HtmlEncodeWithCompatibility(att.XmlValue, _ownerdocument.BackwardCompatibility) + quote);
+				if (quoteType != AttributeValueQuote.WithoutValue )
+                { 
+					outText.Write(" " + name + "=" + quote + HtmlDocument.HtmlEncodeWithCompatibility(att.XmlValue, _ownerdocument.BackwardCompatibility) + quote);
+				}
+				else
+                { 
+					outText.Write(" " + name);
+				}
 			}
 			else
 			{
@@ -2343,18 +2350,24 @@ namespace HtmlAgilityPack
 						return;
 					}
 				}
-				
-				
 
-				var value = quoteType == AttributeValueQuote.DoubleQuote ? !att.Value.StartsWith("@") ? att.Value.Replace("\"", "&quot;") :
+				if (quoteType != AttributeValueQuote.WithoutValue)
+				{
+					var value = quoteType == AttributeValueQuote.DoubleQuote ? !att.Value.StartsWith("@") ? att.Value.Replace("\"", "&quot;") :
 				   att.Value : quoteType == AttributeValueQuote.SingleQuote ?  att.Value.Replace("'", "&#39;") : att.Value;
-                if (_ownerdocument.OptionOutputOptimizeAttributeValues)
-					if (att.Value.IndexOfAny(new char[] {(char) 10, (char) 13, (char) 9, ' '}) < 0)
-						outText.Write(" " + name + "=" + att.Value);
+					if (_ownerdocument.OptionOutputOptimizeAttributeValues)
+						if (att.Value.IndexOfAny(new char[] {(char) 10, (char) 13, (char) 9, ' '}) < 0)
+							outText.Write(" " + name + "=" + att.Value);
+						else
+							outText.Write(" " + name + "=" + quote + value + quote);
 					else
 						outText.Write(" " + name + "=" + quote + value + quote);
+				}
 				else
-					outText.Write(" " + name + "=" + quote + value + quote);
+                {
+					outText.Write(" " + name);
+				}
+
 			}
 		}
 

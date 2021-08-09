@@ -316,7 +316,11 @@ namespace HtmlAgilityPack
         /// No quote mark
         /// </summary>
         None,
-        
+
+
+        /// <summary>Without the value such as '&lt;span readonly&gt;'</summary>
+        WithoutValue,
+
         /// <summary>
         /// The initial value (current value)
         /// </summary>
