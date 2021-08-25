@@ -35,7 +35,9 @@ namespace HtmlAgilityPack
         internal int _streamposition;
         internal string _value;
         internal int _valuelength;
-        internal int _valuestartindex;
+        internal int _valuestartindex; 
+        internal bool _isFromParse;
+        internal bool _hasEqual;
         private bool? _localUseOriginalName;
 
         #endregion
@@ -90,7 +92,17 @@ namespace HtmlAgilityPack
         {
             get
             {
-                return this._localUseOriginalName ?? this.OwnerDocument.OptionDefaultUseOriginalName;
+                var useOriginalName = false;
+                if (this._localUseOriginalName.HasValue)
+				{
+                    useOriginalName = this._localUseOriginalName.Value;
+                }
+                else if (this.OwnerDocument != null)
+				{
+                    useOriginalName = this.OwnerDocument.OptionDefaultUseOriginalName;
+                }
+
+                return useOriginalName;
             }
             set
             {
