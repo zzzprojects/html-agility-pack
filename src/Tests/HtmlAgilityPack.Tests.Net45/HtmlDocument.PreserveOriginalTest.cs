@@ -106,5 +106,21 @@ namespace HtmlAgilityPack.Tests.fx._4._5
             Assert.AreEqual(nodes?.Count, 1, "xpath expression should return 1 node");
             Assert.AreEqual(d.DocumentNode.OuterHtml, html);
         }
+
+
+        [TestMethod]
+        public void PreserveClonedEmptyAttributesTest()
+        {
+            var d = new HtmlDocument();
+            d.GlobalAttributeValueQuote = AttributeValueQuote.Initial;
+            d.OptionDefaultUseOriginalName = true;
+
+            var html = @"<list-counter formErrorsCounter></list-counter>";
+            d.LoadHtml(html);
+
+            var cloned = d.DocumentNode.CloneNode(true);
+
+            Assert.AreEqual(@"<list-counter formErrorsCounter></list-counter>", cloned.OuterHtml);
+        }
     }
 }

@@ -285,6 +285,10 @@ namespace HtmlAgilityPack
             att.Name = OriginalName;
             att.Value = Value;
             att.QuoteType = QuoteType;
+            
+            att._isFromParse = _isFromParse;
+            att._hasEqual = _hasEqual;
+
             return att;
         }
 
