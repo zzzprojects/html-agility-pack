@@ -736,7 +736,7 @@ namespace HtmlAgilityPack.Tests
             }
             catch (Exception e)
             {
-                Assert.AreEqual("Multiple node elments can't be created.", e.Message);
+                Assert.AreEqual("Multiple node elements can't be created.", e.Message);
             }
 
             HtmlNode node5 = HtmlNode.CreateNode(@"/r/n");
