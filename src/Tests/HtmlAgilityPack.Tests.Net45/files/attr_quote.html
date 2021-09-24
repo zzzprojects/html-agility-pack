@@ -1,0 +1,47 @@
+﻿<form xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+    <page>
+
+        <page-body>
+            <form #simulatorForm="ngForm" xdt:Transform="InsertBefore(/form/page/page-body/card[1])"
+                  fxFlex="50%" fxFlex.lt-md="100%"
+                  [dataSourceContext]="simulatorDataSourceContext" name="simulatorForm">
+                <ng-container></ng-container>
+            </form>
+            <!--DADOS DE SIMULAÇÃO-->
+            <card xdt:Transform="SetAttributes(*)"
+                  xdt:Locator="Condition(card-header/card-header-title-container/card-header-title = &quot;{{ 'Lea.Cotacoes.Cards.Dados de Simulação' | translate }}&quot;)"
+                  editable
+                  fxFlex="100%">
+                <data-group>
+
+                    <!-- INSERT CategoriaBem AFTER mat-form-field with mat-select@name = 'tipoProdutoId' -->
+                    <mat-form-field xdt:Transform="InsertAfter(mat-form-field[mat-select/@name = 'tipoProdutoId'])"
+                                    fxFlex="50%" fxFlex.lt-md="50%" fxFlex.lt-sm="100%" *ngIf="!!simulationRequest.tipoProdutoId">
+                        <!-- CategoriaBem -->
+                        <mat-label>
+                            <span>{{ 'Lea.Cotacoes.Simulador.CodCategoriaBem' | translate}}</span>
+                        </mat-label>
+                        <mat-select name="codCategoriaBemId" required
+                                    (selectionChange)="GetProductDetails()"
+                                    [(ngModel)]="simulationRequest.categoriaBemId">
+                            <mat-option *ngFor="let dimension of lea546CATBEM$  | async | filterDimensionByValue:( simulationRequest.tipoProdutoId |  commonData:lea508SUBPROD$:'id':'code')" [value]="dimension.dimensionId">
+
+
+                                {{ dimension.code }} - {{ dimension.description }}
+                            </mat-option>
+                        </mat-select>
+                        <span readOnlyValue> {{ simulationRequest.categoriaBemId | commonData:lea546CATBEM$:'id':'code-desc' }} </span>
+                        <field-error-alert matSuffix></field-error-alert>
+                        <mat-error></mat-error>
+                    </mat-form-field>
+
+                </data-group>
+
+            </card>
+
+
+        </page-body>
+
+
+    </page>
+</form>
