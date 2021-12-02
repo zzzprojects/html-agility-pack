@@ -781,6 +781,10 @@ namespace HtmlAgilityPack
 
         #region Properties
 
+        /// <summary>Gets or sets the automatic decompression.</summary>
+        /// <value>The automatic decompression.</value>
+        public DecompressionMethods AutomaticDecompression { get; set; }
+
         /// <summary>
         /// Gets or Sets a value indicating if document encoding must be automatically detected.
         /// </summary>
@@ -1553,6 +1557,8 @@ namespace HtmlAgilityPack
             req = WebRequest.Create(uri) as HttpWebRequest;
             req.Method = method;
             req.UserAgent = UserAgent;
+            req.AutomaticDecompression = AutomaticDecompression;
+
             if (CaptureRedirect)
             {
                 req.AllowAutoRedirect = false;
@@ -2517,6 +2523,17 @@ namespace HtmlAgilityPack
                 var scripErrorSuppressedProperty = webBrowserType.GetProperty("ScriptErrorsSuppressed");
                 scripErrorSuppressedProperty.SetValue(webBrowser, true, null);
 
+                // disable popup
+                {
+                    var newWindowEvent = webBrowser.GetType().GetEvent("NewWindow");
+                    if(newWindowEvent != null)
+                    {
+                        var newWindowHandler = this.GetType().GetMethod("Web_NewWindow", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                        Delegate newWindowDelegate = Delegate.CreateDelegate(newWindowEvent.EventHandlerType, null, newWindowHandler);
+                        newWindowEvent.AddEventHandler(webBrowser, newWindowDelegate);
+                    }
+                }
+
                 var navigateMethod = webBrowserType.GetMethod("Navigate", new Type[] {typeof(Uri)});
                 navigateMethod.Invoke(webBrowser, new object[] {uri});
 
@@ -2563,6 +2580,17 @@ namespace HtmlAgilityPack
 
             return doc;
         }
+
+        private void Web_NewWindow(object sender, object e)
+        {
+            // we don't want a dynamic reference so we do it via reflection
+            var cancelProperty = e.GetType().GetProperty("Cancel");
+            if(cancelProperty != null)
+            {
+                cancelProperty.SetValue(e, true, null);
+            }
+        }
+
 #endif
 
         #endregion
