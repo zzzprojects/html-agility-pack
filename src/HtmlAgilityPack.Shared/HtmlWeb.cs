@@ -26,6 +26,7 @@ using Microsoft.Win32;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Collections.Concurrent;
 #endif
 #if FX40 || FX45
 using System.Collections;
@@ -116,6 +117,21 @@ namespace HtmlAgilityPack
         #endregion
 
         #region Static Members
+
+#if FX45 || NETSTANDARD
+        internal static ConcurrentDictionary<string, HttpClient> SharedHttpClient = new ConcurrentDictionary<string, HttpClient>();
+
+
+        internal static HttpClient GetSharedHttpClient(string userAgent)
+        {
+            return SharedHttpClient.GetOrAdd(userAgent, x =>
+            {
+                var client = new HttpClient();
+                client.DefaultRequestHeaders.Add("User-Agent", userAgent);
+                return client;
+            });
+        }
+#endif
 
         //private static Dictionary<string, string> _mimeTypes;
 
@@ -2367,11 +2383,19 @@ namespace HtmlAgilityPack
 				clientHandler.AllowAutoRedirect = false;
 	        }
 
-            var client = new HttpClient(clientHandler);
+            HttpClient client;
 
-			//https://stackoverflow.com/questions/44076962/how-do-i-set-a-default-user-agent-on-an-httpclient
-			client.DefaultRequestHeaders.Add("User-Agent", this.UserAgent);
-	     
+            if(credentials != null || CaptureRedirect)
+            {
+                client = new HttpClient(clientHandler);
+
+                //https://stackoverflow.com/questions/44076962/how-do-i-set-a-default-user-agent-on-an-httpclient
+                client.DefaultRequestHeaders.Add("User-Agent", this.UserAgent);
+            }
+            else
+            {
+                client = GetSharedHttpClient(this.UserAgent);
+            }
 
 			var e = await client.GetAsync(uri, cancellationToken).ConfigureAwait(false);
 
