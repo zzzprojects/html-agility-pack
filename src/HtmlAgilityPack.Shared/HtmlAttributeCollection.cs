@@ -153,7 +153,7 @@ namespace HtmlAgilityPack
 		/// </summary>
 		void ICollection<HtmlAttribute>.Clear()
         {
-            items.Clear();
+            Clear();
         }
 
         /// <summary>
@@ -230,7 +230,8 @@ namespace HtmlAgilityPack
         /// <returns></returns>
         bool ICollection<HtmlAttribute>.Remove(HtmlAttribute item)
         {
-            return items.Remove(item);
+            Remove(item);
+            return true;
         }
 
         /// <summary>
