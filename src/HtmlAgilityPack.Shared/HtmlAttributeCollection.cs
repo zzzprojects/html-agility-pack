@@ -230,7 +230,18 @@ namespace HtmlAgilityPack
         /// <returns></returns>
         bool ICollection<HtmlAttribute>.Remove(HtmlAttribute item)
         {
-            Remove(item);
+            if (item == null)
+            {
+                return false;
+            }
+
+            int index = GetAttributeIndex(item);
+            if (index == -1)
+            {
+                return false;
+            }
+
+            RemoveAt(index);
             return true;
         }
 
