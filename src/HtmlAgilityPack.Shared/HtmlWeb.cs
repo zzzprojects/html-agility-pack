@@ -2398,6 +2398,7 @@ namespace HtmlAgilityPack
             }
 
 			var e = await client.GetAsync(uri, cancellationToken).ConfigureAwait(false);
+            _statusCode = e.StatusCode;
 
             var html = string.Empty;
             if (encoding != null)
