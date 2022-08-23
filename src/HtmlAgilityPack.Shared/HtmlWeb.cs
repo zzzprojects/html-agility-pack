@@ -2400,6 +2400,20 @@ namespace HtmlAgilityPack
 			var e = await client.GetAsync(uri, cancellationToken).ConfigureAwait(false);
             _statusCode = e.StatusCode;
 
+            if(e.Headers != null && e.Headers.Location != null)
+            {
+                if(e.Headers.Location.IsAbsoluteUri)
+                {
+                    _responseUri = new Uri(e.Headers.Location.AbsoluteUri);
+                }
+                else
+                {
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6 || WINDOWS_UWP) 
+                    _responseUri = new Uri(uri.GetLeftPart(UriPartial.Authority) + e.Headers.Location);
+#endif
+                }
+            }         
+
             var html = string.Empty;
             if (encoding != null)
             {
