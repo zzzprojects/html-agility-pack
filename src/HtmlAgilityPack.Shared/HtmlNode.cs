@@ -2356,24 +2356,35 @@ namespace HtmlAgilityPack
 					}
 				}
 
-				if (!isWithoutValue)
-				{
-					var value = quoteType == AttributeValueQuote.DoubleQuote ? !att.Value.StartsWith("@") ? att.Value.Replace("\"", "&quot;") :
-				   att.Value : quoteType == AttributeValueQuote.SingleQuote ?  att.Value.Replace("'", "&#39;") : att.Value;
-					if (_ownerdocument.OptionOutputOptimizeAttributeValues)
-						if (att.Value.IndexOfAny(new char[] {(char) 10, (char) 13, (char) 9, ' '}) < 0)
-							outText.Write(" " + name + "=" + att.Value);
-						else
-							outText.Write(" " + name + "=" + quote + value + quote);
-					else
-						outText.Write(" " + name + "=" + quote + value + quote);
-				}
-				else
+                if (!isWithoutValue)
                 {
-					outText.Write(" " + name);
-				}
+                    string value = att.Value;
 
-			}
+                    switch (quoteType)
+                    {
+                        case AttributeValueQuote.DoubleQuote:
+                            value = value.Replace("\"", "&quot;");
+                            break;
+
+                        case AttributeValueQuote.SingleQuote:
+                            value = value.Replace("'", "&#39;");
+                            break;
+                    }
+
+                    if (_ownerdocument.OptionOutputOptimizeAttributeValues)
+                        if (att.Value.Length > 0 && att.Value.IndexOfAny(new char[] { '\r', '\n', '\t', ' ', '=' }) == -1)
+                            outText.Write(" " + name + "=" + att.Value);
+                        else
+                            outText.Write(" " + name + "=" + quote + value + quote);
+                    else
+                        outText.Write(" " + name + "=" + quote + value + quote);
+                }
+                else
+                {
+                    outText.Write(" " + name);
+                }
+
+            }
 		}
 
 		internal void WriteAttributes(TextWriter outText, bool closing)
