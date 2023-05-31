@@ -2163,12 +2163,17 @@ namespace HtmlAgilityPack
 
 #region Internal Methods
 
-		internal void SetChanged()
+		internal void SetChanged(int level = 0)
 		{
+			if (level > HtmlDocument.MaxDepthLevel)
+			{
+				throw new ArgumentException(HtmlNode.DepthLevelExceptionMessage);
+			}
+
 			_changed = true;
 			if (ParentNode != null)
 			{
-				ParentNode.SetChanged();
+				ParentNode.SetChanged(level + 1);
 			}
 		}
 
