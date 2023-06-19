@@ -519,7 +519,7 @@ namespace HtmlAgilityPack
             }
 
             HtmlNode node = CreateNode(HtmlNodeType.Element);
-            node.Name = name;
+            node.SetName(name);
             return node;
         }
 
@@ -1885,6 +1885,7 @@ namespace HtmlAgilityPack
                                         || nodeName == "h6"
                                         || nodeName == "header"
                                         || nodeName == "hr"
+                                        || nodeName == "li"
                                         || nodeName == "menu"
                                         || nodeName == "nav"
                                         || nodeName == "ol"

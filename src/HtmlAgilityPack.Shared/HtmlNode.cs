@@ -153,17 +153,17 @@ namespace HtmlAgilityPack
 			switch (type)
 			{
 				case HtmlNodeType.Comment:
-					Name = HtmlNodeTypeNameComment;
+					SetName(HtmlNodeTypeNameComment);
 					_endnode = this;
 					break;
 
 				case HtmlNodeType.Document:
-					Name = HtmlNodeTypeNameDocument;
+					SetName(HtmlNodeTypeNameDocument);
 					_endnode = this;
 					break;
 
 				case HtmlNodeType.Text:
-					Name = HtmlNodeTypeNameText;
+					SetName(HtmlNodeTypeNameText);
 					_endnode = this;
 					break;
 			}
@@ -600,7 +600,7 @@ namespace HtmlAgilityPack
 				if (_optimizedName == null)
 				{
 					if (_name == null)
-						Name = _ownerdocument.Text.Substring(_namestartindex, _namelength);
+						SetName(_ownerdocument.Text.Substring(_namestartindex, _namelength));
 
 					if (_name == null)
 						_optimizedName = string.Empty;
@@ -612,12 +612,18 @@ namespace HtmlAgilityPack
 
 				return _optimizedName;
 			}
-			set
-			{
-				_name = value;
-				_optimizedName = null;
+            set
+            {
+				SetName(value);
+				SetChanged();
 			}
-		}
+        }
+
+		internal void SetName(string value)
+        {
+            _name = value;
+            _optimizedName = null;
+        }
 
 		/// <summary>
 		/// Gets the HTML node immediately following this element.
@@ -1046,7 +1052,7 @@ namespace HtmlAgilityPack
 			}
 
 			HtmlNode node = CloneNode(deep);
-			node.Name = newName;
+			node.SetName(newName);
 			return node;
 		}
 
@@ -1058,7 +1064,7 @@ namespace HtmlAgilityPack
 		public HtmlNode CloneNode(bool deep)
 		{
 			HtmlNode node = _ownerdocument.CreateNode(_nodetype);
-			node.Name = OriginalName;
+			node.SetName(OriginalName);
 
 			switch (_nodetype)
 			{
@@ -2159,10 +2165,9 @@ namespace HtmlAgilityPack
 			}
 		}
 
-#endregion
+		#endregion
 
-#region Internal Methods
-
+		#region Internal Methods
 		internal void SetChanged()
 		{
 			_changed = true;
