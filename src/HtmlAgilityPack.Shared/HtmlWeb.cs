@@ -98,6 +98,7 @@ namespace HtmlAgilityPack
         private bool _usingCacheAndLoad;
         private bool _usingCacheIfExists;
         private string _userAgent = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:x.x.x) Gecko/20041107 Firefox/x.x";
+        private int _timeout = 100000;
 
         /// <summary>
         /// Occurs after an HTTP request has been executed.
@@ -800,6 +801,15 @@ namespace HtmlAgilityPack
         /// <summary>Gets or sets the automatic decompression.</summary>
         /// <value>The automatic decompression.</value>
         public DecompressionMethods AutomaticDecompression { get; set; }
+
+        /// <summary>
+        /// Gets or sets the timeout value in milliseconds.
+        /// </summary>
+        public int Timeout
+        {
+            get { return _timeout; }
+            set { if (value < 0) { _timeout = 0; } else { _timeout = value; } }
+        }
 
         /// <summary>
         /// Gets or Sets a value indicating if document encoding must be automatically detected.
@@ -1571,6 +1581,7 @@ namespace HtmlAgilityPack
             bool oldFile = false;
 
             req = WebRequest.Create(uri) as HttpWebRequest;
+            req.Timeout = Timeout;
             req.Method = method;
             req.UserAgent = UserAgent;
             req.AutomaticDecompression = AutomaticDecompression;
@@ -1841,6 +1852,8 @@ namespace HtmlAgilityPack
             using (var handler = new HttpClientHandler())
             using (var client = new HttpClient(handler))
             {
+                client.Timeout = TimeSpan.FromMilliseconds(Timeout);
+
                 if(CaptureRedirect)
                 {
                     handler.AllowAutoRedirect = false;
