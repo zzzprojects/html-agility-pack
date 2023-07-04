@@ -803,7 +803,7 @@ namespace HtmlAgilityPack
         public DecompressionMethods AutomaticDecompression { get; set; }
 
         /// <summary>
-        /// Gets or sets the timeout value in milliseconds. Must be greater than zero.
+        /// Gets or sets the timeout value in milliseconds. Must be greater than zero. A value of -1 sets the timeout to be infinite.
         /// </summary>
         public int Timeout
         {
