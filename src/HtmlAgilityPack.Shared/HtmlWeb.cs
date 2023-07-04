@@ -808,7 +808,7 @@ namespace HtmlAgilityPack
         public int Timeout
         {
             get { return _timeout; }
-            set { if (value <= 0) { throw new ArgumentOutOfRangeException(); } else { _timeout = value; } }
+            set { if (value <= 0 && value != -1) { throw new ArgumentOutOfRangeException(); } else { _timeout = value; } }
         }
 
         /// <summary>
