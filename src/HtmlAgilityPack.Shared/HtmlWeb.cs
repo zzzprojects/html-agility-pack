@@ -804,8 +804,10 @@ namespace HtmlAgilityPack
         public DecompressionMethods AutomaticDecompression { get; set; }
 
         /// <summary>
-        /// Maximum number of redirects that will be followed. Default value is 50.
+        /// Maximum number of redirects that will be followed.
+        /// To disable redirects, do not set the value to 0, please set CaptureRedirect to 'true'.
         /// </summary>
+        /// <value>Must be greater than 0, Default is 50.</value>
         public int MaxAutoRedirects
         {
             set { if (value <= 0) { throw new ArgumentOutOfRangeException(); } else { _maxAutoRedirects = value; } }
