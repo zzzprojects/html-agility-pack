@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection.Metadata;
 using Xunit;
 
 namespace HtmlAgilityPack.Tests.NetStandard2_0
@@ -29,7 +30,31 @@ namespace HtmlAgilityPack.Tests.NetStandard2_0
 
             Assert.NotNull(wort);
         }
+
+        [Fact]
+        public void EncapsulatedOuterHtml_Test()
+        {
+            var html = @"
+<div>
+<a href='3.html' class='single'>3</a>
+<div>hello
+<a href='1.html'>1</a>
+<a href='2.html'>2</a>
+</div>
+<div>world</div>
+</div>
+";
+            var document = new HtmlDocument();
+            document.LoadHtml(html);
+            var outerHtml = document.DocumentNode.GetEncapsulatedData<OuterHtml>();
+            Assert.True(outerHtml.Item3.Href == "3.html");
+            Assert.True(outerHtml.Item3.Name == "3");
+
+            Assert.True(outerHtml.Items.Count == 3);
+            Assert.True(outerHtml.Items.All(o => o.Href != null));
+        }
     }
+
 
     #region StackOverFlow_TestClasses
 
@@ -204,5 +229,29 @@ namespace HtmlAgilityPack.Tests.NetStandard2_0
 
     #endregion Dictionary_TestClasses
 
+    #region Encapsulated outer html test classes
 
+    [HasXPath]
+    public class OuterHtml
+    {
+        [XPath("//a", ReturnType.OuterHtml)]
+        public List<OuterHtmlItem> Items { get; set; }
+
+        [XPath("//a[@class='single']", ReturnType.OuterHtml)]
+        public OuterHtmlItem Item3 { get; set; }
+
+
+        [HasXPath]
+        public class OuterHtmlItem
+        {
+            [XPath("a", "href")]
+            [SkipNodeNotFound]
+            public string Href { get; set; }
+
+            [XPath("a")]
+            [SkipNodeNotFound]
+            public string Name { get; set; }
+        }
+    }
+    #endregion
 }
