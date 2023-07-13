@@ -177,7 +177,7 @@ namespace HtmlAgilityPack
                                 {
                                     HtmlDocument innerHtmlDocument = new HtmlDocument();
 
-                                    innerHtmlDocument.LoadHtml(GetEncapsulatedHtml(xPathAttribute.NodeReturnType, htmlNode));
+                                    innerHtmlDocument.LoadHtml(Tools.GetHtmlForEncapsulation(htmlNode, xPathAttribute.NodeReturnType));
 
                                     object o = GetEncapsulatedData(propertyInfo.PropertyType, innerHtmlDocument);
 
@@ -295,7 +295,7 @@ namespace HtmlAgilityPack
                                         foreach (HtmlNode node in nodeCollection)
                                         {
                                             HtmlDocument innerHtmlDocument = new HtmlDocument();
-                                            innerHtmlDocument.LoadHtml(GetEncapsulatedHtml(xPathAttribute.NodeReturnType, node));
+                                            innerHtmlDocument.LoadHtml(Tools.GetHtmlForEncapsulation(node, xPathAttribute.NodeReturnType));
 
                                             object o = GetEncapsulatedData(T_Types[0], innerHtmlDocument);
 
@@ -380,23 +380,6 @@ namespace HtmlAgilityPack
                 throw new MissingXPathException("Type T must define HasXPath attribute and include properties with XPath attribute.");
             }
             #endregion targetObject_NOTDefined_XPath
-        }
-
-
-
-        private static string GetEncapsulatedHtml(ReturnType returnType, HtmlNode node)
-        {
-            switch (returnType)
-            {
-                case ReturnType.InnerText:
-                    return node.InnerText;
-                case ReturnType.InnerHtml:
-                    return node.InnerHtml;
-                case ReturnType.OuterHtml:
-                    return node.OuterHtml;
-                default:
-                    throw new Exception("Unhandled ReturnType : " + returnType.ToString());
-            };
         }
     }
 
@@ -616,34 +599,7 @@ namespace HtmlAgilityPack
                 throw new ArgumentNullException("parameter xpathAttribute is null");
             }
 
-            object result;
-            Type TType = typeof(T);
-
-            switch (xPathAttribute.NodeReturnType)
-            {
-                case ReturnType.InnerHtml:
-                    {
-                        result = Convert.ChangeType(htmlNode.InnerHtml, TType);
-                    }
-                    break;
-
-
-                case ReturnType.InnerText:
-                    {
-                        result = Convert.ChangeType(htmlNode.InnerText, TType);
-                    }
-                    break;
-
-                case ReturnType.OuterHtml:
-                    {
-                        result = Convert.ChangeType(htmlNode.OuterHtml, TType);
-                    }
-                    break;
-
-                default: throw new Exception();
-            }
-
-            return (T)result;
+            return (T)Convert.ChangeType(GetHtmlForEncapsulation(htmlNode, xPathAttribute.NodeReturnType), typeof(T));
         }
 
 
@@ -668,41 +624,10 @@ namespace HtmlAgilityPack
 
 
             IList result = listGenericType.CreateIListOfType();
-
-            switch (xPathAttribute.NodeReturnType)
+            foreach (HtmlNode node in htmlNodeCollection)
             {
-
-                case ReturnType.InnerHtml:
-                    {
-                        foreach (HtmlNode node in htmlNodeCollection)
-                        {
-                            result.Add(Convert.ChangeType(node.InnerHtml, listGenericType));
-                        }
-                    }
-                    break;
-
-
-                case ReturnType.InnerText:
-                    {
-                        foreach (HtmlNode node in htmlNodeCollection)
-                        {
-                            result.Add(Convert.ChangeType(node.InnerText, listGenericType));
-                        }
-                    }
-                    break;
-
-
-                case ReturnType.OuterHtml:
-                    {
-                        foreach (HtmlNode node in htmlNodeCollection)
-                        {
-                            result.Add(Convert.ChangeType(node.OuterHtml, listGenericType));
-                        }
-                    }
-                    break;
-
+                result.Add(Convert.ChangeType(GetHtmlForEncapsulation(node, xPathAttribute.NodeReturnType), listGenericType));
             }
-
             return result;
         }
 
@@ -801,7 +726,27 @@ namespace HtmlAgilityPack
             return counter;
         }
 
-
+        /// <summary>
+        /// Return html part of <see cref="HtmlNode"/> based on <see cref="ReturnType"/>
+        /// </summary>
+        /// <param name="node">A htmlNode instance.</param>
+        /// <param name="returnType"><see cref="ReturnType"/></param>
+        /// <returns>Html part</returns>
+        /// <exception cref="IndexOutOfRangeException">Out of range to the <see cref="ReturnType"/></exception>
+        internal static string GetHtmlForEncapsulation(HtmlNode node, ReturnType returnType)
+        {
+            switch (returnType)
+            {
+                case ReturnType.InnerText:
+                    return node.InnerText;
+                case ReturnType.InnerHtml:
+                    return node.InnerHtml;
+                case ReturnType.OuterHtml:
+                    return node.OuterHtml;
+                default:
+                    throw new IndexOutOfRangeException("Unhandled ReturnType : " + returnType.ToString());
+            };
+        }
     }
 
 
