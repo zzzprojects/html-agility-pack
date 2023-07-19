@@ -89,7 +89,6 @@ namespace HtmlAgilityPack
 
         private string _cachePath;
         private bool _fromCache;
-        private int _maxAutoRedirects = 50;
         private int _requestDuration;
         private Uri _responseUri;
         private HttpStatusCode _statusCode = HttpStatusCode.OK;
@@ -100,6 +99,7 @@ namespace HtmlAgilityPack
         private bool _usingCacheIfExists;
         private string _userAgent = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:x.x.x) Gecko/20041107 Firefox/x.x";
         private int _timeout = 100000;
+        private int? _maxAutoRedirects;
 
         /// <summary>
         /// Occurs after an HTTP request has been executed.
@@ -807,8 +807,8 @@ namespace HtmlAgilityPack
         /// Maximum number of redirects that will be followed.
         /// To disable redirects, do not set the value to 0, please set CaptureRedirect to 'true'.
         /// </summary>
-        /// <value>Must be greater than 0, Default is 50.</value>
-        public int MaxAutoRedirects
+        /// <value>Must be greater than 0.</value>
+        public int? MaxAutoRedirects
         {
             set { if (value <= 0) { throw new ArgumentOutOfRangeException(); } else { _maxAutoRedirects = value; } }
             get { return _maxAutoRedirects; }
@@ -1593,7 +1593,10 @@ namespace HtmlAgilityPack
             bool oldFile = false;
 
             req = WebRequest.Create(uri) as HttpWebRequest;
-            req.MaximumAutomaticRedirections = MaxAutoRedirects;
+            if (MaxAutoRedirects.HasValue)
+            {
+                req.MaximumAutomaticRedirections = MaxAutoRedirects.Value;
+            }
             req.Timeout = Timeout;
             req.Method = method;
             req.UserAgent = UserAgent;
@@ -1866,7 +1869,11 @@ namespace HtmlAgilityPack
             using (var client = new HttpClient(handler))
             {
                 client.Timeout = TimeSpan.FromMilliseconds(Timeout);
-                handler.MaxAutomaticRedirections = MaxAutoRedirects;
+
+                if (MaxAutoRedirects.HasValue)
+                {
+                    handler.MaxAutomaticRedirections = MaxAutoRedirects.Value;
+                }
 
                 if(CaptureRedirect)
                 {

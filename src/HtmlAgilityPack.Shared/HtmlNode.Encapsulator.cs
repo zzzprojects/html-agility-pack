@@ -1,9 +1,9 @@
-// Description: Html Agility Pack - HTML Parsers, selectors, traversors, manupulators.
+﻿// Description: Html Agility Pack - HTML Parsers, selectors, traversors, manupulators.
 // Website & Documentation: http://html-agility-pack.net
 // Forum & Issues: https://github.com/zzzprojects/html-agility-pack
 // License: https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE
 // More projects: http://www.zzzprojects.com/
-// Copyright � ZZZ Projects Inc. 2014 - 2017. All rights reserved.
+// Copyright © ZZZ Projects Inc. 2014 - 2017. All rights reserved.
 
 #if !METRO && !NETSTANDARD1_3
 
@@ -29,7 +29,7 @@ namespace HtmlAgilityPack
         /// <exception cref="XPathException">Why it's thrown.</exception>
         /// <exception cref="NodeNotFoundException">Why it's thrown.</exception>
         /// <exception cref="NodeAttributeNotFoundException">Why it's thrown.</exception>
-        /// <exception cref="FormatException">Why it's thrown.</exception>
+        /// <exception cref="FormatException">Why it's thrown.</exception>                
         /// <exception cref="Exception">Why it's thrown.</exception>
         public T GetEncapsulatedData<T>()
         {
@@ -50,7 +50,7 @@ namespace HtmlAgilityPack
         /// <exception cref="XPathException">Why it's thrown.</exception>
         /// <exception cref="NodeNotFoundException">Why it's thrown.</exception>
         /// <exception cref="NodeAttributeNotFoundException">Why it's thrown.</exception>
-        /// <exception cref="FormatException">Why it's thrown.</exception>
+        /// <exception cref="FormatException">Why it's thrown.</exception>                
         /// <exception cref="Exception">Why it's thrown.</exception>
         public T GetEncapsulatedData<T>(HtmlDocument htmlDocument)
         {
@@ -72,7 +72,7 @@ namespace HtmlAgilityPack
         /// <exception cref="XPathException">Why it's thrown.</exception>
         /// <exception cref="NodeNotFoundException">Why it's thrown.</exception>
         /// <exception cref="NodeAttributeNotFoundException">Why it's thrown.</exception>
-        /// <exception cref="FormatException">Why it's thrown.</exception>
+        /// <exception cref="FormatException">Why it's thrown.</exception>                
         /// <exception cref="Exception">Why it's thrown.</exception>
         public object GetEncapsulatedData(Type targetType, HtmlDocument htmlDocument = null)
         {
@@ -175,7 +175,7 @@ namespace HtmlAgilityPack
                                 // Property is None-IEnumerable HasXPath-user-defined class
                                 if (propertyInfo.PropertyType.IsDefinedAttribute(typeof(HasXPathAttribute)) == true)
                                 {
-                                    HtmlDocument innerHtmlDocument = new HtmlDocument();
+                                    HtmlDocument innerHtmlDocument = new HtmlDocument(); 
 
                                     innerHtmlDocument.LoadHtml(Tools.GetHtmlForEncapsulation(htmlNode, xPathAttribute.NodeReturnType));
 
@@ -192,7 +192,7 @@ namespace HtmlAgilityPack
                                 {
                                     string result = string.Empty;
 
-                                    if (xPathAttribute.AttributeName == null) // It target value of HTMLTag
+                                    if (xPathAttribute.AttributeName == null) // It target value of HTMLTag 
                                     {
                                         result = Tools.GetNodeValueBasedOnXPathReturnType<string>(htmlNode, xPathAttribute);
                                     }
@@ -381,6 +381,9 @@ namespace HtmlAgilityPack
             }
             #endregion targetObject_NOTDefined_XPath
         }
+
+
+
     }
 
 
@@ -624,10 +627,12 @@ namespace HtmlAgilityPack
 
 
             IList result = listGenericType.CreateIListOfType();
+
             foreach (HtmlNode node in htmlNodeCollection)
             {
-                result.Add(Convert.ChangeType(GetHtmlForEncapsulation(node, xPathAttribute.NodeReturnType), listGenericType));
+                result.Add(Convert.ChangeType(GetHtmlForEncapsulation(node, xPathAttribute.NodeReturnType), listGenericType)); 
             }
+
             return result;
         }
 
@@ -724,7 +729,7 @@ namespace HtmlAgilityPack
                 counter++;
             }
             return counter;
-        }
+        } 
 
         /// <summary>
         /// Return html part of <see cref="HtmlNode"/> based on <see cref="ReturnType"/>
@@ -747,6 +752,8 @@ namespace HtmlAgilityPack
                     throw new IndexOutOfRangeException("Unhandled ReturnType : " + returnType.ToString());
             };
         }
+
+
     }
 
 
@@ -756,7 +763,7 @@ namespace HtmlAgilityPack
     public enum ReturnType
     {
         /// <summary>
-        /// The text between the start and end tags of the object.
+        /// The text between the start and end tags of the object.        
         /// </summary>
         InnerText,
 
@@ -855,18 +862,18 @@ namespace HtmlAgilityPack
     public class NodeNotFoundException : Exception
     {
         /// <summary>
-        ///
+        /// 
         /// </summary>
         public NodeNotFoundException() { }
 
         /// <summary>
-        ///
+        /// 
         /// </summary>
         /// <param name="message"></param>
         public NodeNotFoundException(string message) : base(message) { }
 
         /// <summary>
-        ///
+        /// 
         /// </summary>
         /// <param name="message"></param>
         /// <param name="inner"></param>
@@ -880,18 +887,18 @@ namespace HtmlAgilityPack
     public class NodeAttributeNotFoundException : Exception
     {
         /// <summary>
-        ///
+        /// 
         /// </summary>
         public NodeAttributeNotFoundException() { }
 
         /// <summary>
-        ///
+        /// 
         /// </summary>
         /// <param name="message"></param>
         public NodeAttributeNotFoundException(string message) : base(message) { }
 
         /// <summary>
-        ///
+        /// 
         /// </summary>
         /// <param name="message"></param>
         /// <param name="inner"></param>
@@ -906,18 +913,18 @@ namespace HtmlAgilityPack
     {
 
         /// <summary>
-        ///
+        /// 
         /// </summary>
         public MissingXPathException() { }
 
         /// <summary>
-        ///
+        /// 
         /// </summary>
         /// <param name="message"></param>
         public MissingXPathException(string message) : base(message) { }
 
         /// <summary>
-        ///
+        /// 
         /// </summary>
         /// <param name="message"></param>
         /// <param name="inner"></param>
@@ -926,7 +933,7 @@ namespace HtmlAgilityPack
 
 }
 
-#if FX20
+#if FX20 
 namespace System.Runtime.CompilerServices
 {
     [AttributeUsage(AttributeTargets.Method |
