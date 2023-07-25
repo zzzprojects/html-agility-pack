@@ -99,6 +99,7 @@ namespace HtmlAgilityPack
         private bool _usingCacheIfExists;
         private string _userAgent = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:x.x.x) Gecko/20041107 Firefox/x.x";
         private int _timeout = 100000;
+        private int? _maxAutoRedirects;
 
         /// <summary>
         /// Occurs after an HTTP request has been executed.
@@ -801,6 +802,17 @@ namespace HtmlAgilityPack
         /// <summary>Gets or sets the automatic decompression.</summary>
         /// <value>The automatic decompression.</value>
         public DecompressionMethods AutomaticDecompression { get; set; }
+
+        /// <summary>
+        /// Maximum number of redirects that will be followed.
+        /// To disable redirects, do not set the value to 0, please set CaptureRedirect to 'true'.
+        /// </summary>
+        /// <value>Must be greater than 0.</value>
+        public int? MaxAutoRedirects
+        {
+            set { if (value <= 0) { throw new ArgumentOutOfRangeException(); } else { _maxAutoRedirects = value; } }
+            get { return _maxAutoRedirects; }
+        }
 
         /// <summary>
         /// Gets or sets the timeout value in milliseconds. Must be greater than zero. A value of -1 sets the timeout to be infinite.
@@ -1581,6 +1593,10 @@ namespace HtmlAgilityPack
             bool oldFile = false;
 
             req = WebRequest.Create(uri) as HttpWebRequest;
+            if (MaxAutoRedirects.HasValue)
+            {
+                req.MaximumAutomaticRedirections = MaxAutoRedirects.Value;
+            }
             req.Timeout = Timeout;
             req.Method = method;
             req.UserAgent = UserAgent;
@@ -1853,6 +1869,11 @@ namespace HtmlAgilityPack
             using (var client = new HttpClient(handler))
             {
                 client.Timeout = TimeSpan.FromMilliseconds(Timeout);
+
+                if (MaxAutoRedirects.HasValue)
+                {
+                    handler.MaxAutomaticRedirections = MaxAutoRedirects.Value;
+                }
 
                 if(CaptureRedirect)
                 {
