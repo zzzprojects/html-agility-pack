@@ -11,6 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Xml;
 using System.Xml.XPath;
 
 namespace HtmlAgilityPack
@@ -177,7 +178,9 @@ namespace HtmlAgilityPack
                                 {
                                     HtmlDocument innerHtmlDocument = new HtmlDocument();
 
-                                    innerHtmlDocument.LoadHtml(Tools.GetHtmlForEncapsulation(htmlNode, xPathAttribute.NodeReturnType));
+                                    innerHtmlDocument.LoadHtml(Tools.GetHtmlForEncapsulation(
+                                        htmlNode,
+                                        xPathAttribute.IsNodeReturnTypeExplicitlySet ? xPathAttribute.NodeReturnType : ReturnType.InnerHtml));
 
                                     object o = GetEncapsulatedData(propertyInfo.PropertyType, innerHtmlDocument);
 
@@ -295,7 +298,9 @@ namespace HtmlAgilityPack
                                         foreach (HtmlNode node in nodeCollection)
                                         {
                                             HtmlDocument innerHtmlDocument = new HtmlDocument();
-                                            innerHtmlDocument.LoadHtml(Tools.GetHtmlForEncapsulation(node, xPathAttribute.NodeReturnType));
+                                            innerHtmlDocument.LoadHtml(Tools.GetHtmlForEncapsulation(
+                                                node,
+                                                xPathAttribute.IsNodeReturnTypeExplicitlySet ? xPathAttribute.NodeReturnType : ReturnType.InnerHtml));
 
                                             object o = GetEncapsulatedData(T_Types[0], innerHtmlDocument);
 
@@ -789,6 +794,9 @@ namespace HtmlAgilityPack
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
     public sealed class XPathAttribute : Attribute
     {
+        private ReturnType _nodeReturnType;
+        internal bool IsNodeReturnTypeExplicitlySet { get; private set; }
+
         /// <summary>
         /// XPath Expression that is used to find related html node.
         /// </summary>
@@ -802,7 +810,14 @@ namespace HtmlAgilityPack
         /// <summary>
         /// The methode of output
         /// </summary>
-        public ReturnType NodeReturnType { get; set; }
+        public ReturnType NodeReturnType
+        {
+            get => _nodeReturnType; set
+            {
+                _nodeReturnType = value;
+                IsNodeReturnTypeExplicitlySet = true;
+            }
+        }
 
         /// <summary>
         /// Specify Xpath to find related Html Node.
@@ -811,7 +826,7 @@ namespace HtmlAgilityPack
         public XPathAttribute(string xpathString)
         {
             XPath = xpathString;
-            NodeReturnType = ReturnType.InnerText;
+            _nodeReturnType = ReturnType.InnerText;
         }
 
         /// <summary>
@@ -834,6 +849,21 @@ namespace HtmlAgilityPack
         {
             XPath = xpathString;
             AttributeName = attributeName;
+            _nodeReturnType = ReturnType.InnerText;
+        }
+
+
+        /// <summary>
+        /// Specify Xpath and Attribute to find related Html Node and its attribute value.
+        /// </summary>
+        /// <param name="xpathString"></param>
+        /// <param name="attributeName"></param>
+        /// <param name="nodeReturnType">Specify you want the output include html text too.</param>
+        public XPathAttribute(string xpathString, string attributeName, ReturnType nodeReturnType)
+        {
+            XPath = xpathString;
+            AttributeName = attributeName;
+            NodeReturnType = nodeReturnType;
         }
     }
 
