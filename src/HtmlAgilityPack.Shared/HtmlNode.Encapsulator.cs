@@ -11,7 +11,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Xml;
 using System.Xml.XPath;
 
 namespace HtmlAgilityPack
@@ -201,6 +200,7 @@ namespace HtmlAgilityPack
                                     }
                                     else // It target attribute of HTMLTag
                                     {
+                                        ThrowIfNodeReturnTypeIsExplicitlySetWhenAttributeNameIsGiven(xPathAttribute);
                                         result = htmlNode.GetAttributeValue(xPathAttribute.AttributeName, null);
                                     }
 
@@ -329,6 +329,8 @@ namespace HtmlAgilityPack
                                         }
                                         else // It target attribute
                                         {
+                                            ThrowIfNodeReturnTypeIsExplicitlySetWhenAttributeNameIsGiven(xPathAttribute);
+
                                             foreach (HtmlNode node in nodeCollection)
                                             {
                                                 string nodeAttributeValue = node.GetAttributeValue(xPathAttribute.AttributeName, null);
@@ -385,6 +387,15 @@ namespace HtmlAgilityPack
                 throw new MissingXPathException("Type T must define HasXPath attribute and include properties with XPath attribute.");
             }
             #endregion targetObject_NOTDefined_XPath
+        }
+
+
+        private static void ThrowIfNodeReturnTypeIsExplicitlySetWhenAttributeNameIsGiven(XPathAttribute xPathAttr)
+        {
+            if (xPathAttr.IsNodeReturnTypeExplicitlySet && !string.IsNullOrEmpty(xPathAttr.AttributeName))
+            {
+                throw new InvalidNodeReturnTypeException("Specifying a ReturnType value not allowed for XPathAttribute annotations targeting element attributes");
+            }
         }
     }
 
@@ -749,7 +760,7 @@ namespace HtmlAgilityPack
                 case ReturnType.OuterHtml:
                     return node.OuterHtml;
                 default:
-                    throw new IndexOutOfRangeException("Unhandled ReturnType : " + returnType.ToString());
+                    throw new InvalidNodeReturnTypeException(string.Format("Invalid ReturnType value {0}", returnType));
             };
         }
     }
@@ -852,20 +863,6 @@ namespace HtmlAgilityPack
             AttributeName = attributeName;
             _nodeReturnType = ReturnType.InnerText;
         }
-
-
-        /// <summary>
-        /// Specify Xpath and Attribute to find related Html Node and its attribute value.
-        /// </summary>
-        /// <param name="xpathString"></param>
-        /// <param name="attributeName"></param>
-        /// <param name="nodeReturnType">Specify you want the output include html text too.</param>
-        public XPathAttribute(string xpathString, string attributeName, ReturnType nodeReturnType)
-        {
-            XPath = xpathString;
-            AttributeName = attributeName;
-            NodeReturnType = nodeReturnType;
-        }
     }
 
 
@@ -955,6 +952,26 @@ namespace HtmlAgilityPack
         public MissingXPathException(string message, Exception inner) : base(message, inner) { }
     }
 
+
+    /// <summary>
+    /// Exception that occurs when an XPathAttribute annotation has an invalid ReturnType specified.
+    /// </summary>
+    public class InvalidNodeReturnTypeException : Exception
+    {
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        public InvalidNodeReturnTypeException(string message)
+            : base(message) { }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="inner"></param>
+        public InvalidNodeReturnTypeException(string message, Exception inner) : base(message, inner) { }
+    }
 }
 
 #if FX20
