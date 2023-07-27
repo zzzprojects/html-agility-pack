@@ -3,7 +3,7 @@
 // Forum & Issues: https://github.com/zzzprojects/html-agility-pack
 // License: https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE
 // More projects: http://www.zzzprojects.com/
-// Copyright © ZZZ Projects Inc. 2014 - 2017. All rights reserved.
+// Copyright ï¿½ ZZZ Projects Inc. 2014 - 2017. All rights reserved.
 
 #if !METRO && !NETSTANDARD1_3
 
@@ -24,13 +24,14 @@ namespace HtmlAgilityPack
         /// <returns>Returns an object of type T including Encapsulated data.</returns>
         /// <exception cref="ArgumentException">Why it's thrown.</exception>
         /// <exception cref="ArgumentNullException">Why it's thrown.</exception>
-        /// <exception cref="MissingMethodException">Why it's thrown.</exception>
-        /// <exception cref="MissingXPathException">Why it's thrown.</exception>
-        /// <exception cref="XPathException">Why it's thrown.</exception>
-        /// <exception cref="NodeNotFoundException">Why it's thrown.</exception>
-        /// <exception cref="NodeAttributeNotFoundException">Why it's thrown.</exception>
+        /// <exception cref="MissingMethodException"><see cref="MissingMethodException"/></exception>
+        /// <exception cref="MissingXPathException"><see cref="MissingXPathException"/></exception>
+        /// <exception cref="XPathException"><see cref="XPathExeption"/></exception>
+        /// <exception cref="NodeNotFoundException"><see cref="NodeNotFoundException"/></exception>
+        /// <exception cref="NodeAttributeNotFoundException"><see cref="NodeAttributeNotFoundException"/></exception>
         /// <exception cref="FormatException">Why it's thrown.</exception>
         /// <exception cref="Exception">Why it's thrown.</exception>
+        /// <exception cref="InvalidNodeReturnTypeException"><see cref="InvalidNodeReturnTypeException"/></exception>
         public T GetEncapsulatedData<T>()
         {
             return (T)GetEncapsulatedData(typeof(T), null);
@@ -45,13 +46,14 @@ namespace HtmlAgilityPack
         /// <returns>Returns an object of type T including Encapsulated data.</returns>
         /// <exception cref="ArgumentException">Why it's thrown.</exception>
         /// <exception cref="ArgumentNullException">Why it's thrown.</exception>
-        /// <exception cref="MissingMethodException">Why it's thrown.</exception>
-        /// <exception cref="MissingXPathException">Why it's thrown.</exception>
-        /// <exception cref="XPathException">Why it's thrown.</exception>
-        /// <exception cref="NodeNotFoundException">Why it's thrown.</exception>
-        /// <exception cref="NodeAttributeNotFoundException">Why it's thrown.</exception>
+        /// <exception cref="MissingMethodException"><see cref="MissingMethodException"/></exception>
+        /// <exception cref="MissingXPathException"><see cref="MissingXPathException"/></exception>
+        /// <exception cref="XPathException"><see cref="XPathExeption"/></exception>
+        /// <exception cref="NodeNotFoundException"><see cref="NodeNotFoundException"/></exception>
+        /// <exception cref="NodeAttributeNotFoundException"><see cref="NodeAttributeNotFoundException"/></exception>
         /// <exception cref="FormatException">Why it's thrown.</exception>
         /// <exception cref="Exception">Why it's thrown.</exception>
+        /// <exception cref="InvalidNodeReturnTypeException"><see cref="InvalidNodeReturnTypeException"/></exception>
         public T GetEncapsulatedData<T>(HtmlDocument htmlDocument)
         {
             return (T)GetEncapsulatedData(typeof(T), htmlDocument);
@@ -67,13 +69,14 @@ namespace HtmlAgilityPack
         /// <returns>Returns an object of type targetType including Encapsulated data.</returns>
         /// <exception cref="ArgumentException">Why it's thrown.</exception>
         /// <exception cref="ArgumentNullException">Why it's thrown.</exception>
-        /// <exception cref="MissingMethodException">Why it's thrown.</exception>
-        /// <exception cref="MissingXPathException">Why it's thrown.</exception>
-        /// <exception cref="XPathException">Why it's thrown.</exception>
-        /// <exception cref="NodeNotFoundException">Why it's thrown.</exception>
-        /// <exception cref="NodeAttributeNotFoundException">Why it's thrown.</exception>
+        /// <exception cref="MissingMethodException"><see cref="MissingMethodException"/></exception>
+        /// <exception cref="MissingXPathException"><see cref="MissingXPathException"/></exception>
+        /// <exception cref="XPathException"><see cref="XPathExeption"/></exception>
+        /// <exception cref="NodeNotFoundException"><see cref="NodeNotFoundException"/></exception>
+        /// <exception cref="NodeAttributeNotFoundException"><see cref="NodeAttributeNotFoundException"/></exception>
         /// <exception cref="FormatException">Why it's thrown.</exception>
         /// <exception cref="Exception">Why it's thrown.</exception>
+        /// <exception cref="InvalidNodeReturnTypeException"><see cref="InvalidNodeReturnTypeException"/></exception>
         public object GetEncapsulatedData(Type targetType, HtmlDocument htmlDocument = null)
         {
 
