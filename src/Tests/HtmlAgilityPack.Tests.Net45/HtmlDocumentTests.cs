@@ -565,6 +565,24 @@ namespace HtmlAgilityPack.Tests
         }
 
         [Test]
+        public void TestRemoveAttribute()
+        {
+            var output = @"<h1>This is new heading</h1>";
+
+            string html = "<h1 a=\"foo\" b=\"bar\" A=\"baz\">This is new heading</h1>";
+
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(html);
+
+            var h1Node = htmlDoc.DocumentNode.SelectSingleNode("//h1");
+
+            h1Node.Attributes.Remove("a");
+            h1Node.Attributes.Remove("b");
+
+            Assert.AreEqual(h1Node.OuterHtml, output);
+        }
+
+        [Test]
         public void TestAttributeDeEntitizeValue()
         {
             var html =
