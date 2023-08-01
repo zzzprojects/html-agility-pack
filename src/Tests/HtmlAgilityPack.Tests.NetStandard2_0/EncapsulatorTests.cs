@@ -53,6 +53,25 @@ namespace HtmlAgilityPack.Tests.NetStandard2_0
             Assert.True(outerHtml.Items.Count == 3);
             Assert.True(outerHtml.Items.All(o => o.Href != null));
         }
+
+        [Fact]
+        public void Encapsulation_Test2()
+        {
+            var docoument = new HtmlDocument();
+            docoument.LoadHtml(EncapsulationTestHtml.Html);
+            var testHtml = docoument.DocumentNode.GetEncapsulatedData<EncapsulationTestHtml>();
+
+            Assert.True(testHtml.Title == "Test");
+            Assert.True(testHtml.H1 == "Test");
+            Assert.NotEmpty(testHtml.Link1);
+            Assert.NotEmpty(testHtml.Link2);
+            Assert.NotNull(testHtml.Link3);
+
+            Assert.NotNull(testHtml.Form);
+
+            Assert.True(testHtml.Articles.Count == 2);
+            Assert.True(testHtml.Articles.All(o => o.Id != null));
+        }
     }
 
 
