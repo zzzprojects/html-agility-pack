@@ -979,6 +979,21 @@ namespace HtmlAgilityPack
 			_ownerdocument.SetIdForNode(newChild, newChild.GetId());
 			SetChildNodesId(newChild);
 
+			var parentnode = _parentnode;
+			HtmlDocument lastOwnerDocument = null;
+			while (parentnode != null) 
+			{
+				if(parentnode.OwnerDocument != lastOwnerDocument)
+                {
+					parentnode.OwnerDocument.SetIdForNode(newChild, newChild.GetId());
+					parentnode.SetChildNodesId(newChild);
+					lastOwnerDocument = parentnode.OwnerDocument;
+				}
+
+				parentnode = parentnode._parentnode;
+			}
+
+
 			SetChanged();
 			return newChild;
 		}
