@@ -1005,6 +1005,12 @@ namespace HtmlAgilityPack
 			foreach (HtmlNode child in chilNode.ChildNodes)
 			{
 				_ownerdocument.SetIdForNode(child, child.GetId());
+
+				if (child.ChildNodes == chilNode.ChildNodes)
+				{
+					throw new Exception("Oops! a scenario that will cause a Stack Overflow has been found. See the following issue for an example: https://github.com/zzzprojects/html-agility-pack/issues/513");
+				}
+
 				SetChildNodesId(child);
 			}
 		}
