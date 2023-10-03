@@ -1497,6 +1497,16 @@ namespace HtmlAgilityPack
 
                         _currentattribute._isFromParse = true;
 
+
+                        //  Add !,?,% and other special? 
+                        // or a isLetter with a "or" number check
+                        if (_c == '/')
+                        {
+                            PushAttributeNameEnd(_index - 1);
+                            _state = ParseState.AttributeBeforeEquals;
+                            continue;
+                        }
+
                         if (IsWhiteSpace(_c))
                         {
                             PushAttributeNameEnd(_index - 1);
