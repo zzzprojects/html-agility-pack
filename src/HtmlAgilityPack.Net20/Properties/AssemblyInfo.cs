@@ -1,4 +1,4 @@
-// HtmlAgilityPack V1.0 - Simon Mourier <simon underscore mourier at hotmail dot com>
+﻿// HtmlAgilityPack V1.0 - Simon Mourier <simon underscore mourier at hotmail dot com>
 
 using System;
 using System.Reflection;

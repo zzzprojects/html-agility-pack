@@ -1,0 +1,5 @@
+root = true
+
+# C# files
+[*.cs]
+charset = utf-8-bom
