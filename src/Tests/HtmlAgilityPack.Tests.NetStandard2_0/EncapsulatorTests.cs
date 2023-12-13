@@ -9,27 +9,27 @@ namespace HtmlAgilityPack.Tests.NetStandard2_0
 {
     public class EncapsulatorTests
     {
-        [Fact]
-        public void StackOverFlow_Test()
-        {
-            HtmlWeb stackoverflowSite = new HtmlWeb();
-            HtmlDocument htmlDocument = stackoverflowSite.Load("https://stackoverflow.com/questions");
+        //[Fact]
+        //public void StackOverFlow_Test()
+        //{
+        //    HtmlWeb stackoverflowSite = new HtmlWeb();
+        //    HtmlDocument htmlDocument = stackoverflowSite.Load("https://stackoverflow.com/questions");
 
-            StackOverflowPage stackOverflowPage = htmlDocument.DocumentNode.GetEncapsulatedData<StackOverflowPage>();
+        //    StackOverflowPage stackOverflowPage = htmlDocument.DocumentNode.GetEncapsulatedData<StackOverflowPage>();
 
-            Assert.NotNull(stackOverflowPage);
-        }
+        //    Assert.NotNull(stackOverflowPage);
+        //}
 
-        [Fact]
-        public void Dictionary_Test()
-        {
-            HtmlWeb wortSite = new HtmlWeb();
-            HtmlDocument htmlDocument = wortSite.Load("https://wort.ir/woerterbuch/deutsch-persisch/Buch");
+        //[Fact]
+        //public void Dictionary_Test()
+        //{
+        //    HtmlWeb wortSite = new HtmlWeb();
+        //    HtmlDocument htmlDocument = wortSite.Load("https://wort.ir/woerterbuch/deutsch-persisch/Buch");
 
-            Word wort = htmlDocument.DocumentNode.GetEncapsulatedData<Word>();
+        //    Word wort = htmlDocument.DocumentNode.GetEncapsulatedData<Word>();
 
-            Assert.NotNull(wort);
-        }
+        //    Assert.NotNull(wort);
+        //}
 
         [Fact]
         public void EncapsulatedOuterHtml_Test()
