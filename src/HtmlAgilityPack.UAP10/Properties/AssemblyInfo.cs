@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("ZZZ Projects Inc.")]
 [assembly: AssemblyProduct("Html Agility Pack")]
 [assembly: AssemblyCopyright("Copyright © ZZZ Projects Inc.")]
-[assembly: AssemblyTrademark("SQL & .NET Tools")]
+[assembly: AssemblyTrademark("ZZZ Projects Inc.")]
 [assembly: AssemblyCulture("")]
 
 // Version information for an assembly consists of the following four values:
