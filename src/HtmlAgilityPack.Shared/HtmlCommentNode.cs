@@ -76,6 +76,11 @@ namespace HtmlAgilityPack
                     return base.OuterHtml;
                 }
 
+                if(_comment.StartsWith("<!--") && _comment.EndsWith("-->"))
+                {
+                    return _comment;
+                }
+
                 return "<!--" + _comment + "-->";
             }
         }

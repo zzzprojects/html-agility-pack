@@ -1942,7 +1942,7 @@ namespace HtmlAgilityPack
 							}
                             else
                             {
-                                outText.Write("<!--" + GetXmlComment(commentNode) + " -->");
+                                outText.Write("<!--" + GetXmlComment(commentNode) + "-->");
 							}
                         }
 					}

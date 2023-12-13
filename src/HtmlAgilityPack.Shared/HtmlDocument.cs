@@ -501,6 +501,11 @@ namespace HtmlAgilityPack
                 throw new ArgumentNullException("comment");
             }
 
+            if (!comment.StartsWith("<!--") && !comment.EndsWith("-->"))
+            {
+                comment = string.Concat("<!-- ", comment, " -->");
+            }
+
             HtmlCommentNode c = CreateComment();
             c.Comment = comment;
             return c;
