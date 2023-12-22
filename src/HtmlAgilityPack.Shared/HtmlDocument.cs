@@ -1942,6 +1942,9 @@ namespace HtmlAgilityPack
                 case "p":
                     isExplicitEnd = nodeName == "div";
 					break;
+                case "span":
+                    isExplicitEnd = nodeName == "div";
+                    break;
                 case "table":
                     isExplicitEnd = nodeName == "table";
                     break;
