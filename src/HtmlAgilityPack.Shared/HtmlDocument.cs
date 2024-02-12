@@ -157,10 +157,13 @@ namespace HtmlAgilityPack
         /// </summary>
         public bool OptionOutputAsXml;
 
-        /// <summary>
-        /// If used together with <see cref="OptionOutputAsXml"/> and enabled, Xml namespaces in element names are preserved. Default is false.
-        /// </summary>
-        public bool OptionPreserveXmlNamespaces;
+        // NEED TEXT!
+		public bool DisableImplicitEnd;
+
+		/// <summary>
+		/// If used together with <see cref="OptionOutputAsXml"/> and enabled, Xml namespaces in element names are preserved. Default is false.
+		/// </summary>
+		public bool OptionPreserveXmlNamespaces;
 
         /// <summary>
         /// Defines if attribute value output must be optimized (not bound with double quotes if it is possible). Default is false.
@@ -1836,8 +1839,8 @@ namespace HtmlAgilityPack
                 // CHECK if parent must be implicitely closed
                 if (IsParentImplicitEnd())
                 {
-                    if (OptionOutputAsXml)
-                    {
+                    if (OptionOutputAsXml || DisableImplicitEnd)
+					{
                         forceExplicitEnd = true;
                     }
                     else
