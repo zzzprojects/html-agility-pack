@@ -157,7 +157,7 @@ namespace HtmlAgilityPack
         /// </summary>
         public bool OptionOutputAsXml;
 
-        // NEED TEXT!
+		// NEED TEXT!
 		public bool DisableImplicitEnd;
 
 		/// <summary>
