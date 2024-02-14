@@ -157,7 +157,7 @@ namespace HtmlAgilityPack
         /// </summary>
         public bool OptionOutputAsXml;
 
-		// NEED TEXT!
+        /// <summary>True to disable implicit end. An explicit end logic will be used instead.</summary>
 		public bool DisableImplicitEnd;
 
 		/// <summary>
