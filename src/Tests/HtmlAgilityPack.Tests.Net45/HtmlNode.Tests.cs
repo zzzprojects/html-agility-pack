@@ -30,19 +30,21 @@ namespace HtmlAgilityPack.Tests
         [Test]
         public void ScriptingText()
         {
-            var html = @"<?xml version=""1.0"" encoding=""UTF-8"" ?>
-<html xmlns=""http://www.w3.org/1999/xhtml"">
-<head>
-    <title>SEE title</title>
-	<script>SEE script </script>
-	<style>SEE style</style>
-</head>
-<body>
-<script>NOTSEE script</script>
-<div>222<script>NOTSEE script</script>
-<style>NOTSEE style</style></div>
-</body>
-</html>";
+            // this test relies on exact characters so line endings and specific whitespace characters are added explicitly
+            var html = string.Join("\r\n",
+                @"<?xml version=""1.0"" encoding=""UTF-8"" ?>",
+                @"<html xmlns=""http://www.w3.org/1999/xhtml"">",
+                @"<head>",
+                @"    <title>SEE title</title>", // prefix of four spaces
+                "\t<script>SEE script </script>", // prefix of one tab
+                "\t<style>SEE style</style>", // prefix of one tab
+                @"</head>",
+                @"<body>",
+                @"<script>NOTSEE script</script>",
+                @"<div>222<script>NOTSEE script</script>",
+                @"<style>NOTSEE style</style></div>",
+                @"</body>",
+                @"</html>");
 
             {
                 HtmlAgilityPack.HtmlDocument htmlDocument = new HtmlAgilityPack.HtmlDocument();

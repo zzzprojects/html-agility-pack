@@ -140,21 +140,23 @@ namespace HtmlAgilityPack.Tests
                 Assert.AreEqual(8, scriptText.LinePosition);
             }
             {
+                // this test relies on exact character counts so line endings are added explicitly
                 var document = new HtmlAgilityPack.HtmlDocument();
-                document.LoadHtml(@"
-<scrapt>foo</scrapt>");
+                document.LoadHtml(string.Join("\r\n", 
+                    @"",
+                    @"<scrapt>foo</scrapt>"));
                 var scraptText = document.DocumentNode.LastChild.FirstChild;
                 //   var aa = scraptText.FirstChild;
                 Assert.AreEqual(10, scraptText.StreamPosition);
                 Assert.AreEqual(2, scraptText.Line);
                 Assert.AreEqual(8, scraptText.LinePosition);
             }
-
-
             {
+                // this test relies on exact character counts so line endings are added explicitly
                 var document = new HtmlAgilityPack.HtmlDocument();
-                document.LoadHtml(@"
-<script>foo</script>");
+                document.LoadHtml(string.Join("\r\n", 
+                    @"",
+                    "<script>foo</script>"));
                 var scriptText = document.DocumentNode.LastChild.FirstChild;
                 Assert.AreEqual(10, scriptText.StreamPosition);
                 Assert.AreEqual(2, scriptText.Line);
