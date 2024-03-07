@@ -1741,8 +1741,16 @@ namespace HtmlAgilityPack
                         // check buffer end
                         if ((_currentnode._namelength + 3) <= (Text.Length - (_index - 1)))
                         {
-                            if (string.Compare(Text.Substring(_index - 1, _currentnode._namelength + 2),
-                                    "</" + _currentnode.Name, StringComparison.OrdinalIgnoreCase) == 0)
+                            var tagStartMatching = Text[_index - 1] == '<' && Text[_index] == '/';
+                            var tagMatching = string.Compare(
+                                    Text,
+                                    _index + 1,
+                                    _currentnode.Name,
+                                    0,
+                                    _currentnode._namelength,
+                                    StringComparison.OrdinalIgnoreCase)
+                                == 0;
+                            if (tagStartMatching && tagMatching)
                             {
                                 int c = Text[_index - 1 + 2 + _currentnode.Name.Length];
                                 if ((c == '>') || (IsWhiteSpace(c)))
