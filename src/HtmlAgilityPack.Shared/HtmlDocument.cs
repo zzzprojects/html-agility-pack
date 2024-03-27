@@ -1962,6 +1962,9 @@ namespace HtmlAgilityPack
                 case "thead":
                     isExplicitEnd = nodeName == "tbody";
                     break;
+                case "tbody":
+                    isExplicitEnd = nodeName == "tbody";
+                    break;
                 case "td":
                     isExplicitEnd = nodeName == "td" || nodeName == "th" || nodeName == "tr" || nodeName == "tbody";
                     break;
