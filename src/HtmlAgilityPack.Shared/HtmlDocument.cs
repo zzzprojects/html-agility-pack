@@ -1742,15 +1742,15 @@ namespace HtmlAgilityPack
                         if ((_currentnode._namelength + 3) <= (Text.Length - (_index - 1)))
                         {
                             var tagStartMatching = Text[_index - 1] == '<' && Text[_index] == '/';
-                            var tagMatching = string.Compare(
+                            var tagMatching = tagStartMatching && string.Compare(
                                     Text,
                                     _index + 1,
                                     _currentnode.Name,
                                     0,
                                     _currentnode._namelength,
-                                    StringComparison.OrdinalIgnoreCase)
-                                == 0;
-                            if (tagStartMatching && tagMatching)
+                                    StringComparison.OrdinalIgnoreCase) == 0;
+
+                            if (tagMatching)
                             {
                                 int c = Text[_index - 1 + 2 + _currentnode.Name.Length];
                                 if ((c == '>') || (IsWhiteSpace(c)))
