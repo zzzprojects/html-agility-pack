@@ -615,7 +615,11 @@ namespace HtmlAgilityPack
             set
             {
 				SetName(value);
-				SetChanged();
+
+				if (!(this is HtmlTextNode))
+				{
+					SetChanged();
+				}
 			}
         }
 
