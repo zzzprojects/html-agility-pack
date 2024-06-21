@@ -31,13 +31,13 @@ namespace HtmlAgilityPack
         internal int _namestartindex;
         internal HtmlDocument _ownerdocument; // attribute can exists without a node
         internal HtmlNode _ownernode;
-        private AttributeValueQuote _quoteType = AttributeValueQuote.DoubleQuote;
+        private AttributeValueQuote? _quoteType;
         internal int _streamposition;
         internal string _value;
         internal int _valuelength;
         internal int _valuestartindex; 
-        internal bool _isFromParse;
-        internal bool _hasEqual;
+        //internal bool _isFromParse;
+        //internal bool _hasEqual;
         private bool? _localUseOriginalName;
 
         #endregion
@@ -168,14 +168,14 @@ namespace HtmlAgilityPack
         /// </summary>
         public AttributeValueQuote QuoteType
         {
-            get { return _quoteType; }
-            set { _quoteType = value; }
+            get { return _quoteType ?? this.InternalQuoteType ?? this.OwnerDocument.GlobalAttributeValueQuote ?? AttributeValueQuote.DoubleQuote; }
+            set { _quoteType = value != AttributeValueQuote.Initial ? (AttributeValueQuote?)value : null; }
         }
 
         /// <summary>
         /// Specifies what type of quote the data should be wrapped in (internal to keep backward compatibility)
         /// </summary>
-        internal AttributeValueQuote InternalQuoteType { get; set; }
+        internal AttributeValueQuote? InternalQuoteType { get; set; }
 
         /// <summary>
         /// Gets the stream position of this attribute in the document, relative to the start of the document.
@@ -213,6 +213,10 @@ namespace HtmlAgilityPack
             set
             {
                 _value = value;
+                if (!string.IsNullOrEmpty(_value) && this.QuoteType == AttributeValueQuote.WithoutValue)
+                {
+                    this.InternalQuoteType = this.OwnerDocument.GlobalAttributeValueQuote ?? AttributeValueQuote.DoubleQuote;
+                }
 
                 if (_ownernode != null)
                 {
@@ -284,11 +288,11 @@ namespace HtmlAgilityPack
             HtmlAttribute att = new HtmlAttribute(_ownerdocument);
             att.Name = OriginalName;
             att.Value = Value;
-            att.QuoteType = QuoteType;
+            att._quoteType = _quoteType;
             att.InternalQuoteType = InternalQuoteType;
 
-            att._isFromParse = _isFromParse;
-            att._hasEqual = _hasEqual;
+            //att._isFromParse = _isFromParse;
+            //att._hasEqual = _hasEqual;
             return att;
         }
 

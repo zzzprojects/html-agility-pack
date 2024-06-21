@@ -2346,15 +2346,16 @@ namespace HtmlAgilityPack
 			}
 
 			var quoteType = OwnerDocument.GlobalAttributeValueQuote ?? att.QuoteType;
-			var isWithoutValue = quoteType == AttributeValueQuote.WithoutValue
-						 || (quoteType == AttributeValueQuote.Initial && att._isFromParse && !att._hasEqual && string.IsNullOrEmpty(att.XmlValue));
+			//var isWithoutValue = quoteType == AttributeValueQuote.WithoutValue
+			//			 || (quoteType == AttributeValueQuote.Initial && att._isFromParse && !att._hasEqual && string.IsNullOrEmpty(att.XmlValue));
 
-			if (quoteType == AttributeValueQuote.Initial && !(att._isFromParse && !att._hasEqual && string.IsNullOrEmpty(att.XmlValue)))
+			if (quoteType == AttributeValueQuote.Initial/* && !(att._isFromParse && !att._hasEqual && string.IsNullOrEmpty(att.XmlValue))*/)
 			{
-				quoteType = att.InternalQuoteType;
+				quoteType = att.QuoteType;
 			}
+			var isWithoutValue = quoteType == AttributeValueQuote.WithoutValue;
 
-			string name;
+            string name;
 			string quote = quoteType == AttributeValueQuote.DoubleQuote ? "\"" : quoteType == AttributeValueQuote.SingleQuote ? "'" : "";
             if (_ownerdocument.OptionOutputAsXml)
 			{
