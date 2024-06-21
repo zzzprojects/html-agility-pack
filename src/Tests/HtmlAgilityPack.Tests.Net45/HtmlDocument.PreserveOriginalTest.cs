@@ -1,9 +1,10 @@
 ﻿using NUnit.Framework;
 using System;
 using System.IO;
+using System.Linq;
 using System.Xml.XPath;
 
-namespace HtmlAgilityPack.Tests.fx._4._5
+namespace HtmlAgilityPack.Tests
 {
     [TestFixture]
     public class HtmlDocumentPreserveOriginalTest
@@ -167,6 +168,19 @@ namespace HtmlAgilityPack.Tests.fx._4._5
             var cloned = d.DocumentNode.CloneNode(true);
 
             Assert.AreEqual(@"<list-counter formErrorsCounter></list-counter>", cloned.OuterHtml);
+        }
+
+        [Test]
+        public void PreserveQuoteTypeForLoadedAttributes()
+        {
+            var input = HtmlNode.CreateNode("<input checked></input>");
+            var checkedAttribute = input.Attributes.First();
+
+            // Result is: Value: '' (empty string)
+            Assert.AreEqual("", checkedAttribute.Value);
+
+            // Result is: QuoteType: WithoutValue
+            Assert.AreEqual(AttributeValueQuote.WithoutValue, checkedAttribute.QuoteType);
         }
     }
 }

@@ -1503,7 +1503,7 @@ namespace HtmlAgilityPack
                         if (NewCheck())
                             continue;
 
-                        _currentattribute._isFromParse = true;
+                        //_currentattribute._isFromParse = true;
 
 
                         //  Add !,?,% and other special? 
@@ -1525,7 +1525,7 @@ namespace HtmlAgilityPack
                         if (_c == '=')
                         {
                             PushAttributeNameEnd(_index - 1);
-                            _currentattribute._hasEqual = true;
+                            //_currentattribute._hasEqual = true;
                             _state = ParseState.AttributeAfterEquals;
                             continue;
                         }
@@ -1573,7 +1573,7 @@ namespace HtmlAgilityPack
 
                         if (_c == '=')
                         {
-                            _currentattribute._hasEqual = true;
+                            //_currentattribute._hasEqual = true;
                             _state = ParseState.AttributeAfterEquals;
                             continue;
                         }
@@ -1822,6 +1822,7 @@ namespace HtmlAgilityPack
             _currentattribute.Line = _line;
             _currentattribute._lineposition = lineposition;
             _currentattribute._streamposition = index;
+            _currentattribute.InternalQuoteType = AttributeValueQuote.WithoutValue;
         }
 
         private void PushAttributeValueEnd(int index)
@@ -2044,11 +2045,13 @@ namespace HtmlAgilityPack
             _currentattribute._valuestartindex = index;
             if (quote == '\'')
             {
-                _currentattribute.QuoteType = AttributeValueQuote.SingleQuote;
+                _currentattribute.InternalQuoteType = AttributeValueQuote.SingleQuote;
+            }
+            if (quote == '"')
+            {
+                _currentattribute.InternalQuoteType = AttributeValueQuote.DoubleQuote;
             }
 
-            _currentattribute.InternalQuoteType = _currentattribute.QuoteType;
-            
             if (quote == 0)
             {
                 _currentattribute.InternalQuoteType = AttributeValueQuote.None;
