@@ -20,3 +20,7 @@ _ReSharper.*
 *.ide
 *.ide-shm
 *.ide-wal
+
+
+.idea
+temp
