@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlAgilityPack.Tests.Net45
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HtmlAgilityPack.Tests.NetStandard2_0", "Tests\HtmlAgilityPack.Tests.NetStandard2_0\HtmlAgilityPack.Tests.NetStandard2_0.csproj", "{E16AB2BB-BB8E-4AC5-B3D2-FB0A21F9288F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "..\build\_build.csproj", "{CEF6A369-2310-4FAC-94F2-A9BA5703E810}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		HtmlAgilityPack.Shared\HtmlAgilityPack.Shared.projitems*{1028002a-bbe2-4ff2-94b7-a8368a8f6887}*SharedItemsImports = 4
@@ -59,6 +61,8 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CEF6A369-2310-4FAC-94F2-A9BA5703E810}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEF6A369-2310-4FAC-94F2-A9BA5703E810}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1028002A-BBE2-4FF2-94B7-A8368A8F6887}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1028002A-BBE2-4FF2-94B7-A8368A8F6887}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1028002A-BBE2-4FF2-94B7-A8368A8F6887}.Debug|ARM.ActiveCfg = Debug|Any CPU
