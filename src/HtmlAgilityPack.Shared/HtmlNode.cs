@@ -254,20 +254,7 @@ namespace HtmlAgilityPack
 		/// </summary>
 		public bool HasAttributes
 		{
-			get
-			{
-				if (_attributes == null)
-				{
-					return false;
-				}
-
-				if (_attributes.Count <= 0)
-				{
-					return false;
-				}
-
-				return true;
-			}
+			get { return _attributes != null && _attributes.Count > 0; }
 		}
 
 		/// <summary>
@@ -1053,7 +1040,7 @@ namespace HtmlAgilityPack
 		/// <returns></returns>
 		public IEnumerable<HtmlAttribute> ChildAttributes(string name)
 		{
-			return Attributes.AttributesWithName(name);
+			return HasAttributes ? Attributes.AttributesWithName(name) : Enumerable.Empty<HtmlAttribute>();
 		}
 
 		/// <summary>
@@ -2402,7 +2389,7 @@ namespace HtmlAgilityPack
 
 		internal string GetId()
 		{
-			HtmlAttribute att = Attributes["id"];
+			HtmlAttribute att = HasAttributes ? Attributes["id"] : null;
 			return att == null ? string.Empty : att.Value;
 		}
 
