@@ -681,7 +681,7 @@ namespace HtmlAgilityPack
                 throw new Exception(HtmlExceptionUseIdAttributeFalse);
             }
 
-            return Nodesid.ContainsKey(id) ? Nodesid[id] : null;
+            return Nodesid.TryGetValue(id, out var value) ? value : null;
         }
 
         /// <summary>
@@ -1769,7 +1769,7 @@ namespace HtmlAgilityPack
 									// https://www.w3schools.com/jsref/prop_node_innertext.asp
 									// textContent returns the text content of all elements, while innerText returns the content of all elements, except for <script> and <style> elements.
 									// innerText will not return the text of elements that are hidden with CSS (textContent will). ==> The parser do not support that.
-									if (_currentnode.Name.ToLowerInvariant().Equals("script")  || _currentnode.Name.ToLowerInvariant().Equals("style"))
+									if (_currentnode.Name.Equals("script", StringComparison.InvariantCultureIgnoreCase)  || _currentnode.Name.Equals("style", StringComparison.InvariantCultureIgnoreCase))
                                     {
 	                                    _currentnode._isHideInnerText = true;
 									}
@@ -2115,7 +2115,7 @@ namespace HtmlAgilityPack
             if ((close) || (!_currentnode._starttag))
             {
                 if ((OptionStopperNodeName != null) && (_remainder == null) &&
-                    (string.Compare(_currentnode.Name, OptionStopperNodeName, StringComparison.OrdinalIgnoreCase) == 0))
+                    string.Equals(_currentnode.Name, OptionStopperNodeName, StringComparison.OrdinalIgnoreCase))
                 {
                     _remainderOffset = index;
                     _remainder = Text.Substring(_remainderOffset);
@@ -2168,7 +2168,7 @@ namespace HtmlAgilityPack
             HtmlAttribute att = node.Attributes["http-equiv"];
             if (att != null)
             {
-                if (string.Compare(att.Value, "content-type", StringComparison.OrdinalIgnoreCase) != 0)
+                if (!string.Equals(att.Value, "content-type", StringComparison.OrdinalIgnoreCase))
                     return;
                 HtmlAttribute content = node.Attributes["content"];
                 if (content != null)
