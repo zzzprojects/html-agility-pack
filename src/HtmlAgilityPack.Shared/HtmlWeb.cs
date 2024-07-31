@@ -2128,14 +2128,14 @@ namespace HtmlAgilityPack
         }
 #endif
 
-        private bool IsHtmlContent(string contentType)
+        private static bool IsHtmlContent(string contentType)
         {
-            return contentType.ToLowerInvariant().StartsWith("text/html");
+            return contentType.StartsWith("text/html", StringComparison.InvariantCultureIgnoreCase);
         }
 
-        private bool IsGZipEncoding(string contentEncoding)
+        private static bool IsGZipEncoding(string contentEncoding)
         {
-            return contentEncoding.ToLowerInvariant().StartsWith("gzip");
+            return contentEncoding.StartsWith("gzip", StringComparison.InvariantCultureIgnoreCase);
         }
 
 #if !(NETSTANDARD1_3 || NETSTANDARD1_6)
