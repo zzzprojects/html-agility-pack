@@ -36,8 +36,6 @@ namespace HtmlAgilityPack
         internal string _value;
         internal int _valuelength;
         internal int _valuestartindex; 
-        //internal bool _isFromParse;
-        //internal bool _hasEqual;
         private bool? _localUseOriginalName;
 
         #endregion
@@ -291,8 +289,6 @@ namespace HtmlAgilityPack
             att._quoteType = _quoteType;
             att.InternalQuoteType = InternalQuoteType;
 
-            //att._isFromParse = _isFromParse;
-            //att._hasEqual = _hasEqual;
             return att;
         }
 

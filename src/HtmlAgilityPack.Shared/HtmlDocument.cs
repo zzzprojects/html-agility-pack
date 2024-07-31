@@ -1525,7 +1525,6 @@ namespace HtmlAgilityPack
                         if (_c == '=')
                         {
                             PushAttributeNameEnd(_index - 1);
-                            //_currentattribute._hasEqual = true;
                             _state = ParseState.AttributeAfterEquals;
                             continue;
                         }
@@ -1573,7 +1572,6 @@ namespace HtmlAgilityPack
 
                         if (_c == '=')
                         {
-                            //_currentattribute._hasEqual = true;
                             _state = ParseState.AttributeAfterEquals;
                             continue;
                         }
