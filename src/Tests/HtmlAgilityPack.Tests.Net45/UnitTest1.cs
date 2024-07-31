@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace HtmlAgilityPack.Tests.fx._4._5
+namespace HtmlAgilityPack.Tests
 {
     [TestClass]
     public class UnitTest1
