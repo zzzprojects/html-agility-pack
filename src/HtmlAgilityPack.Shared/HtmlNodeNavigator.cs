@@ -533,7 +533,7 @@ namespace HtmlAgilityPack
 #if TRACE_NAVIGATOR
             InternalTrace("localName=" + localName + ", namespaceURI=" + namespaceURI);
 #endif
-			HtmlAttribute att = _currentnode.Attributes[localName];
+			HtmlAttribute att = _currentnode.HasAttributes ? _currentnode.Attributes[localName] : null;
 			if (att == null)
 			{
 #if TRACE_NAVIGATOR
