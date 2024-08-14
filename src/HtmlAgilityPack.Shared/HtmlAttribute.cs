@@ -213,7 +213,9 @@ namespace HtmlAgilityPack
                 _value = value;
                 if (!string.IsNullOrEmpty(_value) && this.QuoteType == AttributeValueQuote.WithoutValue)
                 {
-                    this.InternalQuoteType = this.OwnerDocument.GlobalAttributeValueQuote ?? AttributeValueQuote.DoubleQuote;
+                    this.InternalQuoteType = this.OwnerDocument.GlobalAttributeValueQuote != AttributeValueQuote.Initial ?
+                        (this.OwnerDocument.GlobalAttributeValueQuote ?? AttributeValueQuote.DoubleQuote)
+                        : AttributeValueQuote.DoubleQuote;
                 }
 
                 if (_ownernode != null)
