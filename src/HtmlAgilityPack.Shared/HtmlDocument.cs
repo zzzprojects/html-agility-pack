@@ -1956,19 +1956,19 @@ namespace HtmlAgilityPack
                     isExplicitEnd = nodeName == "table";
                     break;
                 case "tr":
-                    isExplicitEnd = nodeName == "tr" || nodeName == "tbody";
+                    isExplicitEnd = nodeName == "tr" || nodeName == "thead" || nodeName == "tbody" || nodeName == "tfoot";
                     break;
                 case "thead":
-                    isExplicitEnd = nodeName == "tbody";
+                    isExplicitEnd = nodeName == "tbody" || nodeName == "tfoot";
                     break;
                 case "tbody":
-                    isExplicitEnd = nodeName == "tbody";
+                    isExplicitEnd = nodeName == "tbody" || nodeName == "tfoot";
                     break;
                 case "td":
-                    isExplicitEnd = nodeName == "td" || nodeName == "th" || nodeName == "tr" || nodeName == "tbody";
+                    isExplicitEnd = nodeName == "td" || nodeName == "th" || nodeName == "tr" || nodeName == "tbody" || nodeName == "tfoot";
                     break;
                 case "th":
-                    isExplicitEnd = nodeName == "td" || nodeName == "th" || nodeName == "tr" || nodeName == "tbody";
+                    isExplicitEnd = nodeName == "td" || nodeName == "th" || nodeName == "tr" || nodeName == "tbody" || nodeName == "tfoot";
                     break;
                 case "h1":
                     isExplicitEnd = nodeName == "h2" || nodeName == "h3" || nodeName == "h4" || nodeName == "h5";
