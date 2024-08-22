@@ -2337,6 +2337,8 @@ namespace HtmlAgilityPack
 			SetChanged();
 		}
 
+		private static readonly char[] optimizeAttributesCheckedChars = new char[] { (char) 10, (char) 13, (char) 9, ' ' };
+
 		internal void WriteAttribute(TextWriter outText, HtmlAttribute att)
 		{
 			if (att.Value == null)
@@ -2364,11 +2366,17 @@ namespace HtmlAgilityPack
 
 				if (!isWithoutValue)
                 { 
-					outText.Write(" " + name + "=" + quote + HtmlDocument.HtmlEncodeWithCompatibility(att.XmlValue, _ownerdocument.BackwardCompatibility) + quote);
+					outText.Write(" ");
+					outText.Write(name);
+					outText.Write("=");
+					outText.Write(quote);
+					outText.Write(HtmlDocument.HtmlEncodeWithCompatibility(att.XmlValue, _ownerdocument.BackwardCompatibility));
+					outText.Write(quote);
 				}
 				else
                 { 
-					outText.Write(" " + name);
+					outText.Write(" ");
+					outText.Write(name);
 				}
 			}
 			else
@@ -2381,7 +2389,8 @@ namespace HtmlAgilityPack
 					if ((att.Name[0] == '<') && (att.Name[1] == '%') &&
 						(att.Name[att.Name.Length - 1] == '>') && (att.Name[att.Name.Length - 2] == '%'))
 					{
-						outText.Write(" " + name);
+						outText.Write(" ");
+						outText.Write(name);
 						return;
 					}
 				}
@@ -2391,18 +2400,39 @@ namespace HtmlAgilityPack
 					var value = quoteType == AttributeValueQuote.DoubleQuote ? !att.Value.StartsWith("@") ? att.Value.Replace("\"", "&quot;") :
 				   att.Value : quoteType == AttributeValueQuote.SingleQuote ?  att.Value.Replace("'", "&#39;") : att.Value;
 					if (_ownerdocument.OptionOutputOptimizeAttributeValues)
-						if (att.Value.IndexOfAny(new char[] {(char) 10, (char) 13, (char) 9, ' '}) < 0)
-							outText.Write(" " + name + "=" + att.Value);
+					{
+						if (att.Value.IndexOfAny(optimizeAttributesCheckedChars) < 0)
+						{
+							outText.Write(" ");
+							outText.Write(name);
+							outText.Write("=");
+							outText.Write(att.Value);
+						}
 						else
-							outText.Write(" " + name + "=" + quote + value + quote);
+						{
+							outText.Write(" ");
+							outText.Write(name);
+							outText.Write("=");
+							outText.Write(quote);
+							outText.Write(value);
+							outText.Write(quote);
+						}
+					}
 					else
-						outText.Write(" " + name + "=" + quote + value + quote);
+					{
+						outText.Write(" ");
+						outText.Write(name);
+						outText.Write("=");
+						outText.Write(quote);
+						outText.Write(value);
+						outText.Write(quote);
+					}
 				}
 				else
                 {
-					outText.Write(" " + name);
+					outText.Write(" ");
+					outText.Write(name);
 				}
-
 			}
 		}
 
