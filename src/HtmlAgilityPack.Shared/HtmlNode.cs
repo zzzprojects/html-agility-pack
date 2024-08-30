@@ -2073,7 +2073,16 @@ namespace HtmlAgilityPack
 						if (IsEmptyElement(Name))
 						{
 							if ((_ownerdocument.OptionWriteEmptyNodes) || (_ownerdocument.OptionOutputAsXml))
-								outText.Write(" />");
+							{
+								if(_ownerdocument.OptionWriteEmptyNodesWithoutSpace)
+								{
+                                    outText.Write("/>");
+                                }
+								else
+								{
+                                    outText.Write(" />");
+                                }                     
+                            }
 							else
 							{
 								if (Name.Length > 0 && Name[0] == '?')

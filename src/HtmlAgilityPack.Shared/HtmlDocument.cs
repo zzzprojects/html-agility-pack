@@ -210,11 +210,16 @@ namespace HtmlAgilityPack
         /// </summary>
         public bool OptionWriteEmptyNodes;
 
-	    /// <summary>
-	    /// The max number of nested child nodes. 
-	    /// Added to prevent stackoverflow problem when a page has tens of thousands of opening html tags with no closing tags 
-	    /// </summary>
-	    public int OptionMaxNestedChildNodes = 0;
+        /// <summary>
+        /// Defines if empty nodes must be written without the additional space. Default is false.
+        /// </summary>
+        public bool OptionWriteEmptyNodesWithoutSpace;
+
+        /// <summary>
+        /// The max number of nested child nodes. 
+        /// Added to prevent stackoverflow problem when a page has tens of thousands of opening html tags with no closing tags 
+        /// </summary>
+        public int OptionMaxNestedChildNodes = 0;
 
 
 		#endregion
