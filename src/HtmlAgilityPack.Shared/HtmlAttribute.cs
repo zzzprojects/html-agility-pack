@@ -211,7 +211,7 @@ namespace HtmlAgilityPack
             set
             {
                 _value = value;
-                if (!string.IsNullOrEmpty(_value) && this.QuoteType == AttributeValueQuote.WithoutValue)
+                if (!string.IsNullOrEmpty(_value) && (this.QuoteType == AttributeValueQuote.WithoutValue || this.QuoteType == AttributeValueQuote.None))
                 {
                     this.InternalQuoteType = this.OwnerDocument.GlobalAttributeValueQuote != AttributeValueQuote.Initial ?
                         (this.OwnerDocument.GlobalAttributeValueQuote ?? AttributeValueQuote.DoubleQuote)
