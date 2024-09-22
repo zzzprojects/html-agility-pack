@@ -2367,20 +2367,31 @@ namespace HtmlAgilityPack
 			string quote = quoteType == AttributeValueQuote.DoubleQuote ? "\"" : quoteType == AttributeValueQuote.SingleQuote ? "'" : "";
             if (_ownerdocument.OptionOutputAsXml)
 			{
+				if(quoteType != AttributeValueQuote.DoubleQuote && quoteType != AttributeValueQuote.SingleQuote)
+				{
+					// We force a double quote if none has been provided (unless global attribute is single quote)
+					quote = OwnerDocument.GlobalAttributeValueQuote == AttributeValueQuote.SingleQuote ? "'" : "\"";
+                }
+
 				name = _ownerdocument.OptionOutputUpperCase ? att.XmlName.ToUpperInvariant(): att.XmlName;
 				if (_ownerdocument.OptionOutputOriginalCase)
 					name = att.OriginalName;
 
-				if (!isWithoutValue)
-                { 
-					outText.Write(" " + name + "=" + quote + HtmlDocument.HtmlEncodeWithCompatibility(att.XmlValue, _ownerdocument.BackwardCompatibility) + quote);
-				}
-				else
-                { 
-					outText.Write(" " + name);
-				}
-			}
-			else
+                outText.Write(" " + name + "=" + quote + HtmlDocument.HtmlEncodeWithCompatibility(att.XmlValue, _ownerdocument.BackwardCompatibility) + quote);
+                // There is a major breaking change started with changes in https://github.com/zzzprojects/html-agility-pack/releases/tag/v1.11.62
+				// Before, the attribute had a default "DoubleQuote" but that's no longer the case
+				// At this moment, the easiest way to fix it is assuming we always need to close an attribute in xml
+				// However, even this fix cause a breaking change as we cannot longer output without a quote
+                //if (!isWithoutValue)
+                //{
+                //    outText.Write(" " + name + "=" + quote + HtmlDocument.HtmlEncodeWithCompatibility(att.XmlValue, _ownerdocument.BackwardCompatibility) + quote);
+                //}
+                //else
+                //{
+                //    outText.Write(" " + name);
+                //}
+            }
+            else
 			{
 				name = _ownerdocument.OptionOutputUpperCase ? att.Name.ToUpperInvariant() : att.Name;
 				if (_ownerdocument.OptionOutputOriginalCase)
