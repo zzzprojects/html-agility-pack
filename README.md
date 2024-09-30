@@ -1,6 +1,6 @@
-## Library Powered By
+## Library Sponsored By
 
-This library is powered by [Entity Framework Extensions](https://entityframework-extensions.net/?z=github&y=entityframework-plus)
+This library is sponsored by [Entity Framework Extensions](https://entityframework-extensions.net/?z=github&y=entityframework-plus)
 
 <a href="https://entityframework-extensions.net/?z=github&y=entityframework-plus">
 <kbd>
