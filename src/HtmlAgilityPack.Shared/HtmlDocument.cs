@@ -119,8 +119,8 @@ namespace HtmlAgilityPack
         /// </summary>
         public bool OptionEmptyCollection = false;
 
-        /// <summary>True of the whole &lt;![CDATA[ block should be threated as a single comment.</summary>
-        public bool OptionThreatCDataBlockAsComment;
+        /// <summary>True of the whole &lt;![CDATA[ block should be treated as a single comment.</summary>
+        public bool OptionTreatCDataBlockAsComment;
 
         /// <summary>True to disable, false to enable the server side code.</summary>
         public bool DisableServerSideCode = false;
@@ -1297,7 +1297,7 @@ namespace HtmlAgilityPack
             {
 	            if (Text[_index] == '!' || Text[_index] == '?')
                 {
-                    if (OptionThreatCDataBlockAsComment && Text.Substring(_index).StartsWith("![CDATA[", StringComparison.OrdinalIgnoreCase))
+                    if (OptionTreatCDataBlockAsComment && Text.Substring(_index).StartsWith("![CDATA[", StringComparison.OrdinalIgnoreCase))
                     {
                         PushNodeStart(HtmlNodeType.Comment, _index - 1, _lineposition - 1);
                         PushNodeNameStart(true, _index);
