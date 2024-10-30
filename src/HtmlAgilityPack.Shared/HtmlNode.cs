@@ -1524,36 +1524,36 @@ namespace HtmlAgilityPack
 		/// <param name="def">The default value to return if not found.</param>
 		/// <param name="parser">The parser used to convert string attribute value to T.</param>
 		/// <returns>The value of the attribute if found and parsable, the default value otherwise.</returns>
-		public T GetAttributeValue<T>(string name, T def, AttributeValueParser<T> parser) 
-        {
-        	if (name == null)
-        	{
-        		throw new ArgumentNullException(nameof(name));
-        	}
+		public T GetAttributeValue<T>(string name, T def, AttributeValueParser<T> parser)
+		{
+			if (name == null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
 
-        	if (!HasAttributes)
-        	{
-        		return def;
-        	}
+			if (!HasAttributes)
+			{
+				return def;
+			}
 
-        	HtmlAttribute att = Attributes[name];
-        	if (att?.Value == null)
-        	{
-        		return def;
-        	}
+			HtmlAttribute att = Attributes[name];
+			if (att?.Value == null)
+			{
+				return def;
+			}
 
-	        if (att.Value is T value)
-	        {
-		        return value;
-	        }
+			if (att.Value is T value)
+			{
+				return value;
+			}
 
-	        if (parser != null && parser(att.Value, out T parsedValue))
-	        {
-		        return parsedValue;
-	        }
+			if (parser != null && parser(att.Value, out T parsedValue))
+			{
+				return parsedValue;
+			}
 
-	        return def;
-        }
+			return def;
+		}
 #endif
 
 		/// <summary>
