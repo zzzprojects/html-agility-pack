@@ -1481,7 +1481,6 @@ namespace HtmlAgilityPack
 		/// <param name="name">The name of the attribute to get. May not be <c>null</c>.</param>
 		/// <param name="def">The default value to return if not found.</param>
 		/// <returns>The value of the attribute if found, the default value if not found.</returns>
-		[Obsolete("Use GetAttributeValue with an explicit custom parser for AOT compatibility")]
 		public T GetAttributeValue<T>(string name, T def) 
 		{
 			if (name == null)
