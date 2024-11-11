@@ -224,6 +224,11 @@ namespace HtmlAgilityPack
         /// </summary>
         public int OptionMaxNestedChildNodes = 0;
 
+        /// <summary>
+        /// Enable to create a "new line" for tag such as "br"
+        /// </summary>
+        public bool OptionEnableBreakLineForInnerText;
+
 
 		#endregion
 

@@ -421,6 +421,12 @@ namespace HtmlAgilityPack
                 return;
             }
 
+            if (_ownerdocument.OptionEnableBreakLineForInnerText && Name == "br")
+            {
+                sb.AppendLine();
+                return;
+            }
+
             if (_nodetype == HtmlNodeType.Text)
             {
                 sb.Append(((HtmlTextNode) this).Text);
