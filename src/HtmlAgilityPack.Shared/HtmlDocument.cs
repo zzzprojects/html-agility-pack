@@ -1867,7 +1867,7 @@ namespace HtmlAgilityPack
             _currentattribute.Line = _line;
             _currentattribute._lineposition = lineposition;
             _currentattribute._streamposition = index;
-            _currentattribute.InternalQuoteType = AttributeValueQuote.WithoutValue;
+            //_currentattribute.InternalQuoteType = AttributeValueQuote.WithoutValue;
         }
 
         private void PushAttributeValueEnd(int index)
