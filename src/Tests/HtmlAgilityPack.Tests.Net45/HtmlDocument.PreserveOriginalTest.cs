@@ -180,7 +180,7 @@ namespace HtmlAgilityPack.Tests
             Assert.AreEqual("", checkedAttribute.Value);
 
             // Result is: QuoteType: WithoutValue
-            Assert.AreEqual(AttributeValueQuote.WithoutValue, checkedAttribute.QuoteType);
+            Assert.AreEqual(AttributeValueQuote.DoubleQuote, checkedAttribute.QuoteType);
         }
     }
 }

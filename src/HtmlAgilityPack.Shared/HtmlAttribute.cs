@@ -35,7 +35,7 @@ namespace HtmlAgilityPack
         internal int _streamposition;
         internal string _value;
         internal int _valuelength;
-        internal int _valuestartindex; 
+        internal int _valuestartindex;
         private bool? _localUseOriginalName;
 
         #endregion
@@ -92,11 +92,11 @@ namespace HtmlAgilityPack
             {
                 var useOriginalName = false;
                 if (this._localUseOriginalName.HasValue)
-				{
+                {
                     useOriginalName = this._localUseOriginalName.Value;
                 }
                 else if (this.OwnerDocument != null)
-				{
+                {
                     useOriginalName = this.OwnerDocument.OptionDefaultUseOriginalName;
                 }
 
@@ -105,7 +105,7 @@ namespace HtmlAgilityPack
             set
             {
                 this._localUseOriginalName = value;
-            }
+        }
         }
 
         /// <summary>
@@ -120,8 +120,8 @@ namespace HtmlAgilityPack
                     _name = _ownerdocument.Text.Substring(_namestartindex, _namelength);
                 }
 
-	            return UseOriginalName ? _name : _name.ToLowerInvariant();
-			}
+                return UseOriginalName ? _name : _name.ToLowerInvariant();
+            }
             set
             {
                 if (value == null)
@@ -211,7 +211,7 @@ namespace HtmlAgilityPack
             set
             {
                 _value = value;
-                if (!string.IsNullOrEmpty(_value) && (this.QuoteType == AttributeValueQuote.WithoutValue || this.QuoteType == AttributeValueQuote.None))
+                if (!string.IsNullOrEmpty(_value) && this.QuoteType == AttributeValueQuote.None)
                 {
                     this.InternalQuoteType = this.OwnerDocument.GlobalAttributeValueQuote != AttributeValueQuote.Initial ?
                         (this.OwnerDocument.GlobalAttributeValueQuote ?? AttributeValueQuote.DoubleQuote)
@@ -347,10 +347,6 @@ namespace HtmlAgilityPack
         /// No quote mark
         /// </summary>
         None,
-
-
-        /// <summary>Without the value such as '&lt;span readonly&gt;'</summary>
-        WithoutValue,
 
         /// <summary>
         /// The initial value (current value)

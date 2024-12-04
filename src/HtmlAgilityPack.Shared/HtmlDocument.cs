@@ -176,6 +176,9 @@ namespace HtmlAgilityPack
         /// <summary>Defines the global attribute value quote. When specified, it will always win.</summary>
         public AttributeValueQuote? GlobalAttributeValueQuote;
 
+        /// <summary>Without the value such as '&lt;span readonly&gt;'</summary>
+        public bool AttributeWithoutValue;
+
         /// <summary>
         /// Defines if name must be output with it's original case. Useful for asp.net tags and attributes. Default is false.
         /// </summary>
@@ -1867,7 +1870,6 @@ namespace HtmlAgilityPack
             _currentattribute.Line = _line;
             _currentattribute._lineposition = lineposition;
             _currentattribute._streamposition = index;
-            _currentattribute.InternalQuoteType = AttributeValueQuote.WithoutValue;
         }
 
         private void PushAttributeValueEnd(int index)
