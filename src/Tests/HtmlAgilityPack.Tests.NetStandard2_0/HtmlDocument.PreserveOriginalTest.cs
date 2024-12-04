@@ -15,6 +15,7 @@ namespace HtmlAgilityPack.Tests.NetStandard2_0
             d.OptionEmptyCollection = true;
 
             d.GlobalAttributeValueQuote = AttributeValueQuote.Initial;
+            d.AttributeWithoutValue = true;
 
             d.OptionDefaultUseOriginalName = true;
             //d.OptionPreserveEmptyAttributes = true;
@@ -66,6 +67,7 @@ namespace HtmlAgilityPack.Tests.NetStandard2_0
             d.OptionEmptyCollection = true;
 
             d.GlobalAttributeValueQuote = AttributeValueQuote.Initial;
+            d.AttributeWithoutValue = true;
 
             d.OptionDefaultUseOriginalName = true;
             //d.OptionPreserveEmptyAttributes = true;
@@ -118,6 +120,7 @@ namespace HtmlAgilityPack.Tests.NetStandard2_0
             d.OptionEmptyCollection = true;
 
             d.GlobalAttributeValueQuote = AttributeValueQuote.Initial;
+            d.AttributeWithoutValue = true;
             d.OptionDefaultUseOriginalName = true;
 
             var filePath = Path.Combine(contentDirectory, "attr_quote.html");
@@ -144,23 +147,46 @@ namespace HtmlAgilityPack.Tests.NetStandard2_0
             Assert.Equal(expectedOuterNode, clone.OuterHtml);
 
         }
-
-
+        
         [Fact]
         public void PreserveClonedEmptyAttributesTest()
         {
             var d = new HtmlDocument();
             d.GlobalAttributeValueQuote = AttributeValueQuote.Initial;
             d.OptionDefaultUseOriginalName = true;
+            d.AttributeWithoutValue = true;
 
             var html = @"<list-counter formErrorsCounter></list-counter>";
             d.LoadHtml(html);
-
             var cloned = d.DocumentNode.CloneNode(true);
 
             Assert.Equal(@"<list-counter formErrorsCounter></list-counter>", cloned.OuterHtml);
         }
 
+        [Fact]
+        public void PreserveEmptyAttributesWithInitialTest()
+        {
+            var d = new HtmlDocument();
+            d.LoadHtml("<bar ng-app class='message'></bar>");
+
+            var node = d.DocumentNode.SelectSingleNode("//bar");
+            var outer = node.OuterHtml;
+
+            Assert.Equal("<bar ng-app=\"\" class='message'></bar>", outer);
+        }
+
+        [Fact]
+        public void PreserveEmptyAttributes()
+        {
+            var d = new HtmlDocument { GlobalAttributeValueQuote = AttributeValueQuote.Initial };
+            d.LoadHtml("<li ng>Nothing to show</li>");
+
+            var node = d.DocumentNode.SelectSingleNode("//li");
+            var outer = node.OuterHtml;
+
+            Assert.Equal($"<li ng=\"\">Nothing to show</li>", outer);
+        }
+        
         [Fact]
         public void PreserveQuoteTypeForLoadedAttributes()
         {
@@ -171,7 +197,32 @@ namespace HtmlAgilityPack.Tests.NetStandard2_0
             Assert.Equal("", checkedAttribute.Value);
 
             // Result is: QuoteType: WithoutValue
-            Assert.Equal(AttributeValueQuote.WithoutValue, checkedAttribute.QuoteType);
+            Assert.Equal(AttributeValueQuote.DoubleQuote, checkedAttribute.QuoteType);
+        }
+
+        [Fact]
+        public void PreserveQuoteTypeForLoadedAttributes2()
+        {
+            var d = new HtmlDocument { GlobalAttributeValueQuote = AttributeValueQuote.Initial };
+            d.LoadHtml(@"<bar ng-app ng-app2='message'></bar>");
+
+            var node = d.DocumentNode.SelectSingleNode("//bar");
+            var outer = node.OuterHtml;
+
+            Assert.Equal($"<bar ng-app=\"\" ng-app2='message'></bar>", outer);
+        }
+
+        [Fact]
+        public void PreserveQuoteTypeForLoadedAttributes3()
+        {
+            var input = HtmlNode.CreateNode(@"<bar ng-app ng-app2='message'></bar>");
+            var firstAttribute = input.Attributes.First();
+            var secondAttribute = input.Attributes.LastOrDefault();
+
+            Assert.Equal("", firstAttribute.Value);
+            Assert.Equal(AttributeValueQuote.DoubleQuote, firstAttribute.QuoteType);
+            Assert.Equal("message", secondAttribute.Value);
+            Assert.Equal(AttributeValueQuote.SingleQuote, secondAttribute.QuoteType);
         }
     }
 }

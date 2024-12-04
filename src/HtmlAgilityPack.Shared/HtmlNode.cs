@@ -2412,10 +2412,12 @@ namespace HtmlAgilityPack
 				quoteType = att.QuoteType;
 			}
 
-			var isWithoutValue = quoteType == AttributeValueQuote.WithoutValue;
-
             string name;
-			string quote = quoteType == AttributeValueQuote.DoubleQuote ? "\"" : quoteType == AttributeValueQuote.SingleQuote ? "'" : "";
+			var quote = quoteType == AttributeValueQuote.DoubleQuote ? "\"" : quoteType == AttributeValueQuote.SingleQuote ? "'" : "";
+
+            if (quoteType == AttributeValueQuote.Initial && quote == "")
+                quote = "\"";
+            
             if (_ownerdocument.OptionOutputAsXml)
 			{
 				if(quoteType != AttributeValueQuote.DoubleQuote && quoteType != AttributeValueQuote.SingleQuote)
@@ -2457,23 +2459,22 @@ namespace HtmlAgilityPack
 					}
 				}
 
-				if (!isWithoutValue)
-				{
-					var value = quoteType == AttributeValueQuote.DoubleQuote ? !att.Value.StartsWith("@") ? att.Value.Replace("\"", "&quot;") :
-				   att.Value : quoteType == AttributeValueQuote.SingleQuote ?  att.Value.Replace("'", "&#39;") : att.Value;
-					if (_ownerdocument.OptionOutputOptimizeAttributeValues)
-						if (att.Value.IndexOfAny(new char[] {(char) 10, (char) 13, (char) 9, ' '}) < 0)
-							outText.Write(" " + name + "=" + att.Value);
-						else
-							outText.Write(" " + name + "=" + quote + value + quote);
-					else
-						outText.Write(" " + name + "=" + quote + value + quote);
-				}
-				else
+                if (string.IsNullOrEmpty(att.Value) && _ownerdocument.AttributeWithoutValue)
                 {
-					outText.Write(" " + name);
-				}
-
+                    outText.Write(" " + name);
+                }
+                else
+                {
+                    var value = quoteType == AttributeValueQuote.DoubleQuote ? !att.Value.StartsWith("@") ? att.Value.Replace("\"", "&quot;") :
+                        att.Value : quoteType == AttributeValueQuote.SingleQuote ? att.Value.Replace("'", "&#39;") : att.Value;
+                    if (_ownerdocument.OptionOutputOptimizeAttributeValues)
+                        if (att.Value.IndexOfAny(new char[] { (char)10, (char)13, (char)9, ' ' }) < 0)
+                            outText.Write(" " + name + "=" + att.Value);
+                        else
+                            outText.Write(" " + name + "=" + quote + value + quote);
+                    else
+                        outText.Write(" " + name + "=" + quote + value + quote);
+                }
 			}
 		}
 
