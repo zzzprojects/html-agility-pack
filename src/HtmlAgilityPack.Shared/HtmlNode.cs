@@ -1752,7 +1752,7 @@ namespace HtmlAgilityPack
 			}
 		}
 
-        /// <summary>Move a node already associated and append it to this node instead.</summary>
+        /// <summary>Move a node already associated and append it to this node instead (must be from a different document).</summary>
         /// <param name="child">The child node to move.</param>
 		public void MoveChild(HtmlNode child)
 		{
@@ -1771,7 +1771,7 @@ namespace HtmlAgilityPack
 			}
 		}
 
-        /// <summary>Move a children collection already associated and append it to this node instead.</summary>
+        /// <summary>Move a children collection already associated and append it to this node instead (must be from a different document).</summary>
         /// <param name="children">The children collection already associated to move to another node.</param>
 		public void MoveChildren(HtmlNodeCollection children)
 		{
@@ -2411,6 +2411,11 @@ namespace HtmlAgilityPack
 			{
 				quoteType = att.QuoteType;
 			}
+			else if(quoteType == AttributeValueQuote.InitialExceptWithoutValue)
+			{
+                // if the quote doesn't have value, use double quote (https://github.com/zzzprojects/html-agility-pack/issues/575)
+                quoteType = att.QuoteType == AttributeValueQuote.WithoutValue ? AttributeValueQuote.DoubleQuote : att.QuoteType;
+			}
 
 			var isWithoutValue = quoteType == AttributeValueQuote.WithoutValue;
 
@@ -2460,7 +2465,7 @@ namespace HtmlAgilityPack
 				if (!isWithoutValue)
 				{
 					var value = quoteType == AttributeValueQuote.DoubleQuote ? !att.Value.StartsWith("@") ? att.Value.Replace("\"", "&quot;") :
-				   att.Value : quoteType == AttributeValueQuote.SingleQuote ?  att.Value.Replace("'", "&#39;") : att.Value;
+					att.Value : quoteType == AttributeValueQuote.SingleQuote ?  att.Value.Replace("'", "&#39;") : att.Value;
 					if (_ownerdocument.OptionOutputOptimizeAttributeValues)
 						if (att.Value.IndexOfAny(new char[] {(char) 10, (char) 13, (char) 9, ' '}) < 0)
 							outText.Write(" " + name + "=" + att.Value);

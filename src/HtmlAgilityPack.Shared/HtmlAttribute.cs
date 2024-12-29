@@ -355,6 +355,11 @@ namespace HtmlAgilityPack
         /// <summary>
         /// The initial value (current value)
         /// </summary>
-        Initial
+        Initial,
+
+        /// <summary>
+        /// The initial value (current value). However tag without value will have a double quote by default
+        /// </summary>
+        InitialExceptWithoutValue
     }
 }
