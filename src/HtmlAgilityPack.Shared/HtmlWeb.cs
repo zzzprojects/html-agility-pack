@@ -2431,6 +2431,8 @@ namespace HtmlAgilityPack
                 client = GetSharedHttpClient(this.UserAgent);
             }
 
+            client.Timeout = TimeSpan.FromMilliseconds(Timeout);
+
 			var e = await client.GetAsync(uri, cancellationToken).ConfigureAwait(false);
             _statusCode = e.StatusCode;
 
@@ -2442,7 +2444,7 @@ namespace HtmlAgilityPack
                 }
                 else
                 {
-#if !(NETSTANDARD1_3 || NETSTANDARD1_6 || WINDOWS_UWP) 
+#if !(NETSTANDARD1_3 || NETSTANDARD1_6 || WINDOWS_UWP)
                     _responseUri = new Uri(uri.GetLeftPart(UriPartial.Authority) + e.Headers.Location);
 #endif
                 }
