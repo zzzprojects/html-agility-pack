@@ -1306,6 +1306,33 @@ Hello Button: <input type=""button"" value=""ClickMe"" onClick=""var a=&gt;&quot
             Assert.Zero(htmlDoc.ParseErrors.Count());
         }
 
+        [TestCase("<table><caption><colgroup></colgroup></table>", "<table><caption></caption><colgroup></colgroup></table>")]
+        [TestCase("<table><caption><thead></thead></table>", "<table><caption></caption><thead></thead></table>")]
+        [TestCase("<table><caption><tbody></tbody></table>", "<table><caption></caption><tbody></tbody></table>")]
+        [TestCase("<table><caption><tfoot></tfoot></table>", "<table><caption></caption><tfoot></tfoot></table>")]
+        [TestCase("<table><caption><tr></tr></table>", "<table><caption></caption><tr></tr></table>")]
+
+        public void CaptionTagShouldBeClosedIfClosedTagIsMissing(string inputHtml, string expectedHtml)
+        {
+            var doc = new HtmlDocument();
+            doc.LoadHtml(inputHtml);
+
+            Assert.AreEqual(expectedHtml, doc.DocumentNode.OuterHtml);
+        }
+
+        [TestCase("<table><colgroup><thead></thead></table>", "<table><colgroup></colgroup><thead></thead></table>")]
+        [TestCase("<table><colgroup><tbody></tbody></table>", "<table><colgroup></colgroup><tbody></tbody></table>")]
+        [TestCase("<table><colgroup><tfoot></tfoot></table>", "<table><colgroup></colgroup><tfoot></tfoot></table>")]
+        [TestCase("<table><colgroup><tr></tr></table>", "<table><colgroup></colgroup><tr></tr></table>")]
+
+        public void ColgroupTagShouldBeClosedIfClosedTagIsMissing(string inputHtml, string expectedHtml)
+        {
+            var doc = new HtmlDocument();
+            doc.LoadHtml(inputHtml);
+
+            Assert.AreEqual(expectedHtml, doc.DocumentNode.OuterHtml);
+        }
+
         [HasXPath]
         public class StackOverflowPage
         {

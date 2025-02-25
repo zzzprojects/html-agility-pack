@@ -2011,6 +2011,12 @@ namespace HtmlAgilityPack
                 case "tbody":
                     isExplicitEnd = nodeName == "tbody" || nodeName == "tfoot";
                     break;
+                case "caption":
+                    isExplicitEnd = nodeName == "tr" || nodeName == "thead" || nodeName == "tbody" || nodeName == "tfoot" || nodeName == "colgroup";
+                    break;
+                case "colgroup":
+                    isExplicitEnd = nodeName == "tr" || nodeName == "thead" || nodeName == "tbody" || nodeName == "tfoot";
+                    break;
                 case "td":
                     isExplicitEnd = nodeName == "td" || nodeName == "th" || nodeName == "tr" || nodeName == "tbody" || nodeName == "tfoot";
                     break;
