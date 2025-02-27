@@ -124,12 +124,13 @@ namespace HtmlAgilityPack
         internal static ConcurrentDictionary<string, HttpClient> SharedHttpClient = new ConcurrentDictionary<string, HttpClient>();
 
 
-        internal static HttpClient GetSharedHttpClient(string userAgent)
+        internal static HttpClient GetSharedHttpClient(HtmlWeb web)
         {
-            return SharedHttpClient.GetOrAdd(userAgent, x =>
+            return SharedHttpClient.GetOrAdd(web.UserAgent, x =>
             {
                 var client = new HttpClient();
-                client.DefaultRequestHeaders.Add("User-Agent", userAgent);
+                client.Timeout = TimeSpan.FromMilliseconds(web.Timeout);
+                client.DefaultRequestHeaders.Add("User-Agent", web.UserAgent);
                 return client;
             });
         }
@@ -2422,16 +2423,16 @@ namespace HtmlAgilityPack
             if(credentials != null || CaptureRedirect)
             {
                 client = new HttpClient(clientHandler);
-
+                client.Timeout = TimeSpan.FromMilliseconds(Timeout);
                 //https://stackoverflow.com/questions/44076962/how-do-i-set-a-default-user-agent-on-an-httpclient
                 client.DefaultRequestHeaders.Add("User-Agent", this.UserAgent);
             }
             else
             {
-                client = GetSharedHttpClient(this.UserAgent);
+                client = GetSharedHttpClient(this);
             }
 
-            client.Timeout = TimeSpan.FromMilliseconds(Timeout);
+    
 
 			var e = await client.GetAsync(uri, cancellationToken).ConfigureAwait(false);
             _statusCode = e.StatusCode;
