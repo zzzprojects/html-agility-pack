@@ -68,7 +68,13 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="nodeName"></param>
         /// <returns></returns>
-        public HtmlNode this[string nodeName]
+        public
+#if NET8_0
+        HtmlNode?
+#else
+        HtmlNode
+#endif
+        this[string nodeName]
         {
             get
             {
@@ -296,7 +302,13 @@ namespace HtmlAgilityPack
         /// <param name="items"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static HtmlNode FindFirst(HtmlNodeCollection items, string name)
+        public static
+#if NET8_0
+        HtmlNode?
+#else
+        HtmlNode
+#endif
+        FindFirst(HtmlNodeCollection items, string name)
         {
             foreach (HtmlNode node in items)
             {

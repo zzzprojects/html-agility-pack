@@ -591,7 +591,13 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="text">The source text.</param>
         /// <returns>The result text.</returns>
-        public static string DeEntitize(string text)
+        public static
+#if NET8_0
+        string?
+#else
+        string
+#endif
+        DeEntitize(string text)
         {
             if (text == null)
                 return null;
@@ -770,7 +776,13 @@ namespace HtmlAgilityPack
         /// <param name="useNames">If set to false, the function will not use known entities name. Default is true.</param>
         /// <param name="entitizeQuotAmpAndLtGt">If set to true, the [quote], [ampersand], [lower than] and [greather than] characters will be entitized.</param>
         /// <returns>The result text</returns>
-        public static string Entitize(string text, bool useNames, bool entitizeQuotAmpAndLtGt)
+        public static
+#if NET8_0
+        string?
+#else
+        string
+#endif
+        Entitize(string text, bool useNames, bool entitizeQuotAmpAndLtGt)
 //        _entityValue.Add("quot", 34);    // quotation mark = APL quote, U+0022 ISOnum 
 //        _entityName.Add(34, "quot");
 //        _entityValue.Add("amp", 38);    // ampersand, U+0026 ISOnum 

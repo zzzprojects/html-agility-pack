@@ -1307,7 +1307,13 @@ namespace HtmlAgilityPack
 		/// </summary>
 		/// <param name="name"></param>
 		/// <returns></returns>
-		public HtmlNode Element(string name)
+		public
+#if NET8_0
+        HtmlNode?
+#else
+        HtmlNode
+#endif
+        Element(string name)
 		{
 			foreach (HtmlNode node in ChildNodes)
 				if (node.Name == name)

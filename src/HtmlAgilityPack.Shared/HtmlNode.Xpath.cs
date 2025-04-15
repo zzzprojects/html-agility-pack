@@ -37,7 +37,13 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="xpath">The XPath expression.</param>
         /// <returns>An <see cref="HtmlNodeCollection"/> containing a collection of nodes matching the <see cref="XPath"/> query, or <c>null</c> if no node matched the XPath expression.</returns>
-        public HtmlNodeCollection SelectNodes(string xpath)
+        public
+#if NET8_0
+        HtmlNodeCollection?
+#else
+        HtmlNodeCollection
+#endif
+        SelectNodes(string xpath)
         {
             HtmlNodeCollection list = new HtmlNodeCollection(null);
 
@@ -62,7 +68,13 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="xpath">The XPath expression.</param>
         /// <returns>An <see cref="HtmlNodeCollection"/> containing a collection of nodes matching the <see cref="XPath"/> query, or <c>null</c> if no node matched the XPath expression.</returns>
-        public HtmlNodeCollection SelectNodes(XPathExpression xpath)
+        public
+#if NET8_0
+        HtmlNodeCollection?
+#else
+        HtmlNodeCollection
+#endif
+        SelectNodes(XPathExpression xpath)
         { 
             HtmlNodeCollection list = new HtmlNodeCollection(null);
 
@@ -87,7 +99,13 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="xpath">The XPath expression. May not be null.</param>
         /// <returns>The first <see cref="HtmlNode"/> that matches the XPath query or a null reference if no matching node was found.</returns>
-        public HtmlNode SelectSingleNode(string xpath)
+        public
+#if NET8_0
+        HtmlNode?
+#else
+        HtmlNode
+#endif
+        SelectSingleNode(string xpath)
         {
             if (xpath == null)
             {
@@ -110,7 +128,13 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="xpath">The XPath expression.</param>
         /// <returns>An <see cref="HtmlNodeCollection"/> containing a collection of nodes matching the <see cref="XPath"/> query, or <c>null</c> if no node matched the XPath expression.</returns>
-        public HtmlNode SelectSingleNode(XPathExpression xpath)
+        public
+#if NET8_0
+        HtmlNode?
+#else
+        HtmlNode
+#endif
+        SelectSingleNode(XPathExpression xpath)
         {
             if (xpath == null)
             {
