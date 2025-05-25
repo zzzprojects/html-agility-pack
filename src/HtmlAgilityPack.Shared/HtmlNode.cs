@@ -541,7 +541,13 @@ namespace HtmlAgilityPack
 		/// <summary>
 		/// Gets the last child of the node.
 		/// </summary>
-		public HtmlNode LastChild
+		public
+#if NET8_0
+			HtmlNode?
+#else
+            HtmlNode
+#endif
+			LastChild
 		{
 			get { return !HasChildNodes ? null : _childnodes[_childnodes.Count - 1]; }
 		}
@@ -743,7 +749,7 @@ namespace HtmlAgilityPack
 		/// </summary>
 		public int Depth { get; set; }
 
-		#endregion
+#endregion
 
 		#region Public Methods
 
