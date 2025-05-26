@@ -9,7 +9,7 @@ using System.Xml;
 
 namespace HtmlAgilityPack
 {
-    internal class HtmlNameTable : XmlNameTable
+    internal sealed class HtmlNameTable : XmlNameTable
     {
         #region Fields
 

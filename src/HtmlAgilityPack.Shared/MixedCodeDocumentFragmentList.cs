@@ -21,7 +21,7 @@ namespace HtmlAgilityPack
         #region Fields
 
         private MixedCodeDocument _doc;
-        private IList<MixedCodeDocumentFragment> _items = new List<MixedCodeDocumentFragment>();
+        private List<MixedCodeDocumentFragment> _items = new List<MixedCodeDocumentFragment>();
 
         #endregion
 
