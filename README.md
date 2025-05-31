@@ -1,37 +1,27 @@
-## Library Sponsored By
+# Html Agility Pack
 
-This library is sponsored by [Entity Framework Extensions](https://entityframework-extensions.net/)
+Html Agility Pack (HAP) It is an agile HTML parser that builds a read/write DOM and supports plain XPATH or XSLT (No need to understand XPATH nor XSLT to use it, don't worry...). It is a .NET code library that allows you to parse "out of the web" HTML files. The parser is very tolerant of "real world" malformed HTML. The object model is very similar to what proposes System.Xml, but for HTML documents (or streams).
 
-<a href="https://entityframework-extensions.net/">
-<kbd>
-<img src="https://zzzprojects.github.io/images/logo/entityframework-extensions-pub.jpg" alt="Entity Framework Extensions" />
-</kbd>
-</a>
+Read more on our [Website](https://html-agility-pack.net/).
 
----
+## Downloads
 
-# What's Html Agility Pack (HAP)?
-It is an agile HTML parser that builds a read/write DOM and supports plain XPATH or XSLT (No need to understand XPATH nor XSLT to use it, don't worry...). It is a .NET code library that allows you to parse "out of the web" HTML files. The parser is very tolerant of "real world" malformed HTML. The object model is very similar to what proposes System.Xml, but for HTML documents (or streams).
+[![nuget](https://img.shields.io/nuget/v/HtmlAgilityPack?logo=nuget&style=flat-square)](https://www.nuget.org/packages/HtmlAgilityPack)
+[![nuget](https://img.shields.io/nuget/dt/HtmlAgilityPack?logo=nuget&style=flat-square)](https://www.nuget.org/packages/HtmlAgilityPack)
 
-NuGet: https://www.nuget.org/packages/HtmlAgilityPack/
+```
+PM> Install-Package HtmlAgilityPack
+```
 
-## Useful links
+## Sponsors
 
-- [Website](https://html-agility-pack.net/)
-- [Documentation](https://html-agility-pack.net/documentation)
-- [Online Examples](https://html-agility-pack.net/online-examples) 
-- You can also consult thousands of HAP questions on [Stack Overflow](https://stackoverflow.com/questions/tagged/html-agility-pack)
+ZZZ Projects owns and maintains **Html Agility Pack** as part of our [mission](https://zzzprojects.com/mission) to add value to the .NET community
 
-## Contribute
+Through [Entity Framework Extensions](https://entityframework-extensions.net/?utm_source=zzzprojects&utm_medium=htmlagilitypack) and [Dapper Plus](https://dapper-plus.net/?utm_source=zzzprojects&utm_medium=htmlagilitypack), we actively sponsor and help key open-source libraries grow.
 
-The best way to contribute is by **spreading the word** about the library:
+[![Entity Framework Extensions](https://raw.githubusercontent.com/zzzprojects/EntityFramework-Plus/master/entity-framework-extensions-sponsor.png)](https://entityframework-extensions.net/bulk-insert?utm_source=zzzprojects&utm_medium=htmlagilitypack)
 
- - Blog it
- - Comment it
- - Star it
- - Share it
- 
-A **HUGE THANKS** for your help.
+[![Dapper Plus](https://raw.githubusercontent.com/zzzprojects/EntityFramework-Plus/master/dapper-plus-sponsor.png)](https://dapper-plus.net/bulk-insert?utm_source=zzzprojects&utm_medium=htmlagilitypack)
 
 ## More Projects
 
