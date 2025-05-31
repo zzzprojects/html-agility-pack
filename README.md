@@ -10,7 +10,11 @@ Read more on our [Website](https://html-agility-pack.net/).
 [![nuget](https://img.shields.io/nuget/dt/HtmlAgilityPack?logo=nuget&style=flat-square)](https://www.nuget.org/packages/HtmlAgilityPack)
 
 ```
-PM> Install-Package HtmlAgilityPack
+PM> NuGet\Install-Package HtmlAgilityPack
+```
+
+```
+PM> dotnet add package HtmlAgilityPack
 ```
 
 ## Sponsors
