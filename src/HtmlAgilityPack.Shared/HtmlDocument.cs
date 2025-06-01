@@ -694,7 +694,9 @@ namespace HtmlAgilityPack
                 throw new Exception(HtmlExceptionUseIdAttributeFalse);
             }
 
-            return Nodesid.ContainsKey(id) ? Nodesid[id] : null;
+            return Nodesid.TryGetValue(id, out HtmlNode value)
+                ? value
+                : null;
         }
 
         /// <summary>
