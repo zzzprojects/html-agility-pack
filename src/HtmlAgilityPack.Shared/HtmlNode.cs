@@ -276,7 +276,7 @@ namespace HtmlAgilityPack
 		/// <summary>
 		/// Gets a value indicating whether this node has any child nodes.
 		/// </summary>
-        [MemberNotNullWhen(true, nameof(_childnodes))]
+        [MemberNotNullWhen(true, nameof(_childnodes), nameof(FirstChild), nameof(LastChild))]
 		public bool HasChildNodes
 		{
 			get
@@ -291,6 +291,8 @@ namespace HtmlAgilityPack
 					return false;
 				}
 
+				Debug.Assert(FirstChild != null);
+				Debug.Assert(LastChild != null);
 				return true;
 			}
 		}
@@ -298,7 +300,7 @@ namespace HtmlAgilityPack
         /// <summary>
         /// Gets a value indicating whether the current node has any attributes on the closing tag.
         /// </summary>
-        [MemberNotNullWhen(true, nameof(_endnode))]
+        [MemberNotNullWhen(true, nameof(_endnode), nameof(EndNode))]
         public bool HasClosingAttributes
 		{
 			get
@@ -318,6 +320,7 @@ namespace HtmlAgilityPack
 					return false;
 				}
 
+				Debug.Assert(EndNode != null);
 				return true;
 			}
 		}
