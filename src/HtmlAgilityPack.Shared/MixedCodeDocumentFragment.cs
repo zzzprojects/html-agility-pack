@@ -16,7 +16,7 @@ namespace HtmlAgilityPack
         #region Fields
 
         internal MixedCodeDocument Doc;
-        private string _fragmentText;
+        private string? _fragmentText;
         internal int Index;
         internal int Length;
         private int _line;

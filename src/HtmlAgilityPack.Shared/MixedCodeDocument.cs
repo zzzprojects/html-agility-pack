@@ -21,14 +21,14 @@ namespace HtmlAgilityPack
 
         private int _c;
         internal MixedCodeDocumentFragmentList _codefragments;
-        private MixedCodeDocumentFragment _currentfragment;
+        private MixedCodeDocumentFragment _currentfragment = null!; // initialized in parse
         internal MixedCodeDocumentFragmentList _fragments;
         private int _index;
         private int _line;
         private int _lineposition;
         private ParseState _state;
-        private Encoding _streamencoding;
-        internal string _text;
+        private Encoding? _streamencoding;
+        internal string _text = null!; // initialized on load
         internal MixedCodeDocumentFragmentList _textfragments;
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace HtmlAgilityPack
         /// <summary>
         /// Gets the encoding of the stream used to read the document.
         /// </summary>
-        public Encoding StreamEncoding
+        public Encoding? StreamEncoding
         {
             get { return _streamencoding; }
         }
@@ -288,7 +288,7 @@ namespace HtmlAgilityPack
             _textfragments.Clear();
 
             // all pseudo constructors get down to this one
-            using (StreamReader sr = reader as StreamReader)
+            using (StreamReader? sr = reader as StreamReader)
             {
                 if (sr != null)
                 {

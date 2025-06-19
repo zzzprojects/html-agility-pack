@@ -32,9 +32,9 @@ namespace HtmlAgilityPack
         /// <exception cref="FormatException">Why it's thrown.</exception>
         /// <exception cref="Exception">Why it's thrown.</exception>
         /// <exception cref="InvalidNodeReturnTypeException"><see cref="InvalidNodeReturnTypeException"/></exception>
-        public T GetEncapsulatedData<T>()
+        public T? GetEncapsulatedData<T>()
         {
-            return (T)GetEncapsulatedData(typeof(T), null);
+            return (T?)GetEncapsulatedData(typeof(T), null);
         }
 
 
@@ -54,9 +54,9 @@ namespace HtmlAgilityPack
         /// <exception cref="FormatException">Why it's thrown.</exception>
         /// <exception cref="Exception">Why it's thrown.</exception>
         /// <exception cref="InvalidNodeReturnTypeException"><see cref="InvalidNodeReturnTypeException"/></exception>
-        public T GetEncapsulatedData<T>(HtmlDocument htmlDocument)
+        public T? GetEncapsulatedData<T>(HtmlDocument htmlDocument)
         {
-            return (T)GetEncapsulatedData(typeof(T), htmlDocument);
+            return (T?)GetEncapsulatedData(typeof(T), htmlDocument);
         }
 
 
@@ -77,7 +77,7 @@ namespace HtmlAgilityPack
         /// <exception cref="FormatException">Why it's thrown.</exception>
         /// <exception cref="Exception">Why it's thrown.</exception>
         /// <exception cref="InvalidNodeReturnTypeException"><see cref="InvalidNodeReturnTypeException"/></exception>
-        public object GetEncapsulatedData(Type targetType, HtmlDocument htmlDocument = null)
+        public object? GetEncapsulatedData(Type targetType, HtmlDocument? htmlDocument = null)
         {
 
             #region SettingPrerequisite
@@ -100,7 +100,7 @@ namespace HtmlAgilityPack
 
 
 
-            object targetObject;
+            object? targetObject;
 
             if (targetType.IsInstantiable() == false) // if it can not create instanse of T because of lack of constructor in type T.
             {
@@ -131,14 +131,14 @@ namespace HtmlAgilityPack
                     {
                         // Get xpath attribute from valid properties
                         // for .Net old versions:
-                        XPathAttribute xPathAttribute = (propertyInfo.GetCustomAttributes(typeof(XPathAttribute), false) as IList)[0] as XPathAttribute;
+                        XPathAttribute? xPathAttribute = (propertyInfo.GetCustomAttributes(typeof(XPathAttribute), false) as IList)[0] as XPathAttribute;
 
 
                         #region Property_IsNOT_IEnumerable
                         if (propertyInfo.IsIEnumerable() == false) // Property is None-IEnumerable
                         {
 
-                            HtmlNode htmlNode = null;
+                            HtmlNode? htmlNode = null;
 
                             // try to fill htmlNode based on XPath given
                             try
@@ -184,7 +184,7 @@ namespace HtmlAgilityPack
                                         htmlNode,
                                         xPathAttribute.IsNodeReturnTypeExplicitlySet ? xPathAttribute.NodeReturnType : ReturnType.InnerHtml));
 
-                                    object o = GetEncapsulatedData(propertyInfo.PropertyType, innerHtmlDocument);
+                                    object? o = GetEncapsulatedData(propertyInfo.PropertyType, innerHtmlDocument);
 
                                     propertyInfo.SetValue(targetObject, o, null);
                                 }
@@ -195,7 +195,7 @@ namespace HtmlAgilityPack
                                 // AND does not deifned xpath and shouldn't have property that defined xpath.
                                 else
                                 {
-                                    string result = string.Empty;
+                                    string? result;
 
                                     if (xPathAttribute.AttributeName == null) // It target value of HTMLTag
                                     {
@@ -244,7 +244,7 @@ namespace HtmlAgilityPack
                         #region Property_Is_IEnumerable
                         else // Property is IEnumerable<T>
                         {
-                            IList<Type> T_Types = propertyInfo.GetGenericTypes() as IList<Type>; // Get T type
+                            IList<Type>? T_Types = propertyInfo.GetGenericTypes() as IList<Type>; // Get T type
 
                             if (T_Types == null || T_Types.Count == 0)
                             {
@@ -259,7 +259,7 @@ namespace HtmlAgilityPack
                             else if (T_Types.Count == 1) // It is NOT something like Dictionary<Tkey , Tvalue>
                             {
 
-                                HtmlNodeCollection nodeCollection;
+                                HtmlNodeCollection? nodeCollection;
 
                                 // try to fill nodeCollection based on given xpath.
                                 try
@@ -305,7 +305,7 @@ namespace HtmlAgilityPack
                                                 node,
                                                 xPathAttribute.IsNodeReturnTypeExplicitlySet ? xPathAttribute.NodeReturnType : ReturnType.InnerHtml));
 
-                                            object o = GetEncapsulatedData(T_Types[0], innerHtmlDocument);
+                                            object? o = GetEncapsulatedData(T_Types[0], innerHtmlDocument);
 
                                             result.Add(o);
                                         }
@@ -336,7 +336,7 @@ namespace HtmlAgilityPack
 
                                             foreach (HtmlNode node in nodeCollection)
                                             {
-                                                string nodeAttributeValue = node.GetAttributeValue(xPathAttribute.AttributeName, null);
+                                                string? nodeAttributeValue = node.GetAttributeValue(xPathAttribute.AttributeName, null);
                                                 if (nodeAttributeValue == null)
                                                 {
                                                     throw new NodeAttributeNotFoundException("Can not find " + xPathAttribute.AttributeName + " Attribute in " + node.Name + " related to " +
@@ -468,7 +468,7 @@ namespace HtmlAgilityPack
                 throw new ArgumentNullException("Parameter type is null while retrieving properties defined XPathAttribute of Type type.");
             }
 
-            PropertyInfo[] properties = null;
+            PropertyInfo[]? properties = null;
 
 
 #if !(NETSTANDARD1_3 || NETSTANDARD1_6)
@@ -554,7 +554,7 @@ namespace HtmlAgilityPack
         /// <param name="type">Type of class include requested method.</param>
         /// <param name="methodName">Name of requested method as string.</param>
         /// <returns>Method info of requested method.</returns>
-        internal static MethodInfo GetMethodByItsName(this Type type, string methodName)
+        internal static MethodInfo? GetMethodByItsName(this Type type, string methodName)
         {
             if (type == null)
             {
@@ -819,7 +819,7 @@ namespace HtmlAgilityPack
         /// <summary>
         /// Html Attribute name
         /// </summary>
-        public string AttributeName { get; set; }
+        public string? AttributeName { get; set; }
 
         /// <summary>
         /// The methode of output

@@ -8,6 +8,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+
 
 namespace HtmlAgilityPack
 {
@@ -79,7 +81,8 @@ namespace HtmlAgilityPack
         /// <summary>
         /// Gets a given attribute from the list using its name.
         /// </summary>
-        public HtmlAttribute this[string name]
+        [DisallowNull]
+        public HtmlAttribute? this[string name]
         {
             get
             {
@@ -88,12 +91,12 @@ namespace HtmlAgilityPack
                     throw new ArgumentNullException("name");
                 }
 
-                HtmlAttribute value;
+                HtmlAttribute? value;
                 return Hashitems.TryGetValue(name, out value) ? value : null;
             }
             set
             {
-                HtmlAttribute currentValue;
+                HtmlAttribute? currentValue;
 
                 if (!Hashitems.TryGetValue(name, out currentValue))
                 {
@@ -227,7 +230,7 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        bool ICollection<HtmlAttribute>.Remove(HtmlAttribute item)
+        bool ICollection<HtmlAttribute>.Remove(HtmlAttribute? item)
         {
             if (item == null)
             {
@@ -303,7 +306,7 @@ namespace HtmlAgilityPack
         /// <param name="name">The name of the attribute to insert.</param>
         /// <param name="value">The value of the attribute to insert.</param>
         /// <returns>The appended attribute.</returns>
-        public HtmlAttribute Append(string name, string value)
+        public HtmlAttribute Append(string name, string? value)
         {
             HtmlAttribute att = _ownernode._ownerdocument.CreateAttribute(name, value);
             return Append(att);

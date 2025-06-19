@@ -9,6 +9,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -444,7 +445,7 @@ namespace HtmlAgilityPack
 		/// <summary>
 		/// Gets the text value of the current node.
 		/// </summary>
-		public override string Value
+		public override string? Value
 		{
 			get
 			{
@@ -528,18 +529,12 @@ namespace HtmlAgilityPack
 		/// <param name="localName">The local name of the HTML attribute.</param>
 		/// <param name="namespaceURI">The namespace URI of the attribute. Unsupported with the HtmlNavigator implementation.</param>
 		/// <returns>The value of the specified HTML attribute. String.Empty or null if a matching attribute is not found or if the navigator is not positioned on an element node.</returns>
-		public override
-#if NET8_0
-        string?
-#else
-        string
-#endif
-        GetAttribute(string localName, string namespaceURI)
+		public override string? GetAttribute(string localName, string namespaceURI)
 		{
 #if TRACE_NAVIGATOR
             InternalTrace("localName=" + localName + ", namespaceURI=" + namespaceURI);
 #endif
-			HtmlAttribute att = _currentnode.Attributes[localName];
+			HtmlAttribute? att = _currentnode.Attributes[localName];
 			if (att == null)
 			{
 #if TRACE_NAVIGATOR
@@ -575,7 +570,7 @@ namespace HtmlAgilityPack
 		/// <returns>true if the two navigators have the same position, otherwise, false.</returns>
 		public override bool IsSamePosition(XPathNavigator other)
 		{
-			HtmlNodeNavigator nav = other as HtmlNodeNavigator;
+			HtmlNodeNavigator? nav = other as HtmlNodeNavigator;
 			if (nav == null)
 			{
 #if TRACE_NAVIGATOR
@@ -597,7 +592,7 @@ namespace HtmlAgilityPack
 		/// <returns>true if successful, otherwise false. If false, the position of the navigator is unchanged.</returns>
 		public override bool MoveTo(XPathNavigator other)
 		{
-			HtmlNodeNavigator nav = other as HtmlNodeNavigator;
+			HtmlNodeNavigator? nav = other as HtmlNodeNavigator;
 			if (nav == null)
 			{
 #if TRACE_NAVIGATOR
@@ -751,7 +746,7 @@ namespace HtmlAgilityPack
 #if TRACE_NAVIGATOR
             InternalTrace("id=" + id);
 #endif
-			HtmlNode node = _doc.GetElementbyId(id);
+			HtmlNode? node = _doc.GetElementbyId(id);
 			if (node == null)
 			{
 #if TRACE_NAVIGATOR
@@ -950,6 +945,7 @@ namespace HtmlAgilityPack
 
 		#region Private Methods
 
+		[MemberNotNull(nameof(_currentnode))]
 		private void Reset()
 		{
 #if TRACE_NAVIGATOR

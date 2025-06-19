@@ -29,12 +29,12 @@ namespace HtmlAgilityPack
             return _nametable.Add(array, offset, length);
         }
 
-        public override string Get(string array)
+        public override string? Get(string array)
         {
             return _nametable.Get(array);
         }
 
-        public override string Get(char[] array, int offset, int length)
+        public override string? Get(char[] array, int offset, int length)
         {
             return _nametable.Get(array, offset, length);
         }
@@ -45,7 +45,7 @@ namespace HtmlAgilityPack
 
         internal string GetOrAdd(string array)
         {
-            string s = Get(array);
+            string? s = Get(array);
             if (s == null)
             {
                 return Add(array);

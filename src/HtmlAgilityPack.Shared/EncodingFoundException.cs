@@ -14,13 +14,13 @@ namespace HtmlAgilityPack
     {
         #region Fields
 
-        private Encoding _encoding;
+        private Encoding? _encoding;
 
         #endregion
 
         #region Constructors
 
-        internal EncodingFoundException(Encoding encoding)
+        internal EncodingFoundException(Encoding? encoding)
         {
             _encoding = encoding;
         }
@@ -29,7 +29,7 @@ namespace HtmlAgilityPack
 
         #region Properties
 
-        internal Encoding Encoding
+        internal Encoding? Encoding
         {
             get { return _encoding; }
         }

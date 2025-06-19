@@ -18,7 +18,7 @@ namespace HtmlAgilityPack
     {
         #region Fields
 
-        private readonly HtmlNode _parentnode;
+        private readonly HtmlNode? _parentnode;
         private readonly List<HtmlNode> _items = new List<HtmlNode>();
 
         #endregion
@@ -29,7 +29,7 @@ namespace HtmlAgilityPack
         /// Initialize the HtmlNodeCollection with the base parent node
         /// </summary>
         /// <param name="parentnode">The base node of the collection</param>
-        public HtmlNodeCollection(HtmlNode parentnode)
+        public HtmlNodeCollection(HtmlNode? parentnode)
         {
             _parentnode = parentnode; // may be null
         }
@@ -39,7 +39,7 @@ namespace HtmlAgilityPack
         #region Properties
 
         /// <summary>Gets the parent node associated to the collection.</summary>
-        internal HtmlNode ParentNode
+        internal HtmlNode? ParentNode
         {
             get
             {
@@ -68,13 +68,7 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="nodeName"></param>
         /// <returns></returns>
-        public
-#if NET8_0
-        HtmlNode?
-#else
-        HtmlNode
-#endif
-        this[string nodeName]
+        public HtmlNode? this[string nodeName]
         {
             get
             {
@@ -209,8 +203,8 @@ namespace HtmlAgilityPack
         /// <param name="node"></param>
         public void Insert(int index, HtmlNode node)
         {
-            HtmlNode next = null;
-            HtmlNode prev = null;
+            HtmlNode? next = null;
+            HtmlNode? prev = null;
 
             if (index > 0)
                 prev = _items[index - 1];
@@ -257,8 +251,8 @@ namespace HtmlAgilityPack
         /// <param name="index"></param>
         public void RemoveAt(int index)
         {
-            HtmlNode next = null;
-            HtmlNode prev = null;
+            HtmlNode? next = null;
+            HtmlNode? prev = null;
             HtmlNode oldnode = _items[index];
 
             // KEEP a reference since it will be set to null
@@ -302,20 +296,14 @@ namespace HtmlAgilityPack
         /// <param name="items"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static
-#if NET8_0
-        HtmlNode?
-#else
-        HtmlNode
-#endif
-        FindFirst(HtmlNodeCollection items, string name)
+        public static HtmlNode? FindFirst(HtmlNodeCollection items, string name)
         {
             foreach (HtmlNode node in items)
             {
                 if (node.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
                     return node;
                 if (!node.HasChildNodes) continue;
-                HtmlNode returnNode = FindFirst(node.ChildNodes, name);
+                HtmlNode? returnNode = FindFirst(node.ChildNodes, name);
                 if (returnNode != null)
                     return returnNode;
             }
@@ -329,7 +317,7 @@ namespace HtmlAgilityPack
         /// <param name="node"></param>
         public void Append(HtmlNode node)
         {
-            HtmlNode last = null;
+            HtmlNode? last = null;
             if (_items.Count > 0)
                 last = _items[_items.Count - 1];
 
@@ -349,7 +337,7 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public HtmlNode FindFirst(string name)
+        public HtmlNode? FindFirst(string name)
         {
             return FindFirst(this, name);
         }
@@ -374,7 +362,7 @@ namespace HtmlAgilityPack
         /// <param name="node"></param>
         public void Prepend(HtmlNode node)
         {
-            HtmlNode first = null;
+            HtmlNode? first = null;
             if (_items.Count > 0)
                 first = _items[0];
 
@@ -408,8 +396,8 @@ namespace HtmlAgilityPack
         /// <param name="node"></param>
         public void Replace(int index, HtmlNode node)
         {
-            HtmlNode next = null;
-            HtmlNode prev = null;
+            HtmlNode? next = null;
+            HtmlNode? prev = null;
             HtmlNode oldnode = _items[index];
 
             if (index > 0)

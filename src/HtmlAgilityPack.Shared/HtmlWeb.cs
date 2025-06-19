@@ -11,6 +11,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net;
 using System.Security;
@@ -87,10 +88,10 @@ namespace HtmlAgilityPack
         private bool _autoDetectEncoding = true;
         private bool _cacheOnly;
 
-        private string _cachePath;
+        private string? _cachePath;
         private bool _fromCache;
         private int _requestDuration;
-        private Uri _responseUri;
+        private Uri? _responseUri;
         private HttpStatusCode _statusCode = HttpStatusCode.OK;
         private int _streamBufferSize = 1024;
         private bool _useCookies;
@@ -104,17 +105,17 @@ namespace HtmlAgilityPack
         /// <summary>
         /// Occurs after an HTTP request has been executed.
         /// </summary>
-        public PostResponseHandler PostResponse;
+        public PostResponseHandler? PostResponse;
 
         /// <summary>
         /// Occurs before an HTML document is handled.
         /// </summary>
-        public PreHandleDocumentHandler PreHandleDocument;
+        public PreHandleDocumentHandler? PreHandleDocument;
 
         /// <summary>
         /// Occurs before an HTTP request is executed.
         /// </summary>
-        public PreRequestHandler PreRequest;
+        public PreRequestHandler? PreRequest;
 
         #endregion
 
@@ -833,12 +834,12 @@ namespace HtmlAgilityPack
             set { _autoDetectEncoding = value; }
         }
 
-        private Encoding _encoding;
+        private Encoding? _encoding;
 
         /// <summary>
         /// Gets or sets the Encoding used to override the response stream from any web request
         /// </summary>
-        public Encoding OverrideEncoding
+        public Encoding? OverrideEncoding
         {
             get { return _encoding; }
             set { _encoding = value; }
@@ -875,7 +876,7 @@ namespace HtmlAgilityPack
         /// <summary>
         /// Gets or Sets the cache path. If null, no caching mechanism will be used.
         /// </summary>
-        public string CachePath
+        public string? CachePath
         {
             get { return _cachePath; }
             set { _cachePath = value; }
@@ -900,7 +901,7 @@ namespace HtmlAgilityPack
         /// <summary>
         /// Gets the URI of the Internet resource that actually responded to the request.
         /// </summary>
-        public Uri ResponseUri
+        public Uri? ResponseUri
         {
             get { return _responseUri; }
         }
@@ -980,14 +981,15 @@ namespace HtmlAgilityPack
         /// <param name="extension">The input path extension.</param>
         /// <param name="def">The default content type to return if any error occurs.</param>
         /// <returns>The path extension's MIME content type.</returns>
-        public static string GetContentTypeForExtension(string extension, string def)
+        [return:NotNullIfNotNull(nameof(def))]
+        public static string? GetContentTypeForExtension(string? extension, string? def)
         {
             if (string.IsNullOrEmpty(extension))
             {
                 return def;
             }
 
-            string contentType = "";
+            string? contentType = "";
 	        if (!extension.StartsWith("."))
 	        {
 		        extension = "." + extension;
@@ -1021,7 +1023,7 @@ namespace HtmlAgilityPack
 		        throw new ArgumentException("Requested mime type is not valid: " + contentType);
 	        }
 
-			string ext = "";
+			string? ext = "";
 
 	        if (!MimeTypeMap.Mappings.TryGetValue(contentType, out ext))
 	        {
@@ -1041,7 +1043,7 @@ namespace HtmlAgilityPack
         /// <param name="url">The requested URL, such as "http://Myserver/Mypath/Myfile.asp".</param>
         /// <param name="type">The requested type.</param>
         /// <returns>An newly created instance.</returns>
-        public object CreateInstance(string url, Type type)
+        public object? CreateInstance(string url, Type type)
         {
             return CreateInstance(url, null, null, type);
         }
@@ -1242,21 +1244,21 @@ namespace HtmlAgilityPack
         /// <param name="userId">User Id for Authentication</param>
         /// <param name="password">Password for Authentication</param>
         /// <returns>A new HTML document.</returns>
-        public HtmlDocument Load(string url, string proxyHost, int proxyPort, string userId, string password)
+        public HtmlDocument Load(string url, string proxyHost, int proxyPort, string? userId, string? password)
         {
             //Create my proxy
             WebProxy myProxy = new WebProxy(proxyHost, proxyPort);
             myProxy.BypassProxyOnLocal = true;
 
             //Create my credentials
-            NetworkCredential myCreds = null;
+            NetworkCredential? myCreds = null;
             if ((userId != null) && (password != null))
             {
                 myCreds = new NetworkCredential(userId, password);
                 CredentialCache credCache = new CredentialCache();
                 //Add the creds
-                credCache.Add(myProxy.Address, "Basic", myCreds);
-                credCache.Add(myProxy.Address, "Digest", myCreds);
+                credCache.Add(myProxy.Address!, "Basic", myCreds);
+                credCache.Add(myProxy.Address!, "Digest", myCreds);
             }
 
             return Load(url, "GET", myProxy, myCreds);
@@ -1273,21 +1275,21 @@ namespace HtmlAgilityPack
         /// <param name="userId">User Id for Authentication</param>
         /// <param name="password">Password for Authentication</param>
         /// <returns>A new HTML document.</returns>
-        public HtmlDocument Load(Uri uri, string proxyHost, int proxyPort, string userId, string password)
+        public HtmlDocument Load(Uri uri, string proxyHost, int proxyPort, string? userId, string? password)
         {
             //Create my proxy
             WebProxy myProxy = new WebProxy(proxyHost, proxyPort);
             myProxy.BypassProxyOnLocal = true;
 
             //Create my credentials
-            NetworkCredential myCreds = null;
+            NetworkCredential? myCreds = null;
             if ((userId != null) && (password != null))
             {
                 myCreds = new NetworkCredential(userId, password);
                 CredentialCache credCache = new CredentialCache();
                 //Add the creds
-                credCache.Add(myProxy.Address, "Basic", myCreds);
-                credCache.Add(myProxy.Address, "Digest", myCreds);
+                credCache.Add(myProxy.Address!, "Basic", myCreds);
+                credCache.Add(myProxy.Address!, "Digest", myCreds);
             }
 
             return Load(uri, "GET", myProxy, myCreds);
@@ -1372,7 +1374,7 @@ namespace HtmlAgilityPack
         /// <param name="proxy">Proxy to use with this request</param>
         /// <param name="credentials">Credentials to use when authenticating</param>
         /// <returns>A new HTML document.</returns>
-        public HtmlDocument Load(string url, string method, WebProxy proxy, NetworkCredential credentials)
+        public HtmlDocument Load(string url, string method, WebProxy? proxy, NetworkCredential? credentials)
         {
             Uri uri = new Uri(url);
 
@@ -1389,7 +1391,7 @@ namespace HtmlAgilityPack
         /// <param name="proxy">Proxy to use with this request</param>
         /// <param name="credentials">Credentials to use when authenticating</param>
         /// <returns>A new HTML document.</returns>
-        public HtmlDocument Load(Uri uri, string method, WebProxy proxy, NetworkCredential credentials)
+        public HtmlDocument Load(Uri uri, string method, WebProxy? proxy, NetworkCredential? credentials)
         {
             if (UsingCache)
             {
@@ -1531,7 +1533,7 @@ namespace HtmlAgilityPack
             }
             else
             {
-                string dir = Path.GetDirectoryName(target);
+                string? dir = Path.GetDirectoryName(target);
                 if (!Directory.Exists(dir))
                 {
                     Directory.CreateDirectory(dir);
@@ -1586,14 +1588,14 @@ namespace HtmlAgilityPack
         }
 
 #if !(NETSTANDARD1_3 || NETSTANDARD1_6)
-        private HttpStatusCode Get(Uri uri, string method, string path, HtmlDocument doc, IWebProxy proxy,
-            ICredentials creds)
+        private HttpStatusCode Get(Uri uri, string method, string? path, HtmlDocument? doc, IWebProxy? proxy,
+            ICredentials? creds)
         {
-            string cachePath = null;
+            string? cachePath = null;
             HttpWebRequest req;
             bool oldFile = false;
 
-            req = WebRequest.Create(uri) as HttpWebRequest;
+            req = (WebRequest.Create(uri) as HttpWebRequest)!;
             if (MaxAutoRedirects.HasValue)
             {
                 req.MaximumAutomaticRedirections = MaxAutoRedirects.Value;
@@ -1682,16 +1684,16 @@ namespace HtmlAgilityPack
                 //                }
             }
 
-            HttpWebResponse resp;
+            HttpWebResponse? resp;
 
             try
             {
-                resp = req.GetResponse() as HttpWebResponse;
+                resp = (req.GetResponse() as HttpWebResponse)!;
             }
             catch (WebException we)
             {
                 _requestDuration = Environment.TickCount - tc;
-                resp = (HttpWebResponse) we.Response;
+                resp = (HttpWebResponse?) we.Response;
                 if (resp == null)
                 {
                     if (oldFile)
@@ -1740,7 +1742,7 @@ namespace HtmlAgilityPack
                 characterSet = resp.CharacterSet.Replace("\"","");
             }
 
-            Encoding respenc = null;
+            Encoding? respenc = null;
 
             try
 			{
@@ -1762,7 +1764,7 @@ namespace HtmlAgilityPack
                 if (resp.StatusCode == HttpStatusCode.Found)
                 {
                     var location = resp.Headers["Location"];
-                    Uri locationUri;
+                    Uri? locationUri;
 
                     // Do the redirection after we've eaten all the cookies...
                     if (!Uri.TryCreate(location, UriKind.Absolute, out locationUri))
@@ -1784,7 +1786,7 @@ namespace HtmlAgilityPack
                     {
                         IOLibrary.CopyAlways(cachePath, path);
                         // touch the file
-                        File.SetLastWriteTime(path, File.GetLastWriteTime(cachePath));
+                        File.SetLastWriteTime(path, File.GetLastWriteTime(cachePath!));
                     }
 
                     return resp.StatusCode;
@@ -1800,7 +1802,7 @@ namespace HtmlAgilityPack
                 if (UsingCache)
                 {
                     // NOTE: LastModified does not contain milliseconds, so we remove them to the file
-                    SaveStream(s, cachePath, RemoveMilliseconds(resp.LastModified), _streamBufferSize);
+                    SaveStream(s, cachePath!, RemoveMilliseconds(resp.LastModified), _streamBufferSize);
 
                     // save headers
                     SaveCacheHeaders(req.RequestUri, resp);
@@ -1809,12 +1811,12 @@ namespace HtmlAgilityPack
                     {
                         // copy and touch the file
                         IOLibrary.CopyAlways(cachePath, path);
-                        File.SetLastWriteTime(path, File.GetLastWriteTime(cachePath));
+                        File.SetLastWriteTime(path, File.GetLastWriteTime(cachePath!));
                     }
 
                     if (_usingCacheAndLoad)
                     {
-                        doc.Load(cachePath);
+                        doc.Load(cachePath!);
                     }
                 }
                 else
@@ -2103,7 +2105,7 @@ namespace HtmlAgilityPack
 #else
             doc.Load(GetCacheHeadersPath(requestUri));
 #endif
-            XmlNode node =
+            XmlNode? node =
                 doc.SelectSingleNode("//h[translate(@n, 'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')='" +
                                      name.ToUpperInvariant() + "']");
             if (node == null)
@@ -2124,7 +2126,7 @@ namespace HtmlAgilityPack
 #if !(NETSTANDARD1_3 || NETSTANDARD1_6)
         private bool IsCacheHtmlContent(string path)
         {
-            string ct = GetContentTypeForExtension(Path.GetExtension(path), null);
+            string? ct = GetContentTypeForExtension(Path.GetExtension(path), null);
             return IsHtmlContent(ct);
         }
 #endif
@@ -2140,7 +2142,7 @@ namespace HtmlAgilityPack
         }
 
 #if !(NETSTANDARD1_3 || NETSTANDARD1_6)
-        private HtmlDocument LoadUrl(Uri uri, string method, WebProxy proxy, NetworkCredential creds)
+        private HtmlDocument LoadUrl(Uri uri, string method, WebProxy? proxy, NetworkCredential? creds)
         {
             HtmlDocument doc = new HtmlDocument();
             doc.OptionAutoCloseOnEnd = false;
@@ -2178,7 +2180,7 @@ namespace HtmlAgilityPack
             string file = GetCacheHeadersPath(requestUri);
             XmlDocument doc = new XmlDocument();
             doc.LoadXml("<c></c>");
-            XmlNode cache = doc.FirstChild;
+            XmlNode? cache = doc.FirstChild;
             foreach (string header in resp.Headers)
             {
                 XmlNode entry = doc.CreateElement("h");
@@ -2247,7 +2249,7 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="url">Url to the html document</param>
         /// <param name="encoding">The encoding to use while downloading the document</param>
-        public Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding)
+        public Task<HtmlDocument> LoadFromWebAsync(string url, Encoding? encoding)
         {
             return LoadFromWebAsync(new Uri(url), encoding, null, CancellationToken.None);
         }
@@ -2258,7 +2260,7 @@ namespace HtmlAgilityPack
         /// <param name="url">Url to the html document</param>
         /// <param name="encoding">The encoding to use while downloading the document</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        public Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding, CancellationToken cancellationToken)
+        public Task<HtmlDocument> LoadFromWebAsync(string url, Encoding? encoding, CancellationToken cancellationToken)
         {
             return LoadFromWebAsync(new Uri(url), encoding, null, cancellationToken);
         }
@@ -2270,7 +2272,7 @@ namespace HtmlAgilityPack
         /// <param name="encoding">The encoding to use while downloading the document</param>
         /// <param name="userName">Username to use for credentials in the web request</param>
         /// <param name="password">Password to use for credentials in the web request</param>
-        public Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding, string userName, string password)
+        public Task<HtmlDocument> LoadFromWebAsync(string url, Encoding? encoding, string userName, string password)
         {
             return LoadFromWebAsync(new Uri(url), encoding, new NetworkCredential(userName, password), CancellationToken.None);
         }
@@ -2283,7 +2285,7 @@ namespace HtmlAgilityPack
         /// <param name="userName">Username to use for credentials in the web request</param>
         /// <param name="password">Password to use for credentials in the web request</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        public Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding, string userName, string password, CancellationToken cancellationToken)
+        public Task<HtmlDocument> LoadFromWebAsync(string url, Encoding? encoding, string userName, string password, CancellationToken cancellationToken)
         {
             return LoadFromWebAsync(new Uri(url), encoding, new NetworkCredential(userName, password), cancellationToken);
         }
@@ -2296,7 +2298,7 @@ namespace HtmlAgilityPack
         /// <param name="userName">Username to use for credentials in the web request</param>
         /// <param name="password">Password to use for credentials in the web request</param>
         /// <param name="domain">Domain to use for credentials in the web request</param>
-        public Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding, string userName, string password, string domain)
+        public Task<HtmlDocument> LoadFromWebAsync(string url, Encoding? encoding, string userName, string password, string domain)
         {
             return LoadFromWebAsync(new Uri(url), encoding, new NetworkCredential(userName, password, domain), CancellationToken.None);
         }
@@ -2310,7 +2312,7 @@ namespace HtmlAgilityPack
         /// <param name="password">Password to use for credentials in the web request</param>
         /// <param name="domain">Domain to use for credentials in the web request</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        public Task<HtmlDocument> LoadFromWebAsync(string url, Encoding encoding, string userName, string password, string domain, CancellationToken cancellationToken)
+        public Task<HtmlDocument> LoadFromWebAsync(string url, Encoding? encoding, string userName, string password, string domain, CancellationToken cancellationToken)
         {
             return LoadFromWebAsync(new Uri(url), encoding, new NetworkCredential(userName, password, domain), cancellationToken);
         }
@@ -2379,7 +2381,7 @@ namespace HtmlAgilityPack
         /// <param name="url">Url to the html document</param>
         /// <param name="credentials">The credentials to use for authenticating the web request</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        public Task<HtmlDocument> LoadFromWebAsync(string url, NetworkCredential credentials, CancellationToken cancellationToken)
+        public Task<HtmlDocument> LoadFromWebAsync(string url, NetworkCredential? credentials, CancellationToken cancellationToken)
         {
             return LoadFromWebAsync(new Uri(url), null, credentials, cancellationToken);
         }
@@ -2390,7 +2392,7 @@ namespace HtmlAgilityPack
         /// <param name="uri">Url to the html document</param>
         /// <param name="encoding">The encoding to use while downloading the document</param>
         /// <param name="credentials">The credentials to use for authenticating the web request</param>
-        public Task<HtmlDocument> LoadFromWebAsync(Uri uri, Encoding encoding, NetworkCredential credentials)
+        public Task<HtmlDocument> LoadFromWebAsync(Uri uri, Encoding? encoding, NetworkCredential? credentials)
         {
             return LoadFromWebAsync(uri, encoding, credentials, CancellationToken.None);
         }
@@ -2402,7 +2404,7 @@ namespace HtmlAgilityPack
         /// <param name="encoding">The encoding to use while downloading the document</param>
         /// <param name="credentials">The credentials to use for authenticating the web request</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        public async Task<HtmlDocument> LoadFromWebAsync(Uri uri, Encoding encoding, NetworkCredential credentials, CancellationToken cancellationToken)
+        public async Task<HtmlDocument> LoadFromWebAsync(Uri uri, Encoding? encoding, NetworkCredential? credentials, CancellationToken cancellationToken)
         {
             HtmlDocument doc = new HtmlDocument();
              

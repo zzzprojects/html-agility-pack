@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
 
@@ -591,13 +592,8 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="text">The source text.</param>
         /// <returns>The result text.</returns>
-        public static
-#if NET8_0
-        string?
-#else
-        string
-#endif
-        DeEntitize(string text)
+        [return:NotNullIfNotNull(nameof(text))]
+        public static string? DeEntitize(string? text)
         {
             if (text == null)
                 return null;
@@ -753,7 +749,8 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="text">The source text.</param>
         /// <returns>The result text.</returns>
-        public static string Entitize(string text)
+        [return: NotNullIfNotNull(nameof(text))]
+        public static string? Entitize(string? text)
         {
             return Entitize(text, true);
         }
@@ -764,7 +761,8 @@ namespace HtmlAgilityPack
         /// <param name="text">The source text.</param>
         /// <param name="useNames">If set to false, the function will not use known entities name. Default is true.</param>
         /// <returns>The result text.</returns>
-        public static string Entitize(string text, bool useNames)
+        [return: NotNullIfNotNull(nameof(text))]
+        public static string? Entitize(string? text, bool useNames)
         {
             return Entitize(text, useNames, false);
         }
@@ -776,13 +774,8 @@ namespace HtmlAgilityPack
         /// <param name="useNames">If set to false, the function will not use known entities name. Default is true.</param>
         /// <param name="entitizeQuotAmpAndLtGt">If set to true, the [quote], [ampersand], [lower than] and [greather than] characters will be entitized.</param>
         /// <returns>The result text</returns>
-        public static
-#if NET8_0
-        string?
-#else
-        string
-#endif
-        Entitize(string text, bool useNames, bool entitizeQuotAmpAndLtGt)
+        [return: NotNullIfNotNull(nameof(text))]
+        public static string? Entitize(string? text, bool useNames, bool entitizeQuotAmpAndLtGt)
 //        _entityValue.Add("quot", 34);    // quotation mark = APL quote, U+0022 ISOnum 
 //        _entityName.Add(34, "quot");
 //        _entityValue.Add("amp", 38);    // ampersand, U+0026 ISOnum 
@@ -818,7 +811,7 @@ namespace HtmlAgilityPack
                     if ((code > 127) ||
                         (entitizeQuotAmpAndLtGt && ((code == 34) || (code == 38) || (code == 60) || (code == 62))))
                     {
-                        string entity = null;
+                        string? entity = null;
 
                         if (useNames)
                         {

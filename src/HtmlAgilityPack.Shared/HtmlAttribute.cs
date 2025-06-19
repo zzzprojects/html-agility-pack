@@ -26,14 +26,14 @@ namespace HtmlAgilityPack
 
         private int _line;
         internal int _lineposition;
-        internal string _name;
+        internal string? _name;
         internal int _namelength;
         internal int _namestartindex;
         internal HtmlDocument _ownerdocument; // attribute can exists without a node
-        internal HtmlNode _ownernode;
+        internal HtmlNode? _ownernode;
         private AttributeValueQuote? _quoteType;
         internal int _streamposition;
-        internal string _value;
+        internal string? _value;
         internal int _valuelength;
         internal int _valuestartindex; 
         private bool? _localUseOriginalName;
@@ -140,7 +140,7 @@ namespace HtmlAgilityPack
         /// <summary>
         /// Name of attribute with original case
         /// </summary>
-        public string OriginalName
+        public string? OriginalName
         {
             get { return _name; }
         }
@@ -156,7 +156,7 @@ namespace HtmlAgilityPack
         /// <summary>
         /// Gets the HTML node to which this attribute belongs.
         /// </summary>
-        public HtmlNode OwnerNode
+        public HtmlNode? OwnerNode
         {
             get { return _ownernode; }
         }
@@ -186,7 +186,7 @@ namespace HtmlAgilityPack
         /// <summary>
         /// Gets or sets the value of the attribute.
         /// </summary>
-        public string Value
+        public string? Value
         {
             get
             {
@@ -228,7 +228,7 @@ namespace HtmlAgilityPack
         /// <summary>
         /// Gets the DeEntitized value of the attribute.
         /// </summary>
-        public string DeEntitizeValue
+        public string? DeEntitizeValue
         {
             get { return HtmlEntity.DeEntitize(Value); }
         }
@@ -238,7 +238,7 @@ namespace HtmlAgilityPack
             get { return HtmlDocument.GetXmlName(Name, true, OwnerDocument.OptionPreserveXmlNamespaces); }
         }
 
-        internal string XmlValue
+        internal string? XmlValue
         {
             get { return Value; }
         }
@@ -264,9 +264,9 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="obj">An attribute to compare with this instance.</param>
         /// <returns>A 32-bit signed integer that indicates the relative order of the names comparison.</returns>
-        public int CompareTo(object obj)
+        public int CompareTo(object? obj)
         {
-            HtmlAttribute att = obj as HtmlAttribute;
+            HtmlAttribute? att = obj as HtmlAttribute;
             if (att == null)
             {
                 throw new ArgumentException("obj");

@@ -5,6 +5,9 @@
 // More projects: https://zzzprojects.com/
 // Copyright © ZZZ Projects Inc. All rights reserved.
 
+using System.Diagnostics.CodeAnalysis;
+
+
 namespace HtmlAgilityPack
 {
     /// <summary>
@@ -14,7 +17,7 @@ namespace HtmlAgilityPack
     {
         #region Fields
 
-        private string _comment;
+        private string? _comment;
 
         #endregion
 

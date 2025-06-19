@@ -15,7 +15,7 @@ namespace HtmlAgilityPack
     {
         #region Fields
 
-        private string _code;
+        private string? _code;
 
         #endregion
 

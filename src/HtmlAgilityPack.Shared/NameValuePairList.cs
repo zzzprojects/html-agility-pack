@@ -14,7 +14,7 @@ namespace HtmlAgilityPack
     {
         #region Fields
 
-        internal readonly string Text;
+        internal readonly string? Text;
         private List<KeyValuePair<string, string>> _allPairs;
         private Dictionary<string, List<KeyValuePair<string, string>>> _pairsWithName;
 
@@ -27,7 +27,7 @@ namespace HtmlAgilityPack
         {
         }
 
-        internal NameValuePairList(string text)
+        internal NameValuePairList(string? text)
         {
             Text = text;
             _allPairs = new List<KeyValuePair<string, string>>();
@@ -40,13 +40,13 @@ namespace HtmlAgilityPack
 
         #region Internal Methods
 
-        internal static string GetNameValuePairsValue(string text, string name)
+        internal static string GetNameValuePairsValue(string? text, string name)
         {
             NameValuePairList l = new NameValuePairList(text);
             return l.GetNameValuePairValue(name);
         }
 
-        internal List<KeyValuePair<string, string>> GetNameValuePairs(string name)
+        internal List<KeyValuePair<string, string>> GetNameValuePairs(string? name)
         {
             if (name == null)
                 return _allPairs;
@@ -69,7 +69,7 @@ namespace HtmlAgilityPack
 
         #region Private Methods
 
-        private void Parse(string text)
+        private void Parse(string? text)
         {
             _allPairs.Clear();
             _pairsWithName.Clear();
@@ -90,7 +90,7 @@ namespace HtmlAgilityPack
                 _allPairs.Add(nvp);
 
                 // index by name
-                List<KeyValuePair<string, string>> al;
+                List<KeyValuePair<string, string>>? al;
                 if (!_pairsWithName.TryGetValue(nvp.Key, out al))
                 {
                     al = new List<KeyValuePair<string, string>>();

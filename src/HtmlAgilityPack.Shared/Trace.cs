@@ -9,7 +9,7 @@ namespace HtmlAgilityPack
 {
     internal partial class Trace
     {
-        internal static Trace _current;
+        internal static Trace? _current;
 
         internal static Trace Current
         {
@@ -21,9 +21,9 @@ namespace HtmlAgilityPack
             }
         }
 
-        partial void WriteLineIntern(string message, string category);
+        partial void WriteLineIntern(string? message, string? category);
 
-        public static void WriteLine(string message, string category)
+        public static void WriteLine(string? message, string? category)
         {
             Current.WriteLineIntern(message, category);
         }
