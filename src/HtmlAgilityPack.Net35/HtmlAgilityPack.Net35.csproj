@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Nullable.1.3.1\build\Nullable.props" Condition="Exists('..\packages\Nullable.1.3.1\build\Nullable.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -12,6 +13,8 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,11 +49,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Nullable\AllowNullAttribute.cs" />
+    <Compile Include="Nullable\DisallowNullAttribute.cs" />
+    <Compile Include="Nullable\DoesNotReturnAttribute.cs" />
+    <Compile Include="Nullable\DoesNotReturnIfAttribute.cs" />
+    <Compile Include="Nullable\MaybeNullAttribute.cs" />
+    <Compile Include="Nullable\MaybeNullWhenAttribute.cs" />
+    <Compile Include="Nullable\MemberNotNullAttribute.cs" />
+    <Compile Include="Nullable\MemberNotNullWhenAttribute.cs" />
+    <Compile Include="Nullable\NotNullAttribute.cs" />
+    <Compile Include="Nullable\NotNullIfNotNullAttribute.cs" />
+    <Compile Include="Nullable\NotNullWhenAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="HtmlAgilityPack.snk" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="..\HtmlAgilityPack.Shared\HtmlAgilityPack.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Nullable.1.3.1\build\Nullable.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Nullable.1.3.1\build\Nullable.props'))" />
+  </Target>
 </Project>
