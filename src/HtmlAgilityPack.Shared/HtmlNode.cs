@@ -913,7 +913,7 @@ namespace HtmlAgilityPack
 			}
 
 			// min is </x>: 4
-			if (text.Length <= 4)
+			if (text.Length < 4)
 				return false;
 
 			if ((text[0] != '<') ||
