@@ -528,13 +528,7 @@ namespace HtmlAgilityPack
 		/// <param name="localName">The local name of the HTML attribute.</param>
 		/// <param name="namespaceURI">The namespace URI of the attribute. Unsupported with the HtmlNavigator implementation.</param>
 		/// <returns>The value of the specified HTML attribute. String.Empty or null if a matching attribute is not found or if the navigator is not positioned on an element node.</returns>
-		public override
-#if NET8_0
-        string?
-#else
-        string
-#endif
-        GetAttribute(string localName, string namespaceURI)
+		public override string GetAttribute(string localName, string namespaceURI)
 		{
 #if TRACE_NAVIGATOR
             InternalTrace("localName=" + localName + ", namespaceURI=" + namespaceURI);

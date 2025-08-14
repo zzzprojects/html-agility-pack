@@ -69,7 +69,7 @@ namespace HtmlAgilityPack
         /// <param name="nodeName"></param>
         /// <returns></returns>
         public
-#if NET8_0
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
         HtmlNode?
 #else
         HtmlNode
@@ -235,9 +235,9 @@ namespace HtmlAgilityPack
             if (next == node)
                 throw new InvalidProgramException("Unexpected error.");
 
-            node._nextnode = next; 
-			node.SetParent(_parentnode);
-		}
+            node._nextnode = next;
+            node.SetParent(_parentnode);
+        }
 
         /// <summary>
         /// Remove node
@@ -303,7 +303,7 @@ namespace HtmlAgilityPack
         /// <param name="name"></param>
         /// <returns></returns>
         public static
-#if NET8_0
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
         HtmlNode?
 #else
         HtmlNode
@@ -336,8 +336,8 @@ namespace HtmlAgilityPack
             _items.Add(node);
             node._prevnode = last;
             node._nextnode = null;
-	        node.SetParent(_parentnode);
-			if (last == null) return;
+            node.SetParent(_parentnode);
+            if (last == null) return;
             if (last == node)
                 throw new InvalidProgramException("Unexpected error.");
 
@@ -384,9 +384,9 @@ namespace HtmlAgilityPack
                 throw new InvalidProgramException("Unexpected error.");
             node._nextnode = first;
             node._prevnode = null;
-	        node.SetParent(_parentnode);
+            node.SetParent(_parentnode);
 
-			if (first != null)
+            if (first != null)
                 first._prevnode = node;
         }
 
@@ -436,9 +436,9 @@ namespace HtmlAgilityPack
                 throw new InvalidProgramException("Unexpected error.");
 
             node._nextnode = next;
-	        node.SetParent(_parentnode);
+            node.SetParent(_parentnode);
 
-			oldnode._prevnode = null;
+            oldnode._prevnode = null;
             oldnode._nextnode = null;
             oldnode._parentnode = null;
         }
@@ -454,8 +454,8 @@ namespace HtmlAgilityPack
         public IEnumerable<HtmlNode> Descendants()
         {
             foreach (HtmlNode item in _items)
-            foreach (HtmlNode n in item.Descendants())
-                yield return n;
+                foreach (HtmlNode n in item.Descendants())
+                    yield return n;
         }
 
         /// <summary>
@@ -465,8 +465,8 @@ namespace HtmlAgilityPack
         public IEnumerable<HtmlNode> Descendants(string name)
         {
             foreach (HtmlNode item in _items)
-            foreach (HtmlNode n in item.Descendants(name))
-                yield return n;
+                foreach (HtmlNode n in item.Descendants(name))
+                    yield return n;
         }
 
         /// <summary>
@@ -476,8 +476,8 @@ namespace HtmlAgilityPack
         public IEnumerable<HtmlNode> Elements()
         {
             foreach (HtmlNode item in _items)
-            foreach (HtmlNode n in item.ChildNodes)
-                yield return n;
+                foreach (HtmlNode n in item.ChildNodes)
+                    yield return n;
         }
 
         /// <summary>
@@ -488,8 +488,8 @@ namespace HtmlAgilityPack
         public IEnumerable<HtmlNode> Elements(string name)
         {
             foreach (HtmlNode item in _items)
-            foreach (HtmlNode n in item.Elements(name))
-                yield return n;
+                foreach (HtmlNode n in item.Elements(name))
+                    yield return n;
         }
 
         /// <summary>
@@ -499,8 +499,8 @@ namespace HtmlAgilityPack
         public IEnumerable<HtmlNode> Nodes()
         {
             foreach (HtmlNode item in _items)
-            foreach (HtmlNode n in item.ChildNodes)
-                yield return n;
+                foreach (HtmlNode n in item.ChildNodes)
+                    yield return n;
         }
 
         #endregion

@@ -14,7 +14,7 @@ namespace HtmlAgilityPack
     internal static class Utilities
     {
         public static
-#if NET8_0
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
         TValue?
 #else
         TValue
