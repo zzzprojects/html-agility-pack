@@ -38,7 +38,7 @@ namespace HtmlAgilityPack
         /// <param name="xpath">The XPath expression.</param>
         /// <returns>An <see cref="HtmlNodeCollection"/> containing a collection of nodes matching the <see cref="XPath"/> query, or <c>null</c> if no node matched the XPath expression.</returns>
         public
-#if NET8_0
+#if NET8_0_OR_GREATER
         HtmlNodeCollection?
 #else
         HtmlNodeCollection
@@ -69,7 +69,7 @@ namespace HtmlAgilityPack
         /// <param name="xpath">The XPath expression.</param>
         /// <returns>An <see cref="HtmlNodeCollection"/> containing a collection of nodes matching the <see cref="XPath"/> query, or <c>null</c> if no node matched the XPath expression.</returns>
         public
-#if NET8_0
+#if NET8_0_OR_GREATER
         HtmlNodeCollection?
 #else
         HtmlNodeCollection
@@ -100,7 +100,7 @@ namespace HtmlAgilityPack
         /// <param name="xpath">The XPath expression. May not be null.</param>
         /// <returns>The first <see cref="HtmlNode"/> that matches the XPath query or a null reference if no matching node was found.</returns>
         public
-#if NET8_0
+#if NET8_0_OR_GREATER
         HtmlNode?
 #else
         HtmlNode
@@ -129,7 +129,7 @@ namespace HtmlAgilityPack
         /// <param name="xpath">The XPath expression.</param>
         /// <returns>An <see cref="HtmlNodeCollection"/> containing a collection of nodes matching the <see cref="XPath"/> query, or <c>null</c> if no node matched the XPath expression.</returns>
         public
-#if NET8_0
+#if NET8_0_OR_GREATER
         HtmlNode?
 #else
         HtmlNode
