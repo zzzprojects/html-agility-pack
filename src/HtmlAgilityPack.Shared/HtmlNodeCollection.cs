@@ -178,6 +178,15 @@ namespace HtmlAgilityPack
         /// Get Enumerator
         /// </summary>
         /// <returns></returns>
+        public List<HtmlNode>.Enumerator GetEnumerator()
+        {
+            return _items.GetEnumerator();
+        }
+
+        /// <summary>
+        /// Get Enumerator
+        /// </summary>
+        /// <returns></returns>
         IEnumerator<HtmlNode> IEnumerable<HtmlNode>.GetEnumerator()
         {
             return _items.GetEnumerator();
