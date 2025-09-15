@@ -2095,7 +2095,9 @@ namespace HtmlAgilityPack
 							break;
 					}
 
-					outText.Write("<" + name);
+					outText.Write("<");
+					outText.Write(name);
+
 					WriteAttributes(outText, false);
 
 					if (HasChildNodes)
@@ -2123,7 +2125,9 @@ namespace HtmlAgilityPack
 
 						if (_ownerdocument.OptionOutputAsXml || !_isImplicitEnd)
 						{
-							outText.Write("</" + name);
+							outText.Write("</");
+							outText.Write(name);
+
 							if (!_ownerdocument.OptionOutputAsXml)
 								WriteAttributes(outText, true);
 
@@ -2158,7 +2162,9 @@ namespace HtmlAgilityPack
 						{
 							if (!_isImplicitEnd)
 							{
-								outText.Write("></" + name + ">");
+								outText.Write("></");
+								outText.Write(name);
+								outText.Write(">");
 							}
 							else
 							{
@@ -2409,6 +2415,8 @@ namespace HtmlAgilityPack
 			SetChanged();
 		}
 
+		private static readonly char[] optimizeAttributesCheckedChars = {(char) 10, (char) 13, (char) 9, ' '};
+
 		internal void WriteAttribute(TextWriter outText, HtmlAttribute att)
 		{
 			if (att.Value == null)
@@ -2445,8 +2453,14 @@ namespace HtmlAgilityPack
 				if (_ownerdocument.OptionOutputOriginalCase)
 					name = att.OriginalName;
 
-                outText.Write(" " + name + "=" + quote + HtmlDocument.HtmlEncodeWithCompatibility(att.XmlValue, _ownerdocument.BackwardCompatibility) + quote);
-                // There is a major breaking change started with changes in https://github.com/zzzprojects/html-agility-pack/releases/tag/v1.11.62
+				outText.Write(" ");
+				outText.Write(name);
+				outText.Write("=");
+				outText.Write(quote);
+				outText.Write(HtmlDocument.HtmlEncodeWithCompatibility(att.XmlValue, _ownerdocument.BackwardCompatibility));
+				outText.Write(quote);
+
+				// There is a major breaking change started with changes in https://github.com/zzzprojects/html-agility-pack/releases/tag/v1.11.62
 				// Before, the attribute had a default "DoubleQuote" but that's no longer the case
 				// At this moment, the easiest way to fix it is assuming we always need to close an attribute in xml
 				// However, even this fix cause a breaking change as we cannot longer output without a quote
@@ -2469,7 +2483,8 @@ namespace HtmlAgilityPack
 					if ((att.Name[0] == '<') && (att.Name[1] == '%') &&
 						(att.Name[att.Name.Length - 1] == '>') && (att.Name[att.Name.Length - 2] == '%'))
 					{
-						outText.Write(" " + name);
+						outText.Write(" ");
+						outText.Write(name);
 						return;
 					}
 				}
@@ -2479,18 +2494,39 @@ namespace HtmlAgilityPack
 					var value = quoteType == AttributeValueQuote.DoubleQuote ? !att.Value.StartsWith("@") ? att.Value.Replace("\"", "&quot;") :
 					att.Value : quoteType == AttributeValueQuote.SingleQuote ?  att.Value.Replace("'", "&#39;") : att.Value;
 					if (_ownerdocument.OptionOutputOptimizeAttributeValues)
-						if (att.Value.IndexOfAny(new char[] {(char) 10, (char) 13, (char) 9, ' '}) < 0)
-							outText.Write(" " + name + "=" + att.Value);
+					{
+						if (att.Value.IndexOfAny(optimizeAttributesCheckedChars) < 0)
+						{
+							outText.Write(" ");
+							outText.Write(name);
+							outText.Write("=");
+							outText.Write(att.Value);
+						}
 						else
-							outText.Write(" " + name + "=" + quote + value + quote);
+						{
+							outText.Write(" ");
+							outText.Write(name);
+							outText.Write("=");
+							outText.Write(quote);
+							outText.Write(value);
+							outText.Write(quote);
+						}
+					}
 					else
-						outText.Write(" " + name + "=" + quote + value + quote);
+					{
+						outText.Write(" ");
+						outText.Write(name);
+						outText.Write("=");
+						outText.Write(quote);
+						outText.Write(value);
+						outText.Write(quote);;
+					}
 				}
 				else
                 {
-					outText.Write(" " + name);
+					outText.Write(" ");
+					outText.Write(name);
 				}
-
 			}
 		}
 
