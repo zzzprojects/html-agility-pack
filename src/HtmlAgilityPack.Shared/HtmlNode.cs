@@ -369,13 +369,13 @@ namespace HtmlAgilityPack
 				var sb = new StringBuilder();
                 int depthLevel = 0;
 				string name = this.Name;
-	 
+
 				if (name != null)
 				{
-					name = name.ToLowerInvariant();
+					bool isDisplayScriptingText = string.Equals(name, "head", StringComparison.OrdinalIgnoreCase)
+					                              || string.Equals(name, "script", StringComparison.OrdinalIgnoreCase)
+					                              || string.Equals(name, "style", StringComparison.OrdinalIgnoreCase);
 
-					bool isDisplayScriptingText = (name == "head" || name == "script" || name == "style"); 
-					 
 					InternalInnerText(sb, isDisplayScriptingText, depthLevel);
 				}
 				else
@@ -1984,7 +1984,7 @@ namespace HtmlAgilityPack
 					if (_ownerdocument.OptionOutputAsXml)
 					{
 						var commentNode = (HtmlCommentNode) this;
-						if (!_ownerdocument.BackwardCompatibility && commentNode.Comment.ToLowerInvariant().StartsWith("<!doctype"))
+						if (!_ownerdocument.BackwardCompatibility && commentNode.Comment.StartsWith("<!doctype", StringComparison.OrdinalIgnoreCase))
 						{
 							outText.Write(commentNode.Comment);
 						}
@@ -2623,6 +2623,8 @@ namespace HtmlAgilityPack
 			AddClass(name, false);
 		}
 
+		private static readonly char[] spaceSeparator = { ' ' };
+
 		/// <summary>
 		/// Adds one or more classes to this node.
 		/// </summary>
@@ -2631,26 +2633,26 @@ namespace HtmlAgilityPack
 		public void AddClass(string name, bool throwError)
 		{
 			var classAttributes = Attributes.AttributesWithName("class");
+			var isEmpty = true;
 
-			if (!IsEmpty(classAttributes))
+			foreach (HtmlAttribute att in classAttributes)
 			{
-				foreach (HtmlAttribute att in classAttributes)
-				{ 
-					// Check class solo, check class in First with other class, check Class no first.
-					if (att.Value != null && att.Value.Split(' ').ToList().Any(x => x.Equals(name)))
+				isEmpty = false;
+				// Check class solo, check class in First with other class, check Class no first.
+				if (att.Value != null && Array.IndexOf(att.Value.Split(spaceSeparator), name) != -1)
+				{
+					if (throwError)
 					{
-						if (throwError)
-						{
-							throw new Exception(HtmlDocument.HtmlExceptionClassExists);
-						}
-					}
-					else
-					{
-						SetAttributeValue(att.Name, att.Value + " " + name);
+						throw new Exception(HtmlDocument.HtmlExceptionClassExists);
 					}
 				}
+				else
+				{
+					SetAttributeValue(att.Name, att.Value + " " + name);
+				}
 			}
-			else
+
+			if (isEmpty)
 			{
 				HtmlAttribute attribute = _ownerdocument.CreateAttribute("class", name);
 				Attributes.Append(attribute);
@@ -2718,7 +2720,7 @@ namespace HtmlAgilityPack
 					{
 						Attributes.Remove(att);
 					}
-					else if (att.Value != null && att.Value.Split(' ').ToList().Any(x => x.Equals(name)))
+					else if (att.Value != null && att.Value.Split(' ').Contains(name))
 					{
 						string[] classNames = att.Value.Split(' ');
 
