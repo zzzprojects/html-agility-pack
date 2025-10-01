@@ -233,10 +233,12 @@ namespace HtmlAgilityPack
 			get { return !HasClosingAttributes ? new HtmlAttributeCollection(this) : _endnode.Attributes; }
 		}
 
-		/// <summary>
-		/// Gets the closing tag of the node, null if the node is self-closing.
-		/// </summary>
-		public HtmlNode EndNode
+        /// <summary>
+        /// Gets the closing tag of the node.
+        /// For self-closing nodes, this will reference an internal placeholder
+        /// that behaves like a null closing tag or might be null.
+        /// </summary>
+        public HtmlNode EndNode
 		{
 			get { return _endnode; }
 		}
