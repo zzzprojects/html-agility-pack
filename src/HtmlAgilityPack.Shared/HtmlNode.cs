@@ -589,6 +589,14 @@ namespace HtmlAgilityPack
 		    get { return OuterHtml.Length; }
         }
 
+        /// <summary>
+        /// Gets the original outer length. The Current "OuterLength" property return the "OuterHtml.Length" which might contains a different value.
+        /// </summary>
+        public int OriginalOuterLength
+		{
+			get { return _outerlength; }
+		}
+
 		/// <summary>
 		/// Gets or sets this node's name.
 		/// </summary>
