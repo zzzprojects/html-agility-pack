@@ -69,7 +69,7 @@ namespace HtmlAgilityPack
         /// <param name="nodeName"></param>
         /// <returns></returns>
         public
-#if NET8_0
+#if NET8_0_OR_GREATER
         HtmlNode?
 #else
         HtmlNode
@@ -312,7 +312,7 @@ namespace HtmlAgilityPack
         /// <param name="name"></param>
         /// <returns></returns>
         public static
-#if NET8_0
+#if NET8_0_OR_GREATER
         HtmlNode?
 #else
         HtmlNode

@@ -592,7 +592,7 @@ namespace HtmlAgilityPack
         /// <param name="text">The source text.</param>
         /// <returns>The result text.</returns>
         public static
-#if NET8_0
+#if NET8_0_OR_GREATER
         string?
 #else
         string
@@ -777,7 +777,7 @@ namespace HtmlAgilityPack
         /// <param name="entitizeQuotAmpAndLtGt">If set to true, the [quote], [ampersand], [lower than] and [greather than] characters will be entitized.</param>
         /// <returns>The result text</returns>
         public static
-#if NET8_0
+#if NET8_0_OR_GREATER
         string?
 #else
         string
