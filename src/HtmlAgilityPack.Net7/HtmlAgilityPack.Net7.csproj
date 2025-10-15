@@ -5,7 +5,6 @@
     <AssemblyName>HtmlAgilityPack</AssemblyName>
     <RootNamespace>HtmlAgilityPack</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
     <PackageId>HtmlAgilityPack</PackageId>
     <Version>1.12.4</Version>
     <Authors>ZZZ Projects Inc.</Authors>
