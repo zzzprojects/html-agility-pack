@@ -531,7 +531,7 @@ namespace HtmlAgilityPack
 		/// Gets the last child of the node.
 		/// </summary>
 		public
-#if NET8_0
+#if NET8_0_OR_GREATER
 			HtmlNode?
 #else
             HtmlNode
@@ -1311,7 +1311,7 @@ namespace HtmlAgilityPack
 		/// <param name="name"></param>
 		/// <returns></returns>
 		public
-#if NET8_0
+#if NET8_0_OR_GREATER
         HtmlNode?
 #else
         HtmlNode

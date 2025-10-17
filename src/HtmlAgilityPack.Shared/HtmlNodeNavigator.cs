@@ -529,7 +529,7 @@ namespace HtmlAgilityPack
 		/// <param name="namespaceURI">The namespace URI of the attribute. Unsupported with the HtmlNavigator implementation.</param>
 		/// <returns>The value of the specified HTML attribute. String.Empty or null if a matching attribute is not found or if the navigator is not positioned on an element node.</returns>
 		public override
-#if NET8_0
+#if NET8_0_OR_GREATER
         string?
 #else
         string
