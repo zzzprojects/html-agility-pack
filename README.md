@@ -17,6 +17,10 @@ PM> NuGet\Install-Package HtmlAgilityPack
 PM> dotnet add package HtmlAgilityPack
 ```
 
+## Examples
+
+Check out the [`examples`](./examples) folder for a working example that demonstrates HTML parsing operations using HtmlAgilityPack. See the [examples README](./examples/README.md) for more details.
+
 ## Sponsors
 
 ZZZ Projects owns and maintains **Html Agility Pack** as part of our [mission](https://zzzprojects.com/mission) to add value to the .NET community
