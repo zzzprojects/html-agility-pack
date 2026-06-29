@@ -25,6 +25,9 @@ namespace HtmlAgilityPack
         #region Static Members
 
 #if !FX20 && !FX35
+        /// <summary>
+        ///     Gets or sets a value indicating whether WebUtility is used for HTML encoding and decoding operations.
+        /// </summary>
         public static bool UseWebUtility { get; set; }
 #endif
 

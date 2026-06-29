@@ -26,7 +26,7 @@ namespace HtmlAgilityPack
         /// <exception cref="ArgumentNullException">Why it's thrown.</exception>
         /// <exception cref="MissingMethodException"><see cref="MissingMethodException"/></exception>
         /// <exception cref="MissingXPathException"><see cref="MissingXPathException"/></exception>
-        /// <exception cref="XPathException"><see cref="XPathExeption"/></exception>
+        /// <exception cref="XPathException">see XPathExeption.</exception>
         /// <exception cref="NodeNotFoundException"><see cref="NodeNotFoundException"/></exception>
         /// <exception cref="NodeAttributeNotFoundException"><see cref="NodeAttributeNotFoundException"/></exception>
         /// <exception cref="FormatException">Why it's thrown.</exception>
@@ -56,7 +56,7 @@ namespace HtmlAgilityPack
         /// <exception cref="ArgumentNullException">Why it's thrown.</exception>
         /// <exception cref="MissingMethodException"><see cref="MissingMethodException"/></exception>
         /// <exception cref="MissingXPathException"><see cref="MissingXPathException"/></exception>
-        /// <exception cref="XPathException"><see cref="XPathExeption"/></exception>
+        /// <exception cref="XPathException">see XPathExeption.</exception>
         /// <exception cref="NodeNotFoundException"><see cref="NodeNotFoundException"/></exception>
         /// <exception cref="NodeAttributeNotFoundException"><see cref="NodeAttributeNotFoundException"/></exception>
         /// <exception cref="FormatException">Why it's thrown.</exception>
@@ -87,7 +87,7 @@ namespace HtmlAgilityPack
         /// <exception cref="ArgumentNullException">Why it's thrown.</exception>
         /// <exception cref="MissingMethodException"><see cref="MissingMethodException"/></exception>
         /// <exception cref="MissingXPathException"><see cref="MissingXPathException"/></exception>
-        /// <exception cref="XPathException"><see cref="XPathExeption"/></exception>
+        /// <exception cref="XPathException">see XPathExeption.</exception>
         /// <exception cref="NodeNotFoundException"><see cref="NodeNotFoundException"/></exception>
         /// <exception cref="NodeAttributeNotFoundException"><see cref="NodeAttributeNotFoundException"/></exception>
         /// <exception cref="FormatException">Why it's thrown.</exception>

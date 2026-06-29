@@ -420,7 +420,13 @@ namespace HtmlAgilityPack
         }
 
 #if !METRO
-		public void UseAttributeOriginalName(string tagName)
+        /// <summary>
+        ///     Configures all attributes of the specified HTML tag to preserve their original names.
+        /// </summary>
+        /// <param name="tagName">
+        ///     The name of the HTML tag whose attributes should preserve their original names.
+        /// </param>
+        public void UseAttributeOriginalName(string tagName)
 	    {
 		    foreach (var nod in this.DocumentNode.SelectNodes("//" + tagName))
 		    {
@@ -431,8 +437,25 @@ namespace HtmlAgilityPack
 		    }
 		}
 #endif
-
-		public static string GetXmlName(string name, bool isAttribute, bool preserveXmlNamespaces)
+        /// <summary>
+        ///     Converts a string into a valid XML name by encoding unsupported characters.
+        /// </summary>
+        /// <param name="name">
+        ///     The name to convert.
+        /// </param>
+        /// <param name="isAttribute">
+        ///     <see langword="true" /> to allow the <c>:</c> character in attribute names; otherwise, <see langword="false" />.
+        /// </param>
+        /// <param name="preserveXmlNamespaces">
+        ///     <see langword="true" /> to preserve XML namespace prefixes by allowing the <c>:</c> character;
+        ///     otherwise, <see langword="false" />.
+        /// </param>
+        /// <returns>
+        ///     A valid XML name. If the original name contains unsupported characters, they are replaced by their
+        ///     UTF-8 hexadecimal representation followed by an underscore (<c>_</c>), and the resulting name is
+        ///     prefixed with an underscore to distinguish it from an unchanged name.
+        /// </returns>
+        public static string GetXmlName(string name, bool isAttribute, bool preserveXmlNamespaces)
         {
             string xmlname = string.Empty;
             bool nameisok = true;
@@ -1483,7 +1506,9 @@ namespace HtmlAgilityPack
             int lastquote = 0;
             if (OptionComputeChecksum)
             {
+#pragma warning disable CS0618 // Crc32 is obsolete for external consumers but is used internally.
                 _crc32 = new Crc32();
+#pragma warning restore CS0618
             }
 
             Lastnodes = new Dictionary<string, HtmlNode>();

@@ -32,8 +32,10 @@ using System.Collections.Concurrent;
 using System.Collections;
 using System.Diagnostics;
 using System.Linq;
+#pragma warning disable CS0105
 using System.Threading;
 using System.Threading.Tasks;
+#pragma warning restore CS0105
 using System.Reflection;
 
 #endif
@@ -1702,7 +1704,9 @@ namespace HtmlAgilityPack
             bool oldFile = false;
 
 #if NET8_0_OR_GREATER
+#pragma warning disable SYSLIB0014 // WebRequest is obsolete. Html Agility Pack intentionally uses it for compatibility.
             req = (WebRequest.Create(uri) as HttpWebRequest)!;
+#pragma warning restore SYSLIB0014
 #else
             req = WebRequest.Create(uri) as HttpWebRequest;
 #endif
@@ -1878,7 +1882,7 @@ namespace HtmlAgilityPack
                 ? Encoding.GetEncoding(html ? characterSet : resp.ContentEncoding)
                 : null; 
             }
-            catch (Exception e )
+            catch (Exception)
 			{
 
 			} 
@@ -2777,7 +2781,7 @@ namespace HtmlAgilityPack
                         Assembly.LoadFile(path);
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     // Silence catch
                 }
