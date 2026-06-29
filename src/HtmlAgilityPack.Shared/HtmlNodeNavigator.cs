@@ -14,6 +14,10 @@ using System.Text;
 using System.Xml;
 using System.Xml.XPath;
 
+#if NET8_0_OR_GREATER
+using System.Diagnostics.CodeAnalysis;
+#endif
+
 #pragma warning disable 0649
 namespace HtmlAgilityPack
 {
@@ -439,13 +443,17 @@ namespace HtmlAgilityPack
 #endif
 				return _nametable.GetOrAdd(string.Empty);
 			}
-		}
+        }
 
-		/// <summary>
-		/// Gets the text value of the current node.
-		/// </summary>
-		public override string Value
-		{
+        /// <summary>
+        /// Gets the text value of the current node.
+        /// </summary>
+#if NET8_0_OR_GREATER
+        public override string? Value
+#else
+        public override string Value
+#endif
+        {
 			get
 			{
 #if TRACE_NAVIGATOR
@@ -528,18 +536,21 @@ namespace HtmlAgilityPack
 		/// <param name="localName">The local name of the HTML attribute.</param>
 		/// <param name="namespaceURI">The namespace URI of the attribute. Unsupported with the HtmlNavigator implementation.</param>
 		/// <returns>The value of the specified HTML attribute. String.Empty or null if a matching attribute is not found or if the navigator is not positioned on an element node.</returns>
-		public override
-#if NET8_0
-        string?
+#if NET8_0_OR_GREATER
+		public override string? GetAttribute(string localName, string namespaceURI)
 #else
-        string
+        public override string  GetAttribute(string localName, string namespaceURI)
 #endif
-        GetAttribute(string localName, string namespaceURI)
 		{
 #if TRACE_NAVIGATOR
             InternalTrace("localName=" + localName + ", namespaceURI=" + namespaceURI);
 #endif
+			
+#if NET8_0_OR_GREATER
+			HtmlAttribute? att = _currentnode.HasAttributes ? _currentnode.Attributes[localName] : null;
+#else
 			HtmlAttribute att = _currentnode.HasAttributes ? _currentnode.Attributes[localName] : null;
+#endif
 			if (att == null)
 			{
 #if TRACE_NAVIGATOR
@@ -575,8 +586,13 @@ namespace HtmlAgilityPack
 		/// <returns>true if the two navigators have the same position, otherwise, false.</returns>
 		public override bool IsSamePosition(XPathNavigator other)
 		{
-			HtmlNodeNavigator nav = other as HtmlNodeNavigator;
-			if (nav == null)
+#if NET8_0_OR_GREATER
+            HtmlNodeNavigator? nav = other as HtmlNodeNavigator;
+#else
+            HtmlNodeNavigator nav = other as HtmlNodeNavigator;
+#endif
+
+            if (nav == null)
 			{
 #if TRACE_NAVIGATOR
                 InternalTrace(">false");
@@ -597,8 +613,13 @@ namespace HtmlAgilityPack
 		/// <returns>true if successful, otherwise false. If false, the position of the navigator is unchanged.</returns>
 		public override bool MoveTo(XPathNavigator other)
 		{
-			HtmlNodeNavigator nav = other as HtmlNodeNavigator;
-			if (nav == null)
+#if NET8_0_OR_GREATER
+            HtmlNodeNavigator? nav = other as HtmlNodeNavigator;
+#else
+            HtmlNodeNavigator nav = other as HtmlNodeNavigator;
+#endif
+
+            if (nav == null)
 			{
 #if TRACE_NAVIGATOR
                 InternalTrace(">false (nav is not an HtmlNodeNavigator)");
@@ -751,8 +772,13 @@ namespace HtmlAgilityPack
 #if TRACE_NAVIGATOR
             InternalTrace("id=" + id);
 #endif
-			HtmlNode node = _doc.GetElementbyId(id);
-			if (node == null)
+#if NET8_0_OR_GREATER
+            HtmlNode? node = _doc.GetElementbyId(id);
+#else
+            HtmlNode node = _doc.GetElementbyId(id);
+#endif
+
+            if (node == null)
 			{
 #if TRACE_NAVIGATOR
                 InternalTrace(">false");
@@ -897,9 +923,9 @@ namespace HtmlAgilityPack
 #endif
 		}
 
-		#endregion
+        #endregion
 
-		#region Internal Methods
+        #region Internal Methods
 #if TRACE_NAVIGATOR
         [Conditional("TRACE")]
         internal void InternalTrace(object traceValue)
@@ -946,11 +972,14 @@ namespace HtmlAgilityPack
             HtmlAgilityPack.Trace.WriteLine(string.Format("oid={0},n={1},a={2},v={3},{4}", GetHashCode(), nodename, _attindex, nodevalue, traceValue), "N!" + name);
         }
 #endif
-		#endregion
+        #endregion
 
-		#region Private Methods
+        #region Private Methods
 
-		private void Reset()
+#if NET8_0_OR_GREATER
+        [MemberNotNull(nameof(_currentnode))]
+#endif
+        private void Reset()
 		{
 #if TRACE_NAVIGATOR
             InternalTrace(null);

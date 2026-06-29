@@ -15,7 +15,11 @@ namespace HtmlAgilityPack
     {
         #region Fields
 
+#if NET8_0_OR_GREATER
+        private string? _code;
+#else
         private string _code;
+#endif
 
         #endregion
 

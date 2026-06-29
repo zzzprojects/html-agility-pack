@@ -14,7 +14,12 @@ namespace HtmlAgilityPack
     {
         #region Fields
 
+#if NET8_0_OR_GREATER
+        internal readonly string? Text;
+#else
         internal readonly string Text;
+#endif
+
         private List<KeyValuePair<string, string>> _allPairs;
         private Dictionary<string, List<KeyValuePair<string, string>>> _pairsWithName;
 
@@ -26,8 +31,11 @@ namespace HtmlAgilityPack
             this(null)
         {
         }
-
+#if NET8_0_OR_GREATER
+        internal NameValuePairList(string? text)
+#else
         internal NameValuePairList(string text)
+#endif        
         {
             Text = text;
             _allPairs = new List<KeyValuePair<string, string>>();
@@ -40,13 +48,21 @@ namespace HtmlAgilityPack
 
         #region Internal Methods
 
+#if NET8_0_OR_GREATER
+        internal static string GetNameValuePairsValue(string? text, string name)
+#else
         internal static string GetNameValuePairsValue(string text, string name)
+#endif
         {
             NameValuePairList l = new NameValuePairList(text);
             return l.GetNameValuePairValue(name);
         }
 
+#if NET8_0_OR_GREATER
+        internal List<KeyValuePair<string, string>> GetNameValuePairs(string? name)
+#else
         internal List<KeyValuePair<string, string>> GetNameValuePairs(string name)
+#endif
         {
             if (name == null)
                 return _allPairs;
@@ -71,8 +87,11 @@ namespace HtmlAgilityPack
         #endregion
 
         #region Private Methods
-
+#if NET8_0_OR_GREATER
+        private void Parse(string? text)
+#else
         private void Parse(string text)
+#endif        
         {
             _allPairs.Clear();
             _pairsWithName.Clear();
@@ -93,7 +112,11 @@ namespace HtmlAgilityPack
                 _allPairs.Add(nvp);
 
                 // index by name
+#if NET8_0_OR_GREATER
+                List<KeyValuePair<string, string>>? al;
+#else
                 List<KeyValuePair<string, string>> al;
+#endif
                 if (!_pairsWithName.TryGetValue(nvp.Key, out al))
                 {
                     al = new List<KeyValuePair<string, string>>();

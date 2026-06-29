@@ -37,13 +37,12 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="xpath">The XPath expression.</param>
         /// <returns>An <see cref="HtmlNodeCollection"/> containing a collection of nodes matching the <see cref="XPath"/> query, or <c>null</c> if no node matched the XPath expression.</returns>
-        public
-#if NET8_0
-        HtmlNodeCollection?
+
+#if NET8_0_OR_GREATER
+        public HtmlNodeCollection? SelectNodes(string xpath)
 #else
-        HtmlNodeCollection
+        public HtmlNodeCollection SelectNodes(string xpath)
 #endif
-        SelectNodes(string xpath)
         {
             HtmlNodeCollection list = new HtmlNodeCollection(null);
 
@@ -51,7 +50,12 @@ namespace HtmlAgilityPack
             XPathNodeIterator it = nav.Select(xpath);
             while (it.MoveNext())
             {
+#if NET8_0_OR_GREATER
+                HtmlNodeNavigator n = (HtmlNodeNavigator)it.Current!;
+#else
                 HtmlNodeNavigator n = (HtmlNodeNavigator) it.Current;
+#endif
+
                 list.Add(n.CurrentNode, false);
             }
 
@@ -68,21 +72,25 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="xpath">The XPath expression.</param>
         /// <returns>An <see cref="HtmlNodeCollection"/> containing a collection of nodes matching the <see cref="XPath"/> query, or <c>null</c> if no node matched the XPath expression.</returns>
-        public
-#if NET8_0
-        HtmlNodeCollection?
+
+#if NET8_0_OR_GREATER
+        public HtmlNodeCollection? SelectNodes(XPathExpression xpath)
 #else
-        HtmlNodeCollection
+        public HtmlNodeCollection SelectNodes(XPathExpression xpath)
 #endif
-        SelectNodes(XPathExpression xpath)
-        { 
+        {
             HtmlNodeCollection list = new HtmlNodeCollection(null);
 
             HtmlNodeNavigator nav = new HtmlNodeNavigator(OwnerDocument, this);
             XPathNodeIterator it = nav.Select(xpath);
             while (it.MoveNext())
             {
+#if NET8_0_OR_GREATER
+                HtmlNodeNavigator n = (HtmlNodeNavigator)it.Current!;
+#else
                 HtmlNodeNavigator n = (HtmlNodeNavigator) it.Current;
+#endif
+
                 list.Add(n.CurrentNode, false);
             }
 
@@ -99,13 +107,11 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="xpath">The XPath expression. May not be null.</param>
         /// <returns>The first <see cref="HtmlNode"/> that matches the XPath query or a null reference if no matching node was found.</returns>
-        public
-#if NET8_0
-        HtmlNode?
+#if NET8_0_OR_GREATER
+        public HtmlNode? SelectSingleNode(string xpath)
 #else
-        HtmlNode
+        public HtmlNode SelectSingleNode(string xpath)
 #endif
-        SelectSingleNode(string xpath)
         {
             if (xpath == null)
             {
@@ -119,7 +125,12 @@ namespace HtmlAgilityPack
                 return null;
             }
 
+#if NET8_0_OR_GREATER
+            HtmlNodeNavigator node = (HtmlNodeNavigator)it.Current!;
+#else
             HtmlNodeNavigator node = (HtmlNodeNavigator) it.Current;
+#endif
+
             return node.CurrentNode;
         }
 
@@ -128,13 +139,11 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="xpath">The XPath expression.</param>
         /// <returns>An <see cref="HtmlNodeCollection"/> containing a collection of nodes matching the <see cref="XPath"/> query, or <c>null</c> if no node matched the XPath expression.</returns>
-        public
-#if NET8_0
-        HtmlNode?
+#if NET8_0_OR_GREATER
+        public HtmlNode? SelectSingleNode(XPathExpression xpath)
 #else
-        HtmlNode
+        public HtmlNode SelectSingleNode(XPathExpression xpath)
 #endif
-        SelectSingleNode(XPathExpression xpath)
         {
             if (xpath == null)
             {
@@ -148,7 +157,12 @@ namespace HtmlAgilityPack
                 return null;
             }
 
+#if NET8_0_OR_GREATER
+            HtmlNodeNavigator node = (HtmlNodeNavigator)it.Current!;
+#else
             HtmlNodeNavigator node = (HtmlNodeNavigator)it.Current;
+#endif
+
             return node.CurrentNode;
         }
     }

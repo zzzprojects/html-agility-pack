@@ -32,9 +32,17 @@ namespace HtmlAgilityPack
         /// <exception cref="FormatException">Why it's thrown.</exception>
         /// <exception cref="Exception">Why it's thrown.</exception>
         /// <exception cref="InvalidNodeReturnTypeException"><see cref="InvalidNodeReturnTypeException"/></exception>
+#if NET8_0_OR_GREATER
+        public T? GetEncapsulatedData<T>()
+#else
         public T GetEncapsulatedData<T>()
+#endif
         {
+#if NET8_0_OR_GREATER
+            return (T?)GetEncapsulatedData(typeof(T), null);
+#else
             return (T)GetEncapsulatedData(typeof(T), null);
+#endif
         }
 
 
@@ -54,9 +62,17 @@ namespace HtmlAgilityPack
         /// <exception cref="FormatException">Why it's thrown.</exception>
         /// <exception cref="Exception">Why it's thrown.</exception>
         /// <exception cref="InvalidNodeReturnTypeException"><see cref="InvalidNodeReturnTypeException"/></exception>
+#if NET8_0_OR_GREATER
+        public T? GetEncapsulatedData<T>(HtmlDocument htmlDocument)
+#else
         public T GetEncapsulatedData<T>(HtmlDocument htmlDocument)
+#endif
         {
+#if NET8_0_OR_GREATER
+            return (T?)GetEncapsulatedData(typeof(T), htmlDocument);
+#else
             return (T)GetEncapsulatedData(typeof(T), htmlDocument);
+#endif
         }
 
 
@@ -77,7 +93,11 @@ namespace HtmlAgilityPack
         /// <exception cref="FormatException">Why it's thrown.</exception>
         /// <exception cref="Exception">Why it's thrown.</exception>
         /// <exception cref="InvalidNodeReturnTypeException"><see cref="InvalidNodeReturnTypeException"/></exception>
+#if NET8_0_OR_GREATER
+        public object? GetEncapsulatedData(Type targetType, HtmlDocument? htmlDocument = null)
+#else
         public object GetEncapsulatedData(Type targetType, HtmlDocument htmlDocument = null)
+#endif
         {
 
             #region SettingPrerequisite
@@ -99,8 +119,11 @@ namespace HtmlAgilityPack
             }
 
 
-
+#if NET8_0_OR_GREATER
+            object? targetObject;
+#else
             object targetObject;
+#endif
 
             if (targetType.IsInstantiable() == false) // if it can not create instanse of T because of lack of constructor in type T.
             {
@@ -131,14 +154,21 @@ namespace HtmlAgilityPack
                     {
                         // Get xpath attribute from valid properties
                         // for .Net old versions:
+#if NET8_0_OR_GREATER
+                        XPathAttribute? xPathAttribute = (propertyInfo.GetCustomAttributes(typeof(XPathAttribute), false) as IList)[0] as XPathAttribute;
+#else
                         XPathAttribute xPathAttribute = (propertyInfo.GetCustomAttributes(typeof(XPathAttribute), false) as IList)[0] as XPathAttribute;
+#endif
 
 
                         #region Property_IsNOT_IEnumerable
                         if (propertyInfo.IsIEnumerable() == false) // Property is None-IEnumerable
                         {
-
+#if NET8_0_OR_GREATER
+                            HtmlNode? htmlNode = null;
+#else
                             HtmlNode htmlNode = null;
+#endif
 
                             // try to fill htmlNode based on XPath given
                             try
@@ -184,7 +214,11 @@ namespace HtmlAgilityPack
                                         htmlNode,
                                         xPathAttribute.IsNodeReturnTypeExplicitlySet ? xPathAttribute.NodeReturnType : ReturnType.InnerHtml));
 
+#if NET8_0_OR_GREATER
+                                    object? o = GetEncapsulatedData(propertyInfo.PropertyType, innerHtmlDocument);
+#else
                                     object o = GetEncapsulatedData(propertyInfo.PropertyType, innerHtmlDocument);
+#endif
 
                                     propertyInfo.SetValue(targetObject, o, null);
                                 }
@@ -195,7 +229,11 @@ namespace HtmlAgilityPack
                                 // AND does not deifned xpath and shouldn't have property that defined xpath.
                                 else
                                 {
+#if NET8_0_OR_GREATER
+                                    string? result;
+#else
                                     string result = string.Empty;
+#endif
 
                                     if (xPathAttribute.AttributeName == null) // It target value of HTMLTag
                                     {
@@ -244,7 +282,11 @@ namespace HtmlAgilityPack
                         #region Property_Is_IEnumerable
                         else // Property is IEnumerable<T>
                         {
+#if NET8_0_OR_GREATER
+                            IList<Type>? T_Types = propertyInfo.GetGenericTypes() as IList<Type>; // Get T type
+#else
                             IList<Type> T_Types = propertyInfo.GetGenericTypes() as IList<Type>; // Get T type
+#endif
 
                             if (T_Types == null || T_Types.Count == 0)
                             {
@@ -258,8 +300,11 @@ namespace HtmlAgilityPack
 
                             else if (T_Types.Count == 1) // It is NOT something like Dictionary<Tkey , Tvalue>
                             {
-
+#if NET8_0_OR_GREATER
+                                HtmlNodeCollection? nodeCollection;
+#else
                                 HtmlNodeCollection nodeCollection;
+#endif
 
                                 // try to fill nodeCollection based on given xpath.
                                 try
@@ -305,7 +350,11 @@ namespace HtmlAgilityPack
                                                 node,
                                                 xPathAttribute.IsNodeReturnTypeExplicitlySet ? xPathAttribute.NodeReturnType : ReturnType.InnerHtml));
 
+#if NET8_0_OR_GREATER
+                                            object? o = GetEncapsulatedData(T_Types[0], innerHtmlDocument);
+#else
                                             object o = GetEncapsulatedData(T_Types[0], innerHtmlDocument);
+#endif
 
                                             result.Add(o);
                                         }
@@ -336,7 +385,12 @@ namespace HtmlAgilityPack
 
                                             foreach (HtmlNode node in nodeCollection)
                                             {
+#if NET8_0_OR_GREATER
+                                                string? nodeAttributeValue = node.GetAttributeValue(xPathAttribute.AttributeName, null);
+#else
                                                 string nodeAttributeValue = node.GetAttributeValue(xPathAttribute.AttributeName, null);
+#endif
+
                                                 if (nodeAttributeValue == null)
                                                 {
                                                     throw new NodeAttributeNotFoundException("Can not find " + xPathAttribute.AttributeName + " Attribute in " + node.Name + " related to " +
@@ -468,7 +522,11 @@ namespace HtmlAgilityPack
                 throw new ArgumentNullException("Parameter type is null while retrieving properties defined XPathAttribute of Type type.");
             }
 
+#if NET8_0_OR_GREATER
+            PropertyInfo[]? properties = null;
+#else
             PropertyInfo[] properties = null;
+#endif
 
 
 #if !(NETSTANDARD1_3 || NETSTANDARD1_6)
@@ -554,7 +612,11 @@ namespace HtmlAgilityPack
         /// <param name="type">Type of class include requested method.</param>
         /// <param name="methodName">Name of requested method as string.</param>
         /// <returns>Method info of requested method.</returns>
+#if NET8_0_OR_GREATER
+        internal static MethodInfo? GetMethodByItsName(this Type type, string methodName)
+#else
         internal static MethodInfo GetMethodByItsName(this Type type, string methodName)
+#endif
         {
             if (type == null)
             {
@@ -819,7 +881,11 @@ namespace HtmlAgilityPack
         /// <summary>
         /// Html Attribute name
         /// </summary>
+#if NET8_0_OR_GREATER
+        public string? AttributeName { get; set; }
+#else
         public string AttributeName { get; set; }
+#endif
 
         /// <summary>
         /// The methode of output

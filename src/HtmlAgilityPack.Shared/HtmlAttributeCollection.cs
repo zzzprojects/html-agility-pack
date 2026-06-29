@@ -8,6 +8,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+#if NET8_0_OR_GREATER
+using System.Diagnostics.CodeAnalysis;
+#endif
 
 namespace HtmlAgilityPack
 {
@@ -79,7 +82,12 @@ namespace HtmlAgilityPack
         /// <summary>
         /// Gets a given attribute from the list using its name.
         /// </summary>
+#if NET8_0_OR_GREATER
+        [DisallowNull]
+        public HtmlAttribute? this[string name]
+#else
         public HtmlAttribute this[string name]
+#endif
         {
             get
             {
@@ -88,12 +96,21 @@ namespace HtmlAgilityPack
                     throw new ArgumentNullException("name");
                 }
 
+#if NET8_0_OR_GREATER
+                HtmlAttribute? value;
+#else
                 HtmlAttribute value;
+#endif
+
                 return Hashitems.TryGetValue(name, out value) ? value : null;
             }
             set
             {
+#if NET8_0_OR_GREATER
+                HtmlAttribute? currentValue;
+#else
                 HtmlAttribute currentValue;
+#endif
 
                 if (!Hashitems.TryGetValue(name, out currentValue))
                 {
@@ -227,7 +244,11 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
+#if NET8_0_OR_GREATER
+        bool ICollection<HtmlAttribute>.Remove(HtmlAttribute? item)
+#else
         bool ICollection<HtmlAttribute>.Remove(HtmlAttribute item)
+#endif
         {
             if (item == null)
             {
@@ -303,7 +324,11 @@ namespace HtmlAgilityPack
         /// <param name="name">The name of the attribute to insert.</param>
         /// <param name="value">The value of the attribute to insert.</param>
         /// <returns>The appended attribute.</returns>
+#if NET8_0_OR_GREATER
+        public HtmlAttribute Append(string name, string? value)
+#else
         public HtmlAttribute Append(string name, string value)
+#endif
         {
             HtmlAttribute att = _ownernode._ownerdocument.CreateAttribute(name, value);
             return Append(att);

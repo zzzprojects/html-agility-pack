@@ -19,16 +19,23 @@ namespace HtmlAgilityPack
     {
         #region Fields
 
+#if NET8_0_OR_GREATER
+        private MixedCodeDocumentFragment _currentfragment = null!; // initialized in parse
+        private Encoding? _streamencoding;
+        internal string _text = null!; // initialized on load
+#else
+        private MixedCodeDocumentFragment _currentfragment;
+        private Encoding _streamencoding;
+        internal string _text;
+#endif
+
         private int _c;
         internal MixedCodeDocumentFragmentList _codefragments;
-        private MixedCodeDocumentFragment _currentfragment;
         internal MixedCodeDocumentFragmentList _fragments;
         private int _index;
         private int _line;
         private int _lineposition;
         private ParseState _state;
-        private Encoding _streamencoding;
-        internal string _text;
         internal MixedCodeDocumentFragmentList _textfragments;
 
         /// <summary>
@@ -119,7 +126,11 @@ namespace HtmlAgilityPack
         /// <summary>
         /// Gets the encoding of the stream used to read the document.
         /// </summary>
+#if NET8_0_OR_GREATER
+        public Encoding? StreamEncoding
+#else
         public Encoding StreamEncoding
+#endif
         {
             get { return _streamencoding; }
         }
@@ -288,7 +299,11 @@ namespace HtmlAgilityPack
             _textfragments.Clear();
 
             // all pseudo constructors get down to this one
+#if NET8_0_OR_GREATER
+            using (StreamReader? sr = reader as StreamReader)
+#else
             using (StreamReader sr = reader as StreamReader)
+#endif
             {
                 if (sr != null)
                 {

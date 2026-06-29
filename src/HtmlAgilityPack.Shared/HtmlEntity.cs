@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
 
@@ -591,13 +592,13 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="text">The source text.</param>
         /// <returns>The result text.</returns>
-        public static
-#if NET8_0
-        string?
+
+#if NET8_0_OR_GREATER
+        [return: NotNullIfNotNull(nameof(text))]
+        public static string? DeEntitize(string? text)
 #else
-        string
+        public static string DeEntitize(string text)
 #endif
-        DeEntitize(string text)
         {
             if (text == null)
                 return null;
@@ -753,7 +754,12 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="text">The source text.</param>
         /// <returns>The result text.</returns>
+#if NET8_0_OR_GREATER
+        [return: NotNullIfNotNull(nameof(text))]
+        public static string Entitize(string? text)
+#else
         public static string Entitize(string text)
+#endif
         {
             return Entitize(text, true);
         }
@@ -764,7 +770,12 @@ namespace HtmlAgilityPack
         /// <param name="text">The source text.</param>
         /// <param name="useNames">If set to false, the function will not use known entities name. Default is true.</param>
         /// <returns>The result text.</returns>
+#if NET8_0_OR_GREATER
+        [return: NotNullIfNotNull(nameof(text))]
+        public static string Entitize(string? text, bool useNames)
+#else
         public static string Entitize(string text, bool useNames)
+#endif
         {
             return Entitize(text, useNames, false);
         }
@@ -776,21 +787,20 @@ namespace HtmlAgilityPack
         /// <param name="useNames">If set to false, the function will not use known entities name. Default is true.</param>
         /// <param name="entitizeQuotAmpAndLtGt">If set to true, the [quote], [ampersand], [lower than] and [greather than] characters will be entitized.</param>
         /// <returns>The result text</returns>
-        public static
-#if NET8_0
-        string?
+#if NET8_0_OR_GREATER
+        [return: NotNullIfNotNull(nameof(text))]
+        public static string? Entitize(string? text, bool useNames, bool entitizeQuotAmpAndLtGt)
 #else
-        string
+        public static string Entitize(string text, bool useNames, bool entitizeQuotAmpAndLtGt)
 #endif
-        Entitize(string text, bool useNames, bool entitizeQuotAmpAndLtGt)
-//        _entityValue.Add("quot", 34);    // quotation mark = APL quote, U+0022 ISOnum 
-//        _entityName.Add(34, "quot");
-//        _entityValue.Add("amp", 38);    // ampersand, U+0026 ISOnum 
-//        _entityName.Add(38, "amp");
-//        _entityValue.Add("lt", 60);    // less-than sign, U+003C ISOnum 
-//        _entityName.Add(60, "lt");
-//        _entityValue.Add("gt", 62);    // greater-than sign, U+003E ISOnum 
-//        _entityName.Add(62, "gt");
+        //        _entityValue.Add("quot", 34);    // quotation mark = APL quote, U+0022 ISOnum 
+        //        _entityName.Add(34, "quot");
+        //        _entityValue.Add("amp", 38);    // ampersand, U+0026 ISOnum 
+        //        _entityName.Add(38, "amp");
+        //        _entityValue.Add("lt", 60);    // less-than sign, U+003C ISOnum 
+        //        _entityName.Add(60, "lt");
+        //        _entityValue.Add("gt", 62);    // greater-than sign, U+003E ISOnum 
+        //        _entityName.Add(62, "gt");
         {
             if (text == null)
                 return null;
@@ -818,7 +828,11 @@ namespace HtmlAgilityPack
                     if ((code > 127) ||
                         (entitizeQuotAmpAndLtGt && ((code == 34) || (code == 38) || (code == 60) || (code == 62))))
                     {
+#if NET8_0_OR_GREATER
+                        string? entity = null;
+#else
                         string entity = null;
+#endif
 
                         if (useNames)
                         {

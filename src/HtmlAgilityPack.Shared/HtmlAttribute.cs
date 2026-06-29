@@ -23,17 +23,24 @@ namespace HtmlAgilityPack
     public class HtmlAttribute : IComparable
     {
         #region Fields
+        
+#if NET8_0_OR_GREATER
+        internal string? _name;
+        internal string? _value;
+        internal HtmlNode? _ownernode;
+#else
+        internal string _name;
+        internal string _value;
+        internal HtmlNode _ownernode;
+#endif
 
         private int _line;
         internal int _lineposition;
-        internal string _name;
         internal int _namelength;
         internal int _namestartindex;
         internal HtmlDocument _ownerdocument; // attribute can exists without a node
-        internal HtmlNode _ownernode;
         private AttributeValueQuote? _quoteType;
         internal int _streamposition;
-        internal string _value;
         internal int _valuelength;
         internal int _valuestartindex; 
         private bool? _localUseOriginalName;
@@ -140,7 +147,11 @@ namespace HtmlAgilityPack
         /// <summary>
         /// Name of attribute with original case
         /// </summary>
+#if NET8_0_OR_GREATER
+        public string? OriginalName
+#else
         public string OriginalName
+#endif
         {
             get { return _name; }
         }
@@ -156,7 +167,11 @@ namespace HtmlAgilityPack
         /// <summary>
         /// Gets the HTML node to which this attribute belongs.
         /// </summary>
+#if NET8_0_OR_GREATER
+        public HtmlNode? OwnerNode
+#else
         public HtmlNode OwnerNode
+#endif
         {
             get { return _ownernode; }
         }
@@ -186,7 +201,11 @@ namespace HtmlAgilityPack
         /// <summary>
         /// Gets or sets the value of the attribute.
         /// </summary>
+#if NET8_0_OR_GREATER
+        public string? Value
+#else
         public string Value
+#endif
         {
             get
             {
@@ -228,7 +247,11 @@ namespace HtmlAgilityPack
         /// <summary>
         /// Gets the DeEntitized value of the attribute.
         /// </summary>
+#if NET8_0_OR_GREATER
+        public string? DeEntitizeValue
+#else
         public string DeEntitizeValue
+#endif
         {
             get { return HtmlEntity.DeEntitize(Value); }
         }
@@ -238,7 +261,11 @@ namespace HtmlAgilityPack
             get { return HtmlDocument.GetXmlName(Name, true, OwnerDocument.OptionPreserveXmlNamespaces); }
         }
 
+#if NET8_0_OR_GREATER
+        internal string? XmlValue
+#else
         internal string XmlValue
+#endif
         {
             get { return Value; }
         }
@@ -264,9 +291,18 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="obj">An attribute to compare with this instance.</param>
         /// <returns>A 32-bit signed integer that indicates the relative order of the names comparison.</returns>
+#if NET8_0_OR_GREATER
+        public int CompareTo(object? obj)
+#else
         public int CompareTo(object obj)
+#endif
         {
+#if NET8_0_OR_GREATER
+            HtmlAttribute? att = obj as HtmlAttribute;
+#else
             HtmlAttribute att = obj as HtmlAttribute;
+#endif
+
             if (att == null)
             {
                 throw new ArgumentException("obj");

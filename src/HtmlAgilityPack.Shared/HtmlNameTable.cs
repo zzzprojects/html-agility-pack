@@ -29,12 +29,20 @@ namespace HtmlAgilityPack
             return _nametable.Add(array, offset, length);
         }
 
+#if NET8_0_OR_GREATER
+        public override string? Get(string array)
+#else
         public override string Get(string array)
+#endif
         {
             return _nametable.Get(array);
         }
 
+#if NET8_0_OR_GREATER
+        public override string? Get(char[] array, int offset, int length)
+#else
         public override string Get(char[] array, int offset, int length)
+#endif
         {
             return _nametable.Get(array, offset, length);
         }
@@ -45,7 +53,11 @@ namespace HtmlAgilityPack
 
         internal string GetOrAdd(string array)
         {
+#if NET8_0_OR_GREATER
+            string? s = Get(array);
+#else
             string s = Get(array);
+#endif
             if (s == null)
             {
                 return Add(array);

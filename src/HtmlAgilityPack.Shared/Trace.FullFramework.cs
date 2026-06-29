@@ -9,7 +9,11 @@ namespace HtmlAgilityPack
 {
     partial class Trace
     {
+#if NET8_0_OR_GREATER
+        partial void WriteLineIntern(string? message, string? category)
+#else
         partial void WriteLineIntern(string message, string category)
+#endif
         {
             System.Diagnostics.Debug.WriteLine(message, category);
         }

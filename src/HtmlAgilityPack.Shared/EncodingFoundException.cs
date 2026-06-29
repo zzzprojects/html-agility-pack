@@ -14,13 +14,23 @@ namespace HtmlAgilityPack
     {
         #region Fields
 
+#if NET8_0_OR_GREATER
+        private Encoding? _encoding;
+#else
         private Encoding _encoding;
+#endif
+
+
 
         #endregion
 
         #region Constructors
 
+#if NET8_0_OR_GREATER
+        internal EncodingFoundException(Encoding? encoding)
+#else
         internal EncodingFoundException(Encoding encoding)
+#endif
         {
             _encoding = encoding;
         }
@@ -29,7 +39,11 @@ namespace HtmlAgilityPack
 
         #region Properties
 
+#if NET8_0_OR_GREATER
+        internal Encoding? Encoding
+#else
         internal Encoding Encoding
+#endif
         {
             get { return _encoding; }
         }

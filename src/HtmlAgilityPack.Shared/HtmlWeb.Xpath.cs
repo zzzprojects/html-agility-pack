@@ -24,7 +24,11 @@ namespace HtmlAgilityPack
         /// <param name="xsltArgs">An <see cref="XsltArgumentList"/> containing the namespace-qualified arguments used as input to the transform.</param>
         /// <param name="type">The requested type.</param>
         /// <returns>An newly created instance.</returns>
+#if NET8_0_OR_GREATER
+        public object? CreateInstance(string htmlUrl, string? xsltUrl, XsltArgumentList? xsltArgs, Type type)
+#else
         public object CreateInstance(string htmlUrl, string xsltUrl, XsltArgumentList xsltArgs, Type type)
+#endif
         {
             return CreateInstance(htmlUrl, xsltUrl, xsltArgs, type, null);
         }
@@ -38,8 +42,11 @@ namespace HtmlAgilityPack
         /// <param name="type">The requested type.</param>
         /// <param name="xmlPath">A file path where the temporary XML before transformation will be saved. Mostly used for debugging purposes.</param>
         /// <returns>An newly created instance.</returns>
-        public object CreateInstance(string htmlUrl, string xsltUrl, XsltArgumentList xsltArgs, Type type,
-            string xmlPath)
+#if NET8_0_OR_GREATER
+        public object? CreateInstance(string htmlUrl, string? xsltUrl, XsltArgumentList? xsltArgs, Type type, string? xmlPath)
+#else
+        public object CreateInstance(string htmlUrl, string xsltUrl, XsltArgumentList xsltArgs, Type type, string xmlPath)
+#endif
         {
             StringWriter sw = new StringWriter();
             XmlTextWriter writer = new XmlTextWriter(sw);
@@ -63,7 +70,13 @@ namespace HtmlAgilityPack
             StringReader sr = new StringReader(sw.ToString());
             XmlTextReader reader = new XmlTextReader(sr);
             XmlSerializer serializer = new XmlSerializer(type);
+
+#if NET8_0_OR_GREATER
+            object? o;
+#else
             object o;
+#endif
+
             try
             {
                 o = serializer.Deserialize(reader);
@@ -83,7 +96,11 @@ namespace HtmlAgilityPack
         /// <param name="xsltUrl">The URL that specifies the XSLT stylesheet to load.</param>
         /// <param name="xsltArgs">An XsltArgumentList containing the namespace-qualified arguments used as input to the transform.</param>
         /// <param name="writer">The XmlTextWriter to which you want to save.</param>
+#if NET8_0_OR_GREATER
+        public void LoadHtmlAsXml(string htmlUrl, string xsltUrl, XsltArgumentList? xsltArgs, XmlTextWriter writer)
+#else
         public void LoadHtmlAsXml(string htmlUrl, string xsltUrl, XsltArgumentList xsltArgs, XmlTextWriter writer)
+#endif
         {
             LoadHtmlAsXml(htmlUrl, xsltUrl, xsltArgs, writer, null);
         }
@@ -96,8 +113,11 @@ namespace HtmlAgilityPack
         /// <param name="xsltArgs">An XsltArgumentList containing the namespace-qualified arguments used as input to the transform.</param>
         /// <param name="writer">The XmlTextWriter to which you want to save.</param>
         /// <param name="xmlPath">A file path where the temporary XML before transformation will be saved. Mostly used for debugging purposes.</param>
-        public void LoadHtmlAsXml(string htmlUrl, string xsltUrl, XsltArgumentList xsltArgs, XmlTextWriter writer,
-            string xmlPath)
+#if NET8_0_OR_GREATER
+        public void LoadHtmlAsXml(string htmlUrl, string xsltUrl, XsltArgumentList? xsltArgs, XmlTextWriter writer, string? xmlPath)
+#else
+        public void LoadHtmlAsXml(string htmlUrl, string xsltUrl, XsltArgumentList xsltArgs, XmlTextWriter writer, string xmlPath)
+#endif
         {
             if (htmlUrl == null)
             {

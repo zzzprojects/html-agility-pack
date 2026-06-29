@@ -15,6 +15,10 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
+#if NET8_0_OR_GREATER
+using System.Diagnostics.CodeAnalysis;
+#endif
+
 // ReSharper disable InconsistentNaming
 namespace HtmlAgilityPack
 {
@@ -31,30 +35,46 @@ namespace HtmlAgilityPack
 		#endregion
 
 		#region Fields
-
+		
+#if NET8_0_OR_GREATER
+		internal HtmlAttributeCollection? _attributes;
+		internal HtmlNodeCollection? _childnodes;
+		internal HtmlNode? _endnode;
+		internal string? _innerhtml;
+		private string? _name;
+		internal HtmlNode? _nextnode;
+		internal string? _outerhtml;
+		private string? _optimizedName;
+		internal HtmlNode? _parentnode;
+		internal HtmlNode? _prevnode;
+		internal HtmlNode? _prevwithsamename;
+#else
 		internal HtmlAttributeCollection _attributes;
 		internal HtmlNodeCollection _childnodes;
 		internal HtmlNode _endnode;
+		internal string _innerhtml;
+	    private string _name;
+		internal HtmlNode _nextnode;
+		internal string _outerhtml;
+		private string _optimizedName;
+		internal HtmlNode _parentnode;
+		internal HtmlNode _prevnode;
+		internal HtmlNode _prevwithsamename;
+#endif
+
+
 
 		private bool _changed;
-		internal string _innerhtml;
 		internal int _innerlength;
 		internal int _innerstartindex;
 		internal int _line;
 		internal int _lineposition;
-	    private string _name;
 		internal int _namelength;
 		internal int _namestartindex;
-		internal HtmlNode _nextnode;
 		internal HtmlNodeType _nodetype;
-		internal string _outerhtml;
 		internal int _outerlength;
 		internal int _outerstartindex;
-		private string _optimizedName;
 		internal HtmlDocument _ownerdocument;
-		internal HtmlNode _parentnode;
-		internal HtmlNode _prevnode;
-		internal HtmlNode _prevwithsamename;
 		internal bool _starttag;
 		internal int _streamposition;
 		internal bool _isImplicitEnd;
@@ -238,7 +258,11 @@ namespace HtmlAgilityPack
         /// For self-closing nodes, this will reference an internal placeholder
         /// that behaves like a null closing tag or might be null.
         /// </summary>
+#if NET8_0_OR_GREATER
+        public HtmlNode? EndNode
+#else
         public HtmlNode EndNode
+#endif
 		{
 			get { return _endnode; }
 		}
@@ -246,7 +270,11 @@ namespace HtmlAgilityPack
 		/// <summary>
 		/// Gets the first child of the node.
 		/// </summary>
+#if NET8_0_OR_GREATER
+		public HtmlNode? FirstChild
+#else
 		public HtmlNode FirstChild
+#endif
 		{
 			get { return !HasChildNodes ? null : _childnodes[0]; }
 		}
@@ -254,6 +282,9 @@ namespace HtmlAgilityPack
 		/// <summary>
 		/// Gets a value indicating whether the current node has any attributes.
 		/// </summary>
+#if NET8_0_OR_GREATER
+		[MemberNotNullWhen(true, nameof(_attributes))]
+#endif
 		public bool HasAttributes
 		{
 			get { return _attributes != null && _attributes.Count > 0; }
@@ -262,6 +293,9 @@ namespace HtmlAgilityPack
 		/// <summary>
 		/// Gets a value indicating whether this node has any child nodes.
 		/// </summary>
+#if NET8_0_OR_GREATER
+		[MemberNotNullWhen(true, nameof(_childnodes), nameof(FirstChild), nameof(LastChild))]
+#endif
 		public bool HasChildNodes
 		{
 			get
@@ -276,6 +310,10 @@ namespace HtmlAgilityPack
 					return false;
 				}
 
+#if NET8_0_OR_GREATER
+                Debug.Assert(FirstChild != null);
+				Debug.Assert(LastChild != null);
+#endif
 				return true;
 			}
 		}
@@ -283,6 +321,9 @@ namespace HtmlAgilityPack
 		/// <summary>
 		/// Gets a value indicating whether the current node has any attributes on the closing tag.
 		/// </summary>
+#if NET8_0_OR_GREATER
+		[MemberNotNullWhen(true, nameof(_endnode), nameof(EndNode))]
+#endif
 		public bool HasClosingAttributes
 		{
 			get
@@ -302,6 +343,9 @@ namespace HtmlAgilityPack
 					return false;
 				}
 
+#if NET8_0_OR_GREATER
+                Debug.Assert(EndNode != null);
+#endif
 				return true;
 			}
 		}
@@ -309,7 +353,11 @@ namespace HtmlAgilityPack
 		/// <summary>
 		/// Gets or sets the value of the 'id' HTML attribute. The document must have been parsed using the OptionUseIdAttribute set to true.
 		/// </summary>
+#if NET8_0_OR_GREATER
+		public string? Id
+#else
 		public string Id
+#endif
 		{
 			get
 			{
@@ -530,13 +578,12 @@ namespace HtmlAgilityPack
 		/// <summary>
 		/// Gets the last child of the node.
 		/// </summary>
-		public
-#if NET8_0
-			HtmlNode?
+#if NET8_0_OR_GREATER
+		public HtmlNode? LastChild
 #else
-            HtmlNode
+		public HtmlNode LastChild
 #endif
-			LastChild
+			
 		{
 			get { return !HasChildNodes ? null : _childnodes[_childnodes.Count - 1]; }
 		}
@@ -632,6 +679,9 @@ namespace HtmlAgilityPack
 			}
         }
 
+#if NET8_0_OR_GREATER
+		[MemberNotNull(nameof(_name))]
+#endif
 		internal void SetName(string value)
         {
             _name = value;
@@ -641,7 +691,11 @@ namespace HtmlAgilityPack
 		/// <summary>
 		/// Gets the HTML node immediately following this element.
 		/// </summary>
+#if NET8_0_OR_GREATER
+		public HtmlNode? NextSibling
+#else
 		public HtmlNode NextSibling
+#endif
 		{
 			get { return _nextnode; }
 			internal set { _nextnode = value; }
@@ -659,7 +713,11 @@ namespace HtmlAgilityPack
 		/// <summary>
 		/// The original unaltered name of the tag
 		/// </summary>
+#if NET8_0_OR_GREATER
+		public string? OriginalName
+#else
 		public string OriginalName
+#endif
 		{
 			get { return _name; }
 		}
@@ -703,7 +761,11 @@ namespace HtmlAgilityPack
 		/// <summary>
 		/// Gets the parent of this node (for nodes that can have parents).
 		/// </summary>
+#if NET8_0_OR_GREATER
+		public HtmlNode? ParentNode
+#else
 		public HtmlNode ParentNode
+#endif
 		{
 			get { return _parentnode; }
 			internal set { _parentnode = value; }
@@ -712,7 +774,11 @@ namespace HtmlAgilityPack
 		/// <summary>
 		/// Gets the node immediately preceding this node.
 		/// </summary>
+#if NET8_0_OR_GREATER
+		public HtmlNode? PreviousSibling
+#else
 		public HtmlNode PreviousSibling
+#endif
 		{
 			get { return _prevnode; }
 			internal set { _prevnode = value; }
@@ -787,7 +853,11 @@ namespace HtmlAgilityPack
 		/// <param name="html">The HTML text.</param>
 		/// <param name="htmlDocumentBuilder">The HTML Document builder.</param>
 		/// <returns>The newly created node instance.</returns>
+#if NET8_0_OR_GREATER
+		public static HtmlNode CreateNode(string html, Action<HtmlDocument>? htmlDocumentBuilder)
+#else
 		public static HtmlNode CreateNode(string html, Action<HtmlDocument> htmlDocumentBuilder)
+#endif
 		{
 			// REVIEW: this is *not* optimum...
 			HtmlDocument doc = new HtmlDocument();
@@ -928,7 +998,12 @@ namespace HtmlAgilityPack
 		/// <returns></returns>
 		public IEnumerable<HtmlNode> Ancestors()
 		{
+#if NET8_0_OR_GREATER
+			HtmlNode? node = ParentNode;
+#else
 			HtmlNode node = ParentNode;
+#endif
+
 			if (node != null)
 			{
 				yield return node; //return the immediate parent node
@@ -949,7 +1024,11 @@ namespace HtmlAgilityPack
 		/// <returns></returns>
 		public IEnumerable<HtmlNode> Ancestors(string name)
 		{
+#if NET8_0_OR_GREATER
+			for (HtmlNode? n = ParentNode; n != null; n = n.ParentNode)
+#else
 			for (HtmlNode n = ParentNode; n != null; n = n.ParentNode)
+#endif
 				if (n.Name == name)
 					yield return n;
 		}
@@ -960,7 +1039,11 @@ namespace HtmlAgilityPack
 		/// <returns></returns>
 		public IEnumerable<HtmlNode> AncestorsAndSelf()
 		{
+#if NET8_0_OR_GREATER
+			for (HtmlNode? n = this; n != null; n = n.ParentNode)
+#else
 			for (HtmlNode n = this; n != null; n = n.ParentNode)
+#endif
 				yield return n;
 		}
 
@@ -971,7 +1054,11 @@ namespace HtmlAgilityPack
 		/// <returns></returns>
 		public IEnumerable<HtmlNode> AncestorsAndSelf(string name)
 		{
+#if NET8_0_OR_GREATER
+			for (HtmlNode? n = this; n != null; n = n.ParentNode)
+#else
 			for (HtmlNode n = this; n != null; n = n.ParentNode)
+#endif
 				if (n.Name == name)
 					yield return n;
 		}
@@ -993,7 +1080,11 @@ namespace HtmlAgilityPack
 			SetChildNodesId(newChild);
 
 			var parentnode = _parentnode;
+#if NET8_0_OR_GREATER
+			HtmlDocument? lastOwnerDocument = null;
+#else
 			HtmlDocument lastOwnerDocument = null;
+#endif
 			while (parentnode != null) 
 			{
 				if(parentnode.OwnerDocument != lastOwnerDocument)
@@ -1310,13 +1401,12 @@ namespace HtmlAgilityPack
 		/// </summary>
 		/// <param name="name"></param>
 		/// <returns></returns>
-		public
-#if NET8_0
-        HtmlNode?
+		
+#if NET8_0_OR_GREATER
+		public HtmlNode? Element(string name)
 #else
-        HtmlNode
+		public HtmlNode Element(string name)
 #endif
-        Element(string name)
 		{
 			foreach (HtmlNode node in ChildNodes)
 				if (node.Name == name)
@@ -1386,7 +1476,12 @@ namespace HtmlAgilityPack
 		/// <param name="name">The name of the attribute to get. May not be <c>null</c>.</param>
 		/// <param name="def">The default value to return if not found.</param>
 		/// <returns>The value of the attribute if found, the default value if not found.</returns>
+#if NET8_0_OR_GREATER
+		[return: NotNullIfNotNull(nameof(def))]
+		public string? GetAttributeValue(string name, string? def)
+#else
 		public string GetAttributeValue(string name, string def)
+#endif
 		{
 #if METRO || NETSTANDARD1_3 || NETSTANDARD1_6
             if (name == null)
@@ -1489,14 +1584,19 @@ namespace HtmlAgilityPack
 
 
 #if !(METRO || NETSTANDARD1_3 || NETSTANDARD1_6)
-		/// <summary>
-		/// Helper method to get the value of an attribute of this node. If the attribute is not found,
-		/// the default value will be returned.
-		/// </summary>
-		/// <param name="name">The name of the attribute to get. May not be <c>null</c>.</param>
-		/// <param name="def">The default value to return if not found.</param>
-		/// <returns>The value of the attribute if found, the default value if not found.</returns>
+        /// <summary>
+        /// Helper method to get the value of an attribute of this node. If the attribute is not found,
+        /// the default value will be returned.
+        /// </summary>
+        /// <param name="name">The name of the attribute to get. May not be <c>null</c>.</param>
+        /// <param name="def">The default value to return if not found.</param>
+        /// <returns>The value of the attribute if found, the default value if not found.</returns>
+#if NET8_0_OR_GREATER
+        [return: NotNullIfNotNull(nameof(def))]
+        public T? GetAttributeValue<T>(string name, T? def) 
+#else
 		public T GetAttributeValue<T>(string name, T def) 
+#endif
 		{
 			if (name == null)
 			{
@@ -1508,7 +1608,12 @@ namespace HtmlAgilityPack
 				return def;
 			}
 
+#if NET8_0_OR_GREATER
+			HtmlAttribute? att = Attributes[name];
+#else
 			HtmlAttribute att = Attributes[name];
+#endif
+
 			if (att == null)
 			{
 				return def;
@@ -1516,7 +1621,11 @@ namespace HtmlAgilityPack
 
             try
             {
+#if NET8_0_OR_GREATER
+	            return (T?)att.Value.To(typeof(T));
+#else
                 return (T)att.Value.To(typeof(T));
+#endif
             }
 			catch
 			{
@@ -1538,7 +1647,12 @@ namespace HtmlAgilityPack
 		/// <param name="def">The default value to return if not found.</param>
 		/// <param name="parser">The parser used to convert string attribute value to T.</param>
 		/// <returns>The value of the attribute if found and parsable, the default value otherwise.</returns>
+#if NET8_0_OR_GREATER
+		[return:NotNullIfNotNull(nameof(def))]
+		public T? GetAttributeValue<T>(string name, T? def, AttributeValueParser<T>? parser)
+#else
 		public T GetAttributeValue<T>(string name, T def, AttributeValueParser<T> parser)
+#endif
 		{
 			if (name == null)
 			{
@@ -1549,8 +1663,13 @@ namespace HtmlAgilityPack
 			{
 				return def;
 			}
-
+			
+#if NET8_0_OR_GREATER
+			HtmlAttribute? att = Attributes[name];
+#else
 			HtmlAttribute att = Attributes[name];
+#endif
+			
 			if (att?.Value == null)
 			{
 				return def;
@@ -1576,7 +1695,11 @@ namespace HtmlAgilityPack
 		/// <param name="newChild">The node to insert. May not be <c>null</c>.</param>
 		/// <param name="refChild">The node that is the reference node. The newNode is placed after the refNode.</param>
 		/// <returns>The node being inserted.</returns>
+#if NET8_0_OR_GREATER
+		public HtmlNode InsertAfter(HtmlNode newChild, HtmlNode? refChild)
+#else
 		public HtmlNode InsertAfter(HtmlNode newChild, HtmlNode refChild)
+#endif
 		{
 			if (newChild == null)
 			{
@@ -1619,7 +1742,11 @@ namespace HtmlAgilityPack
 		/// <param name="newChild">The node to insert. May not be <c>null</c>.</param>
 		/// <param name="refChild">The node that is the reference node. The newChild is placed before this node.</param>
 		/// <returns>The node being inserted.</returns>
+#if NET8_0_OR_GREATER
+		public HtmlNode InsertBefore(HtmlNode newChild, HtmlNode? refChild)
+#else
 		public HtmlNode InsertBefore(HtmlNode newChild, HtmlNode refChild)
+#endif
 		{
 			if (newChild == null)
 			{
@@ -1865,8 +1992,12 @@ namespace HtmlAgilityPack
 			if ((oldChild._childnodes != null) && keepGrandChildren)
 			{
 				// get prev sibling
+#if NET8_0_OR_GREATER
+				HtmlNode? prev = oldChild.PreviousSibling;
+#else
 				HtmlNode prev = oldChild.PreviousSibling;
-
+#endif
+				
 				// reroute grand children to ourselves
 				foreach (HtmlNode grandchild in oldChild._childnodes)
 				{
@@ -1885,11 +2016,19 @@ namespace HtmlAgilityPack
 		/// <param name="newChild">The new node to put in the child list.</param>
 		/// <param name="oldChild">The node being replaced in the list.</param>
 		/// <returns>The node replaced.</returns>
+#if NET8_0_OR_GREATER
+		public HtmlNode ReplaceChild(HtmlNode? newChild, HtmlNode? oldChild)
+#else
 		public HtmlNode ReplaceChild(HtmlNode newChild, HtmlNode oldChild)
+#endif
 		{
 			if (newChild == null)
 			{
+#if NET8_0_OR_GREATER
+				return RemoveChild(oldChild!);
+#else
 				return RemoveChild(oldChild);
+#endif
 			}
 
 			if (oldChild == null)
@@ -1934,7 +2073,12 @@ namespace HtmlAgilityPack
 				throw new ArgumentNullException("name");
 			}
 
+#if NET8_0_OR_GREATER
+			HtmlAttribute? att = Attributes[name];
+#else
 			HtmlAttribute att = Attributes[name];
+#endif
+
 			if (att == null)
 			{
 				return Attributes.Append(_ownerdocument.CreateAttribute(name, value));
@@ -2029,7 +2173,12 @@ namespace HtmlAgilityPack
 							int rootnodes = _ownerdocument.DocumentNode._childnodes.Count;
 							if (rootnodes > 0)
 							{
+#if NET8_0_OR_GREATER
+								HtmlNode? xml = _ownerdocument.GetXmlDeclaration();
+#else
 								HtmlNode xml = _ownerdocument.GetXmlDeclaration();
+#endif
+
 								if (xml != null)
 									rootnodes--;
 
@@ -2251,7 +2400,11 @@ namespace HtmlAgilityPack
 		/// <summary>
 		/// Sets the parent Html node and properly determines the current node's depth using the parent node's depth.
 		/// </summary>
+#if NET8_0_OR_GREATER
+		public void SetParent(HtmlNode? parent)
+#else
 		public void SetParent(HtmlNode parent)
+#endif
 		{
 			if (parent == null)
 				return;
@@ -2277,6 +2430,9 @@ namespace HtmlAgilityPack
 			}
 		}
 
+#if NET8_0_OR_GREATER
+		[MemberNotNull(nameof(_innerhtml), nameof(_outerhtml))]
+#endif
 		private void UpdateHtml()
 		{
 			_innerhtml = WriteContentTo();
@@ -2307,7 +2463,12 @@ namespace HtmlAgilityPack
 
 		internal void UpdateLastNode()
 		{
+#if NET8_0_OR_GREATER
+			HtmlNode? newLast = null;
+#else
 			HtmlNode newLast = null;
+#endif
+
 			if (_prevwithsamename == null || !_prevwithsamename._starttag)
 			{
                 if (_ownerdocument.Openednodes != null)
@@ -2371,8 +2532,13 @@ namespace HtmlAgilityPack
 
 				if (_ownerdocument.Openednodes != null)
 					_ownerdocument.Openednodes.Remove(_outerstartindex);
-
+				
+#if NET8_0_OR_GREATER
+				HtmlNode? self = Utilities.GetDictionaryValueOrDefault(_ownerdocument.Lastnodes, Name);
+#else
 				HtmlNode self = Utilities.GetDictionaryValueOrDefault(_ownerdocument.Lastnodes, Name);
+#endif
+				
 				if (self == this)
 				{
 					_ownerdocument.Lastnodes.Remove(Name);
@@ -2397,9 +2563,17 @@ namespace HtmlAgilityPack
 			}
 		}
 
+#if NET8_0_OR_GREATER
+		internal string? GetId()
+#else
 		internal string GetId()
+#endif
 		{
+#if NET8_0_OR_GREATER
+			HtmlAttribute? att = HasAttributes ? Attributes["id"] : null;
+#else
 			HtmlAttribute att = HasAttributes ? Attributes["id"] : null;
+#endif
 			return att == null ? string.Empty : att.Value;
 		}
 
@@ -2835,7 +3009,7 @@ namespace HtmlAgilityPack
 		}
 
 		/// <summary>Check if the node class has the parameter class.</summary>
-		/// <param name="class">The class.</param>
+		/// <param name="className">The class.</param>
 		/// <returns>True if node class has the parameter class, false if not.</returns>
 		public bool HasClass(string className)
 		{

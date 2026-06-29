@@ -9,7 +9,12 @@ namespace HtmlAgilityPack
 {
     internal partial class Trace
     {
+#if NET8_0_OR_GREATER
+        internal static Trace? _current;
+#else
         internal static Trace _current;
+#endif
+
 
         internal static Trace Current
         {
@@ -21,9 +26,17 @@ namespace HtmlAgilityPack
             }
         }
 
+#if NET8_0_OR_GREATER
+        partial void WriteLineIntern(string? message, string? category);
+#else
         partial void WriteLineIntern(string message, string category);
+#endif
 
+#if NET8_0_OR_GREATER
+        public static void WriteLine(string? message, string? category)
+#else
         public static void WriteLine(string message, string category)
+#endif
         {
             Current.WriteLineIntern(message, category);
         }

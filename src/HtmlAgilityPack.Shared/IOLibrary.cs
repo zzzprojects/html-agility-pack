@@ -12,9 +12,13 @@ namespace HtmlAgilityPack
 {
     internal struct IOLibrary
     {
-#region Internal Methods
+        #region Internal Methods
 
+#if NET8_0_OR_GREATER
+        internal static void CopyAlways(string? source, string target)
+#else
         internal static void CopyAlways(string source, string target)
+#endif
         {
             if (!File.Exists(source))
                 return;

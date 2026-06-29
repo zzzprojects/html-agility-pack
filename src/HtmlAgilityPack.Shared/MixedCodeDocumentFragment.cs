@@ -16,7 +16,14 @@ namespace HtmlAgilityPack
         #region Fields
 
         internal MixedCodeDocument Doc;
+
+#if NET8_0_OR_GREATER
+        private string? _fragmentText;
+#else
         private string _fragmentText;
+#endif
+
+
         internal int Index;
         internal int Length;
         private int _line;

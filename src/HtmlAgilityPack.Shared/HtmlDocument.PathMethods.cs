@@ -36,7 +36,12 @@ namespace HtmlAgilityPack
                 throw new ArgumentNullException("path");
             }
 
+#if NET8_0_OR_GREATER
+            Encoding? enc;
+#else
             Encoding enc;
+#endif
+
             if (detectEncoding)
             {
                 enc = DetectEncoding(path);
@@ -61,7 +66,11 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="path">Path for the file containing the HTML document to detect. May not be null.</param>
         /// <returns>The detected encoding.</returns>
+#if NET8_0_OR_GREATER
+        public Encoding? DetectEncoding(string path)
+#else
         public Encoding DetectEncoding(string path)
+#endif
         {
             if (path == null)
             {
@@ -74,7 +83,11 @@ namespace HtmlAgilityPack
             using (StreamReader sr = new StreamReader(path, OptionDefaultStreamEncoding))
 #endif
             {
+#if NET8_0_OR_GREATER
+                Encoding? encoding = DetectEncoding(sr);
+#else
                 Encoding encoding = DetectEncoding(sr);
+#endif
                 return encoding;
             }
         }

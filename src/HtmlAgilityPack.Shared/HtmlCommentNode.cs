@@ -13,8 +13,12 @@ namespace HtmlAgilityPack
     public class HtmlCommentNode : HtmlNode
     {
         #region Fields
-
+        
+#if NET8_0_OR_GREATER
+        private string? _comment;
+#else
         private string _comment;
+#endif
 
         #endregion
 

@@ -15,24 +15,40 @@ namespace HtmlAgilityPack
     {
 #region Public Methods
 
-        public override void Write(string Message)
+#if NET8_0_OR_GREATER
+        public override void Write(string? message)
+#else
+        public override void Write(string message)
+#endif
         {
-            Write(Message, "");
+            Write(message, "");
         }
 
-        public override void Write(string Message, string Category)
+#if NET8_0_OR_GREATER
+        public override void Write(string? message, string? category)
+#else
+        public override void Write(string message, string category)
+#endif
         {
-            Console.Write("T:" + Category + ": " + Message);
+            Console.Write("T:" + category + ": " + message);
         }
 
-        public override void WriteLine(string Message)
+#if NET8_0_OR_GREATER
+        public override void WriteLine(string? message)
+#else
+        public override void WriteLine(string message)
+#endif
         {
-            Write(Message + "\n");
+            Write(message + "\n");
         }
 
-        public override void WriteLine(string Message, string Category)
+#if NET8_0_OR_GREATER
+        public override void WriteLine(string? message, string? category)
+#else
+        public override void WriteLine(string message, string category)
+#endif
         {
-            Write(Message + "\n", Category);
+            Write(message + "\n", category);
         }
 
 #endregion

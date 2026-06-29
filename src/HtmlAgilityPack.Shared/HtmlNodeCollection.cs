@@ -18,7 +18,12 @@ namespace HtmlAgilityPack
     {
         #region Fields
 
+#if NET8_0_OR_GREATER
+        private readonly HtmlNode? _parentnode;
+#else
         private readonly HtmlNode _parentnode;
+#endif
+
         private readonly List<HtmlNode> _items = new List<HtmlNode>();
 
         #endregion
@@ -29,7 +34,11 @@ namespace HtmlAgilityPack
         /// Initialize the HtmlNodeCollection with the base parent node
         /// </summary>
         /// <param name="parentnode">The base node of the collection</param>
+#if NET8_0_OR_GREATER
+        public HtmlNodeCollection(HtmlNode? parentnode)
+#else
         public HtmlNodeCollection(HtmlNode parentnode)
+#endif
         {
             _parentnode = parentnode; // may be null
         }
@@ -39,7 +48,11 @@ namespace HtmlAgilityPack
         #region Properties
 
         /// <summary>Gets the parent node associated to the collection.</summary>
+#if NET8_0_OR_GREATER
+        internal HtmlNode? ParentNode
+#else
         internal HtmlNode ParentNode
+#endif
         {
             get
             {
@@ -68,13 +81,11 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="nodeName"></param>
         /// <returns></returns>
-        public
-#if NET8_0
-        HtmlNode?
+#if NET8_0_OR_GREATER
+        public HtmlNode? this[string nodeName]
 #else
-        HtmlNode
+        public HtmlNode this[string nodeName]
 #endif
-        this[string nodeName]
         {
             get
             {
@@ -218,8 +229,13 @@ namespace HtmlAgilityPack
         /// <param name="node"></param>
         public void Insert(int index, HtmlNode node)
         {
+#if NET8_0_OR_GREATER
+            HtmlNode? next = null;
+            HtmlNode? prev = null;
+#else
             HtmlNode next = null;
             HtmlNode prev = null;
+#endif
 
             if (index > 0)
                 prev = _items[index - 1];
@@ -266,8 +282,14 @@ namespace HtmlAgilityPack
         /// <param name="index"></param>
         public void RemoveAt(int index)
         {
+#if NET8_0_OR_GREATER
+            HtmlNode? next = null;
+            HtmlNode? prev = null;
+#else
             HtmlNode next = null;
             HtmlNode prev = null;
+#endif
+
             HtmlNode oldnode = _items[index];
 
             // KEEP a reference since it will be set to null
@@ -311,20 +333,22 @@ namespace HtmlAgilityPack
         /// <param name="items"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static
-#if NET8_0
-        HtmlNode?
+#if NET8_0_OR_GREATER
+        public static HtmlNode? FindFirst(HtmlNodeCollection items, string name)
 #else
-        HtmlNode
+        public static HtmlNode FindFirst(HtmlNodeCollection items, string name)
 #endif
-        FindFirst(HtmlNodeCollection items, string name)
         {
             foreach (HtmlNode node in items)
             {
                 if (node.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
                     return node;
                 if (!node.HasChildNodes) continue;
+#if NET8_0_OR_GREATER
+                HtmlNode? returnNode = FindFirst(node.ChildNodes, name);
+#else
                 HtmlNode returnNode = FindFirst(node.ChildNodes, name);
+#endif
                 if (returnNode != null)
                     return returnNode;
             }
@@ -338,7 +362,12 @@ namespace HtmlAgilityPack
         /// <param name="node"></param>
         public void Append(HtmlNode node)
         {
+#if NET8_0_OR_GREATER
+            HtmlNode? last = null;
+#else
             HtmlNode last = null;
+#endif
+
             if (_items.Count > 0)
                 last = _items[_items.Count - 1];
 
@@ -358,7 +387,11 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
+#if NET8_0_OR_GREATER
+        public HtmlNode? FindFirst(string name)
+#else
         public HtmlNode FindFirst(string name)
+#endif
         {
             return FindFirst(this, name);
         }
@@ -383,7 +416,12 @@ namespace HtmlAgilityPack
         /// <param name="node"></param>
         public void Prepend(HtmlNode node)
         {
+#if NET8_0_OR_GREATER
+            HtmlNode? first = null;
+#else
             HtmlNode first = null;
+#endif
+
             if (_items.Count > 0)
                 first = _items[0];
 
@@ -417,8 +455,14 @@ namespace HtmlAgilityPack
         /// <param name="node"></param>
         public void Replace(int index, HtmlNode node)
         {
+#if NET8_0_OR_GREATER
+            HtmlNode? next = null;
+            HtmlNode? prev = null;
+#else
             HtmlNode next = null;
             HtmlNode prev = null;
+#endif
+
             HtmlNode oldnode = _items[index];
 
             if (index > 0)

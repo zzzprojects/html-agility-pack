@@ -13,22 +13,29 @@ namespace HtmlAgilityPack
 {
     internal static class Utilities
     {
-        public static
-#if NET8_0
-        TValue?
+#if NET8_0_OR_GREATER
+        public static TValue? GetDictionaryValueOrDefault<TKey, TValue>(Dictionary<TKey, TValue> dict, TKey key, TValue? defaultValue = default(TValue)) where TKey : class
 #else
-        TValue
+        public static TValue GetDictionaryValueOrDefault<TKey, TValue>(Dictionary<TKey, TValue> dict, TKey key, TValue defaultValue = default(TValue)) where TKey : class
 #endif
-        GetDictionaryValueOrDefault<TKey, TValue>(Dictionary<TKey, TValue> dict, TKey key, TValue defaultValue = default(TValue)) where TKey : class
         {
+#if NET8_0_OR_GREATER
+            TValue? value;
+#else
             TValue value;
+#endif
+
             if (!dict.TryGetValue(key, out value))
                 return defaultValue;
             return value;
         }
 
 #if !(METRO || NETSTANDARD1_3 || NETSTANDARD1_6)
+#if NET8_0_OR_GREATER
+        internal static object? To(this Object? @this, Type type)
+#else
         internal static object To(this Object @this, Type type)
+#endif
         {
             if (@this != null)
             {
