@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>HtmlAgilityPack</AssemblyName>
     <RootNamespace>HtmlAgilityPack</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <PackageId>HtmlAgilityPack</PackageId>
-    <Version>1.12.4</Version>
+    <Version>1.13.0</Version>
     <Authors>ZZZ Projects Inc.</Authors>
     <Company>ZZZ Projects Inc.</Company>
     <Product>Html Agility Pack</Product>

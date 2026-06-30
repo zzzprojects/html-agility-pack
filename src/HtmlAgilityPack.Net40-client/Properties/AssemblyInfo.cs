@@ -24,10 +24,10 @@ using System.Security;
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(true)]
 [assembly: Guid("643622ea-d2aa-4572-a2b2-6202b7fcd83f")]
-[assembly: AssemblyVersion("1.12.4")]
+[assembly: AssemblyVersion("1.13.0")]
 #if !PocketPC
-[assembly: AssemblyFileVersion("1.12.4")]
-[assembly: AssemblyInformationalVersion("1.12.4")]
+[assembly: AssemblyFileVersion("1.13.0")]
+[assembly: AssemblyInformationalVersion("1.13.0")]
 #if !SILVERLIGHT
 [assembly: AllowPartiallyTrustedCallers]
 #endif
