@@ -257,7 +257,7 @@ namespace HtmlAgilityPack
 
                                     try
                                     {
-                                        resultCastedToTargetPropertyType = Convert.ChangeType(result, propertyInfo.PropertyType);
+                                        resultCastedToTargetPropertyType = Tools.ChangeType(result, propertyInfo.PropertyType);
                                     }
                                     catch (FormatException)
                                     {
@@ -402,7 +402,7 @@ namespace HtmlAgilityPack
 
                                                 try
                                                 {
-                                                    resultCastedToTargetPropertyType = Convert.ChangeType(nodeAttributeValue, T_Types[0]);
+                                                    resultCastedToTargetPropertyType = Tools.ChangeType(nodeAttributeValue, T_Types[0]);
                                                 }
                                                 catch (FormatException) // if it can not cast result(string) to type of property.
                                                 {
@@ -684,6 +684,11 @@ namespace HtmlAgilityPack
         }
 
 
+        internal static object ChangeType(string value, Type targetType)
+        {
+            return Convert.ChangeType(value, Nullable.GetUnderlyingType(targetType) ?? targetType);
+        }
+
         /// <summary>
         /// Returns parts of values of <see cref="HtmlNode"/> you want as <see cref="IList{T}"/>.
         /// </summary>
@@ -707,7 +712,7 @@ namespace HtmlAgilityPack
             IList result = listGenericType.CreateIListOfType();
             foreach (HtmlNode node in htmlNodeCollection)
             {
-                result.Add(Convert.ChangeType(GetHtmlForEncapsulation(node, xPathAttribute.NodeReturnType), listGenericType));
+                result.Add(ChangeType(GetHtmlForEncapsulation(node, xPathAttribute.NodeReturnType), listGenericType));
             }
             return result;
         }

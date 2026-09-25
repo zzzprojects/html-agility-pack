@@ -72,6 +72,36 @@ namespace HtmlAgilityPack.Tests.NetStandard2_0
             Assert.True(testHtml.Articles.Count == 2);
             Assert.True(testHtml.Articles.All(o => o.Id != null));
         }
+
+        [Fact]
+        public void Nullable_value_type_properties_are_populated()
+        {
+            var document = new HtmlDocument();
+            document.LoadHtml("<div value='42'>17</div>");
+
+            var model = document.DocumentNode.GetEncapsulatedData<NullableValues>();
+
+            Assert.Equal(42, model.AttributeValue);
+            Assert.Equal(17, model.ElementValue);
+            Assert.Equal(new int?[] { 42 }, model.AttributeValues);
+            Assert.Equal(new int?[] { 17 }, model.ElementValues);
+        }
+
+        [HasXPath]
+        public class NullableValues
+        {
+            [XPath("//div", "value")]
+            public int? AttributeValue { get; set; }
+
+            [XPath("//div")]
+            public int? ElementValue { get; set; }
+
+            [XPath("//div", "value")]
+            public List<int?> AttributeValues { get; set; }
+
+            [XPath("//div")]
+            public List<int?> ElementValues { get; set; }
+        }
     }
 
 
