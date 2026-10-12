@@ -663,7 +663,8 @@ namespace HtmlAgilityPack
                                         }
                                         catch
                                         {
-                                            sb.Append("&#" + e + ";");
+                                            // 'e' already starts with '#', so prepending "&#" would duplicate it.
+                                            sb.Append("&" + e + ";");
                                         }
                                     }
                                     else
